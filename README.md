@@ -1,1 +1,1 @@
-# wehrli-licht-website
+# Wehrli Licht Website

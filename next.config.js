@@ -1,9 +1,13 @@
+const withPWA = require('next-pwa')({
+  dest: 'public',
+})
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  experimental: {
-    scrollRestoration: true,
-  },
+  swcMinify: true,
 }
 
-module.exports = nextConfig
+module.exports = withPWA({
+  // next.js config
+})
