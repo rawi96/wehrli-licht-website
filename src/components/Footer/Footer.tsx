@@ -1,4 +1,3 @@
-
 const navigation = {
   main: [
     { name: 'Home', href: '#' },
@@ -73,7 +72,7 @@ const navigation = {
   ],
 }
 
-export function Footer() {
+export const Footer = () => {
   return (
     <footer className="bg-wehrli text-white">
       <div className="mx-auto max-w-7xl overflow-hidden px-6 pt-20 pb-10 sm:py-24 sm:pb-10 lg:px-8">
@@ -100,12 +99,25 @@ export function Footer() {
             </a>
           ))}
         </div>
-        <p className="mt-10 text-center text-xs leading-5">
-          Wehrli Licht GmbH <br />
+
+        <p className="mt-10 text-center text-xs font-bold leading-5">
+          Wehrli Licht GmbH
+        </p>
+
+        <p className="text-center text-xs leading-5">
           Blumenstrasse 66 <br />
           9403 Goldach <br />
           +41 71 841 23 68 <br />
           info@wehrli-licht.ch
+        </p>
+
+        <p className="mt-10 text-center text-xs font-bold leading-5">
+          Öffnungszeiten
+        </p>
+
+        <p className="text-center text-xs leading-5">
+          Montag – Samstag: 09.00 – 12.00 & 14.00 – 18.00 <br />
+          Mittwoch- & Samstagnachmittag geschlossen
         </p>
       </div>
     </footer>

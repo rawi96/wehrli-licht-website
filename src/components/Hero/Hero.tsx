@@ -1,22 +1,16 @@
-import { Navigation } from './Navigation'
+import Image from 'next/image'
+import { Button } from '../Button'
+import { Navigation } from '../Navigation'
 
-const navigation = [
-  { name: 'Home', href: '/home' },
-  { name: 'Online Shop', href: '/shop' },
-  { name: 'Angebot', href: '/angebot' },
-  { name: 'Über uns', href: '/ueber-uns' },
-  { name: 'Projekte', href: '/projekte' },
-  { name: 'Kontakt', href: '/kontakt' },
-]
-
-export function Hero() {
-
+export const Hero = () => {
   return (
-    <div className="relative isolate overflow-hidden bg-gray-900">
-      <img
+    <div className="relative isolate mb-20 overflow-hidden bg-gray-900">
+      <Image
         src="/images/essbereich.jpg"
-        alt=""
-        className="absolute inset-0 -z-10 h-full w-full object-cover blur-sm brightness-50			"
+        alt="Essbereich Beleuchtung"
+        fill
+        style={{ objectFit: 'cover' }}
+        className="absolute inset-0 -z-10 blur-sm brightness-50"
       />
       <div className="absolute inset-x-0 top-[-10rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[-20rem]">
         <svg
@@ -57,18 +51,8 @@ export function Hero() {
               fugiat aliqua.
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
-              <a
-                href="#"
-                className="rounded-md bg-wehrli px-3.5 py-1.5 text-base font-semibold leading-7 text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-400"
-              >
-                Zum Online Shop
-              </a>
-              <a
-                href="/kontakt"
-                className="text-base font-semibold leading-7 text-white"
-              >
-                Kontakt <span aria-hidden="true">→</span>
-              </a>
+              <Button type="primary" text="Online Shop" href="/shop" />
+              <Button type="secondary" text="Kontakt" href="/kontakt" />
             </div>
           </div>
         </div>
