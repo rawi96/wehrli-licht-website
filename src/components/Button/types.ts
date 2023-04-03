@@ -1,5 +1,5 @@
 export type ButtonProps = {
   text: string
   href: string
-  type: 'primary' | 'secondary'
+  type: 'primary' | 'secondary' | 'tertiary' | 'quaternary'
 }
