@@ -2,34 +2,9 @@ import { Dialog } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import Image from 'next/image'
 import { useState } from 'react'
+import { Flyout } from '../Flyout'
+import { navigationItems } from './data'
 import { NavigationAccordion } from './NavigationAccordion'
-import { Flyout } from './NavigationFlyout'
-
-import { NavigationType } from './types'
-
-const navigation: NavigationType = [
-  { name: 'Home', href: '/' },
-  { name: 'Shop', href: '/shop' },
-  {
-    title: 'Angebot',
-    items: [
-      { name: 'Lichtplanung', href: '#' },
-      { name: 'Lichtberatung', href: '#' },
-      { name: 'Lampenschirme', href: '#' },
-      { name: 'Wohnraumleuchten', href: '#' },
-      { name: 'Sonderanfertigungen', href: '#' },
-    ],
-  },
-  {
-    title: 'Über uns',
-    items: [
-      { name: 'Team', href: '#' },
-      { name: 'Geschichte', href: '#' },
-    ],
-  },
-  { name: 'Projekte', href: '/projekte' },
-  { name: 'Kontakt', href: '/kontakt' },
-]
 
 export const Navigation = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -62,9 +37,15 @@ export const Navigation = () => {
           </button>
         </div>
         <div className="hidden lg:flex lg:gap-x-12">
-          {navigation.map((item) => {
+          {navigationItems.map((item) => {
             return 'items' in item ? (
-              <Flyout key={item.title} title={item.title} items={item.items} />
+              <div className="relative font-semibold">
+                <Flyout
+                  key={item.title}
+                  title={item.title}
+                  items={item.items}
+                />
+              </div>
             ) : (
               <a
                 key={item.name}
@@ -101,7 +82,7 @@ export const Navigation = () => {
           <div className="mt-6 flow-root">
             <div className="-my-6 divide-y divide-gray-500/25">
               <div className="space-y-2 py-6">
-                {navigation.map((item) => {
+                {navigationItems.map((item) => {
                   return 'items' in item ? (
                     <NavigationAccordion
                       key={item.title}

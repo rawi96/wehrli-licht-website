@@ -1,12 +1,12 @@
 import { Popover, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { Fragment } from 'react'
-import { NavigationFlyoutProps } from './types'
+import { FlyoutProps } from './types'
 
-export const Flyout = ({ title, items }: NavigationFlyoutProps) => {
+export const Flyout = ({ title, items }: FlyoutProps) => {
   return (
-    <Popover className="relative">
-      <Popover.Button className="focus:outline.white inline-flex items-center gap-x-1 text-sm font-semibold leading-6 text-white focus:outline-wehrli">
+    <Popover className="">
+      <Popover.Button className="focus:outline.white inline-flex items-center gap-x-1 text-sm leading-6 text-white focus:outline-wehrli">
         <span>{title}</span>
         <ChevronDownIcon className="h-5 w-5" aria-hidden="true" />
       </Popover.Button>

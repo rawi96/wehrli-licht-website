@@ -52,7 +52,7 @@ export const Hero = () => {
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
               <Button type="primary" text="Online Shop" href="/shop" />
-              <Button type="secondary" text="Kontakt" href="/kontakt" />
+              <Button type="tertiary" text="Kontakt" href="/kontakt" />
             </div>
           </div>
         </div>
