@@ -45,7 +45,7 @@ export const Hero = () => {
             <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl">
               Aus Liebe zum Licht
             </h1>
-            <p className="mt-6 text-lg leading-8 text-gray-300">
+            <p className="mt-6 text-lg leading-8 text-white">
               Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui
               lorem cupidatat commodo. Elit sunt amet fugiat veniam occaecat
               fugiat aliqua.
