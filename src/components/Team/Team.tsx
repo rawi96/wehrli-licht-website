@@ -10,7 +10,7 @@ export const Team = () => {
       {people.map((person) => (
         <li key={person.name} className="flex flex-col gap-6 xl:flex-row">
           <Image
-            className="aspect-[4/5] w-52 flex-none rounded-2xl object-cover"
+            className="aspect-[4/5] w-52 flex-none rounded-lg object-cover"
             src={person.imageUrl}
             width={416}
             height={520}

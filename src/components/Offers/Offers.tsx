@@ -8,7 +8,7 @@ export const Offers = () => {
           <a
             href={offer.href}
             key={offer.title}
-            className="flex flex-col overflow-hidden rounded-lg shadow-lg transition-opacity hover:opacity-75"
+            className="flex flex-col overflow-hidden rounded-lg shadow-lg transition-shadow hover:shadow-2xl"
           >
             <div className="flex-shrink-0">
               <Image
