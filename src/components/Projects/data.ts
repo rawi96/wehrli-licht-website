@@ -102,9 +102,9 @@ export const projects = [
       '/images/projects/stwe-altenrhein-2/headerImage/stwe_altenrhein-2.jpg',
   },
   {
-    title: 'EFH Schöngau',
+    title: 'EFH Schongau',
     href: '#',
     lines: ['Lichtplanung: Wehrli Licht GmbH', 'Ausführung: Wehrli Licht GmbH'],
-    imageUrl: '/images/projects/efh_schoengau/headerImage/efh_schoengau.jpg',
+    imageUrl: '/images/projects/efh_schongau/headerImage/efh_schongau.jpg',
   },
 ]
