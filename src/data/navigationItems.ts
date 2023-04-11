@@ -1,4 +1,4 @@
-import { NavigationType } from './types'
+import { NavigationType } from '../components/Navigation/types'
 
 export const navigationItems: NavigationType = [
   { name: 'Home', href: '/' },

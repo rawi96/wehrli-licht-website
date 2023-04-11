@@ -1,7 +1,7 @@
 import { Button } from '../components/Button'
 import { CallToAction } from '../components/CallToAction'
-import { Container } from '../components/Container'
 import { Footer } from '../components/Footer'
+import { PageContainer } from '../components/PageContainer'
 import { TitleSection } from '../components/TitleSection'
 
 export default function AboutUs() {
@@ -14,7 +14,7 @@ export default function AboutUs() {
         <Button type="secondary" text="Anfahrt anzeigen" href="/shop" />
         <Button type="tertiary" text="Anrufen" href="/kontakt" />
       </CallToAction>
-      <Container>
+      <PageContainer>
         <div className="text-center">
           <TitleSection title="Unsere Adresse" />
           <p className="font-semibold">Wehrli Licht GmbH</p>
@@ -32,7 +32,7 @@ export default function AboutUs() {
             Mittwoch- & Samstagnachmittag geschlossen
           </p>
         </div>
-      </Container>
+      </PageContainer>
       <Footer />
     </>
   )
