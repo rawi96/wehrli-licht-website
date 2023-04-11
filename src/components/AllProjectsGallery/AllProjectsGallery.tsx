@@ -1,10 +1,11 @@
 import Image from 'next/image'
-import { projects } from './data'
+import Link from 'next/link'
+import { projectItems } from '../../data/projectItems'
 
-export const Projects = () => {
+export const AllProjectsGallery = () => {
   return (
     <div className="mx-auto mb-32 mt-12 grid gap-6 md:grid-cols-2 lg:max-w-none lg:grid-cols-3">
-      {projects.map((project) => (
+      {projectItems.map((project) => (
         <article
           key={project.title}
           className="group relative isolate flex flex-col justify-end overflow-hidden rounded-2xl bg-gray-900 px-8 pb-8 pt-80 sm:pt-48 lg:pt-80"
@@ -28,10 +29,10 @@ export const Projects = () => {
           ))}
 
           <h3 className="mt-3 text-lg font-semibold leading-6 text-white">
-            <a href={project.href}>
+            <Link href={`/projekte/${project.slug}`}>
               <span className="absolute inset-0" />
               {project.title}
-            </a>
+            </Link>
           </h3>
         </article>
       ))}

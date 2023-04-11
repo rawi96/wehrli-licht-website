@@ -1,11 +1,12 @@
+import Link from 'next/link'
+import { socialItems } from '../../data/socialItems'
 import { Flyout } from '../Flyout'
-import { navigationItems } from '../Navigation'
-import { socialItems } from './data'
+import { navigationItems } from '../../data/navigationItems'
 
 export const Footer = () => {
   return (
     <footer className="bg-wehrli text-white">
-      <div className="mx-auto max-w-7xl overflow-hidden px-6 pt-20 pb-10 sm:py-24 sm:pb-10 lg:px-8">
+      <div className="mx-auto max-w-7xl overflow-hidden px-6 pb-10 pt-20 sm:py-24 sm:pb-10 lg:px-8">
         <nav
           className="relative -mb-6 columns-2 sm:flex sm:justify-center sm:space-x-12"
           aria-label="Footer"
@@ -21,22 +22,26 @@ export const Footer = () => {
               </div>
             ) : (
               <div key={item.name} className="pb-6">
-                <a
+                <Link
                   href={item.href}
                   className="text-sm leading-6 hover:text-gray-900"
                 >
                   {item.name}
-                </a>
+                </Link>
               </div>
             )
           })}
         </nav>
         <div className="mt-10 flex justify-center space-x-10">
           {socialItems.map((item) => (
-            <a key={item.name} href={item.href} className="hover:text-gray-500">
+            <Link
+              key={item.name}
+              href={item.href}
+              className="hover:text-gray-500"
+            >
               <span className="sr-only">{item.name}</span>
               <item.icon className="h-6 w-6" aria-hidden="true" />
-            </a>
+            </Link>
           ))}
         </div>
 

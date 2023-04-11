@@ -1,5 +1,6 @@
 import { Popover, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
+import Link from 'next/link'
 import { Fragment } from 'react'
 import { FlyoutProps } from './types'
 
@@ -23,13 +24,13 @@ export const Flyout = ({ title, items }: FlyoutProps) => {
         <Popover.Panel className="absolute left-1/2 z-10 mt-5 flex w-screen max-w-min -translate-x-1/2 px-4">
           <div className="w-56 shrink rounded-xl bg-white p-4 text-sm font-semibold leading-6 text-gray-900 shadow-lg ring-1 ring-gray-900/5">
             {items.map((item) => (
-              <a
+              <Link
                 key={item.name}
                 href={item.href}
                 className="block p-2 hover:text-wehrli"
               >
                 {item.name}
-              </a>
+              </Link>
             ))}
           </div>
         </Popover.Panel>

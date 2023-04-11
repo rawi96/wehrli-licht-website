@@ -1,9 +1,10 @@
 import { Dialog } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useState } from 'react'
+import { navigationItems } from '../../data/navigationItems'
 import { Flyout } from '../Flyout'
-import { navigationItems } from './data'
 import { NavigationAccordion } from './NavigationAccordion'
 
 export const Navigation = () => {
@@ -16,7 +17,7 @@ export const Navigation = () => {
         aria-label="Global"
       >
         <div className="flex lg:flex-1">
-          <a href="#" className="-m-1.5 p-1.5">
+          <Link href="#" className="-m-1.5 p-1.5">
             <span className="sr-only">Wehrli Licht GmbH</span>
             <Image
               src="/logos/wehrli_licht_logo.svg"
@@ -24,7 +25,7 @@ export const Navigation = () => {
               width={200}
               height={60}
             />
-          </a>
+          </Link>
         </div>
         <div className="flex lg:hidden">
           <button
@@ -47,13 +48,13 @@ export const Navigation = () => {
                 />
               </div>
             ) : (
-              <a
+              <Link
                 key={item.name}
                 href={item.href}
                 className="text-sm font-semibold leading-6 text-white"
               >
                 {item.name}
-              </a>
+              </Link>
             )
           })}
         </div>
@@ -61,7 +62,7 @@ export const Navigation = () => {
       <Dialog as="div" open={mobileMenuOpen} onClose={setMobileMenuOpen}>
         <Dialog.Panel className="fixed inset-0 z-10 overflow-y-auto bg-wehrli px-6 py-6 lg:hidden">
           <div className="flex items-center justify-between">
-            <a href="#" className="-m-1.5 p-1.5">
+            <Link href="#" className="-m-1.5 p-1.5">
               <span className="sr-only">Wehrli Licht GmbH</span>
               <Image
                 src="/logos/wehrli_licht_logo.svg"
@@ -69,7 +70,7 @@ export const Navigation = () => {
                 width={200}
                 height={60}
               />
-            </a>
+            </Link>
             <button
               type="button"
               className="-m-2.5 rounded-md p-2.5 text-gray-400"
@@ -90,13 +91,13 @@ export const Navigation = () => {
                       items={item.items}
                     />
                   ) : (
-                    <a
+                    <Link
                       key={item.name}
                       href={item.href}
-                      className="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-white hover:bg-gray-400/10"
+                      className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-gray-400/10"
                     >
                       {item.name}
-                    </a>
+                    </Link>
                   )
                 })}
               </div>

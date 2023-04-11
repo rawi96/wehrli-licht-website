@@ -1,11 +1,13 @@
 import Image from 'next/image'
-import { offers } from './data'
-export const Offers = () => {
+import Link from 'next/link'
+import { offerItems } from '../../data/offerItems'
+
+export const AllOffersGallery = () => {
   return (
     <>
       <div className="mx-auto mb-32 mt-12 grid gap-6 md:grid-cols-2 lg:max-w-none lg:grid-cols-3">
-        {offers.map((offer) => (
-          <a
+        {offerItems.map((offer) => (
+          <Link
             href={offer.href}
             key={offer.title}
             className="flex flex-col overflow-hidden rounded-lg shadow-lg transition-shadow hover:shadow-2xl"
@@ -33,7 +35,7 @@ export const Offers = () => {
                 </p>
               </div>
             </div>
-          </a>
+          </Link>
         ))}
       </div>
     </>

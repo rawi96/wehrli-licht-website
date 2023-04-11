@@ -1,10 +1,10 @@
-import { Button } from '../components/Button'
-import { CallToAction } from '../components/CallToAction'
-import { Container } from '../components/Container'
-import { Footer } from '../components/Footer'
-import { Projects } from '../components/Projects'
+import { AllProjectsGallery as ProjectComponent } from '../../components/AllProjectsGallery'
+import { Button } from '../../components/Button'
+import { CallToAction } from '../../components/CallToAction'
+import { Footer } from '../../components/Footer'
+import { PageContainer } from '../../components/PageContainer'
 
-export default function AboutUs() {
+export default function Projects() {
   return (
     <>
       <CallToAction
@@ -14,9 +14,9 @@ export default function AboutUs() {
         <Button type="secondary" text="Online Shop" href="/shop" />
         <Button type="tertiary" text="Kontakt" href="/kontakt" />
       </CallToAction>
-      <Container>
-        <Projects />
-      </Container>
+      <PageContainer>
+        <ProjectComponent />
+      </PageContainer>
       <Footer />
     </>
   )

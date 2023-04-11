@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { people } from './data'
+import { teamMembers } from '../../data/teamMembers'
 
 export const Team = () => {
   return (
@@ -7,7 +7,7 @@ export const Team = () => {
       role="list"
       className="mx-auto my-20 grid max-w-2xl grid-cols-1 gap-x-6 gap-y-20 sm:grid-cols-2 lg:max-w-4xl lg:gap-x-8 xl:max-w-none"
     >
-      {people.map((person) => (
+      {teamMembers.map((person) => (
         <li key={person.name} className="flex flex-col gap-6 xl:flex-row">
           <Image
             className="aspect-[4/5] w-52 flex-none rounded-lg object-cover"
