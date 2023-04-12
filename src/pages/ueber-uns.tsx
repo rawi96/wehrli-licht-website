@@ -5,21 +5,27 @@ import { History } from '../components/History'
 import { PageContainer } from '../components/PageContainer'
 import { Team as TeamComponent } from '../components/Team'
 import { TitleSection } from '../components/TitleSection'
+import { aboutUs } from '../data/aboutUs'
 
 export default function AboutUs() {
   return (
     <>
-      <CallToAction
-        title="Über Wehrli Licht"
-        intro="Quia illum aut in beatae. Possimus dolores aliquid accusantium aut in ut non assumenda. Enim iusto molestias aut deleniti eos aliquid magnam molestiae. At et non possimus ab. Magni labore molestiae nulla qui."
-      >
-        <Button type="secondary" text="Online Shop" href="/shop" />
-        <Button type="tertiary" text="Kontakt" href="/kontakt" />
+      <CallToAction title={aboutUs.title} intro={aboutUs.intro}>
+        <Button
+          type="secondary"
+          text={aboutUs.primaryButton.text}
+          href={aboutUs.primaryButton.link}
+        />
+        <Button
+          type="tertiary"
+          text={aboutUs.secondaryButton.text}
+          href={aboutUs.secondaryButton.link}
+        />
       </CallToAction>
       <PageContainer>
-        <TitleSection title="Unser Team" />
+        <TitleSection title={aboutUs.teamSubtitle} />
         <TeamComponent />
-        <TitleSection title="Unsere Geschichte" />
+        <TitleSection title={aboutUs.historySubtitle} />
         <History />
       </PageContainer>
       <Footer />
