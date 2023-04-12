@@ -6,21 +6,23 @@ import { PageContainer } from '../components/PageContainer'
 import { ProjectsTeaserRow } from '../components/ProjectsTeaserRow'
 import { Testimonial } from '../components/Testimonial'
 import { TitleSection } from '../components/TitleSection'
+import { home } from '../data/home'
 
 export default function Home() {
   return (
     <>
       <Hero />
       <PageContainer>
-        <TitleSection title="Unser Angebot" />
+        <TitleSection title={home.offerSubTitle} />
         <AllOffersGallery />
 
-        <TitleSection title="Aktuelle Lichtprojekte" />
+        <TitleSection title={home.projectsSubTitle} />
         <ProjectsTeaserRow />
-        <TitleSection title="Was unsere Kund*innen sagen" />
 
+        <TitleSection title={home.testimonialsSubTitle} />
         <Testimonial />
         <Testimonial />
+
         <Feedback />
       </PageContainer>
       <Footer />

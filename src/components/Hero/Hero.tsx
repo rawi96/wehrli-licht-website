@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import { home } from '../../data/home'
 import { Button } from '../Button'
 import { Navigation } from '../Navigation'
 
@@ -43,16 +44,20 @@ export const Hero = () => {
         <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
           <div className="text-center">
             <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl">
-              Aus Liebe zum Licht
+              {home.title}
             </h1>
-            <p className="mt-6 text-lg leading-8 text-white">
-              Ihr Experte für hochwertige Innenbeleuchtung, massgeschneiderte
-              Lampenschirme, professionelle Lichtplanung und individuelle
-              Lampen-Sonderanfertigungen.
-            </p>
+            <p className="mt-6 text-lg leading-8 text-white">{home.intro}</p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
-              <Button type="primary" text="Online Shop" href="/shop" />
-              <Button type="tertiary" text="Kontakt" href="/kontakt" />
+              <Button
+                type="primary"
+                text={home.primaryButton.text}
+                href={home.primaryButton.text}
+              />
+              <Button
+                type="tertiary"
+                text={home.secondaryButton.text}
+                href={home.secondaryButton.text}
+              />
             </div>
           </div>
         </div>

@@ -1,7 +1,10 @@
 import Link from 'next/link'
-import { socialItems } from '../../data/socialItems'
-import { Flyout } from '../Flyout'
+import { global } from '../../data/global'
 import { navigationItems } from '../../data/navigationItems'
+import { socialItems } from '../../data/socialItems'
+import { Address } from '../Address'
+import { Flyout } from '../Flyout'
+import { OpeningHours } from '../OpeningHours'
 
 export const Footer = () => {
   return (
@@ -45,25 +48,15 @@ export const Footer = () => {
           ))}
         </div>
 
-        <p className="mt-10 text-center text-xs font-bold leading-5">
-          Wehrli Licht GmbH
-        </p>
+        <h3 className="mt-10 text-center text-xs font-bold leading-5">
+          {global.addressTitle}
+        </h3>
+        <Address />
 
-        <p className="text-center text-xs leading-5">
-          Blumenstrasse 66 <br />
-          9403 Goldach <br />
-          +41 71 841 23 68 <br />
-          info@wehrli-licht.ch
-        </p>
-
-        <p className="mt-10 text-center text-xs font-bold leading-5">
-          Öffnungszeiten
-        </p>
-
-        <p className="text-center text-xs leading-5">
-          Montag – Samstag: 09.00 – 12.00 & 14.00 – 18.00 <br />
-          Mittwoch- & Samstagnachmittag geschlossen
-        </p>
+        <h3 className="mt-10 text-center text-xs font-bold leading-5">
+          {global.openingHoursTitle}
+        </h3>
+        <OpeningHours />
       </div>
     </footer>
   )
