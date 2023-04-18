@@ -1,17 +1,19 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { projectItems } from '../../data/projectItems'
+import { AllProjectsGalleryProps } from './types'
 
-export const AllProjectsGallery = () => {
+export const AllProjectsGallery = ({
+  projectsWithHeaderImages,
+}: AllProjectsGalleryProps) => {
   return (
     <div className="mx-auto mb-32 mt-12 grid gap-6 md:grid-cols-2 lg:max-w-none lg:grid-cols-3">
-      {projectItems.map((project) => (
+      {projectsWithHeaderImages.map((project) => (
         <article
           key={project.title}
           className="group relative isolate flex flex-col justify-end overflow-hidden rounded-2xl bg-gray-900 px-8 pb-8 pt-80 sm:pt-48 lg:pt-80"
         >
           <Image
-            src={project.imageUrl}
+            src={project.headerImage.src}
             alt={project.title}
             className="absolute inset-0 -z-10 h-full w-full object-cover transition-opacity group-hover:opacity-75"
             width={640}

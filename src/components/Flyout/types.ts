@@ -1,6 +1,6 @@
-import { NavItemType } from '../Navigation/types'
+import { NavItem } from '../../types/Navigation'
 
 export type FlyoutProps = {
   title: string
-  items: NavItemType[]
+  items: NavItem[]
 }

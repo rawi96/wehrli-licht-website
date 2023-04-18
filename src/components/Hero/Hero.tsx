@@ -1,14 +1,20 @@
 import Image from 'next/image'
-import { home } from '../../data/home'
 import { Button } from '../Button'
 import { Navigation } from '../Navigation'
+import { HeroProps } from './types'
 
-export const Hero = () => {
+export const Hero = ({
+  image,
+  title,
+  intro,
+  primaryButton,
+  secondaryButton,
+}: HeroProps) => {
   return (
     <div className="relative isolate mb-20 overflow-hidden bg-gray-900">
       <Image
-        src="/images/essbereich.jpg"
-        alt="Essbereich Beleuchtung"
+        src={image.src}
+        alt={image.altText}
         fill
         style={{ objectFit: 'cover' }}
         className="absolute inset-0 -z-10 blur-sm brightness-50"
@@ -44,19 +50,19 @@ export const Hero = () => {
         <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
           <div className="text-center">
             <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl">
-              {home.title}
+              {title}
             </h1>
-            <p className="mt-6 text-lg leading-8 text-white">{home.intro}</p>
+            <p className="mt-6 text-lg leading-8 text-white">{intro}</p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
               <Button
                 type="primary"
-                text={home.primaryButton.text}
-                href={home.primaryButton.text}
+                text={primaryButton.text}
+                href={primaryButton.text}
               />
               <Button
                 type="tertiary"
-                text={home.secondaryButton.text}
-                href={home.secondaryButton.text}
+                text={secondaryButton.text}
+                href={secondaryButton.text}
               />
             </div>
           </div>

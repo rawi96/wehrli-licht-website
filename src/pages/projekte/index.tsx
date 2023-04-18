@@ -1,11 +1,20 @@
+import { GetStaticProps, NextPage } from 'next'
 import { AllProjectsGallery as ProjectComponent } from '../../components/AllProjectsGallery'
 import { Button } from '../../components/Button'
 import { CallToAction } from '../../components/CallToAction'
 import { Footer } from '../../components/Footer'
 import { PageContainer } from '../../components/PageContainer'
 import { projects } from '../../data/projects'
+import { getAllProjectsWithHeaderImages } from '../../helpers/getAllProjectsWithHeaderImages'
+import { ProjectWithHeaderImage } from '../../types/ProjectWithHeaderImage'
 
-export default function Projects() {
+type ProjectPageProps = {
+  projectsWithHeaderImages: ProjectWithHeaderImage[]
+}
+
+const ProjectsPage: NextPage<ProjectPageProps> = ({
+  projectsWithHeaderImages,
+}) => {
   return (
     <>
       <CallToAction title={projects.title} intro={projects.intro}>
@@ -21,9 +30,17 @@ export default function Projects() {
         />
       </CallToAction>
       <PageContainer>
-        <ProjectComponent />
+        <ProjectComponent projectsWithHeaderImages={projectsWithHeaderImages} />
       </PageContainer>
       <Footer />
     </>
   )
 }
+
+export const getStaticProps: GetStaticProps<ProjectPageProps> = () => ({
+  props: {
+    projectsWithHeaderImages: getAllProjectsWithHeaderImages(),
+  },
+})
+
+export default ProjectsPage

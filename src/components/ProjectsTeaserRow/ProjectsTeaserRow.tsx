@@ -1,17 +1,19 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { projectItems } from '../../data/projectItems'
+import { ProjectsTeaserRowProps } from './types'
 
-export const ProjectsTeaserRow = () => {
+export const ProjectsTeaserRow = ({
+  projectsWithHeaderImages,
+}: ProjectsTeaserRowProps) => {
   return (
     <div className="pb-20 pt-10">
       <div className="flex overflow-x-scroll pb-5">
         <div className="flex flex-nowrap gap-4">
-          {projectItems.slice(0, 5).map((project) => (
+          {projectsWithHeaderImages.slice(0, 5).map((project) => (
             <Link href={`/projekte/${project.slug}`} key={project.title}>
               <div className="group relative h-64 w-64 overflow-hidden rounded-lg">
                 <Image
-                  src={project.imageUrl}
+                  src={project.headerImage.src}
                   alt={project.title}
                   className="absolute h-full w-full object-cover transition-opacity group-hover:opacity-75"
                   width={256}

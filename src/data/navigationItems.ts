@@ -1,6 +1,6 @@
-import { NavigationType } from '../components/Navigation/types'
+import { Navigation } from '../types/Navigation'
 
-export const navigationItems: NavigationType = [
+export const navigationItems: Navigation = [
   { name: 'Home', href: '/' },
   { name: 'Online Shop', href: '/shop' },
   {

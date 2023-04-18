@@ -1,1 +1,3 @@
-export type ImageGalleryProps = {}
+export type ImageGalleryProps = {
+  images: { src: string; altText: string }[]
+}
