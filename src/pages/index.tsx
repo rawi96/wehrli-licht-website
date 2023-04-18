@@ -1,3 +1,4 @@
+import { GetStaticProps, NextPage } from 'next'
 import { AllOffersGallery } from '../components/AllOffersGallery'
 import { Feedback } from '../components/Feedback'
 import { Footer } from '../components/Footer'
@@ -7,17 +8,34 @@ import { ProjectsTeaserRow } from '../components/ProjectsTeaserRow'
 import { Testimonial } from '../components/Testimonial'
 import { TitleSection } from '../components/TitleSection'
 import { home } from '../data/home'
+import { getAllProjectsWithHeaderImages } from '../helpers/getAllProjectsWithHeaderImages'
+import { ProjectWithHeaderImage } from '../types/ProjectWithHeaderImage'
 
-export default function Home() {
+type HomePageProps = {
+  projectsWithHeaderImages: ProjectWithHeaderImage[]
+}
+
+const HomePage: NextPage<HomePageProps> = ({ projectsWithHeaderImages }) => {
   return (
     <>
-      <Hero />
+      <Hero
+        image={{
+          src: '/images/essbereich.jpg',
+          altText: 'Essbereich Beleuchtung',
+        }}
+        title={home.title}
+        intro={home.intro}
+        primaryButton={home.primaryButton}
+        secondaryButton={home.secondaryButton}
+      />
       <PageContainer>
         <TitleSection title={home.offerSubTitle} />
         <AllOffersGallery />
 
         <TitleSection title={home.projectsSubTitle} />
-        <ProjectsTeaserRow />
+        <ProjectsTeaserRow
+          projectsWithHeaderImages={projectsWithHeaderImages}
+        />
 
         <TitleSection title={home.testimonialsSubTitle} />
         <Testimonial />
@@ -29,3 +47,11 @@ export default function Home() {
     </>
   )
 }
+
+export const getStaticProps: GetStaticProps<HomePageProps> = () => ({
+  props: {
+    projectsWithHeaderImages: getAllProjectsWithHeaderImages(),
+  },
+})
+
+export default HomePage

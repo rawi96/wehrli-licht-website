@@ -1,4 +1,4 @@
-import { Offer } from '../components/AllOffersGallery'
+import { Offer } from '../types/Offer'
 
 export const offerItems: Offer[] = [
   {

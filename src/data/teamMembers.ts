@@ -1,6 +1,6 @@
-import { TeamType } from '../components/Team'
+import { Person } from '../types/Person'
 
-export const teamMembers: TeamType[] = [
+export const teamMembers: Person[] = [
   {
     name: 'Mariella Wirth-Kleinstein',
     role: 'Geschäftsinhaberin',

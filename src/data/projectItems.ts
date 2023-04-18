@@ -1,4 +1,4 @@
-import { Project } from '../components/AllProjectsGallery/types'
+import { Project } from '../types/Project'
 
 export const projectItems: Project[] = [
   {
@@ -7,8 +7,7 @@ export const projectItems: Project[] = [
       'Dir gefällt dieses Projekt? Schaue dir noch weitere Projekte an und lass dich inspirieren.',
     slug: 'inspecta-experts-office',
     lines: ['Lichtplanung: Wehrli Licht GmbH', 'Ausführung: Wehrli Licht GmbH'],
-    imageUrl:
-      '/images/projects/inspecta_experts/headerImage/inspecta_experts.jpg',
+    imagesPath: '/images/projects/inspecta_experts',
   },
   {
     title: 'Garagenbeleuchtung',
@@ -19,8 +18,7 @@ export const projectItems: Project[] = [
       'Lichtplanung: Wehrli Licht GmbH',
       'Ausführung: Elektro Kuster, Goldach',
     ],
-
-    imageUrl: '/images/projects/private_garage/headerImage/private_garage.jpg',
+    imagesPath: '/images/projects/private_garage',
   },
   {
     title: 'Innenbeleuchtung STWE St.Gallen',
@@ -28,7 +26,7 @@ export const projectItems: Project[] = [
       'Dir gefällt dieses Projekt? Schaue dir noch weitere Projekte an und lass dich inspirieren.',
     slug: 'stwe-stgallen',
     lines: ['Lichtplanung: Wehrli Licht GmbH', 'Ausführung: Wehrli Licht GmbH'],
-    imageUrl: '/images/projects/stwe_stgallen/headerImage/stwe_stgallen.jpg',
+    imagesPath: '/images/projects/stwe_stgallen',
   },
   {
     title: 'Hotel Beleuchtung Capetta',
@@ -40,8 +38,7 @@ export const projectItems: Project[] = [
       'Ausführung: Wehrli Licht GmbH',
       'Architekt: Iseppi AG Thusis',
     ],
-
-    imageUrl: '/images/projects/hotel_capetta/headerImage/hotel_capetta.jpg',
+    imagesPath: '/images/projects/hotel_capetta',
   },
   {
     title: 'Wohnraum Beleuchtung EFH Häggenschwil',
@@ -49,8 +46,7 @@ export const projectItems: Project[] = [
       'Dir gefällt dieses Projekt? Schaue dir noch weitere Projekte an und lass dich inspirieren.',
     slug: 'efh-haeggenschwil',
     lines: ['Lichtplanung: Wehrli Licht GmbH', 'Ausführung: Wehrli Licht GmbH'],
-    imageUrl:
-      '/images/projects/efh_haeggenschwil/headerImage/efh_haeggenschwil.jpg',
+    imagesPath: '/images/projects/efh_haeggenschwil',
   },
   {
     title: 'Jugendherberge St.Moritz',
@@ -61,8 +57,7 @@ export const projectItems: Project[] = [
       'Lichtplanung: Giagoba GmbH',
       'Produktion Lampenschirme: Wehrli Licht GmbH',
     ],
-    imageUrl:
-      '/images/projects/jugendherberge_stmoritz/headerImage/jugendherberge_stmoritz.jpg',
+    imagesPath: '/images/projects/jugendherberge_stmoritz',
   },
   {
     title: 'EFH Zumikon',
@@ -70,7 +65,7 @@ export const projectItems: Project[] = [
       'Dir gefällt dieses Projekt? Schaue dir noch weitere Projekte an und lass dich inspirieren.',
     slug: 'efh-zumikon',
     lines: ['Lichtplanung: Wehrli Licht GmbH', 'Ausführung: Wehrli Licht GmbH'],
-    imageUrl: '/images/projects/efh_zumikon/headerImage/efh_zumikon.jpg',
+    imagesPath: '/images/projects/efh_zumikon',
   },
   {
     title: 'Restauration Lampenschirme',
@@ -78,9 +73,7 @@ export const projectItems: Project[] = [
       'Dir gefällt dieses Projekt? Schaue dir noch weitere Projekte an und lass dich inspirieren.',
     slug: 'restauration-lampenschirme',
     lines: [],
-
-    imageUrl:
-      '/images/projects/restauration_lampenschirme/headerImage/restauration_lampenschirme.jpg',
+    imagesPath: '/images/projects/restauration_lampenschirme',
   },
   {
     title: 'Coople Zürich',
@@ -91,7 +84,7 @@ export const projectItems: Project[] = [
       'Produktion Lampenschirme: Wehrli Licht GmbH',
       'Kreation & Ausbau: Sasha Badiali',
     ],
-    imageUrl: '/images/projects/coople_zurich/headerImage/coople_zurich.jpg',
+    imagesPath: '/images/projects/coople_zurich',
   },
   {
     title: 'Gemeindehaus Rorschach',
@@ -99,8 +92,7 @@ export const projectItems: Project[] = [
       'Dir gefällt dieses Projekt? Schaue dir noch weitere Projekte an und lass dich inspirieren.',
     slug: 'gemeindehaus-rorschach',
     lines: ['Lichtplanung: Wehrli Licht GmbH', 'Ausführung: Wehrli Licht GmbH'],
-    imageUrl:
-      '/images/projects/gemeindehaus_rorschach/headerImage/gemeindehaus_rorschach.jpg',
+    imagesPath: '/images/projects/gemeindehaus_rorschach',
   },
   {
     title: 'Hairstyling Pepa',
@@ -108,8 +100,7 @@ export const projectItems: Project[] = [
       'Dir gefällt dieses Projekt? Schaue dir noch weitere Projekte an und lass dich inspirieren.',
     slug: 'hairstyling-pepa',
     lines: ['Lichtplanung: Wehrli Licht GmbH', 'Ausführung: Wehrli Licht GmbH'],
-    imageUrl:
-      '/images/projects/hairstyling_pepa/headerImage/hairstyling_pepa.jpg',
+    imagesPath: '/images/projects/hairstyling_pepa',
   },
   {
     title: 'STWE Altenrhein 1',
@@ -117,8 +108,7 @@ export const projectItems: Project[] = [
       'Dir gefällt dieses Projekt? Schaue dir noch weitere Projekte an und lass dich inspirieren.',
     slug: 'stwe-altenrhein-1',
     lines: ['Lichtplanung: Wehrli Licht GmbH', 'Ausführung: Wehrli Licht GmbH'],
-    imageUrl:
-      '/images/projects/stwe_altenrhein-1/headerImage/stwe_altenrhein-1.jpg',
+    imagesPath: '/images/projects/stwe_altenrhein_1',
   },
   {
     title: 'STWE Altenrhein 2',
@@ -126,8 +116,7 @@ export const projectItems: Project[] = [
       'Dir gefällt dieses Projekt? Schaue dir noch weitere Projekte an und lass dich inspirieren.',
     slug: 'stwe-altenrhein-2',
     lines: ['Lichtplanung: Wehrli Licht GmbH', 'Ausführung: Wehrli Licht GmbH'],
-    imageUrl:
-      '/images/projects/stwe-altenrhein-2/headerImage/stwe_altenrhein-2.jpg',
+    imagesPath: '/images/projects/stwe_altenrhein_2',
   },
   {
     title: 'EFH Schongau',
@@ -135,6 +124,6 @@ export const projectItems: Project[] = [
       'Dir gefällt dieses Projekt? Schaue dir noch weitere Projekte an und lass dich inspirieren.',
     slug: 'efh-schongau',
     lines: ['Lichtplanung: Wehrli Licht GmbH', 'Ausführung: Wehrli Licht GmbH'],
-    imageUrl: '/images/projects/efh_schongau/headerImage/efh_schongau.jpg',
+    imagesPath: '/images/projects/efh_schongau',
   },
 ]

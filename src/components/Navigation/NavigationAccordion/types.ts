@@ -1,6 +1,6 @@
-import { NavItemType } from '../types'
+import { NavItem } from '../../../types/Navigation'
 
 export type NavigationAccordionProps = {
   title: string
-  items: NavItemType[]
+  items: NavItem[]
 }

@@ -1,23 +1,40 @@
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
-import { Project } from '../../components/AllProjectsGallery/types'
-import { Button } from '../../components/Button'
-import { CallToAction } from '../../components/CallToAction'
 import { Footer } from '../../components/Footer'
+import { Hero } from '../../components/Hero'
 import { ImageGallery } from '../../components/ImageGallery/ImageGallery'
 import { PageContainer } from '../../components/PageContainer'
 import { projectItems } from '../../data/projectItems'
+import { getHeaderImageByProject } from '../../helpers/getHeaderImageByProject'
+import { getImagesByProject } from '../../helpers/getImagesByProject'
+import { getProjectByUrlParams } from '../../helpers/getProjectByUrlParams'
+import { Project } from '../../types/Project'
 
-interface ProjectPageProps {
+type ProjectPageProps = {
   project: Project
+  headerImage: { src: string; altText: string }
+  images: { src: string; altText: string }[]
 }
 
-const ProjectPage: NextPage<ProjectPageProps> = ({ project }) => {
+const ProjectPage: NextPage<ProjectPageProps> = ({
+  project,
+  headerImage,
+  images,
+}) => {
   return (
     <>
-      <CallToAction title={project.title} intro={project.intro}>
-        <Button type="secondary" text="Projekte anschauen" href="/shop" />
-        <Button type="tertiary" text="Kontakt" href="/kontakt" />
-      </CallToAction>
+      <Hero
+        image={headerImage}
+        title={project.title}
+        intro={project.intro}
+        primaryButton={{
+          text: 'Projekte anschauen',
+          link: '/projekte',
+        }}
+        secondaryButton={{
+          text: 'Kontakt',
+          link: '/kontakt',
+        }}
+      />
       <PageContainer>
         <div className="mb-16 text-center">
           {project.lines.map((line) => (
@@ -30,7 +47,7 @@ const ProjectPage: NextPage<ProjectPageProps> = ({ project }) => {
           ))}
         </div>
 
-        <ImageGallery />
+        <ImageGallery images={images} />
       </PageContainer>
       <Footer />
     </>
@@ -40,26 +57,16 @@ const ProjectPage: NextPage<ProjectPageProps> = ({ project }) => {
 export const getStaticProps: GetStaticProps<ProjectPageProps> = ({
   params,
 }) => {
-  if (!params || !params.slug) {
-    return {
-      notFound: true,
-    }
-  }
-
-  const { slug } = params
-  const project = projectItems.find((project) => project.slug === slug)
+  const project = getProjectByUrlParams(params)
 
   if (!project) {
-    return {
-      notFound: true,
-    }
+    return { notFound: true }
   }
 
-  return {
-    props: {
-      project,
-    },
-  }
+  const headerImage = getHeaderImageByProject(project)
+  const images = [headerImage, ...getImagesByProject(project)]
+
+  return { props: { project, headerImage, images } }
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
