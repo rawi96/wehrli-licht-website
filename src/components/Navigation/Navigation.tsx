@@ -40,7 +40,7 @@ export const Navigation = () => {
         <div className="hidden lg:flex lg:gap-x-12">
           {navigationItems.map((item) => {
             return 'items' in item ? (
-              <div className="relative font-semibold">
+              <div key={item.title} className="relative font-semibold">
                 <Flyout
                   key={item.title}
                   title={item.title}

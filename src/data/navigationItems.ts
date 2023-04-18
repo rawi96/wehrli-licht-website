@@ -6,7 +6,7 @@ export const navigationItems: Navigation = [
   {
     title: 'Angebot',
     items: [
-      { name: 'Lichtplanung', href: '#' },
+      { name: 'Lichtplanung', href: '/angebot/lichtplanung' },
       { name: 'Lichtberatung', href: '#' },
       { name: 'Lampenschirme', href: '#' },
       { name: 'Wohnraumleuchten', href: '#' },
