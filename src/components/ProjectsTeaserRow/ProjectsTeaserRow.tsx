@@ -9,7 +9,7 @@ export const ProjectsTeaserRow = ({
     <div className="pb-20 pt-10">
       <div className="flex overflow-x-scroll pb-5">
         <div className="flex flex-nowrap gap-4">
-          {projectsWithHeaderImages.slice(0, 5).map((project) => (
+          {projectsWithHeaderImages.map((project) => (
             <Link href={`/projekte/${project.slug}`} key={project.title}>
               <div className="group relative h-64 w-64 overflow-hidden rounded-lg">
                 <Image

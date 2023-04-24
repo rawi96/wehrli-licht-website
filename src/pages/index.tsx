@@ -34,7 +34,7 @@ const HomePage: NextPage<HomePageProps> = ({ projectsWithHeaderImages }) => {
 
         <TitleSection title={home.projectsSubTitle} />
         <ProjectsTeaserRow
-          projectsWithHeaderImages={projectsWithHeaderImages}
+          projectsWithHeaderImages={projectsWithHeaderImages.slice(0, 5)}
         />
 
         <TitleSection title={home.testimonialsSubTitle} />

@@ -1,12 +1,11 @@
-export const lightplanning = {
+export const lightPlanning = {
   title: 'Lichtplanung',
-  intro: 'Text',
   primaryButton: {
-    text: 'text',
-    link: '/text',
+    text: 'Weitere Angebote anzeigen',
+    link: '/',
   },
   secondaryButton: {
-    text: 'text',
-    link: 'text',
+    text: 'Kontakt',
+    link: '/kontakt',
   },
 }
