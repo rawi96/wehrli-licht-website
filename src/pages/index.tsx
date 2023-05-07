@@ -1,4 +1,5 @@
 import { GetStaticProps, NextPage } from 'next'
+import { NextSeo } from 'next-seo'
 import { useEffect, useState } from 'react'
 import { AllOffersGallery } from '../components/AllOffersGallery'
 import { Feedback } from '../components/Feedback'
@@ -30,6 +31,7 @@ const HomePage: NextPage<HomePageProps> = ({ projectsWithHeaderImages }) => {
 
   return (
     <>
+      <NextSeo title="Wehrli Licht GmbH" description={home.intro} />
       <Hero
         image={{
           src: '/images/essbereich.jpg',

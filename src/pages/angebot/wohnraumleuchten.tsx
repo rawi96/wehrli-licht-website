@@ -1,4 +1,5 @@
 import { GetStaticProps, NextPage } from 'next'
+import { NextSeo } from 'next-seo'
 import { Button } from '../../components/Button'
 import { CallToAction } from '../../components/CallToAction'
 import { Footer } from '../../components/Footer'
@@ -19,6 +20,10 @@ const LightPlanningPage: NextPage<LightPlaningPageProps> = ({
 }) => {
   return (
     <>
+      <NextSeo
+        title={livingRoomLight.title}
+        description={offerItems[3].description}
+      />
       <CallToAction
         title={livingRoomLight.title}
         intro={offerItems[3].description}

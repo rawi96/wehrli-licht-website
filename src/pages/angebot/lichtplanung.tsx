@@ -1,4 +1,5 @@
 import { GetStaticProps, NextPage } from 'next'
+import { NextSeo } from 'next-seo'
 import Image from 'next/image'
 import { Button } from '../../components/Button'
 import { CallToAction } from '../../components/CallToAction'
@@ -20,14 +21,8 @@ const LightPlanningPage: NextPage<LightPlaningPageProps> = ({
 }) => {
   return (
     <>
-      <CallToAction
-        title={lightPlanning.title}
-        intro="Eine gute Lichtplanung kann einen erheblichen Einfluss auf das
-        Ambiente und die Funktionalität eines Raumes haben. Egal ob Sie ein
-        Wohnzimmer, ein Office oder ein Restaurant gestalten, eine sorgfältige
-        Planung der Beleuchtung kann den Raum von einem einfachen Raum zu
-        einem einladenden und funktionalen Ort verwandeln."
-      >
+      <NextSeo title={lightPlanning.title} description={lightPlanning.intro} />
+      <CallToAction title={lightPlanning.title} intro={lightPlanning.intro}>
         <Button
           type="secondary"
           text={lightPlanning.primaryButton.text}

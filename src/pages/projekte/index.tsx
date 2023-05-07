@@ -7,6 +7,7 @@ import { PageContainer } from '../../components/PageContainer'
 import { projects } from '../../data/projects'
 import { getAllProjectsWithHeaderImages } from '../../helpers/getAllProjectsWithHeaderImages'
 import { ProjectWithHeaderImage } from '../../types/ProjectWithHeaderImage'
+import { NextSeo } from 'next-seo'
 
 type ProjectPageProps = {
   projectsWithHeaderImages: ProjectWithHeaderImage[]
@@ -17,6 +18,7 @@ const ProjectsPage: NextPage<ProjectPageProps> = ({
 }) => {
   return (
     <>
+      <NextSeo title={projects.title} description={projects.intro} />
       <CallToAction title={projects.title} intro={projects.intro}>
         <Button
           type="secondary"

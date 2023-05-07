@@ -3,8 +3,7 @@ import type { AppProps } from 'next/app'
 import Head from 'next/head'
 import './styles/globals.css'
 
-const PLAUSIBLE_DOMAIN =
-  process.env.PLAUSIBLE_DOMAIN || 'wehrli-licht-website.vercel.app'
+const PLAUSIBLE_DOMAIN = process.env.DOMAIN || 'wehrli-licht-website.vercel.app'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (

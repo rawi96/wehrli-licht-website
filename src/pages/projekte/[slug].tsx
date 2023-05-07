@@ -1,4 +1,5 @@
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
+import { NextSeo } from 'next-seo'
 import { Footer } from '../../components/Footer'
 import { Hero } from '../../components/Hero'
 import { ImageGallery } from '../../components/ImageGallery/ImageGallery'
@@ -22,6 +23,7 @@ const ProjectPage: NextPage<ProjectPageProps> = ({
 }) => {
   return (
     <>
+      <NextSeo title={project.title} description={project.intro} />
       <Hero
         image={headerImage}
         title={project.title}

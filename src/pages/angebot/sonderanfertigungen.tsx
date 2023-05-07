@@ -1,4 +1,5 @@
 import { GetStaticProps, NextPage } from 'next'
+import { NextSeo } from 'next-seo'
 import { Button } from '../../components/Button'
 import { CallToAction } from '../../components/CallToAction'
 import { Footer } from '../../components/Footer'
@@ -19,6 +20,10 @@ const CustomProductsPage: NextPage<CustomProductsPageProps> = ({
 }) => {
   return (
     <>
+      <NextSeo
+        title={customProducts.title}
+        description={offerItems[4].description}
+      />
       <CallToAction
         title={customProducts.title}
         intro={offerItems[4].description}

@@ -1,3 +1,4 @@
+import { NextSeo } from 'next-seo'
 import { Button } from '../components/Button'
 import { CallToAction } from '../components/CallToAction'
 import { Footer } from '../components/Footer'
@@ -10,6 +11,7 @@ import { aboutUs } from '../data/aboutUs'
 export default function AboutUs() {
   return (
     <>
+      <NextSeo title={aboutUs.title} description={aboutUs.intro} />
       <CallToAction title={aboutUs.title} intro={aboutUs.intro}>
         <Button
           type="secondary"
