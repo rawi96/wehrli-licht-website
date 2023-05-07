@@ -1,13 +1,22 @@
-const withPWA = require('next-pwa')({
-  dest: 'public',
-})
+const { withPlausibleProxy } = require('next-plausible')
 
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  reactStrictMode: true,
-  swcMinify: true,
-}
+const withPWA = require('next-pwa')
 
-module.exports = withPWA({
-  // next.js config
-})
+module.exports = module.exports = withPlausibleProxy()(
+  withPWA({
+    reactStrictMode: true,
+    pwa: {
+      dest: 'public',
+    },
+
+    async redirects() {
+      return [
+        {
+          source: '/shop',
+          destination: 'https://wehrli-licht.ch/shop/',
+          permanent: true,
+        },
+      ]
+    },
+  })
+)

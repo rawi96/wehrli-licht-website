@@ -1,6 +1,10 @@
+import PlausibleProvider from 'next-plausible'
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
 import './styles/globals.css'
+
+const PLAUSIBLE_DOMAIN =
+  process.env.PLAUSIBLE_DOMAIN || 'wehrli-licht-website.vercel.app'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -33,7 +37,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         <link rel="icon" href="/icons/favicon.ico" />
         <meta name="theme-color" content="#ffffff" />
       </Head>
-      <Component {...pageProps} />
+      <PlausibleProvider domain={PLAUSIBLE_DOMAIN}>
+        <Component {...pageProps} />
+      </PlausibleProvider>
     </>
   )
 }
