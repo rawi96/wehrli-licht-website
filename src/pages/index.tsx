@@ -1,21 +1,33 @@
 import { GetStaticProps, NextPage } from 'next'
+import { useEffect, useState } from 'react'
 import { AllOffersGallery } from '../components/AllOffersGallery'
 import { Feedback } from '../components/Feedback'
 import { Footer } from '../components/Footer'
 import { Hero } from '../components/Hero'
 import { PageContainer } from '../components/PageContainer'
 import { ProjectsTeaserRow } from '../components/ProjectsTeaserRow'
-import { Testimonial } from '../components/Testimonial'
+import { Testimonial as TestimonialComponent } from '../components/Testimonial'
 import { TitleSection } from '../components/TitleSection'
 import { home } from '../data/home'
+import { testimonials } from '../data/testimonials'
 import { getAllProjectsWithHeaderImages } from '../helpers/getAllProjectsWithHeaderImages'
 import { ProjectWithHeaderImage } from '../types/ProjectWithHeaderImage'
+import { Testimonial } from '../types/Testimonial'
 
 type HomePageProps = {
   projectsWithHeaderImages: ProjectWithHeaderImage[]
 }
 
 const HomePage: NextPage<HomePageProps> = ({ projectsWithHeaderImages }) => {
+  const [randomTestimonials, setRandomTestimonials] = useState<Testimonial[]>(
+    []
+  )
+
+  useEffect(() => {
+    const shuffled = testimonials.sort(() => Math.random() - 0.5)
+    setRandomTestimonials(shuffled.slice(0, 2))
+  }, [])
+
   return (
     <>
       <Hero
@@ -38,8 +50,9 @@ const HomePage: NextPage<HomePageProps> = ({ projectsWithHeaderImages }) => {
         />
 
         <TitleSection title={home.testimonialsSubTitle} />
-        <Testimonial />
-        <Testimonial />
+        {randomTestimonials.map((testimonial, index) => (
+          <TestimonialComponent key={index} {...testimonial} />
+        ))}
 
         <Feedback />
       </PageContainer>

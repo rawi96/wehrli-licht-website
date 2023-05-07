@@ -1,13 +1,13 @@
 import { GetStaticProps, NextPage } from 'next'
+import Image from 'next/image'
 import { Button } from '../../components/Button'
 import { CallToAction } from '../../components/CallToAction'
 import { Footer } from '../../components/Footer'
-import { ImageGallery } from '../../components/ImageGallery/ImageGallery'
 import { PageContainer } from '../../components/PageContainer'
 import { ProjectsTeaserRow } from '../../components/ProjectsTeaserRow'
+import { ServiceTeaser } from '../../components/ServiceTeaser'
 import { TitleSection } from '../../components/TitleSection'
 import { lightPlanning } from '../../data/lightPlanning'
-import { offerItems } from '../../data/offerItems'
 import { getAllProjectsWithHeaderImages } from '../../helpers/getAllProjectsWithHeaderImages'
 import { ProjectWithHeaderImage } from '../../types/ProjectWithHeaderImage'
 
@@ -22,7 +22,11 @@ const LightPlanningPage: NextPage<LightPlaningPageProps> = ({
     <>
       <CallToAction
         title={lightPlanning.title}
-        intro={offerItems[0].description}
+        intro="Eine gute Lichtplanung kann einen erheblichen Einfluss auf das
+        Ambiente und die Funktionalität eines Raumes haben. Egal ob Sie ein
+        Wohnzimmer, ein Office oder ein Restaurant gestalten, eine sorgfältige
+        Planung der Beleuchtung kann den Raum von einem einfachen Raum zu
+        einem einladenden und funktionalen Ort verwandeln."
       >
         <Button
           type="secondary"
@@ -35,43 +39,61 @@ const LightPlanningPage: NextPage<LightPlaningPageProps> = ({
           href={lightPlanning.secondaryButton.text}
         />
       </CallToAction>
-      <TitleSection title="Unser Service" />
+
       <PageContainer>
-        <div className="mb-16">
-          <ul className="list-inside list-disc text-center">
-            <li>
-              Situation erfassen (vor Ort, gemäss Fotos, gemäss Bauplänen)
-            </li>
-            <li>Ganzheitliches Beleuchtungskonzept erarbeiten</li>
-            <li>Lichttechnische Berechnungen gemäss Normen und Richtlinien</li>
-            <li>Leuchtenstellen definieren</li>
-            <li>Beratung allfälliger Lichtsteuerung</li>
-            <li>Herstellung und/oder Beschaffung der Leuchten</li>
-          </ul>
-        </div>
-        <div className="mb-16">
-          <ImageGallery
-            images={[
-              {
-                src: '/images/angebote/lichtplanung/lichtplanung_1.jpg',
-                altText: 'Lichtplanung',
-              },
-              {
-                src: '/images/angebote/lichtplanung/lichtplanung_2.jpg',
-                altText: 'Lichtplanung',
-              },
-              {
-                src: '/images/angebote/lichtplanung/lichtplanung_3.jpg',
-                altText: 'Lichtplanung',
-              },
-              {
-                src: '/images/angebote/lichtplanung/lichtplanung_4.jpg',
-                altText: 'Lichtplanung',
-              },
-            ]}
+        <div className="mb-20 grid gap-4 md:grid-cols-2">
+          <Image
+            src={'/images/angebote/lichtplanung/lichtplanung_1.jpg'}
+            width={1000}
+            height={1000}
+            className="full-width rounded-lg"
+            alt="Lichtplanung"
+          />
+          <Image
+            src={'/images/angebote/lichtplanung/lichtplanung_2.jpg'}
+            width={1000}
+            height={1000}
+            className="full-width rounded-lg"
+            alt="Lichtplanung"
           />
         </div>
-        <TitleSection title="Lichtplanung Projekte" />
+
+        <div className="mb-20 grid gap-4 md:grid-cols-2">
+          <p>
+            <h3 className="mb-2 font-bold">
+              Lichtplanung für energieeffiziente Beleuchtung in allen Räumen
+            </h3>
+            Unsere Lichtplanungsdienstleistungen sind für alle Arten von Räumen
+            geeignet, einschließlich Wohnräume, Arbeitsumgebungen und
+            öffentliche Gebäude. Wir helfen Ihnen, die richtigen
+            LED-Beleuchtungen, Einsatzorte und Steuerungsmöglichkeiten zu
+            finden, um den Energieverbrauch zu minimieren und gleichzeitig eine
+            hervorragende Beleuchtung zu gewährleisten.
+          </p>
+          <p>
+            <h3 className="mb-2 font-bold">
+              Kontaktieren Sie uns für eine massgeschneiderte Lichtplanung
+            </h3>
+            Kontaktieren Sie uns heute, um mehr über unsere
+            Lichtplanungsdienstleistungen zu erfahren und Ihre
+            Beleuchtungsanforderungen zu besprechen.
+          </p>
+        </div>
+
+        <ServiceTeaser
+          title={'Lichtplanung auf einem Blick'}
+          imageUrl="/images/angebote/lichtplanung/lichtplanung_2.jpg"
+          items={[
+            'Situation erfassen (vor Ort, gemäss Fotos, gemäss Bauplänen)',
+            'Ganzheitliches Beleuchtungskonzept erarbeiten',
+            'Lichttechnische Berechnungen gemäss Normen und Richtlinien',
+            'Lampenstellen definieren',
+            'Beratung allfälliger Lichtsteuerung',
+            'Herstellung und/oder Beschaffung der Leuchten',
+          ]}
+        />
+
+        <TitleSection title="Lichtprojekte" />
         <ProjectsTeaserRow
           projectsWithHeaderImages={projectsWithHeaderImages.slice(0, 5)}
         />

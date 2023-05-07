@@ -1,6 +1,14 @@
 import Image from 'next/image'
+import { TestimonialProps } from './types'
 
-export const Testimonial = () => {
+export const Testimonial = ({
+  text,
+  authorName,
+  authorImageUrl,
+  authorTitle,
+  authorSubtitle,
+  authorSubtitleUrl,
+}: TestimonialProps) => {
   return (
     <section className="isolate my-20">
       <figure className="grid grid-cols-1 items-center gap-x-6 gap-y-8 lg:gap-x-10">
@@ -18,25 +26,31 @@ export const Testimonial = () => {
             <use href="#b56e9dab-6ccb-4d32-ad02-6b4bb5d9bbeb" x={86} />
           </svg>
           <blockquote className="text-l leading-8 text-gray-900 sm:leading-9">
-            <p>
-              Commodo amet fugiat excepteur sunt qui ea elit cupidatat ullamco
-              consectetur ipsum elit consequat. Elit sunt proident ea nulla ad
-              nulla dolore ad pariatur tempor non. Sint veniam minim et ea.
-            </p>
+            <p>{text}</p>
           </blockquote>
         </div>
         <div className="col-end-1 w-16 lg:row-span-4 lg:w-64">
           <Image
-            alt="Testimonial"
+            alt={authorName}
             className="rounded-lg"
-            src="/images/testimonials/judith.avif"
+            src={authorImageUrl}
             width={288}
             height={288}
           />
         </div>
         <figcaption className="text-base lg:col-start-1 lg:row-start-3">
-          <div className="font-semibold text-gray-900">Judith Black</div>
-          <div className="mt-1 text-gray-500">CEO of Workcation</div>
+          <div className="font-semibold text-gray-900">{authorName}</div>
+          <div className="mt-1 text-gray-500">{authorTitle}</div>
+          {authorSubtitle && authorSubtitleUrl && (
+            <div className="mt-1">
+              <a
+                className="text-gray-500 underline hover:text-gray-700"
+                href={authorSubtitleUrl}
+              >
+                {authorSubtitle}
+              </a>
+            </div>
+          )}
         </figcaption>
       </figure>
     </section>
