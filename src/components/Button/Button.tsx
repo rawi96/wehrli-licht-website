@@ -7,7 +7,7 @@ export const Button = ({ text, href, type }: ButtonProps) => {
       {type === 'primary' && (
         <Link
           href={href}
-          className="rounded-md bg-wehrli px-3.5 py-1.5 text-base font-semibold leading-7 text-white shadow-sm hover:bg-wehrli-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-400"
+          className="rounded-lg bg-wehrli px-3.5 py-1.5 text-base font-semibold leading-7 text-white shadow-sm hover:bg-wehrli-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-400"
         >
           {text}
         </Link>
@@ -15,7 +15,7 @@ export const Button = ({ text, href, type }: ButtonProps) => {
       {type === 'secondary' && (
         <Link
           href={href}
-          className="rounded-md bg-white px-3.5 py-1.5 text-base font-semibold leading-7 text-wehrli shadow-sm hover:bg-gray-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-400"
+          className="rounded-lg bg-white px-3.5 py-1.5 text-base font-semibold leading-7 text-wehrli shadow-sm hover:bg-gray-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-400"
         >
           {text}
         </Link>

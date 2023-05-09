@@ -24,9 +24,9 @@ export const AllOffersGallery = () => {
             </div>
             <div className="relative flex flex-1 flex-col justify-between bg-white p-6 pb-12">
               <div className="flex-1">
-                <p className="text-xl font-semibold text-wehrli">
+                <h3 className="text-xl font-semibold text-wehrli">
                   {offer.title}
-                </p>
+                </h3>
                 <p className="mt-3 pb-4 text-base text-gray-500">
                   {offer.description}
                 </p>

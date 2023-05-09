@@ -39,7 +39,7 @@ export const Testimonial = ({
           />
         </div>
         <figcaption className="text-base lg:col-start-1 lg:row-start-3">
-          <div className="font-semibold text-gray-900">{authorName}</div>
+          <h3 className="font-semibold text-gray-900">{authorName}</h3>
           <div className="mt-1 text-gray-500">{authorTitle}</div>
           {authorSubtitle && authorSubtitleUrl && (
             <div className="mt-1">

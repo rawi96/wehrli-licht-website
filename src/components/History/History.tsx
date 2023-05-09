@@ -30,9 +30,9 @@ export const History = () => {
             width={255}
             height={255}
           />
-          <p className="mt-6 text-lg font-semibold leading-8 tracking-tight text-gray-900">
+          <h3 className="mt-6 text-lg font-semibold leading-8 tracking-tight text-gray-900">
             {item.name}
-          </p>
+          </h3>
           <p className="mt-1 text-base leading-7 text-gray-600">
             {item.description}
           </p>

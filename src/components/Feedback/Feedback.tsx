@@ -5,9 +5,9 @@ export const Feedback = () => {
   return (
     <>
       <div className="text-center">
-        <h3 className="text-2xl font-bold tracking-tight text-wehrli">
+        <h2 className="text-2xl font-bold tracking-tight text-wehrli">
           {home.feedbackSubTitle}
-        </h3>
+        </h2>
         <div className="mb-20 mt-10 flex items-center justify-center gap-x-4">
           <Button
             type="primary"
