@@ -4,6 +4,21 @@ const withPWA = require('next-pwa')
 
 module.exports = withPlausibleProxy()(
   withPWA({
-    // next.js config
+    reactStrictMode: true,
+    pwa: {
+      dest: 'public',
+    },
+    eslint: {
+      dirs: ['src'],
+    },
+    async redirects() {
+      return [
+        {
+          source: '/shop',
+          destination: 'https://shop.wehrli.licht.ch',
+          permanent: true,
+        },
+      ]
+    },
   })
 )
