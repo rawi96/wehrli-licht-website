@@ -27,14 +27,14 @@ export const Address = ({ size = 's' }: AddressProps) => {
         </Link>
         <p className="mt-4">
           <Link
-            className="block p-1 underline hover:opacity-80"
+            className="block p-4 underline hover:opacity-80"
             href={`tel:${global.address.tel}`}
             itemProp="telephone"
           >
             {global.address.tel}
           </Link>
           <Link
-            className="block p-1 underline hover:opacity-80"
+            className="block p-4 underline hover:opacity-80"
             href={`mailto:${global.address.email}`}
             itemProp="email"
           >
