@@ -13,7 +13,7 @@ export const Address = ({ size = 's' }: AddressProps) => {
     >
       <span className="inline-block">
         <Link
-          href="https://www.google.com/maps/place/{global.address.street}"
+          href={global.address.maps}
           target="_blank"
           itemProp="address"
           itemScope
@@ -31,14 +31,18 @@ export const Address = ({ size = 's' }: AddressProps) => {
             href={`tel:${global.address.tel}`}
             itemProp="telephone"
           >
-            {global.address.tel}
+            <button className="relative inline-flex items-center border px-4 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-offset-2 lg:px-6">
+              {global.address.tel}
+            </button>
           </Link>
           <Link
             className="block p-4 underline hover:opacity-80"
             href={`mailto:${global.address.email}`}
             itemProp="email"
           >
-            {global.address.email}
+            <button className="relative inline-flex items-center border px-4 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-offset-2 lg:px-6">
+              {global.address.email}
+            </button>
           </Link>
         </p>
       </span>
