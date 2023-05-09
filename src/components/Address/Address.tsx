@@ -18,7 +18,7 @@ export const Address = ({ size = 's' }: AddressProps) => {
           itemProp="address"
           itemScope
           itemType="https://schema.org/PostalAddress"
-          className="hover:opacity-80"
+          className="p-3 hover:opacity-80"
         >
           <p itemProp="name">{global.name}</p>
           <p itemProp="streetAddress">{global.address.street}</p>
@@ -34,7 +34,7 @@ export const Address = ({ size = 's' }: AddressProps) => {
             {global.address.tel}
           </Link>
           <Link
-            className="block underline hover:opacity-80"
+            className="block p-2 underline hover:opacity-80"
             href={`mailto:${global.address.email}`}
             itemProp="email"
           >

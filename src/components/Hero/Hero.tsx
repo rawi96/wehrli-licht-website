@@ -18,6 +18,7 @@ export const Hero = ({
         fill
         style={{ objectFit: 'cover' }}
         className="absolute inset-0 -z-10 blur-sm brightness-50"
+        sizes="(min-width: 1024px) 1024px, 100vw"
       />
       <div className="absolute inset-x-0 top-[-10rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[-20rem]">
         <svg
@@ -49,7 +50,7 @@ export const Hero = ({
 
         <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
           <div className="text-center">
-            <h1 className="text-2xl font-bold tracking-tight text-white sm:text-5xl">
+            <h1 className="text-3xl font-bold tracking-tight text-white sm:text-5xl">
               {title}
             </h1>
             <p className="mt-6 text-lg leading-8 text-white">{intro}</p>
