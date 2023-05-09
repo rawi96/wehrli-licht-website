@@ -41,6 +41,7 @@ const LightPlanningPage: NextPage<LightPlaningPageProps> = ({
             src={'/images/angebote/lichtplanung/lichtplanung_1.jpg'}
             width={1000}
             height={1000}
+            sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
             className="full-width rounded-lg"
             alt="Lichtplanung"
           />
@@ -48,6 +49,7 @@ const LightPlanningPage: NextPage<LightPlaningPageProps> = ({
             src={'/images/angebote/lichtplanung/lichtplanung_2.jpg'}
             width={1000}
             height={1000}
+            sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
             className="full-width rounded-lg"
             alt="Lichtplanung"
           />

@@ -14,6 +14,7 @@ export const ServiceTeaser = ({
             src={imageUrl}
             width={1000}
             height={1000}
+            sizes="(min-width: 1024px) 1000px, 100vw"
             alt={title}
             className="rounded-lg bg-opacity-50 transition"
           />

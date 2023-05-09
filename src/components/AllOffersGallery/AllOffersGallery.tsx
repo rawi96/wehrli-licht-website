@@ -20,6 +20,7 @@ export const AllOffersGallery = () => {
                 src={offer.imageUrl}
                 width={512}
                 height={192}
+                sizes="(min-width: 1024px) 512px, 100vw"
               />
             </div>
             <div className="relative flex flex-1 flex-col justify-between bg-white p-6 pb-12">

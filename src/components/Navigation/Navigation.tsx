@@ -24,6 +24,7 @@ export const Navigation = () => {
               alt="Wehrli Licht Logo"
               width={200}
               height={60}
+              sizes="(min-width: 1024px) 200px, 100vw"
             />
           </Link>
         </div>
@@ -69,6 +70,7 @@ export const Navigation = () => {
                 alt="Wehrli Licht Logo"
                 width={200}
                 height={60}
+                sizes="(min-width: 1024px) 200px, 100vw"
               />
             </Link>
             <button

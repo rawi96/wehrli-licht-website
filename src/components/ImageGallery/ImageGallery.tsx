@@ -12,6 +12,7 @@ export const ImageGallery = ({ images }: ImageGalleryProps) => {
             alt={image.altText}
             width={1000}
             height={1000}
+            sizes="(min-width: 1024px) 1000px, 100vw"
           />
         </div>
       ))}

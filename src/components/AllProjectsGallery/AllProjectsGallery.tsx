@@ -18,6 +18,7 @@ export const AllProjectsGallery = ({
             className="absolute inset-0 -z-10 h-full w-full object-cover transition-opacity group-hover:opacity-75"
             width={640}
             height={872}
+            sizes="(min-width: 1024px) 640px, 100vw"
           />
           <div className="absolute inset-0 -z-10 bg-gradient-to-t from-gray-900 via-gray-900/40" />
           <div className="absolute inset-0 -z-10 rounded-lg ring-1 ring-inset ring-gray-900/10" />

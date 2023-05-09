@@ -29,6 +29,7 @@ export const History = () => {
             src={item.imageUrl}
             width={255}
             height={255}
+            sizes="(min-width: 1024px) 255px, 100vw"
           />
           <h3 className="mt-6 text-lg font-semibold leading-8 tracking-tight text-gray-900">
             {item.name}

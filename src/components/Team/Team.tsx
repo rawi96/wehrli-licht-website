@@ -14,6 +14,7 @@ export const Team = () => {
             src={person.imageUrl}
             width={416}
             height={520}
+            sizes="(min-width: 1024px) 416px, 100vw"
             alt={person.imageUrl}
           />
           <div className="flex-auto">

@@ -36,6 +36,7 @@ export const Testimonial = ({
             src={authorImageUrl}
             width={288}
             height={288}
+            sizes="(min-width: 1024px) 288px, 100vw"
           />
         </div>
         <figcaption className="text-base lg:col-start-1 lg:row-start-3">
