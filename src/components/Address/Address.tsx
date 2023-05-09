@@ -31,7 +31,11 @@ export const Address = ({ size = 's' }: AddressProps) => {
             href={`tel:${global.address.tel}`}
             itemProp="telephone"
           >
-            <button className="relative inline-flex items-center border px-4 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-offset-2 lg:px-6">
+            <button
+              className={`${
+                size === 'l' ? 'border-black' : 'text-white'
+              } ${'relative inline-flex items-center border px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 lg:px-6'}`}
+            >
               {global.address.tel}
             </button>
           </Link>
@@ -40,7 +44,11 @@ export const Address = ({ size = 's' }: AddressProps) => {
             href={`mailto:${global.address.email}`}
             itemProp="email"
           >
-            <button className="relative inline-flex items-center border px-4 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-offset-2 lg:px-6">
+            <button
+              className={`${
+                size === 'l' ? 'border-black' : 'text-white'
+              } ${'relative inline-flex items-center border px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 lg:px-6'}`}
+            >
               {global.address.email}
             </button>
           </Link>

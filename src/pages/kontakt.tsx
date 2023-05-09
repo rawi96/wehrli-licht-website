@@ -3,6 +3,7 @@ import { Address } from '../components/Address'
 import { Button } from '../components/Button'
 import { CallToAction } from '../components/CallToAction'
 import { Footer } from '../components/Footer'
+import { GoogleMap } from '../components/GoogleMap'
 import { OpeningHours } from '../components/OpeningHours'
 import { PageContainer } from '../components/PageContainer'
 import { TitleSection } from '../components/TitleSection'
@@ -26,14 +27,16 @@ export default function AboutUs() {
       </CallToAction>
       <PageContainer>
         <div className="text-center">
-          <TitleSection title="Unsere Adresse" />
-          <div className="mb-20">
-            <Address size="l" />
-          </div>
           <TitleSection title="Unsere Öffnungszeiten" />
           <div className="mb-20">
             <OpeningHours size="l" />
           </div>
+          <TitleSection title="Unsere Adresse" />
+          <div className="mb-20">
+            <Address size="l" />
+          </div>
+
+          <GoogleMap />
         </div>
       </PageContainer>
       <Footer />

@@ -10,8 +10,9 @@ export const global = {
     maps: 'https://goo.gl/maps/bskYrHQAgCZQm7XFA?coh=178571&entry=tt',
   },
   openingHoursTitle: 'Öffnungszeiten',
-  openingHours: [
-    'Montag – Samstag: 09.00 – 12.00 & 14.00 – 18.00',
-    'Mittwoch- & Samstagnachmittag geschlossen',
+  openingHours: ['Montag – Samstag', '09.00 – 12.00 Uhr', '14.00 – 18.00 Uhr'],
+  closingHours: [
+    'Mittwochnachmittag geschlossen',
+    'Samstagnachmittag geschlossen',
   ],
 }
