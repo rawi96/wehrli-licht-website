@@ -49,7 +49,7 @@ export const Hero = ({
 
         <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
           <div className="text-center">
-            <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl">
+            <h1 className="text-2xl font-bold tracking-tight text-white sm:text-5xl">
               {title}
             </h1>
             <p className="mt-6 text-lg leading-8 text-white">{intro}</p>
@@ -57,12 +57,12 @@ export const Hero = ({
               <Button
                 type="primary"
                 text={primaryButton.text}
-                href={primaryButton.text}
+                href={primaryButton.link}
               />
               <Button
                 type="tertiary"
                 text={secondaryButton.text}
-                href={secondaryButton.text}
+                href={secondaryButton.link}
               />
             </div>
           </div>

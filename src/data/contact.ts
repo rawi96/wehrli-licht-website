@@ -5,7 +5,7 @@ export const contact = {
   intro: 'Wir freuen uns, wenn Sie vorbei kommen.',
   primaryButton: {
     text: 'Anfahrt anzeigen',
-    link: '/shop',
+    link: 'https://goo.gl/maps/bskYrHQAgCZQm7XFA?coh=178571&entry=tt',
   },
   secondaryButton: {
     text: 'Anrufen',

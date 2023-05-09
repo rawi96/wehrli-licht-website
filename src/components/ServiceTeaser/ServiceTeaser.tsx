@@ -15,7 +15,7 @@ export const ServiceTeaser = ({
             width={1000}
             height={1000}
             alt={title}
-            className="rounded bg-opacity-50 transition"
+            className="rounded-lg bg-opacity-50 transition"
           />
         </figure>
       </div>

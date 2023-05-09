@@ -17,7 +17,7 @@ export const Navigation = () => {
         aria-label="Global"
       >
         <div className="flex lg:flex-1">
-          <Link href="#" className="-m-1.5 p-1.5">
+          <Link href="/" className="-m-1.5 p-1.5">
             <span className="sr-only">Wehrli Licht GmbH</span>
             <Image
               src="/logos/wehrli_licht_logo.svg"
@@ -30,7 +30,7 @@ export const Navigation = () => {
         <div className="flex lg:hidden">
           <button
             type="button"
-            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-400"
+            className="-m-2.5 inline-flex items-center justify-center rounded-lg p-2.5 text-gray-400"
             onClick={() => setMobileMenuOpen(true)}
           >
             <span className="sr-only">Menu öffnen</span>
@@ -73,7 +73,7 @@ export const Navigation = () => {
             </Link>
             <button
               type="button"
-              className="-m-2.5 rounded-md p-2.5 text-gray-400"
+              className="-m-2.5 rounded-lg p-2.5 text-gray-400"
               onClick={() => setMobileMenuOpen(false)}
             >
               <span className="sr-only">Menu schliessen</span>

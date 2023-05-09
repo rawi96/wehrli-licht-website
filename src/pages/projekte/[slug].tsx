@@ -40,12 +40,12 @@ const ProjectPage: NextPage<ProjectPageProps> = ({
       <PageContainer>
         <div className="mb-16 text-center">
           {project.lines.map((line) => (
-            <p
+            <h2
               key={line}
               className="text-lg font-semibold leading-8 tracking-tight text-gray-900"
             >
               {line}
-            </p>
+            </h2>
           ))}
         </div>
 

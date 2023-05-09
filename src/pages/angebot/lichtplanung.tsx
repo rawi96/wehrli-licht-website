@@ -55,9 +55,9 @@ const LightPlanningPage: NextPage<LightPlaningPageProps> = ({
 
         <div className="mb-20 grid gap-4 md:grid-cols-2">
           <p>
-            <h3 className="mb-2 font-bold">
+            <h2 className="mb-2 font-bold">
               Lichtplanung für energieeffiziente Beleuchtung in allen Räumen
-            </h3>
+            </h2>
             Unsere Lichtplanungsdienstleistungen sind für alle Arten von Räumen
             geeignet, einschließlich Wohnräume, Arbeitsumgebungen und
             öffentliche Gebäude. Wir helfen Ihnen, die richtigen
@@ -66,9 +66,9 @@ const LightPlanningPage: NextPage<LightPlaningPageProps> = ({
             hervorragende Beleuchtung zu gewährleisten.
           </p>
           <p>
-            <h3 className="mb-2 font-bold">
+            <h2 className="mb-2 font-bold">
               Kontaktieren Sie uns für eine massgeschneiderte Lichtplanung
-            </h3>
+            </h2>
             Kontaktieren Sie uns heute, um mehr über unsere
             Lichtplanungsdienstleistungen zu erfahren und Ihre
             Beleuchtungsanforderungen zu besprechen.
