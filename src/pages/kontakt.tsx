@@ -35,7 +35,6 @@ export default function AboutUs() {
           <div className="mb-20">
             <Address size="l" />
           </div>
-
           <GoogleMap />
         </div>
       </PageContainer>
