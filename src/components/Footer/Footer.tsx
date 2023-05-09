@@ -48,12 +48,12 @@ export const Footer = () => {
           ))}
         </div>
 
-        <h3 className="mt-10 text-center text-xs font-bold leading-5">
+        <h3 className="mt-10 text-center text-sm font-bold">
           {global.addressTitle}
         </h3>
         <Address />
 
-        <h3 className="mt-10 text-center text-xs font-bold leading-5">
+        <h3 className="mt-10 text-center text-sm font-bold">
           {global.openingHoursTitle}
         </h3>
         <OpeningHours />
