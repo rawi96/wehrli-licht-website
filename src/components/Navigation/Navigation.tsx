@@ -13,7 +13,7 @@ export const Navigation = () => {
   return (
     <>
       <nav
-        className="flex items-center justify-between pt-6"
+        className="flex items-center justify-between pt-6 z-50"
         aria-label="Global"
       >
         <div className="flex lg:flex-1">
