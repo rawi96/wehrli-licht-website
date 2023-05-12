@@ -73,6 +73,7 @@ const ShopPage: NextPage<ShopPageProps> = ({ categories }) => {
           link: '/kontakt',
         }}
       />
+
       <PageContainer>
         <TitleSection title="Kategorien" />
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
