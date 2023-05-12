@@ -1,5 +1,6 @@
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import swell, { Category, Product } from 'swell-js'
+import { Bestsellers } from '../../../components/Bestsellers'
 import { Feedback } from '../../../components/Feedback'
 import { Footer } from '../../../components/Footer'
 import { Header } from '../../../components/Header'
@@ -9,11 +10,13 @@ import { TitleSection } from '../../../components/TitleSection'
 type CategorySlugPage = {
   products: Product[]
   category: Category
+  bestsellers: Product[]
 }
 
 const CategorySlugPage: NextPage<CategorySlugPage> = ({
   category,
   products,
+  bestsellers,
 }) => {
   return (
     <>
@@ -48,6 +51,8 @@ const CategorySlugPage: NextPage<CategorySlugPage> = ({
           </div>
         </div>
 
+        {bestsellers?.length > 0 && <Bestsellers bestsellers={bestsellers} />}
+
         <Feedback />
       </PageContainer>
       <Footer />
@@ -69,12 +74,16 @@ export const getStaticProps: GetStaticProps<CategorySlugPage> = async ({
     category: typeof slug === 'string' ? slug : '',
   })
 
+  const bestsellers = (await swell.products.list({})).results.filter(
+    (product) => product.tags?.includes('bestseller')
+  )
+
   const category = await swell.categories.get(
     typeof slug === 'string' ? slug : ''
   )
 
   return {
-    props: { category: category, products: products.results },
+    props: { category: category, products: products.results, bestsellers },
     revalidate: 60,
   }
 }

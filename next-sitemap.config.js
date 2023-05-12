@@ -12,7 +12,7 @@ const priorities = {
 module.exports = {
   siteUrl: process.env.DOMAIN || 'wehrli-licht-website.vercel.app',
   generateRobotsTxt: false,
-  changefreq: 'weekly',
+  changefreq: 'daily',
   exclude: ['/404'],
   // The default priority should be 0.5 (source: https://www.sitemaps.org/PROTOCOL.html)
   priority: 0.5,

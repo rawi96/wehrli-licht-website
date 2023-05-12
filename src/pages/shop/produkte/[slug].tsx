@@ -2,6 +2,7 @@ import { Tab } from '@headlessui/react'
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import Link from 'next/link'
 import swell, { Product } from 'swell-js'
+import { Bestsellers } from '../../../components/Bestsellers'
 import { Button } from '../../../components/Button'
 import { Feedback } from '../../../components/Feedback'
 import { Footer } from '../../../components/Footer'
@@ -9,15 +10,20 @@ import { Header } from '../../../components/Header'
 import { PageContainer } from '../../../components/PageContainer'
 import { useShopContext } from '../../../context/ShopContext'
 
-type ProductSlugPage = {
-  product: Product
+type ProductSlugPageProps = {
+  product?: Product
+  bestsellers: Product[]
 }
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
-const ProductSlugPage: NextPage<ProductSlugPage> = ({ product }) => {
+const ProductSlugPage: NextPage<ProductSlugPageProps> = ({
+  product,
+  bestsellers,
+}) => {
+  console.log(product)
   const { cart, setCart, setIsShowCart } = useShopContext()
 
   const handleAddToCartClick = async (event: any) => {
@@ -27,7 +33,7 @@ const ProductSlugPage: NextPage<ProductSlugPage> = ({ product }) => {
     )
 
     const cart = await swell.cart.addItem({
-      product_id: product.id,
+      product_id: product?.id,
       quantity: 1,
     })
 
@@ -48,7 +54,7 @@ const ProductSlugPage: NextPage<ProductSlugPage> = ({ product }) => {
                 {/* Image selector */}
                 <div className="mx-auto mt-6 hidden w-full max-w-2xl sm:block lg:max-w-none">
                   <Tab.List className="grid grid-cols-4 gap-6">
-                    {product.images?.map((image) => (
+                    {product?.images?.map((image) => (
                       <Tab
                         key={image.id}
                         className="relative flex h-24 cursor-pointer items-center justify-center rounded-md bg-white text-sm font-medium uppercase text-gray-900 hover:bg-gray-50 focus:outline-none focus:ring focus:ring-opacity-50 focus:ring-offset-4"
@@ -80,7 +86,7 @@ const ProductSlugPage: NextPage<ProductSlugPage> = ({ product }) => {
                 </div>
 
                 <Tab.Panels className="aspect-h-1 aspect-w-1 w-full">
-                  {product.images?.map((image) => (
+                  {product?.images?.map((image) => (
                     <Tab.Panel key={image.id}>
                       <img
                         src={image.file?.url}
@@ -95,20 +101,20 @@ const ProductSlugPage: NextPage<ProductSlugPage> = ({ product }) => {
               {/* Product info */}
               <div className="mt-10 px-4 sm:mt-16 sm:px-0 lg:mt-0">
                 <h1 className="text-3xl font-bold tracking-tight text-gray-900">
-                  {product.name}
+                  {product?.name}
                 </h1>
 
                 <div className="mt-3">
                   <h2 className="sr-only">Product information</h2>
                   <p className="text-3xl tracking-tight text-gray-900">
-                    {product.price}
+                    {product?.price}
                   </p>
                 </div>
 
                 <div className="mt-6">
                   <h3 className="sr-only">Description</h3>
 
-                  {product.description && (
+                  {product?.description && (
                     <div
                       className="space-y-6 text-base text-gray-700"
                       dangerouslySetInnerHTML={{
@@ -147,6 +153,8 @@ const ProductSlugPage: NextPage<ProductSlugPage> = ({ product }) => {
           </div>
         </div>
 
+        {bestsellers?.length > 0 && <Bestsellers bestsellers={bestsellers} />}
+
         <Feedback />
       </PageContainer>
       <Footer />
@@ -154,7 +162,7 @@ const ProductSlugPage: NextPage<ProductSlugPage> = ({ product }) => {
   )
 }
 
-export const getStaticProps: GetStaticProps<ProductSlugPage> = async ({
+export const getStaticProps: GetStaticProps<ProductSlugPageProps> = async ({
   params,
 }) => {
   const { slug } = params || {}
@@ -164,10 +172,16 @@ export const getStaticProps: GetStaticProps<ProductSlugPage> = async ({
     process.env.NEXT_PUBLIC_SWELL_API_KEY || ''
   )
 
-  const product = await swell.products.get(typeof slug === 'string' ? slug : '')
+  const { results } = await swell.products.list({})
+
+  const bestsellers = results.filter((product) =>
+    product.tags?.includes('bestseller')
+  )
+
+  const currentProduct = results.find((product) => product.slug === slug)
 
   return {
-    props: { product },
+    props: { product: currentProduct, bestsellers },
     revalidate: 60,
   }
 }
