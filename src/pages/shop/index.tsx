@@ -1,12 +1,10 @@
 import { GetStaticProps, NextPage } from 'next'
-import { NextSeo } from 'next-seo'
 import swell, { Category } from 'swell-js'
 import { Feedback } from '../../components/Feedback'
 import { Footer } from '../../components/Footer'
 import { Hero } from '../../components/Hero'
 import { PageContainer } from '../../components/PageContainer'
 import { TitleSection } from '../../components/TitleSection'
-import { home } from '../../data/home'
 
 const products = [
   {
@@ -59,7 +57,6 @@ type ShopPageProps = {
 const ShopPage: NextPage<ShopPageProps> = ({ categories }) => {
   return (
     <>
-      <NextSeo title="Wehrli Licht GmbH" description={home.intro} />
       <Hero
         image={{
           src: '/images/essbereich.jpg',
@@ -68,12 +65,12 @@ const ShopPage: NextPage<ShopPageProps> = ({ categories }) => {
         title={'Wehrli Licht Shop'}
         intro="Diese und viele weitere Leuchten sind auch in unserem Showroom in Goldach ausgestellt. Wir beraten Sie gerne persönlich und freuen uns auf Ihren Besuch!"
         primaryButton={{
-          text: 'Warenkorb',
-          link: '/shop',
+          text: 'Zurück zur Website',
+          link: '/',
         }}
         secondaryButton={{
-          text: 'Kasse',
-          link: '/shop',
+          text: 'Kontakt',
+          link: '/kontakt',
         }}
       />
       <PageContainer>
@@ -139,7 +136,10 @@ const ShopPage: NextPage<ShopPageProps> = ({ categories }) => {
 }
 
 export const getStaticProps: GetStaticProps<ShopPageProps> = async () => {
-  swell.init(process.env.SWELL_STORE_ID || '', process.env.SWELL_API_KEY || '')
+  swell.init(
+    process.env.NEXT_PUBLIC_SWELL_STORE_ID || '',
+    process.env.NEXT_PUBLIC_SWELL_API_KEY || ''
+  )
 
   const { results } = await swell.categories.list()
 

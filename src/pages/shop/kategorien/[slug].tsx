@@ -2,7 +2,7 @@ import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import swell, { Category, Product } from 'swell-js'
 import { Feedback } from '../../../components/Feedback'
 import { Footer } from '../../../components/Footer'
-import { Hero } from '../../../components/Hero'
+import { Header } from '../../../components/Header'
 import { PageContainer } from '../../../components/PageContainer'
 import { TitleSection } from '../../../components/TitleSection'
 
@@ -11,28 +11,15 @@ type CategorySlugPage = {
   category: Category
 }
 
-const ProjectPage: NextPage<CategorySlugPage> = ({ category, products }) => {
-  console.log(products)
+const CategorySlugPage: NextPage<CategorySlugPage> = ({
+  category,
+  products,
+}) => {
   return (
     <>
-      <Hero
-        image={{
-          src: '/images/essbereich.jpg',
-          altText: 'Essbereich Beleuchtung',
-        }}
-        title={category.name}
-        intro="Diese und viele weitere Leuchten sind auch in unserem Showroom in Goldach ausgestellt. Wir beraten Sie gerne persönlich und freuen uns auf Ihren Besuch!"
-        primaryButton={{
-          text: 'Warenkorb',
-          link: '/shop',
-        }}
-        secondaryButton={{
-          text: 'Kasse',
-          link: '/shop',
-        }}
-      />
+      <Header />
       <PageContainer>
-        <TitleSection title="Bestseller" />
+        <TitleSection title={category.name} />
         <div className="mx-auto max-w-2xl px-4 pb-20 pt-10 sm:px-6 lg:max-w-7xl lg:px-8">
           <h2 className="sr-only">Produkte</h2>
 
@@ -73,14 +60,14 @@ export const getStaticProps: GetStaticProps<CategorySlugPage> = async ({
 }) => {
   const { slug } = params || {}
 
-  swell.init(process.env.SWELL_STORE_ID || '', process.env.SWELL_API_KEY || '')
+  swell.init(
+    process.env.NEXT_PUBLIC_SWELL_STORE_ID || '',
+    process.env.NEXT_PUBLIC_SWELL_API_KEY || ''
+  )
 
   const products = await swell.products.list({
     category: typeof slug === 'string' ? slug : '',
   })
-
-  console.log('-----------')
-  console.log(products)
 
   const category = await swell.categories.get(
     typeof slug === 'string' ? slug : ''
@@ -93,7 +80,10 @@ export const getStaticProps: GetStaticProps<CategorySlugPage> = async ({
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  swell.init('wehrli-licht', 'pk_G2OVaJ200p3pymiEpJWcnbsbo0WDLxiy')
+  swell.init(
+    process.env.NEXT_PUBLIC_SWELL_STORE_ID || '',
+    process.env.NEXT_PUBLIC_SWELL_API_KEY || ''
+  )
 
   const { results } = await swell.categories.list()
 
@@ -103,4 +93,4 @@ export const getStaticPaths: GetStaticPaths = async () => {
   }
 }
 
-export default ProjectPage
+export default CategorySlugPage

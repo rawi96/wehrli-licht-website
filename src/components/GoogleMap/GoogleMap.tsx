@@ -21,7 +21,6 @@ const defaultProps = {
 }
 
 export const GoogleMap = () => {
-  console.log(API_KEY)
   return (
     <div className="full-width mb-20 h-[50vh]">
       <GoogleMapReact

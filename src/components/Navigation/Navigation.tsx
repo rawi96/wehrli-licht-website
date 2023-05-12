@@ -2,18 +2,33 @@ import { Dialog } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { useState } from 'react'
-import { navigationItems } from '../../data/navigationItems'
+import { useShopContext } from '../../context/ShopContext'
+import {
+  shopNavigationItems,
+  websiteNavigationItems,
+} from '../../data/navigationItems'
 import { Flyout } from '../Flyout'
+import { ShoppingCart } from '../ShoppingCart'
 import { NavigationAccordion } from './NavigationAccordion'
 
 export const Navigation = () => {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+
+  const { cart, isShowCart, setIsShowCart } = useShopContext()
+
+  const router = useRouter()
+
+  const isShopPage = router.pathname.includes('/shop')
+  const navigationItems = isShopPage
+    ? shopNavigationItems
+    : websiteNavigationItems
 
   return (
     <>
       <nav
-        className="flex items-center justify-between pt-6 z-50"
+        className="flex items-center justify-between py-6"
         aria-label="Global"
       >
         <div className="flex lg:flex-1">
@@ -32,7 +47,7 @@ export const Navigation = () => {
           <button
             type="button"
             className="-m-2.5 inline-flex items-center justify-center rounded-lg p-2.5 text-gray-400"
-            onClick={() => setMobileMenuOpen(true)}
+            onClick={() => setIsMobileMenuOpen(true)}
           >
             <span className="sr-only">Menu öffnen</span>
             <Bars3Icon className="h-6 w-6" aria-hidden="true" />
@@ -58,9 +73,20 @@ export const Navigation = () => {
               </Link>
             )
           })}
+          {isShopPage && (
+            <button
+              className="text-sm font-semibold leading-6 text-white"
+              onClick={() => setIsShowCart(true)}
+            >
+              Warenkorb{' '}
+              {cart?.item_quantity && cart.item_quantity > 0
+                ? `(${cart.item_quantity})`
+                : ''}
+            </button>
+          )}
         </div>
       </nav>
-      <Dialog as="div" open={mobileMenuOpen} onClose={setMobileMenuOpen}>
+      <Dialog as="div" open={isMobileMenuOpen} onClose={setIsMobileMenuOpen}>
         <Dialog.Panel className="fixed inset-0 z-10 overflow-y-auto bg-wehrli px-6 py-6 lg:hidden">
           <div className="flex items-center justify-between">
             <Link href="#" className="-m-1.5 p-1.5">
@@ -76,7 +102,7 @@ export const Navigation = () => {
             <button
               type="button"
               className="-m-2.5 rounded-lg p-2.5 text-gray-400"
-              onClick={() => setMobileMenuOpen(false)}
+              onClick={() => setIsMobileMenuOpen(false)}
             >
               <span className="sr-only">Menu schliessen</span>
               <XMarkIcon className="h-6 w-6" aria-hidden="true" />
@@ -107,6 +133,7 @@ export const Navigation = () => {
           </div>
         </Dialog.Panel>
       </Dialog>
+      <ShoppingCart open={isShowCart} setOpen={setIsShowCart} />
     </>
   )
 }

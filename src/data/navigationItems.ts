@@ -1,8 +1,8 @@
 import { Navigation } from '../types/Navigation'
 
-export const navigationItems: Navigation = [
+export const websiteNavigationItems: Navigation = [
   { name: 'Home', href: '/' },
-  { name: 'Online Shop', href: '/shop' },
+  { name: 'Shop', href: '/shop' },
   {
     title: 'Angebot',
     items: [
@@ -17,4 +17,9 @@ export const navigationItems: Navigation = [
 
   { name: 'Projekte', href: '/projekte' },
   { name: 'Kontakt', href: '/kontakt' },
+]
+
+export const shopNavigationItems: Navigation = [
+  { name: 'Zurück zur Website', href: '/' },
+  { name: 'Shop', href: '/shop' },
 ]
