@@ -5,4 +5,5 @@ export type ButtonProps = {
   href?: string
   onClick?: (event?: MouseEvent<Element>) => void
   type: 'primary' | 'secondary' | 'tertiary' | 'quaternary'
+  disabled?: boolean
 }

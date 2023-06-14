@@ -1,5 +1,5 @@
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
-import swell, { Category, Product } from 'swell-js'
+import swell, { Category, Product, Variant } from 'swell-js'
 import { Bestsellers } from '../../../components/Bestsellers'
 import { Feedback } from '../../../components/Feedback'
 import { Footer } from '../../../components/Footer'
@@ -11,6 +11,22 @@ type CategorySlugPage = {
   products: Product[]
   category: Category
   bestsellers: Product[]
+}
+
+const getLowestPriceFromVariantsOrProductPrice = (product: Product) => {
+  if (product.variants) {
+    const variants = product.variants as unknown as { results: Variant[] }
+
+    const variantsWithPrice = variants.results.filter(
+      (variant) => typeof variant.price === 'number'
+    )
+
+    const prices = variantsWithPrice.map((variant) => variant.price as number)
+
+    return `Ab CHF ${Math.min(...prices)}.-`
+  } else {
+    return `CHF ${product.price}.-`
+  }
 }
 
 const CategorySlugPage: NextPage<CategorySlugPage> = ({
@@ -44,7 +60,7 @@ const CategorySlugPage: NextPage<CategorySlugPage> = ({
                 </div>
                 <h3 className="mt-4 text-sm text-gray-700">{product.name}</h3>
                 <p className="mt-1 text-lg font-medium text-gray-900">
-                  {product.price}
+                  {getLowestPriceFromVariantsOrProductPrice(product)}
                 </p>
               </a>
             ))}
@@ -72,6 +88,7 @@ export const getStaticProps: GetStaticProps<CategorySlugPage> = async ({
 
   const products = await swell.products.list({
     category: typeof slug === 'string' ? slug : '',
+    expand: ['variants'],
   })
 
   const bestsellers = (await swell.products.list({})).results.filter(
