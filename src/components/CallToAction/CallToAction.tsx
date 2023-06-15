@@ -9,9 +9,7 @@ export const CallToAction = ({ title, intro, children }: CallToActionProps) => {
       </div>
       <div className="px-6 py-24 sm:px-6 sm:py-32 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
-          <h1 className="text-4xl font-bold tracking-tight text-white">
-            {title}
-          </h1>
+          <h1 className="text-4xl font-bold tracking-tight text-white" dangerouslySetInnerHTML={{ __html: title }}></h1>
           <p className="mx-auto mt-6 max-w-xl text-lg leading-8 text-white">
             {intro}
           </p>

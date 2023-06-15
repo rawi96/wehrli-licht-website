@@ -12,7 +12,7 @@ export const offerItems: Offer[] = [
     title: 'Lichtberatung',
     href: '/angebot/lichtberatung',
     description:
-      'Sich die Wirkung des Lichts in einem Raum vorstellen zu können ist nicht für jeden leicht. Wir beraten Sie gerne bei uns im Showroom oder bei Ihnen vor Ort.',
+      'Sich die Wirkung des Lichts in einem Raum vorstellen zu können ist nicht für jede Person leicht. Wir beraten Sie gerne bei uns im Showroom oder bei Ihnen vor Ort.',
     imageUrl: '/images/teasers/lichtberatung.jpg',
   },
   {

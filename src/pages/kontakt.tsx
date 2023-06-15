@@ -3,13 +3,13 @@ import { Address } from '../components/Address'
 import { Button } from '../components/Button'
 import { CallToAction } from '../components/CallToAction'
 import { Footer } from '../components/Footer'
-import { GoogleMap } from '../components/GoogleMap'
+import { Map } from '../components/Map'
 import { OpeningHours } from '../components/OpeningHours'
 import { PageContainer } from '../components/PageContainer'
 import { TitleSection } from '../components/TitleSection'
 import { contact } from '../data/contact'
 
-export default function AboutUs() {
+export default function Contact() {
   return (
     <>
       <NextSeo title={contact.title} description={contact.intro} />
@@ -35,7 +35,7 @@ export default function AboutUs() {
           <div className="mb-20">
             <Address size="l" />
           </div>
-          <GoogleMap />
+          <Map />
         </div>
       </PageContainer>
       <Footer />

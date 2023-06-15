@@ -5,6 +5,7 @@ import { CallToAction } from '../../components/CallToAction'
 import { Footer } from '../../components/Footer'
 import { PageContainer } from '../../components/PageContainer'
 import { ProjectsTeaserRow } from '../../components/ProjectsTeaserRow'
+import { ServiceTeaser } from '../../components/ServiceTeaser'
 import { TitleSection } from '../../components/TitleSection'
 import { lightConsulting } from '../../data/lightConsulting'
 import { offerItems } from '../../data/offerItems'
@@ -40,11 +41,47 @@ const LightConsultingPage: NextPage<LightConsultingPageProps> = ({
         />
       </CallToAction>
       <PageContainer>
-        <TitleSection title="Unser Service" />
-        <div className="mb-16">
-          <div className="mb-5">{lightConsulting.text1}</div>
-          <div>{lightConsulting.text2}</div>
+        <div className="mb-20 grid gap-4 md:grid-cols-2">
+          <div>
+            <h2 className="mb-2 font-bold">Ins rechte Licht gerückt</h2>
+            <p>
+              Besondere Projekte verdienen eine besondere Beleuchtung und die
+              entsprechenden Leuchten dazu. Unsere aussergewöhnlichen
+              Designerleuchten versprechen ein gelungenes Ergebnis. Um sich eine
+              noch nicht realisierte Beleuchtungssituation vorstellen zu können
+              benötigt es ein grossen Vorstellungsvermögen.
+            </p>
+          </div>
+          <div>
+            <h2 className="mb-2 font-bold">
+              Professionelle Unterstützung und Beratung
+            </h2>
+            <p>
+              Wir unterstützen und beraten Sie dabei gerne mit unserem
+              Fachwissen und unserer Erfahrung. In unserem Showroom oder bei
+              Ihnen vor Ort stehen wir Ihnen mit Rat und Tat zu Seite.
+            </p>
+            <div className="my-4">
+              <Button
+                type="primary"
+                text="Vereinbaren Sie jetzt einen Termin"
+                href="/kontakt"
+              />
+            </div>
+          </div>
         </div>
+        <ServiceTeaser
+          title={'Wobei wir Sie unterstützen können'}
+          imageUrl="/images/angebote/lichtberatung/Mariella_Wirth_Lichtberatung.jpg"
+          items={[
+            'Architektonisch anspruchsvolle Räume',
+            'Unsicherheit bei der Leuchtenauswahl',
+            'Beratung bezüglich Lichtleistung, -verteilung & -wirkung',
+            'Individuelle Wünsche bezüglich Leuchten oder Licht',
+            'Unterstützung zur besseren Visualisierung',
+          ]}
+        />
+
         <TitleSection title="Lichtprojekte" />
         <ProjectsTeaserRow
           projectsWithHeaderImages={projectsWithHeaderImages.slice(0, 5)}

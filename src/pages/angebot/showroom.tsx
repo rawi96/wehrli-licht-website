@@ -5,6 +5,7 @@ import { CallToAction } from '../../components/CallToAction'
 import { Footer } from '../../components/Footer'
 import { PageContainer } from '../../components/PageContainer'
 import { ProjectsTeaserRow } from '../../components/ProjectsTeaserRow'
+import { StreetView } from '../../components/StreetView'
 import { TitleSection } from '../../components/TitleSection'
 import { offerItems } from '../../data/offerItems'
 import { showRoom } from '../../data/showRoom'
@@ -34,11 +35,34 @@ const ShowRoomPage: NextPage<ShowRoomPageProps> = ({
         />
       </CallToAction>
       <PageContainer>
-        <TitleSection title="Unser Service" />
-        <div className="mb-16">
-          <div className="mb-5">{showRoom.text1}</div>
-          <div>{showRoom.text2}</div>
+        <div className="mb-20 grid gap-4 md:grid-cols-2">
+          <div>
+            <h2 className="mb-2 font-bold">
+              Exklusive Wohnraumleuchten in unserem Showroom
+            </h2>
+            <p>
+              Entdecken Sie in unserem Showroom exklusive Wohnraumleuchten.
+              Hochwertige Qualität und ansprechendes Design – von klassischen
+              Kristalllustern bis hin zu filigranem Minimalismus.
+            </p>
+          </div>
+          <div>
+            <h2 className="mb-2 font-bold">
+              Inspirierende Vielfalt für jeden Geschmack
+            </h2>
+            <p>
+              Besuchen Sie unseren Showroom und lassen Sie sich inspirieren.
+              Vielfältige Auswahl für jeden Geschmack. Finden Sie die perfekte
+              Beleuchtungslösung.
+            </p>
+            <div className="my-4">
+              <Button type="primary" text="Anfahrt" href="/kontakt" />
+            </div>
+          </div>
         </div>
+
+        <StreetView />
+
         <TitleSection title="Lichtprojekte" />
         <ProjectsTeaserRow
           projectsWithHeaderImages={projectsWithHeaderImages.slice(0, 5)}

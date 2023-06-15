@@ -56,25 +56,36 @@ const LightPlanningPage: NextPage<LightPlaningPageProps> = ({
         </div>
 
         <div className="mb-20 grid gap-4 md:grid-cols-2">
-          <p>
+          <div>
             <h2 className="mb-2 font-bold">
               Lichtplanung für energieeffiziente Beleuchtung in allen Räumen
             </h2>
-            Unsere Lichtplanungsdienstleistungen sind für alle Arten von Räumen
-            geeignet, einschließlich Wohnräume, Arbeitsumgebungen und
-            öffentliche Gebäude. Wir helfen Ihnen, die richtigen
-            LED-Beleuchtungen, Einsatzorte und Steuerungsmöglichkeiten zu
-            finden, um den Energieverbrauch zu minimieren und gleichzeitig eine
-            hervorragende Beleuchtung zu gewährleisten.
-          </p>
-          <p>
+            <p>
+              Unsere Lichtplanungsdienstleistungen sind für alle Arten von
+              Räumen geeignet, einschließlich Wohnräume, Arbeitsumgebungen und
+              öffentliche Gebäude. Wir helfen Ihnen, die richtigen
+              LED-Beleuchtungen, Einsatzorte und Steuerungsmöglichkeiten zu
+              finden, um den Energieverbrauch zu minimieren und gleichzeitig
+              eine hervorragende Beleuchtung zu gewährleisten.
+            </p>
+          </div>
+          <div>
             <h2 className="mb-2 font-bold">
               Kontaktieren Sie uns für eine massgeschneiderte Lichtplanung
             </h2>
-            Kontaktieren Sie uns heute, um mehr über unsere
-            Lichtplanungsdienstleistungen zu erfahren und Ihre
-            Beleuchtungsanforderungen zu besprechen.
-          </p>
+            <p>
+              Kontaktieren Sie uns heute, um mehr über unsere
+              Lichtplanungsdienstleistungen zu erfahren und Ihre
+              Beleuchtungsanforderungen zu besprechen.
+            </p>
+            <div className="my-4">
+              <Button
+                type="primary"
+                text="Vereinbaren Sie jetzt einen Termin"
+                href="/kontakt"
+              />
+            </div>
+          </div>
         </div>
 
         <ServiceTeaser

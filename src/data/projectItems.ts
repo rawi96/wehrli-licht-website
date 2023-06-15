@@ -2,9 +2,28 @@ import { Project } from '../types/Project'
 
 export const projectItems: Project[] = [
   {
+    title: 'Buurebeiz',
+    intro:
+      'Gefällt Ihnen dieses Projekt? Schauen Sie sich noch weitere Projekte an und lassen Sie sich inspirieren.',
+    slug: 'buurebeiz',
+    lines: [
+      'Lichtplanung: Wehrli Licht GmbH',
+      'Ausführung: Wehrli Licht GmbH',
+    ],
+    imagesPath: '/images/projects/buurebeiz',
+  },
+  {
+    title: 'Projekte von Neuco AG',
+    intro:
+      'Gefällt Ihnen dieses Projekt? Schauen Sie sich noch weitere Projekte an und lassen Sie sich inspirieren.',
+    slug: 'inspecta-experts-office',
+    lines: ['Lampenschirme: Wehrli Licht GmbH', 'Konzept und Umsetzung: Neuco AG', 'Fotografie: Alex Gemperle AG'],
+    imagesPath: '/images/projects/neuco',
+  },
+  {
     title: 'Büro Beleuchtung inspecta experts',
     intro:
-      'Dir gefällt dieses Projekt? Schaue dir noch weitere Projekte an und lass dich inspirieren.',
+      'Gefällt Ihnen dieses Projekt? Schauen Sie sich noch weitere Projekte an und lassen Sie sich inspirieren.',
     slug: 'inspecta-experts-office',
     lines: ['Lichtplanung: Wehrli Licht GmbH', 'Ausführung: Wehrli Licht GmbH'],
     imagesPath: '/images/projects/inspecta_experts',
@@ -12,7 +31,7 @@ export const projectItems: Project[] = [
   {
     title: 'Garagenbeleuchtung',
     intro:
-      'Dir gefällt dieses Projekt? Schaue dir noch weitere Projekte an und lass dich inspirieren.',
+      'Gefällt Ihnen dieses Projekt? Schauen Sie sich noch weitere Projekte an und lassen Sie sich inspirieren.',
     slug: 'private-garage',
     lines: [
       'Lichtplanung: Wehrli Licht GmbH',
@@ -23,7 +42,7 @@ export const projectItems: Project[] = [
   {
     title: 'Innenbeleuchtung STWE St.Gallen',
     intro:
-      'Dir gefällt dieses Projekt? Schaue dir noch weitere Projekte an und lass dich inspirieren.',
+      'Gefällt Ihnen dieses Projekt? Schauen Sie sich noch weitere Projekte an und lassen Sie sich inspirieren.',
     slug: 'stwe-stgallen',
     lines: ['Lichtplanung: Wehrli Licht GmbH', 'Ausführung: Wehrli Licht GmbH'],
     imagesPath: '/images/projects/stwe_stgallen',
@@ -31,7 +50,7 @@ export const projectItems: Project[] = [
   {
     title: 'Hotel Beleuchtung Capetta',
     intro:
-      'Dir gefällt dieses Projekt? Schaue dir noch weitere Projekte an und lass dich inspirieren.',
+      'Gefällt Ihnen dieses Projekt? Schauen Sie sich noch weitere Projekte an und lassen Sie sich inspirieren.',
     slug: 'hotel-capetta',
     lines: [
       'Lichtplanung: Wehrli Licht GmbH',
@@ -43,7 +62,7 @@ export const projectItems: Project[] = [
   {
     title: 'Wohnraum Beleuchtung EFH Häggenschwil',
     intro:
-      'Dir gefällt dieses Projekt? Schaue dir noch weitere Projekte an und lass dich inspirieren.',
+      'Gefällt Ihnen dieses Projekt? Schauen Sie sich noch weitere Projekte an und lassen Sie sich inspirieren.',
     slug: 'efh-haeggenschwil',
     lines: ['Lichtplanung: Wehrli Licht GmbH', 'Ausführung: Wehrli Licht GmbH'],
     imagesPath: '/images/projects/efh_haeggenschwil',
@@ -51,18 +70,18 @@ export const projectItems: Project[] = [
   {
     title: 'Jugendherberge St.Moritz',
     intro:
-      'Dir gefällt dieses Projekt? Schaue dir noch weitere Projekte an und lass dich inspirieren.',
+      'Gefällt Ihnen dieses Projekt? Schauen Sie sich noch weitere Projekte an und lassen Sie sich inspirieren.',
     slug: 'jugendherberge-stmoritz',
     lines: [
       'Lichtplanung: Giagoba GmbH',
-      'Produktion Lampenschirme: Wehrli Licht GmbH',
+      'Lampenschirme: Wehrli Licht GmbH',
     ],
     imagesPath: '/images/projects/jugendherberge_stmoritz',
   },
   {
     title: 'EFH Zumikon',
     intro:
-      'Dir gefällt dieses Projekt? Schaue dir noch weitere Projekte an und lass dich inspirieren.',
+      'Gefällt Ihnen dieses Projekt? Schauen Sie sich noch weitere Projekte an und lassen Sie sich inspirieren.',
     slug: 'efh-zumikon',
     lines: ['Lichtplanung: Wehrli Licht GmbH', 'Ausführung: Wehrli Licht GmbH'],
     imagesPath: '/images/projects/efh_zumikon',
@@ -70,7 +89,7 @@ export const projectItems: Project[] = [
   {
     title: 'Restauration Lampenschirme',
     intro:
-      'Dir gefällt dieses Projekt? Schaue dir noch weitere Projekte an und lass dich inspirieren.',
+      'Gefällt Ihnen dieses Projekt? Schauen Sie sich noch weitere Projekte an und lassen Sie sich inspirieren.',
     slug: 'restauration-lampenschirme',
     lines: [],
     imagesPath: '/images/projects/restauration_lampenschirme',
@@ -78,10 +97,10 @@ export const projectItems: Project[] = [
   {
     title: 'Coople Zürich',
     intro:
-      'Dir gefällt dieses Projekt? Schaue dir noch weitere Projekte an und lass dich inspirieren.',
+      'Gefällt Ihnen dieses Projekt? Schauen Sie sich noch weitere Projekte an und lassen Sie sich inspirieren.',
     slug: 'coople-zurich',
     lines: [
-      'Produktion Lampenschirme: Wehrli Licht GmbH',
+      'Lampenschirme: Wehrli Licht GmbH',
       'Kreation & Ausbau: Sasha Badiali',
     ],
     imagesPath: '/images/projects/coople_zurich',
@@ -89,7 +108,7 @@ export const projectItems: Project[] = [
   {
     title: 'Gemeindehaus Rorschach',
     intro:
-      'Dir gefällt dieses Projekt? Schaue dir noch weitere Projekte an und lass dich inspirieren.',
+      'Gefällt Ihnen dieses Projekt? Schauen Sie sich noch weitere Projekte an und lassen Sie sich inspirieren.',
     slug: 'gemeindehaus-rorschach',
     lines: ['Lichtplanung: Wehrli Licht GmbH', 'Ausführung: Wehrli Licht GmbH'],
     imagesPath: '/images/projects/gemeindehaus_rorschach',
@@ -97,7 +116,7 @@ export const projectItems: Project[] = [
   {
     title: 'Hairstyling Pepa',
     intro:
-      'Dir gefällt dieses Projekt? Schaue dir noch weitere Projekte an und lass dich inspirieren.',
+      'Gefällt Ihnen dieses Projekt? Schauen Sie sich noch weitere Projekte an und lassen Sie sich inspirieren.',
     slug: 'hairstyling-pepa',
     lines: ['Lichtplanung: Wehrli Licht GmbH', 'Ausführung: Wehrli Licht GmbH'],
     imagesPath: '/images/projects/hairstyling_pepa',
@@ -105,7 +124,7 @@ export const projectItems: Project[] = [
   {
     title: 'STWE Altenrhein 1',
     intro:
-      'Dir gefällt dieses Projekt? Schaue dir noch weitere Projekte an und lass dich inspirieren.',
+      'Gefällt Ihnen dieses Projekt? Schauen Sie sich noch weitere Projekte an und lassen Sie sich inspirieren.',
     slug: 'stwe-altenrhein-1',
     lines: ['Lichtplanung: Wehrli Licht GmbH', 'Ausführung: Wehrli Licht GmbH'],
     imagesPath: '/images/projects/stwe_altenrhein_1',
@@ -113,7 +132,7 @@ export const projectItems: Project[] = [
   {
     title: 'STWE Altenrhein 2',
     intro:
-      'Dir gefällt dieses Projekt? Schaue dir noch weitere Projekte an und lass dich inspirieren.',
+      'Gefällt Ihnen dieses Projekt? Schauen Sie sich noch weitere Projekte an und lassen Sie sich inspirieren.',
     slug: 'stwe-altenrhein-2',
     lines: ['Lichtplanung: Wehrli Licht GmbH', 'Ausführung: Wehrli Licht GmbH'],
     imagesPath: '/images/projects/stwe_altenrhein_2',
@@ -121,7 +140,7 @@ export const projectItems: Project[] = [
   {
     title: 'EFH Schongau',
     intro:
-      'Dir gefällt dieses Projekt? Schaue dir noch weitere Projekte an und lass dich inspirieren.',
+      'Gefällt Ihnen dieses Projekt? Schauen Sie sich noch weitere Projekte an und lassen Sie sich inspirieren.',
     slug: 'efh-schongau',
     lines: ['Lichtplanung: Wehrli Licht GmbH', 'Ausführung: Wehrli Licht GmbH'],
     imagesPath: '/images/projects/efh_schongau',

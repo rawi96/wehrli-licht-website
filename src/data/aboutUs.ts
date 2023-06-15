@@ -1,7 +1,7 @@
 export const aboutUs = {
-  title: 'Erfahren Sie mehr über uns',
+  title: 'Wer wir sind',
   intro:
-    'Wir sind ein kleines Team aus erfahrenen Frauen und freuen uns, wenn Sie vorbei kommen.',
+    'Wir sind ein kleines Team aus erfahrenen Frauen und freuen uns, Sie auch persönlich kennzulernen.',
   primaryButton: {
     text: 'Online Shop',
     link: '/shop',
