@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { global } from '../../data/global'
-import { navigationItems } from '../../data/navigationItems'
+import { websiteNavigationItems } from '../../data/navigationItems'
 import { socialItems } from '../../data/socialItems'
 import { Address } from '../Address'
 import { Flyout } from '../Flyout'
@@ -14,7 +14,7 @@ export const Footer = () => {
           className="relative -mb-6 columns-2 sm:flex sm:justify-center sm:space-x-12"
           aria-label="Footer"
         >
-          {navigationItems.map((item) => {
+          {websiteNavigationItems.map((item) => {
             return 'items' in item ? (
               <div key={item.title} className="pb-6">
                 <Flyout

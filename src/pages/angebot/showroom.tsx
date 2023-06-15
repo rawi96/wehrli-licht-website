@@ -43,7 +43,7 @@ const ShowRoomPage: NextPage<ShowRoomPageProps> = ({
             <p>
               Entdecken Sie in unserem Showroom exklusive Wohnraumleuchten.
               Hochwertige Qualität und ansprechendes Design – von klassischen
-              Kristalllustern bis hin zu filigranen Designerstücken.
+              Kristalllustern bis hin zu filigranem Minimalismus.
             </p>
           </div>
           <div>

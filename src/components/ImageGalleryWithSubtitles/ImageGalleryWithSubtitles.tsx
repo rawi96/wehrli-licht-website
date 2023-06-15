@@ -5,7 +5,7 @@ export const ImageGalleryWithSubtitles = ({
   images,
 }: ImageGalleryWithSubtitleProps) => {
   return (
-    <div className="mb-20 grid grid-cols-2 items-center gap-4 md:grid-cols-3">
+    <div className="mb-20 grid grid-cols-1 items-center gap-4 md:grid-cols-3">
       {images.map((image, index) => (
         <div
           key={index}

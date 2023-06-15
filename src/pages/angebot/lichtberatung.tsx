@@ -78,7 +78,7 @@ const LightConsultingPage: NextPage<LightConsultingPageProps> = ({
             'Unsicherheit bei der Leuchtenauswahl',
             'Beratung bezüglich Lichtleistung, -verteilung & -wirkung',
             'Individuelle Wünsche bezüglich Leuchten oder Licht',
-            'Unterstützung zur besseren Realisierung',
+            'Unterstützung zur besseren Visualisierung',
           ]}
         />
 

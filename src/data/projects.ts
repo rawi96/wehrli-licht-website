@@ -1,6 +1,6 @@
 export const projects = {
   title: 'Projekte',
-  intro: 'Hier findest du eine Auswahl unserer Projekte.',
+  intro: 'Hier finden Sie eine Auswahl unserer Projekte.',
   primaryButton: {
     text: 'Online Shop',
     link: '/shop',

@@ -51,8 +51,7 @@ const LightPlanningPage: NextPage<LightPlaningPageProps> = ({
               angenehmen Wohnatmosphäre. Es unterstützt und betont die
               vorherrschenden Materialien und die Einrichtung von Wohnräumen. Um
               das perfekte Lichtkonzept zu verwirklichen, bieten wir in unserem
-              Showroom eine breite Auswahl an hochwertigen Leuchten namhafter
-              europäischer Hersteller.
+              Showroom eine breite Auswahl an hochwertigen Leuchten europäischer Hersteller.
             </p>
           </div>
           <div>

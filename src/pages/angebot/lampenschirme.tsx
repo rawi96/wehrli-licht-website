@@ -45,11 +45,11 @@ const LampShadePage: NextPage<LampShadePageProps> = ({
           <div className="mb-20 grid gap-4 md:grid-cols-2">
             <div>
               <h2 className="mb-2 font-bold">
-                Tradition und Qualität seit über 70 Jahren
+                Tradition und Qualität seit drei Generationen
               </h2>
               <p>
                 Jeder Lampenschirm wird gemäss Wunsch des Kunden angefertigt. Um
-                ein perfektes Ergebnis zu erreichen, wird jede Komponente
+                ein perfektes Ergebnis zu erreichen, werden die Komponenten
                 individuell zusammengestellt. Die Produktion sowie die Reparatur
                 von Lampenschirmen wird vollumfänglich in unseren Atelierräumen
                 in Goldach vorgenommen. Unser starkes Team fertigt täglich mit
@@ -70,7 +70,7 @@ const LampShadePage: NextPage<LampShadePageProps> = ({
               <div className="my-4">
                 <Button
                   type="primary"
-                  text="Jetzt unverbindliche Beratung anfordern"
+                  text="Beratungstermin vereinbaren"
                   href="/kontakt"
                 />
               </div>
@@ -84,9 +84,8 @@ const LampShadePage: NextPage<LampShadePageProps> = ({
               'Soll ein neuer Lampenschirm kreiert oder ein bestehender Lampenschirm neu überzogen werden?',
               'Allenfalls Form und Masse bereithalten',
               'Auswahl der Stoffart und -farbe',
-              'Individuelle Wünsche bezüglich Leuchten oder Licht',
               'Allfällige zusätzliche Details wie Bordüre, Spezialfolien oder Applikationen besprechen',
-              'Uns Zeit geben um Ihr Meisterwerk anzufertigen und sich darauf freuen.',
+              'Uns Zeit geben um Ihr Meisterwerk anzufertigen und sich darauf freuen',
             ]}
           />
         </div>
