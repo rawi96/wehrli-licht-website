@@ -2,6 +2,14 @@ import { Project } from '../types/Project'
 
 export const projectItems: Project[] = [
   {
+    title: 'Neuco AG',
+    intro:
+      'Dir gefällt dieses Projekt? Schaue dir noch weitere Projekte an und lass dich inspirieren.',
+    slug: 'inspecta-experts-office',
+    lines: ['Lampenschirme: Wehrli Licht GmbH', 'Fotografie: Alex Gemperle AG'],
+    imagesPath: '/images/projects/neuco',
+  },
+  {
     title: 'Büro Beleuchtung inspecta experts',
     intro:
       'Dir gefällt dieses Projekt? Schaue dir noch weitere Projekte an und lass dich inspirieren.',

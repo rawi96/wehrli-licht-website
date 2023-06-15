@@ -11,6 +11,7 @@ export const navigationItems: Navigation = [
       { name: 'Lampenschirme', href: '/angebot/lampenschirme' },
       { name: 'Wohnraumleuchten', href: '/angebot/wohnraumleuchten' },
       { name: 'Sonderanfertigungen', href: '/angebot/sonderanfertigungen' },
+      { name: 'Showroom', href: '/angebot/showroom' },
     ],
   },
   { name: 'Über uns', href: '/ueber-uns' },

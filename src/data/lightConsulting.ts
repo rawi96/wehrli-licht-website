@@ -1,5 +1,6 @@
 export const lightConsulting = {
   title: 'Lichtberatung',
+  intro: 'Ins rechte Licht gerückt',
   primaryButton: {
     text: 'Weitere Angebote anzeigen',
     link: '/',
