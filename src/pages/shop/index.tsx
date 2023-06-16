@@ -8,87 +8,12 @@ import { Footer } from '../../components/Footer'
 import { PageContainer } from '../../components/PageContainer'
 import { TitleSection } from '../../components/TitleSection'
 
-const products = [
-  {
-    id: 1,
-    name: 'Earthen Bottle',
-    href: '#',
-    price: '$48',
-    imageSrc:
-      'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-01.jpg',
-    imageAlt:
-      'Tall slender porcelain bottle with natural clay textured body and cork stopper.',
-  },
-  {
-    id: 2,
-    name: 'Nomad Tumbler',
-    href: '#',
-    price: '$35',
-    imageSrc:
-      'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-02.jpg',
-    imageAlt:
-      'Olive drab green insulated bottle with flared screw lid and flat top.',
-  },
-  {
-    id: 3,
-    name: 'Focus Paper Refill',
-    href: '#',
-    price: '$89',
-    imageSrc:
-      'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-03.jpg',
-    imageAlt:
-      'Person using a pen to cross a task off a productivity paper card.',
-  },
-  {
-    id: 4,
-    name: 'Machined Mechanical Pencil',
-    href: '#',
-    price: '$35',
-    imageSrc:
-      'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-04.jpg',
-    imageAlt:
-      'Hand holding black machined steel mechanical pencil with brass tip and top.',
-  },
-  {
-    id: 4,
-    name: 'Machined Mechanical Pencil',
-    href: '#',
-    price: '$35',
-    imageSrc:
-      'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-04.jpg',
-    imageAlt:
-      'Hand holding black machined steel mechanical pencil with brass tip and top.',
-  },
-  {
-    id: 4,
-    name: 'Machined Mechanical Pencil',
-    href: '#',
-    price: '$35',
-    imageSrc:
-      'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-04.jpg',
-    imageAlt:
-      'Hand holding black machined steel mechanical pencil with brass tip and top.',
-  },
-  {
-    id: 4,
-    name: 'Machined Mechanical Pencil',
-    href: '#',
-    price: '$35',
-    imageSrc:
-      'https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-04.jpg',
-    imageAlt:
-      'Hand holding black machined steel mechanical pencil with brass tip and top.',
-  },
-  // More products...
-]
-
 type ShopPageProps = {
   categories: Category[]
   bestsellers: Product[]
 }
 
 const ShopPage: NextPage<ShopPageProps> = ({ categories, bestsellers }) => {
-  console.log(bestsellers)
   return (
     <>
       <CallToAction
@@ -100,32 +25,39 @@ const ShopPage: NextPage<ShopPageProps> = ({ categories, bestsellers }) => {
       </CallToAction>
 
       <PageContainer>
-        <TitleSection title="Kategorien" />
+        <TitleSection title="Entdecken Sie unsere Leuchten-Kategorien" />
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-2xl pb-20 lg:max-w-none">
             <div className="mt-6 space-y-12 lg:grid lg:grid-cols-3 lg:gap-x-6 lg:space-y-0">
               {categories.map((category) => (
-                <div key={category.name} className="group relative ">
-                  <div className="relative mt-12 h-80 w-full overflow-hidden rounded-lg bg-white sm:aspect-h-1 sm:aspect-w-2 lg:aspect-h-1 lg:aspect-w-1 group-hover:opacity-75 sm:h-64">
-                    {category.images?.length &&
-                      category.images[0].file?.url && (
-                        <img
-                          src={category.images[0].file.url}
-                          alt={category.name}
-                          className="h-full w-full object-cover object-center"
-                        />
-                      )}
-                  </div>
-                  <h3 className="mt-6 text-sm text-gray-500">
-                    <a href={`/shop/kategorien/${category.slug}`}>
-                      <span className="absolute inset-0" />
+                <a
+                  key={category.name}
+                  href={`/shop/kategorien/${category.slug}`}
+                  className="group block"
+                >
+                  <div
+                    key={category.name}
+                    className="group relative cursor-pointer"
+                  >
+                    <div className="relative mt-12 h-80 w-full overflow-hidden rounded-lg bg-white sm:aspect-h-1 sm:aspect-w-2 lg:aspect-h-1 lg:aspect-w-1 group-hover:opacity-75 sm:h-64">
+                      {category.images?.length &&
+                        category.images[0].file?.url && (
+                          <img
+                            src={category.images[0].file.url}
+                            alt={category.name}
+                            className="h-full w-full object-cover object-center"
+                          />
+                        )}
+                    </div>
+                    <h3 className="mt-4 text-base font-semibold text-gray-900">
                       {category.name}
-                    </a>
-                  </h3>
-                  <p className="text-base font-semibold text-gray-900">
-                    {category.description}
-                  </p>
-                </div>
+                    </h3>
+                    <p
+                      className="mt-2 text-sm text-gray-500"
+                      dangerouslySetInnerHTML={{ __html: category.description }}
+                    ></p>
+                  </div>
+                </a>
               ))}
             </div>
           </div>
@@ -148,9 +80,9 @@ export const getStaticProps: GetStaticProps<ShopPageProps> = async () => {
 
   const categories = await swell.categories.list()
 
-  const bestsellers = (await swell.products.list({limit: 100})).results.filter(
-    (product) => product.tags?.includes('bestseller')
-  )
+  const bestsellers = (
+    await swell.products.list({ limit: 100 })
+  ).results.filter((product) => product.tags?.includes('bestseller'))
 
   return {
     props: { categories: categories.results, bestsellers },

@@ -14,9 +14,8 @@ type CategorySlugPage = {
 }
 
 const getLowestPriceFromVariantsOrProductPrice = (product: Product) => {
-  if (product.variants) {
-    const variants = product.variants as unknown as { results: Variant[] }
-
+  const variants = product.variants as unknown as { results: Variant[] }
+  if (variants.results.length > 0) {
     const variantsWithPrice = variants.results.filter(
       (variant) => typeof variant.price === 'number'
     )
@@ -44,25 +43,27 @@ const CategorySlugPage: NextPage<CategorySlugPage> = ({
 
           <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
             {products.map((product) => (
-              <a
-                key={product.id}
-                href={`/shop/produkte/${product.slug}`}
-                className="group"
-              >
-                <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
-                  {product.images?.length && product.images[0].file?.url && (
-                    <img
-                      src={product.images[0].file.url}
-                      alt={product.name}
-                      className="h-full w-full object-cover object-center group-hover:opacity-75"
-                    />
-                  )}
-                </div>
-                <h3 className="mt-4 text-sm text-gray-700">{product.name}</h3>
-                <p className="mt-1 text-lg font-medium text-gray-900">
-                  {getLowestPriceFromVariantsOrProductPrice(product)}
-                </p>
-              </a>
+              <>
+                <a
+                  key={product.id}
+                  href={`/shop/produkte/${product.slug}`}
+                  className="group"
+                >
+                  <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
+                    {product.images?.length && product.images[0].file?.url && (
+                      <img
+                        src={product.images[0].file.url}
+                        alt={product.name}
+                        className="h-full w-full object-cover object-center group-hover:opacity-75"
+                      />
+                    )}
+                  </div>
+                  <h3 className="mt-4 text-sm text-gray-700">{product.name}</h3>
+                  <p className="mt-1 text-lg font-medium text-gray-900">
+                    {getLowestPriceFromVariantsOrProductPrice(product)}
+                  </p>
+                </a>
+              </>
             ))}
           </div>
         </div>
@@ -89,12 +90,12 @@ export const getStaticProps: GetStaticProps<CategorySlugPage> = async ({
   const products = await swell.products.list({
     category: typeof slug === 'string' ? slug : '',
     expand: ['variants'],
-    limit:100
+    limit: 100,
   })
 
-  const bestsellers = (await swell.products.list({limit: 100})).results.filter(
-    (product) => product.tags?.includes('bestseller')
-  )
+  const bestsellers = (
+    await swell.products.list({ limit: 100 })
+  ).results.filter((product) => product.tags?.includes('bestseller'))
 
   const category = await swell.categories.get(
     typeof slug === 'string' ? slug : ''

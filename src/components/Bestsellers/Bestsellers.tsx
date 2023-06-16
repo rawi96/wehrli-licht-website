@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { BestsellerProps } from './types'
 import { TitleSection } from '../TitleSection'
+import { BestsellerProps } from './types'
 
 export const Bestsellers = ({ bestsellers }: BestsellerProps) => {
   return (
@@ -10,7 +10,7 @@ export const Bestsellers = ({ bestsellers }: BestsellerProps) => {
       <div className="mb-20 mt-10 flex overflow-x-scroll">
         <div className="flex flex-nowrap gap-4">
           {bestsellers?.map((product) => (
-            <Link href={`shop/produkte/${product.slug}`} key={product.id}>
+            <Link href={`/shop/produkte/${product.slug}`} key={product.id}>
               <div className="group relative h-64 w-64 overflow-hidden rounded-lg">
                 {product.images?.length && product.images[0].file?.url && (
                   <Image

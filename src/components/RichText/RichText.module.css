@@ -1,0 +1,16 @@
+.richtext ul {
+  list-style-type: disc;
+  list-style-position: inside;
+}
+
+.richtext a {
+  text-decoration: underline;
+}
+
+.richtext a:hover {
+  color: #214073;
+}
+
+.richtext a:active {
+  color: #214073;
+}
