@@ -21,7 +21,7 @@ const LightPlanningPage: NextPage<LightPlaningPageProps> = ({
 }) => {
   return (
     <>
-      <NextSeo title={lightPlanning.title} description={lightPlanning.intro} />
+      <NextSeo title="Lichtplanung" description={lightPlanning.intro} />
       <CallToAction title={lightPlanning.title} intro={lightPlanning.intro}>
         <Button
           type="secondary"
@@ -81,7 +81,7 @@ const LightPlanningPage: NextPage<LightPlaningPageProps> = ({
             <div className="my-4">
               <Button
                 type="primary"
-                text="Vereinbaren Sie jetzt einen Termin"
+                text="Kontakt"
                 href="/kontakt"
               />
             </div>

@@ -1,7 +1,7 @@
 export const lampShades = {
-  title: 'Lampenschirme',
+  title: 'Lampen&shy;schirme',
   primaryButton: {
-    text: 'Weitere Angebote anzeigen',
+    text: 'Weitere Angebote',
     link: '/',
   },
   secondaryButton: {

@@ -2,7 +2,7 @@ import { Testimonial } from '../types/Testimonial'
 
 export const testimonials: Testimonial[] = [
   {
-    text: '«Seit 30 Jahren berät und Wehrli Licht in Sachen Beleuchtung und nimmt auch auf spezielle Kundenwünsche Rücksicht.»',
+    text: '«Seit 30 Jahren berät uns Wehrli Licht in Sachen Beleuchtung und nimmt auch auf spezielle Kundenwünsche Rücksicht.»',
     authorName: 'Susanne Tobler',
     authorTitle: 'Geschäftsführerin',
     authorSubtitle: 'Hotel Mozart',

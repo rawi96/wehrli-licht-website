@@ -1,7 +1,7 @@
 export const customProducts = {
   title: 'Sonder&shy;anfertigungen',
   primaryButton: {
-    text: 'Weitere Angebote anzeigen',
+    text: 'Weitere Angebote',
     link: '/',
   },
   secondaryButton: {

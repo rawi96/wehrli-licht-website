@@ -22,7 +22,7 @@ const LightConsultingPage: NextPage<LightConsultingPageProps> = ({
   return (
     <>
       <NextSeo
-        title={lightConsulting.title}
+        title="Lichtberatung"
         description={offerItems[1].description}
       />
       <CallToAction
@@ -64,7 +64,7 @@ const LightConsultingPage: NextPage<LightConsultingPageProps> = ({
             <div className="my-4">
               <Button
                 type="primary"
-                text="Vereinbaren Sie jetzt einen Termin"
+                text="Kontakt"
                 href="/kontakt"
               />
             </div>

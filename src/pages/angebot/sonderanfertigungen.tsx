@@ -22,7 +22,7 @@ const CustomProductsPage: NextPage<CustomProductsPageProps> = ({
   return (
     <>
       <NextSeo
-        title={customProducts.title}
+        title="Sonderanfertigungen"
         description={offerItems[4].description}
       />
       <CallToAction
@@ -69,7 +69,7 @@ const CustomProductsPage: NextPage<CustomProductsPageProps> = ({
             <div className="my-4">
               <Button
                 type="primary"
-                text="Jetzt einen Termin vereinbaren"
+                text="Kontakt"
                 href="/kontakt"
               />
             </div>

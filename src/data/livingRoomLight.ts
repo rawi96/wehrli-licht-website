@@ -1,7 +1,7 @@
 export const livingRoomLight = {
-  title: 'Wohnraumleuchten',
+  title: 'Wohn&shy;raum&shy;leuchten',
   primaryButton: {
-    text: 'Weitere Angebote anzeigen',
+    text: 'Weitere Angebote',
     link: '/',
   },
   secondaryButton: {

@@ -1,7 +1,7 @@
 export const showRoom = {
   title: 'Showroom',
   primaryButton: {
-    text: 'Weitere Angebote anzeigen',
+    text: 'Weitere Angebote',
     link: '/',
   },
   secondaryButton: {

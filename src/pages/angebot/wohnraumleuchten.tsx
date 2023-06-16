@@ -22,7 +22,7 @@ const LightPlanningPage: NextPage<LightPlaningPageProps> = ({
   return (
     <>
       <NextSeo
-        title={livingRoomLight.title}
+        title="Wohnraumleuchten"
         description={offerItems[3].description}
       />
       <CallToAction

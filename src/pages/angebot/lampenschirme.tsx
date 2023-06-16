@@ -24,7 +24,7 @@ const LampShadePage: NextPage<LampShadePageProps> = ({
   return (
     <>
       <NextSeo
-        title={lampShades.title}
+        title="Lampenschirme"
         description={offerItems[2].description}
       />
 
@@ -70,7 +70,7 @@ const LampShadePage: NextPage<LampShadePageProps> = ({
               <div className="my-4">
                 <Button
                   type="primary"
-                  text="Beratungstermin vereinbaren"
+                  text="Kontakt"
                   href="/kontakt"
                 />
               </div>
@@ -90,12 +90,12 @@ const LampShadePage: NextPage<LampShadePageProps> = ({
           />
         </div>
         <div className="mb-16">
-          <TitleSection title="Lampenschirmformen" />
+          <TitleSection title="Lampen&shy;schirm Formen" />
           <div className="mt-10">
             <ImageGalleryWithSubtitles images={lampShades.shapeImages} />
           </div>
         </div>
-        <TitleSection title="Lampenschirm Beispiele" />
+        <TitleSection title="Lampen&shy;schirm Beispiele" />
         <div className="mt-10">
           <ImageGallery images={lampShades.images} />
         </div>
