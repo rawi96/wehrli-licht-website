@@ -89,9 +89,10 @@ export const getStaticProps: GetStaticProps<CategorySlugPage> = async ({
   const products = await swell.products.list({
     category: typeof slug === 'string' ? slug : '',
     expand: ['variants'],
+    limit:100
   })
 
-  const bestsellers = (await swell.products.list({})).results.filter(
+  const bestsellers = (await swell.products.list({limit: 100})).results.filter(
     (product) => product.tags?.includes('bestseller')
   )
 

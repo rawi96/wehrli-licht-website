@@ -148,7 +148,7 @@ export const getStaticProps: GetStaticProps<ShopPageProps> = async () => {
 
   const categories = await swell.categories.list()
 
-  const bestsellers = (await swell.products.list({})).results.filter(
+  const bestsellers = (await swell.products.list({limit: 100})).results.filter(
     (product) => product.tags?.includes('bestseller')
   )
 

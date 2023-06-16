@@ -190,6 +190,7 @@ export const getStaticProps: GetStaticProps<ProductSlugPageProps> = async ({
 
   //include variants of products
   const { results } = await swell.products.list({
+    limit: 100,
     expand: ['variants'],
   })
 
@@ -211,7 +212,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     process.env.NEXT_PUBLIC_SWELL_API_KEY || ''
   )
 
-  const { results } = await swell.products.list()
+  const { results } = await swell.products.list({limit: 100})
 
   return {
     paths: results.map(({ slug }) => ({ params: { slug } })),
