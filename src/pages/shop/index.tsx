@@ -1,4 +1,5 @@
 import { GetStaticProps, NextPage } from 'next'
+import { NextSeo } from 'next-seo'
 import Image from 'next/image'
 import Link from 'next/link'
 import swell, { Category, Product } from 'swell-js'
@@ -19,6 +20,13 @@ type ShopPageProps = {
 const ShopPage: NextPage<ShopPageProps> = ({ categories, bestsellers }) => {
   return (
     <>
+      <NextSeo
+        title={'Wehrli Licht Shop'}
+        description={
+          'Diese und viele weitere Leuchten sind auch in unserem Showroom in Goldach ausgestellt. Wir beraten Sie gerne persönlich und freuen uns auf Ihren Besuch!'
+        }
+      />
+
       <CallToAction
         title={'Wehrli Licht Shop'}
         intro="Diese und viele weitere Leuchten sind auch in unserem Showroom in Goldach ausgestellt. Wir beraten Sie gerne persönlich und freuen uns auf Ihren Besuch!"

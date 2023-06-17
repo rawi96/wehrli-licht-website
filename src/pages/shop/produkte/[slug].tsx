@@ -1,5 +1,6 @@
 import { Tab } from '@headlessui/react'
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
+import { NextSeo } from 'next-seo'
 import Image from 'next/image'
 import { useState } from 'react'
 import swell, { Product, Variant } from 'swell-js'
@@ -79,6 +80,7 @@ const ProductSlugPage: NextPage<ProductSlugPageProps> = ({
 
   return (
     <>
+      <NextSeo title={product?.name} description={product?.description} />
       <Header />
       <PageContainer>
         {product && (

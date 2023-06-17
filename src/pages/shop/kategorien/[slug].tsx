@@ -1,5 +1,7 @@
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
+import { NextSeo } from 'next-seo'
 import Image from 'next/image'
+import Link from 'next/link'
 import swell, { Category, Product, Variant } from 'swell-js'
 import { Bestsellers } from '../../../components/Bestsellers'
 import { Breadcrumbs } from '../../../components/Breadcrumbs'
@@ -8,7 +10,6 @@ import { Footer } from '../../../components/Footer'
 import { Header } from '../../../components/Header'
 import { PageContainer } from '../../../components/PageContainer'
 import { TitleSection } from '../../../components/TitleSection'
-import Link from 'next/link'
 
 type CategorySlugPage = {
   products: Product[]
@@ -38,6 +39,7 @@ const CategorySlugPage: NextPage<CategorySlugPage> = ({
 }) => {
   return (
     <>
+      <NextSeo title={category.name} description={category.description} />
       <Header />
       <PageContainer>
         <Breadcrumbs

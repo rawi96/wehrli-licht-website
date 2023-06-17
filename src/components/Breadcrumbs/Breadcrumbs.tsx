@@ -5,11 +5,17 @@ import { BreadcrumsProps } from './types'
 export const Breadcrumbs = ({ pages }: BreadcrumsProps) => {
   return (
     <nav className="mb-10 flex justify-center" aria-label="Breadcrumb">
-      <ol role="list" className="flex items-center space-x-4">
+      <ol
+        role="list"
+        className="flex flex-col items-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0"
+      >
         <li>
           <div>
             <Link href="/" className="text-gray-400 hover:text-gray-500">
-              <HomeIcon className="h-5 w-5 flex-shrink-0" aria-hidden="true" />
+              <HomeIcon
+                className="ml-8 h-5 w-5 flex-shrink-0"
+                aria-hidden="true"
+              />
               <span className="sr-only">Home</span>
             </Link>
           </div>
