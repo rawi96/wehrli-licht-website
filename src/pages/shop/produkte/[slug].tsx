@@ -167,20 +167,40 @@ const ProductSlugPage: NextPage<ProductSlugPageProps> = ({
                       setActiveVariant={setActiveVariant}
                     />
                   )}
-
-                  <div className="mt-3">
-                    <div className="sm:flex-col1 mb-10 mt-6 flex ">
-                      <div className="mr-2">
+                  <div className="hidden lg:block">
+                    <div className="mt-3">
+                      <div className="sm:flex-col1 mb-10 mt-6 flex ">
+                        <div className="mr-2">
+                          <Button
+                            text="Zum Warenkorb hinzufügen"
+                            type="primary"
+                            onClick={handleAddToCartClick}
+                          />
+                        </div>
                         <Button
-                          text="Zum Warenkorb hinzufügen"
-                          type="primary"
-                          onClick={handleAddToCartClick}
+                          text="Besichtigungstermin vereinbaren"
+                          type="quaternary"
+                          href="/kontakt"
                         />
                       </div>
+                    </div>
+                  </div>
+                  <div className="block lg:hidden">
+                    <div className="w-full pt-6">
+                      <Button
+                        text="Zum Warenkorb hinzufügen"
+                        type="primary"
+                        onClick={handleAddToCartClick}
+                        fullWidth
+                      />
+                    </div>
+
+                    <div className=" pb-10 pt-6 text-center">
                       <Button
                         text="Besichtigungstermin vereinbaren"
                         type="quaternary"
                         href="/kontakt"
+                        fullWidth
                       />
                     </div>
                   </div>

@@ -8,11 +8,15 @@ const classNamesMap = {
   quaternary: 'text-black hover:underline',
 }
 
-const ButtonLink = ({ href, text, type }: ButtonProps) => {
+const ButtonLink = ({ href, text, type, fullWidth }: ButtonProps) => {
   return (
     <Link
       href={href!}
-      className={`rounded-lg px-3.5 py-1.5 text-base font-semibold leading-7 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-wehrli-400 ${classNamesMap[type]}`}
+      className={`${
+        fullWidth ? 'w-full' : ''
+      } rounded-lg px-3.5 py-1.5 text-base font-semibold leading-7 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-wehrli-400 ${
+        classNamesMap[type]
+      }`}
     >
       {text}{' '}
       {type === 'tertiary' || type === 'quaternary' ? (
@@ -24,11 +28,15 @@ const ButtonLink = ({ href, text, type }: ButtonProps) => {
   )
 }
 
-const ButtonClick = ({ onClick, text, type }: ButtonProps) => {
+const ButtonClick = ({ onClick, text, type, fullWidth }: ButtonProps) => {
   return (
     <button
       onClick={onClick}
-      className={`rounded-lg px-3.5 py-1.5 text-base font-semibold leading-7 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-wehrli-400 ${classNamesMap[type]}`}
+      className={`${
+        fullWidth ? 'w-full' : ''
+      } rounded-lg px-3.5 py-1.5 text-base font-semibold leading-7 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-wehrli-400 ${
+        classNamesMap[type]
+      }`}
     >
       {text}{' '}
       {type === 'tertiary' || type === 'quaternary' ? (
@@ -40,15 +48,26 @@ const ButtonClick = ({ onClick, text, type }: ButtonProps) => {
   )
 }
 
-export const Button = ({ text, href, onClick, type }: ButtonProps) => {
+export const Button = ({
+  text,
+  href,
+  onClick,
+  type,
+  fullWidth,
+}: ButtonProps) => {
   const isLink = !!href
 
   return (
     <>
       {isLink ? (
-        <ButtonLink href={href} type={type} text={text} />
+        <ButtonLink href={href} type={type} text={text} fullWidth={fullWidth} />
       ) : (
-        <ButtonClick onClick={onClick} type={type} text={text} />
+        <ButtonClick
+          onClick={onClick}
+          type={type}
+          text={text}
+          fullWidth={fullWidth}
+        />
       )}
     </>
   )
