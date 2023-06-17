@@ -1,6 +1,7 @@
 import { GetStaticProps, NextPage } from 'next'
 import swell, { Category, Product } from 'swell-js'
 import { Bestsellers } from '../../components/Bestsellers'
+import { Breadcrumbs } from '../../components/Breadcrumbs'
 import { Button } from '../../components/Button'
 import { CallToAction } from '../../components/CallToAction'
 import { Feedback } from '../../components/Feedback'
@@ -25,6 +26,7 @@ const ShopPage: NextPage<ShopPageProps> = ({ categories, bestsellers }) => {
       </CallToAction>
 
       <PageContainer>
+        <Breadcrumbs pages={[{ name: 'Shop', href: '/shop' }]} />
         <TitleSection title="Entdecken Sie unsere Leuchten-Kategorien" />
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-2xl pb-20 lg:max-w-none">

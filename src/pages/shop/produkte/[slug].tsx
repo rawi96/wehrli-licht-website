@@ -3,6 +3,7 @@ import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import { useState } from 'react'
 import swell, { Product, Variant } from 'swell-js'
 import { Bestsellers } from '../../../components/Bestsellers'
+import { Breadcrumbs } from '../../../components/Breadcrumbs'
 import { Button } from '../../../components/Button'
 import { Feedback } from '../../../components/Feedback'
 import { Footer } from '../../../components/Footer'
@@ -44,113 +45,144 @@ const ProductSlugPage: NextPage<ProductSlugPageProps> = ({
     setIsShowCart(true)
   }
 
+  const generateBreadcrumps = () => {
+    const breadcrumpArray = []
+
+    breadcrumpArray.push({ name: 'Shop', href: '/shop' })
+
+    const firstCategoryOfProduct = product?.categories
+      ? (product.categories[0] as { name: string; slug: string })
+      : null
+
+    if (firstCategoryOfProduct !== null) {
+      breadcrumpArray.push({
+        name: firstCategoryOfProduct.name,
+        href: `/shop/kategorien/${firstCategoryOfProduct.slug}`,
+      })
+    }
+
+    if (product !== undefined) {
+      breadcrumpArray.push({
+        name: product.name,
+        href: `/shop/produkte/${product.slug}`,
+      })
+    }
+
+    return breadcrumpArray
+  }
+
   return (
     <>
       <Header />
       <PageContainer>
         {product && (
-          <div className="mb-20 lg:grid lg:grid-cols-2 lg:items-start lg:gap-x-8">
-            {/* Image gallery */}
-            <Tab.Group as="div" className="flex flex-col-reverse">
-              {/* Image selector */}
-              <div className="mx-auto mt-6 w-full max-w-2xl lg:max-w-none">
-                <Tab.List className="grid grid-cols-2 gap-6 sm:grid-cols-4">
-                  {product?.images?.map((image) => (
-                    <Tab
-                      key={image.id}
-                      className="relative flex h-24 cursor-pointer items-center justify-center rounded-md bg-white text-sm font-medium uppercase text-gray-900 hover:bg-gray-50 focus:outline-none focus:ring focus:ring-opacity-50 focus:ring-offset-4"
-                    >
-                      {({ selected }) => (
-                        <>
-                          <span className="sr-only">{product.name}</span>
-                          <span className="absolute inset-0 overflow-hidden rounded-md">
-                            <img
-                              src={image.file?.url}
-                              alt={product.name}
-                              className="h-full w-full object-cover object-center"
+          <>
+            <Breadcrumbs pages={generateBreadcrumps()} />
+            <div className="mb-20 lg:grid lg:grid-cols-2 lg:items-start lg:gap-x-8">
+              {/* Image gallery */}
+              <Tab.Group as="div" className="flex flex-col-reverse">
+                {/* Image selector */}
+                <div className="mx-auto mt-6 w-full max-w-2xl lg:max-w-none">
+                  <Tab.List className="grid grid-cols-2 gap-6 sm:grid-cols-4">
+                    {product?.images?.map((image) => (
+                      <Tab
+                        key={image.id}
+                        className="relative flex h-24 cursor-pointer items-center justify-center rounded-md bg-white text-sm font-medium uppercase text-gray-900 hover:bg-gray-50 focus:outline-none focus:ring focus:ring-opacity-50 focus:ring-offset-4"
+                      >
+                        {({ selected }) => (
+                          <>
+                            <span className="sr-only">{product.name}</span>
+                            <span className="absolute inset-0 overflow-hidden rounded-md">
+                              <img
+                                src={image.file?.url}
+                                alt={product.name}
+                                className="h-full w-full object-cover object-center"
+                              />
+                            </span>
+                            <span
+                              className={classNames(
+                                selected
+                                  ? 'ring-wehrli-500'
+                                  : 'ring-transparent',
+                                'pointer-events-none absolute inset-0 rounded-md ring-2 ring-offset-2'
+                              )}
+                              aria-hidden="true"
                             />
-                          </span>
-                          <span
-                            className={classNames(
-                              selected ? 'ring-wehrli-500' : 'ring-transparent',
-                              'pointer-events-none absolute inset-0 rounded-md ring-2 ring-offset-2'
-                            )}
-                            aria-hidden="true"
-                          />
-                        </>
-                      )}
-                    </Tab>
+                          </>
+                        )}
+                      </Tab>
+                    ))}
+                  </Tab.List>
+                </div>
+
+                <Tab.Panels className="aspect-h-1 aspect-w-1 w-full">
+                  {product?.images?.map((image) => (
+                    <Tab.Panel key={image.id}>
+                      <img
+                        src={image.file?.url}
+                        alt={product.name}
+                        className="h-full w-full object-cover object-center sm:rounded-lg"
+                      />
+                    </Tab.Panel>
                   ))}
-                </Tab.List>
-              </div>
+                </Tab.Panels>
+              </Tab.Group>
 
-              <Tab.Panels className="aspect-h-1 aspect-w-1 w-full">
-                {product?.images?.map((image) => (
-                  <Tab.Panel key={image.id}>
-                    <img
-                      src={image.file?.url}
-                      alt={product.name}
-                      className="h-full w-full object-cover object-center sm:rounded-lg"
-                    />
-                  </Tab.Panel>
-                ))}
-              </Tab.Panels>
-            </Tab.Group>
-
-            {/* Product info */}
-            <div className="mt-10 px-4 sm:mt-16 sm:px-0 lg:mt-0">
-              <h1 className="text-3xl font-bold tracking-tight text-gray-900">
-                {product?.name}
-              </h1>
-
-              <div className="mt-3">
-                <p className="text-3xl tracking-tight text-gray-900">
-                  CHF {activeVariant?.price ?? product?.price}.-
-                </p>
-              </div>
-
-              <div className="mt-6">
-                {(
-                  product?.variants as unknown as {
-                    count: number
-                    results: Variant[]
-                  }
-                ).count > 0 && (
-                  <ProductVariationSelector
-                    product={product}
-                    activeVariant={activeVariant}
-                    setActiveVariant={setActiveVariant}
-                  />
-                )}
+              {/* Product info */}
+              <div className="mt-10 px-4 sm:mt-16 sm:px-0 lg:mt-0">
+                <h1 className="text-3xl font-bold tracking-tight text-gray-900">
+                  {product?.name}
+                </h1>
 
                 <div className="mt-3">
-                  <div className="sm:flex-col1 mb-10 mt-6 flex ">
-                    <div className="mr-2">
+                  <p className="text-3xl tracking-tight text-gray-900">
+                    CHF {activeVariant?.price ?? product?.price}.-
+                  </p>
+                </div>
+
+                <div className="mt-6">
+                  {(
+                    product?.variants as unknown as {
+                      count: number
+                      results: Variant[]
+                    }
+                  ).count > 0 && (
+                    <ProductVariationSelector
+                      product={product}
+                      activeVariant={activeVariant}
+                      setActiveVariant={setActiveVariant}
+                    />
+                  )}
+
+                  <div className="mt-3">
+                    <div className="sm:flex-col1 mb-10 mt-6 flex ">
+                      <div className="mr-2">
+                        <Button
+                          text="Zum Warenkorb hinzufügen"
+                          type="primary"
+                          onClick={handleAddToCartClick}
+                        />
+                      </div>
                       <Button
-                        text="Zum Warenkorb hinzufügen"
-                        type="primary"
-                        onClick={handleAddToCartClick}
+                        text="Besichtigungstermin vereinbaren"
+                        type="quaternary"
+                        href="/kontakt"
                       />
                     </div>
-                    <Button
-                      text="Besichtigungstermin vereinbaren"
-                      type="quaternary"
-                      href="/kontakt"
-                    />
                   </div>
                 </div>
-              </div>
 
-              {product?.description && (
-                <>
-                  <div className="mb-2">
-                    <p className="text-lg font-bold">Beschreibung</p>
-                  </div>
-                  <RichText html={product.description} />
-                </>
-              )}
+                {product?.description && (
+                  <>
+                    <div className="mb-2">
+                      <p className="text-lg font-bold">Beschreibung</p>
+                    </div>
+                    <RichText html={product.description} />
+                  </>
+                )}
+              </div>
             </div>
-          </div>
+          </>
         )}
 
         {bestsellers?.length > 0 && <Bestsellers bestsellers={bestsellers} />}
@@ -175,7 +207,7 @@ export const getStaticProps: GetStaticProps<ProductSlugPageProps> = async ({
   //include variants of products
   const { results } = await swell.products.list({
     limit: 100,
-    expand: ['variants'],
+    expand: ['variants', 'categories'],
   })
 
   const bestsellers = results.filter((product) =>
