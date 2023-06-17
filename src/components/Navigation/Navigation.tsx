@@ -128,6 +128,17 @@ export const Navigation = () => {
                     </Link>
                   )
                 })}
+                {isShopPage && (
+                  <button
+                    className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-gray-400/10"
+                    onClick={() => setIsShowCart(true)}
+                  >
+                    Warenkorb{' '}
+                    {cart?.item_quantity && cart.item_quantity > 0
+                      ? `(${cart.item_quantity})`
+                      : ''}
+                  </button>
+                )}
               </div>
             </div>
           </div>

@@ -12,10 +12,7 @@ export const Breadcrumbs = ({ pages }: BreadcrumsProps) => {
         <li>
           <div>
             <Link href="/" className="text-gray-400 hover:text-gray-500">
-              <HomeIcon
-                className="ml-8 h-5 w-5 flex-shrink-0"
-                aria-hidden="true"
-              />
+              <HomeIcon className="h-5 w-5 flex-shrink-0" aria-hidden="true" />
               <span className="sr-only">Home</span>
             </Link>
           </div>
@@ -24,12 +21,12 @@ export const Breadcrumbs = ({ pages }: BreadcrumsProps) => {
           <li key={page.name}>
             <div className="flex items-center">
               <ChevronRightIcon
-                className="h-5 w-5 flex-shrink-0 text-gray-400"
+                className="hidden h-5 w-5 flex-shrink-0 text-gray-400 sm:block"
                 aria-hidden="true"
               />
               <Link
                 href={page.href}
-                className="ml-4 text-sm font-medium text-gray-500 hover:text-gray-700"
+                className="text-sm font-medium text-gray-500 hover:text-gray-700 sm:ml-4"
               >
                 {page.name}
               </Link>
