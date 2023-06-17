@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import { TestimonialProps } from './types'
+import Link from 'next/link'
 
 export const Testimonial = ({
   text,
@@ -44,12 +45,12 @@ export const Testimonial = ({
           <div className="mt-1 text-gray-500">{authorTitle}</div>
           {authorSubtitle && authorSubtitleUrl && (
             <div className="mt-1">
-              <a
+              <Link
                 className="text-gray-500 underline hover:text-gray-700"
                 href={authorSubtitleUrl}
               >
                 {authorSubtitle}
-              </a>
+              </Link>
             </div>
           )}
         </figcaption>

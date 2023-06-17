@@ -1,4 +1,6 @@
 import { GetStaticProps, NextPage } from 'next'
+import Image from 'next/image'
+import Link from 'next/link'
 import swell, { Category, Product } from 'swell-js'
 import { Bestsellers } from '../../components/Bestsellers'
 import { Breadcrumbs } from '../../components/Breadcrumbs'
@@ -32,7 +34,7 @@ const ShopPage: NextPage<ShopPageProps> = ({ categories, bestsellers }) => {
           <div className="mx-auto max-w-2xl pb-20 lg:max-w-none">
             <div className="mt-6 space-y-12 lg:grid lg:grid-cols-3 lg:gap-x-6 lg:space-y-0">
               {categories.map((category) => (
-                <a
+                <Link
                   key={category.name}
                   href={`/shop/kategorien/${category.slug}`}
                   className="group block"
@@ -44,10 +46,12 @@ const ShopPage: NextPage<ShopPageProps> = ({ categories, bestsellers }) => {
                     <div className="relative mt-12 h-80 w-full overflow-hidden rounded-lg bg-white sm:aspect-h-1 sm:aspect-w-2 lg:aspect-h-1 lg:aspect-w-1 group-hover:opacity-75 sm:h-64">
                       {category.images?.length &&
                         category.images[0].file?.url && (
-                          <img
+                          <Image
                             src={category.images[0].file.url}
                             alt={category.name}
                             className="h-full w-full object-cover object-center"
+                            height={100}
+                            width={1000}
                           />
                         )}
                     </div>
@@ -59,7 +63,7 @@ const ShopPage: NextPage<ShopPageProps> = ({ categories, bestsellers }) => {
                       dangerouslySetInnerHTML={{ __html: category.description }}
                     ></p>
                   </div>
-                </a>
+                </Link>
               ))}
             </div>
           </div>

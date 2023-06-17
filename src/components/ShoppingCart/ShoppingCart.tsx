@@ -1,5 +1,7 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
+import Image from 'next/image'
+import Link from 'next/link'
 import { ChangeEvent, Fragment } from 'react'
 import swell, { CartItem } from 'swell-js'
 import { Button } from '../../components/Button'
@@ -74,48 +76,59 @@ export const ShoppingCart = ({ open, setOpen }: ShoppingCartProps) => {
                   <div className="relative flex w-full flex-col overflow-hidden bg-white pb-8 pt-6 sm:rounded-lg sm:pb-6 lg:py-8">
                     <div className="flex items-center justify-between px-4 sm:px-6 lg:px-8">
                       <h2 className="text-lg font-medium text-gray-900">
-                        Shopping Cart
+                        Warenkorb
                       </h2>
                       <button
                         type="button"
                         className="text-gray-400 hover:text-gray-500"
                         onClick={() => setOpen(false)}
                       >
-                        <span className="sr-only">Close</span>
+                        <span className="sr-only">Schliessen</span>
                         <XMarkIcon className="h-6 w-6" aria-hidden="true" />
                       </button>
                     </div>
 
                     <section aria-labelledby="cart-heading">
                       <h2 id="cart-heading" className="sr-only">
-                        Items in your shopping cart
+                        Produkte im Warenkorb
                       </h2>
 
                       <ul
                         role="list"
                         className="divide-y divide-gray-200 px-4 sm:px-6 lg:px-8"
                       >
+                        {cart.items?.length === 0 && (
+                          <p>Sie haben keine Produkte im Warenkorb.</p>
+                        )}
                         {cart.items?.map((item, productIdx) => (
                           <li
                             key={item.id}
                             className="flex py-8 text-sm sm:items-center"
                           >
-                            {item.product?.images && (
-                              <img
-                                src={item.product.images[0].file?.url}
-                                alt={item.product.name}
-                                className="h-24 w-24 flex-none rounded-lg border border-gray-200 sm:h-32 sm:w-32"
-                              />
-                            )}
+                            {item.product?.images &&
+                              item.product.images[0].file?.url && (
+                                <Image
+                                  src={item.product.images[0].file?.url}
+                                  alt={item.product.name}
+                                  className="h-24 w-24 flex-none rounded-lg border border-gray-200 sm:h-32 sm:w-32"
+                                  width={1000}
+                                  height={1000}
+                                />
+                              )}
 
                             <div className="ml-4 grid flex-auto grid-cols-1 grid-rows-1 items-start gap-x-5 gap-y-3 sm:ml-6 sm:flex sm:items-center sm:gap-0">
                               <div className="row-end-1 flex-auto sm:pr-6">
                                 <h3 className="font-medium text-gray-900">
-                                  <a
+                                  <Link
                                     href={`/shop/produkte/${item.product?.slug}`}
                                   >
                                     {item.product?.name}
-                                  </a>
+                                  </Link>
+                                  {item.options && (
+                                    <p className="pt-3 text-gray-600">
+                                      {item.options[0].value}
+                                    </p>
+                                  )}
                                 </h3>
                               </div>
                               <p className="row-span-2 row-end-2 font-medium text-gray-900 sm:order-1 sm:ml-6 sm:w-1/3 sm:flex-none sm:text-right">
@@ -162,43 +175,44 @@ export const ShoppingCart = ({ open, setOpen }: ShoppingCartProps) => {
                         ))}
                       </ul>
                     </section>
+                    {cart.items?.length !== 0 && (
+                      <section
+                        aria-labelledby="summary-heading"
+                        className="mt-auto sm:px-6 lg:px-8"
+                      >
+                        <div className="bg-gray-50 p-6 sm:rounded-lg sm:p-8">
+                          <h2 id="summary-heading" className="sr-only">
+                            Bestellübersicht
+                          </h2>
 
-                    <section
-                      aria-labelledby="summary-heading"
-                      className="mt-auto sm:px-6 lg:px-8"
-                    >
-                      <div className="bg-gray-50 p-6 sm:rounded-lg sm:p-8">
-                        <h2 id="summary-heading" className="sr-only">
-                          Order summary
-                        </h2>
+                          <div className="flow-root">
+                            <dl className="-my-4 divide-y divide-gray-200 text-sm">
+                              <div className="flex items-center justify-between py-4">
+                                <dt className="text-gray-600">Zwischentotal</dt>
+                                <dd className="font-medium text-gray-900">
+                                  {cart.sub_total}
+                                </dd>
+                              </div>
+                              <div className="flex items-center justify-between py-4">
+                                <dt className="text-gray-600">Versand</dt>
+                                <dd className="font-medium text-gray-900">
+                                  {cart.shipment_price}
+                                </dd>
+                              </div>
 
-                        <div className="flow-root">
-                          <dl className="-my-4 divide-y divide-gray-200 text-sm">
-                            <div className="flex items-center justify-between py-4">
-                              <dt className="text-gray-600">Subtotal</dt>
-                              <dd className="font-medium text-gray-900">
-                                {cart.sub_total}
-                              </dd>
-                            </div>
-                            <div className="flex items-center justify-between py-4">
-                              <dt className="text-gray-600">Shipping</dt>
-                              <dd className="font-medium text-gray-900">
-                                {cart.shipment_price}
-                              </dd>
-                            </div>
-
-                            <div className="flex items-center justify-between py-4">
-                              <dt className="text-base font-medium text-gray-900">
-                                Order total
-                              </dt>
-                              <dd className="text-base font-medium text-gray-900">
-                                {cart.grand_total}
-                              </dd>
-                            </div>
-                          </dl>
+                              <div className="flex items-center justify-between py-4">
+                                <dt className="text-base font-medium text-gray-900">
+                                  Total
+                                </dt>
+                                <dd className="text-base font-medium text-gray-900">
+                                  {cart.grand_total}
+                                </dd>
+                              </div>
+                            </dl>
+                          </div>
                         </div>
-                      </div>
-                    </section>
+                      </section>
+                    )}
 
                     <div className="mt-8 flex justify-end px-4 sm:px-6 lg:px-8">
                       {cart?.item_quantity && cart.item_quantity > 0 ? (

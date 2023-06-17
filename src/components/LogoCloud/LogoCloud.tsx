@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 
 const logos = [
   {
@@ -69,7 +70,7 @@ export const LogoCloud = () => {
       <h2 className="mb-2 font-bold">Unsere Partner</h2>
       <div className="mx-auto mt-10 grid grid-cols-4 items-start gap-x-8 gap-y-10 sm:grid-cols-6 sm:gap-x-10 lg:mx-0 lg:grid-cols-5">
         {logos.map((logo) => (
-          <a href={logo.url} key={logo.name}>
+          <Link href={logo.url} key={logo.name}>
             <Image
               className="col-span-2 max-h-12 w-full object-contain object-left lg:col-span-1"
               src={logo.imageSrc}
@@ -77,7 +78,7 @@ export const LogoCloud = () => {
               width={200}
               height={200}
             />
-          </a>
+          </Link>
         ))}
       </div>
     </div>

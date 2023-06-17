@@ -1,5 +1,6 @@
 import { Tab } from '@headlessui/react'
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
+import Image from 'next/image'
 import { useState } from 'react'
 import swell, { Product, Variant } from 'swell-js'
 import { Bestsellers } from '../../../components/Bestsellers'
@@ -38,6 +39,7 @@ const ProductSlugPage: NextPage<ProductSlugPageProps> = ({
 
     const cart = await swell.cart.addItem({
       product_id: product?.id,
+      variant_id: activeVariant?.id,
       quantity: 1,
     })
 
@@ -54,7 +56,11 @@ const ProductSlugPage: NextPage<ProductSlugPageProps> = ({
       ? (product.categories[0] as { name: string; slug: string })
       : null
 
-    if (firstCategoryOfProduct !== null) {
+    if (
+      firstCategoryOfProduct &&
+      firstCategoryOfProduct.name &&
+      firstCategoryOfProduct.slug
+    ) {
       breadcrumpArray.push({
         name: firstCategoryOfProduct.name,
         href: `/shop/kategorien/${firstCategoryOfProduct.slug}`,
@@ -93,11 +99,15 @@ const ProductSlugPage: NextPage<ProductSlugPageProps> = ({
                           <>
                             <span className="sr-only">{product.name}</span>
                             <span className="absolute inset-0 overflow-hidden rounded-md">
-                              <img
-                                src={image.file?.url}
-                                alt={product.name}
-                                className="h-full w-full object-cover object-center"
-                              />
+                              {image.file?.url && (
+                                <Image
+                                  src={image.file.url}
+                                  alt={product.name}
+                                  className="h-full w-full object-cover object-center"
+                                  width={1000}
+                                  height={1000}
+                                />
+                              )}
                             </span>
                             <span
                               className={classNames(
@@ -118,11 +128,15 @@ const ProductSlugPage: NextPage<ProductSlugPageProps> = ({
                 <Tab.Panels className="aspect-h-1 aspect-w-1 w-full">
                   {product?.images?.map((image) => (
                     <Tab.Panel key={image.id}>
-                      <img
-                        src={image.file?.url}
-                        alt={product.name}
-                        className="h-full w-full object-cover object-center sm:rounded-lg"
-                      />
+                      {image.file?.url && (
+                        <Image
+                          src={image.file.url}
+                          alt={product.name}
+                          className="h-full w-full object-cover object-center sm:rounded-lg"
+                          width={1000}
+                          height={1000}
+                        />
+                      )}
                     </Tab.Panel>
                   ))}
                 </Tab.Panels>
