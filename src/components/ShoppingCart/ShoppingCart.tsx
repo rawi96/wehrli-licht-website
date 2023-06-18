@@ -6,6 +6,7 @@ import { ChangeEvent, Fragment } from 'react'
 import swell, { CartItem } from 'swell-js'
 import { Button } from '../../components/Button'
 import { useShopContext } from '../../context/ShopContext'
+import { AnalyticsListener } from '../AnalyticsListener'
 import { ShoppingCartProps } from './types'
 
 export const ShoppingCart = ({ open, setOpen }: ShoppingCartProps) => {
@@ -119,11 +120,15 @@ export const ShoppingCart = ({ open, setOpen }: ShoppingCartProps) => {
                             <div className="ml-4 grid flex-auto grid-cols-1 grid-rows-1 items-start gap-x-5 gap-y-3 sm:ml-6 sm:flex sm:items-center sm:gap-0">
                               <div className="row-end-1 flex-auto sm:pr-6">
                                 <h3 className="font-medium text-gray-900">
-                                  <Link
-                                    href={`/shop/produkte/${item.product?.slug}`}
+                                  <AnalyticsListener
+                                    buttonName={item.product?.name || ''}
                                   >
-                                    {item.product?.name}
-                                  </Link>
+                                    <Link
+                                      href={`/shop/produkte/${item.product?.slug}`}
+                                    >
+                                      {item.product?.name}
+                                    </Link>
+                                  </AnalyticsListener>
                                   {item.options && (
                                     <p className="pt-3 text-gray-600">
                                       {item.options[0].value}

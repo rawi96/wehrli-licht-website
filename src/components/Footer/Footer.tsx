@@ -3,6 +3,7 @@ import { global } from '../../data/global'
 import { websiteNavigationItems } from '../../data/navigationItems'
 import { socialItems } from '../../data/socialItems'
 import { Address } from '../Address'
+import { AnalyticsListener } from '../AnalyticsListener'
 import { Flyout } from '../Flyout'
 import { OpeningHours } from '../OpeningHours'
 
@@ -25,26 +26,26 @@ export const Footer = () => {
               </div>
             ) : (
               <div key={item.name} className="pb-6">
-                <Link
-                  href={item.href}
-                  className="text-sm leading-6 hover:text-gray-900"
-                >
-                  {item.name}
-                </Link>
+                <AnalyticsListener buttonName={item.name}>
+                  <Link
+                    href={item.href}
+                    className="text-sm leading-6 hover:text-gray-900"
+                  >
+                    {item.name}
+                  </Link>
+                </AnalyticsListener>
               </div>
             )
           })}
         </nav>
         <div className="mt-10 flex justify-center space-x-10">
           {socialItems.map((item) => (
-            <Link
-              key={item.name}
-              href={item.href}
-              className="hover:text-gray-500"
-            >
-              <span className="sr-only">{item.name}</span>
-              <item.icon className="h-6 w-6" aria-hidden="true" />
-            </Link>
+            <AnalyticsListener key={item.name} buttonName={item.name}>
+              <Link href={item.href} className="hover:text-gray-500">
+                <span className="sr-only">{item.name}</span>
+                <item.icon className="h-6 w-6" aria-hidden="true" />
+              </Link>
+            </AnalyticsListener>
           ))}
         </div>
 

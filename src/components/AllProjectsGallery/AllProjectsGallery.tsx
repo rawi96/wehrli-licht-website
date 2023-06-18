@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { AnalyticsListener } from '../AnalyticsListener'
 import { AllProjectsGalleryProps } from './types'
 
 export const AllProjectsGallery = ({
@@ -32,10 +33,12 @@ export const AllProjectsGallery = ({
           ))}
 
           <h3 className="mt-3 text-lg font-semibold leading-6 text-white">
-            <Link href={`/projekte/${project.slug}`}>
-              <span className="absolute inset-0" />
-              {project.title}
-            </Link>
+            <AnalyticsListener buttonName={project.title}>
+              <Link href={`/projekte/${project.slug}`}>
+                <span className="absolute inset-0" />
+                {project.title}
+              </Link>
+            </AnalyticsListener>
           </h3>
         </article>
       ))}

@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { AnalyticsListener } from '../AnalyticsListener'
 import { ButtonProps } from './types'
 
 const classNamesMap = {
@@ -59,16 +60,23 @@ export const Button = ({
 
   return (
     <>
-      {isLink ? (
-        <ButtonLink href={href} type={type} text={text} fullWidth={fullWidth} />
-      ) : (
-        <ButtonClick
-          onClick={onClick}
-          type={type}
-          text={text}
-          fullWidth={fullWidth}
-        />
-      )}
+      <AnalyticsListener buttonName={text}>
+        {isLink ? (
+          <ButtonLink
+            href={href}
+            type={type}
+            text={text}
+            fullWidth={fullWidth}
+          />
+        ) : (
+          <ButtonClick
+            onClick={onClick}
+            type={type}
+            text={text}
+            fullWidth={fullWidth}
+          />
+        )}
+      </AnalyticsListener>
     </>
   )
 }

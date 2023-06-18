@@ -1,6 +1,7 @@
 import { Disclosure } from '@headlessui/react'
 import { MinusSmallIcon, PlusSmallIcon } from '@heroicons/react/24/outline'
 import Link from 'next/link'
+import { AnalyticsListener } from '../../AnalyticsListener'
 import { NavigationAccordionProps } from './types'
 
 export const NavigationAccordion = ({
@@ -25,13 +26,14 @@ export const NavigationAccordion = ({
           </dt>
           <Disclosure.Panel as="dd" className="mt-2 pr-12">
             {items.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className="block rounded-lg p-2 px-3 py-2 text-white hover:bg-gray-400/10"
-              >
-                {item.name}
-              </Link>
+              <AnalyticsListener key={item.name} buttonName={item.name}>
+                <Link
+                  href={item.href}
+                  className="block rounded-lg p-2 px-3 py-2 text-white hover:bg-gray-400/10"
+                >
+                  {item.name}
+                </Link>
+              </AnalyticsListener>
             ))}
           </Disclosure.Panel>
         </>
