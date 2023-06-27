@@ -17,6 +17,19 @@ export default class CustomDocument extends Document {
 
           <link rel="icon" href="/favicon.ico" />
           <link rel="manifest" href="/manifest.json" />
+          <script
+            async
+            src="https://www.googletagmanager.com/gtag/js?id=AW-640686870"
+          ></script>
+          <script>
+            {`
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+
+              gtag('config', 'AW-640686870');
+            `}
+          </script>
         </Head>
         <body className="h-full bg-gray-50 antialiased">
           <Main />
