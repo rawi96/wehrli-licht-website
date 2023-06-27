@@ -1,4 +1,5 @@
 import Document, { Head, Html, Main, NextScript } from 'next/document'
+import Script from 'next/script'
 
 export default class CustomDocument extends Document {
   render() {
@@ -17,11 +18,12 @@ export default class CustomDocument extends Document {
 
           <link rel="icon" href="/favicon.ico" />
           <link rel="manifest" href="/manifest.json" />
-          <script
-            async
+
+          <Script
             src="https://www.googletagmanager.com/gtag/js?id=AW-640686870"
-          ></script>
-          <script>
+            strategy="afterInteractive"
+          />
+          <Script id="google-analytics" strategy="afterInteractive">
             {`
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
@@ -29,7 +31,7 @@ export default class CustomDocument extends Document {
 
               gtag('config', 'AW-640686870');
             `}
-          </script>
+          </Script>
         </Head>
         <body className="h-full bg-gray-50 antialiased">
           <Main />
