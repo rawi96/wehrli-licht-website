@@ -5,10 +5,12 @@ import { AllOffersGallery } from '../components/AllOffersGallery'
 import { Feedback } from '../components/Feedback'
 import { Footer } from '../components/Footer'
 import { Hero } from '../components/Hero'
+import { HolidayModal } from '../components/HolidayModal'
 import { PageContainer } from '../components/PageContainer'
 import { ProjectsTeaserRow } from '../components/ProjectsTeaserRow'
 import { Testimonial as TestimonialComponent } from '../components/Testimonial'
 import { TitleSection } from '../components/TitleSection'
+import { global } from '../data/global'
 import { home } from '../data/home'
 import { testimonials } from '../data/testimonials'
 import { getAllProjectsWithHeaderImages } from '../helpers/getAllProjectsWithHeaderImages'
@@ -31,6 +33,7 @@ const HomePage: NextPage<HomePageProps> = ({ projectsWithHeaderImages }) => {
 
   return (
     <>
+      {global.showHolidays && <HolidayModal />}
       <NextSeo title="Wehrli Licht GmbH" description={home.intro} />
       <Hero
         image={{

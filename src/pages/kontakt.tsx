@@ -1,4 +1,5 @@
 import { NextSeo } from 'next-seo'
+import Image from 'next/image'
 import { Address } from '../components/Address'
 import { Button } from '../components/Button'
 import { CallToAction } from '../components/CallToAction'
@@ -8,6 +9,7 @@ import { OpeningHours } from '../components/OpeningHours'
 import { PageContainer } from '../components/PageContainer'
 import { TitleSection } from '../components/TitleSection'
 import { contact } from '../data/contact'
+import { global } from '../data/global'
 
 export default function Contact() {
   return (
@@ -27,15 +29,37 @@ export default function Contact() {
       </CallToAction>
       <PageContainer>
         <div className="text-center">
-          <TitleSection title="Unsere Öffnungszeiten" />
+          {global.showHolidays && (
+            <>
+              <TitleSection title="Wir machen Ferien" />
+              <Image
+                className="mb-6 inline-block w-96"
+                src="/images/vacation/ferien.jpg"
+                width={1000}
+                height={1000}
+                alt="Ferien"
+              />
+              <div className="text-md mb-20">
+                <div>
+                  Vom{' '}
+                  <strong>{`${global.holidaysStart} bis ${global.holidaysEnd}`}</strong>{' '}
+                  bleibt das Geschäft geschlossen.
+                </div>
+                <div className="mt-2">
+                  Nach Voranmeldung sind wir natürlich sehr gerne für Sie da!
+                </div>
+              </div>
+            </>
+          )}
+          <TitleSection title="Öffnungszeiten" />
           <div className="mb-20">
             <OpeningHours size="l" />
           </div>
-          <TitleSection title="Unsere Adresse" />
+          <Map />
+          <TitleSection title="Adresse" />
           <div className="mb-20">
             <Address size="l" />
           </div>
-          <Map />
         </div>
       </PageContainer>
       <Footer />
