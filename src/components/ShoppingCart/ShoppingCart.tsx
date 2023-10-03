@@ -8,6 +8,7 @@ import { Button } from '../../components/Button'
 import { useShopContext } from '../../context/ShopContext'
 import { AnalyticsListener } from '../AnalyticsListener'
 import { ShoppingCartProps } from './types'
+import { formatPriceToCHF } from '../../pages/shop/produkte/[slug]'
 
 export const ShoppingCart = ({ open, setOpen }: ShoppingCartProps) => {
   const { cart, setCart } = useShopContext()
@@ -137,7 +138,7 @@ export const ShoppingCart = ({ open, setOpen }: ShoppingCartProps) => {
                                 </h3>
                               </div>
                               <p className="row-span-2 row-end-2 font-medium text-gray-900 sm:order-1 sm:ml-6 sm:w-1/3 sm:flex-none sm:text-right">
-                                {item.price}
+                                {formatPriceToCHF(item.price)}
                               </p>
                               <div className="flex items-center sm:block sm:flex-none sm:text-center">
                                 <label

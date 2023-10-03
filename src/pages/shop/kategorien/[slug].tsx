@@ -11,6 +11,7 @@ import { Footer } from '../../../components/Footer'
 import { Header } from '../../../components/Header'
 import { PageContainer } from '../../../components/PageContainer'
 import { TitleSection } from '../../../components/TitleSection'
+import { formatPriceToCHF } from '../produkte/[slug]'
 
 type CategorySlugPage = {
   products: Product[]
@@ -27,9 +28,9 @@ const getLowestPriceFromVariantsOrProductPrice = (product: Product) => {
 
     const prices = variantsWithPrice.map((variant) => variant.price as number)
 
-    return `Ab CHF ${Math.min(...prices)}.-`
+    return `Ab ${formatPriceToCHF(Math.min(...prices))}`
   } else {
-    return `CHF ${product.price}.-`
+    return formatPriceToCHF(product.price)
   }
 }
 

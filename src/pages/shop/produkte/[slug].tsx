@@ -24,6 +24,19 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
+
+export const formatPriceToCHF = (price?: number) => {
+  if (!price) {
+    return ''
+  }
+
+  return price.toLocaleString('de-CH', {
+    style: 'currency',
+    currency: 'CHF',
+  })
+}
+
+
 const ProductSlugPage: NextPage<ProductSlugPageProps> = ({
   product,
   bestsellers,
@@ -127,14 +140,14 @@ const ProductSlugPage: NextPage<ProductSlugPageProps> = ({
                   </Tab.List>
                 </div>
 
-                <Tab.Panels className="aspect-h-1 aspect-w-1 w-full">
+                <Tab.Panels className="">
                   {product?.images?.map((image) => (
                     <Tab.Panel key={image.id}>
                       {image.file?.url && (
                         <Image
                           src={image.file.url}
                           alt={product.name}
-                          className="h-full w-full object-cover object-center sm:rounded-lg"
+                          className="rounded-lg"
                           width={1000}
                           height={1000}
                         />
@@ -152,7 +165,7 @@ const ProductSlugPage: NextPage<ProductSlugPageProps> = ({
 
                 <div className="mt-3">
                   <p className="text-3xl tracking-tight text-gray-900">
-                    CHF {activeVariant?.price ?? product?.price}.-
+                    {formatPriceToCHF(activeVariant?.price ?? product?.price)}
                   </p>
                 </div>
 
@@ -171,7 +184,7 @@ const ProductSlugPage: NextPage<ProductSlugPageProps> = ({
                   )}
                   <div className="hidden lg:block">
                     <div className="mt-3">
-                      <div className="sm:flex-col1 mb-10 mt-6 flex ">
+                      <div className="sm:flex-col1 mb-10 mt-6 flex items-center">
                         <div className="mr-2">
                           <Button
                             text="Zum Warenkorb hinzufügen"

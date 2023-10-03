@@ -12,6 +12,7 @@ import { Feedback } from '../../components/Feedback'
 import { Footer } from '../../components/Footer'
 import { PageContainer } from '../../components/PageContainer'
 import { TitleSection } from '../../components/TitleSection'
+import { Navigation } from '../../components/Navigation'
 
 type ShopPageProps = {
   categories: Category[]
@@ -28,13 +29,25 @@ const ShopPage: NextPage<ShopPageProps> = ({ categories, bestsellers }) => {
         }
       />
 
-      <CallToAction
-        title={'Wehrli Licht Shop'}
-        intro="Diese und viele weitere Leuchten sind auch in unserem Showroom in Goldach ausgestellt. Wir beraten Sie gerne persönlich und freuen uns auf Ihren Besuch!"
-      >
-        <Button text="Zurück zur Website" type={'secondary'} />
+       <div className="mb-20 bg-wehrli">
+      <div className="px-6 lg:px-8">
+        <Navigation />
+      </div>
+      <div className="px-6 pt-12 pb-24 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-2xl text-center">
+          <h1 className="text-4xl font-bold tracking-tight text-white" dangerouslySetInnerHTML={{ __html: 'Wehrli Licht Shop' }}></h1>
+          <p className="mx-auto mt-6 max-w-xl text-lg leading-8 text-white">
+            Diese und viele weitere Leuchten sind auch in unserem Showroom in Goldach ausgestellt. Wir beraten Sie gerne persönlich und freuen uns auf Ihren Besuch!
+          </p>
+          <div className="mt-10 flex items-center justify-center gap-x-6">
+             <Button text="Zurück zur Website" type={'secondary'} />
         <Button text="Kontakt" type={'tertiary'} />
-      </CallToAction>
+          </div>
+        </div>
+      </div>
+    </div>
+
+      
 
       <PageContainer>
         <Breadcrumbs pages={[{ name: 'Shop', href: '/shop' }]} />
