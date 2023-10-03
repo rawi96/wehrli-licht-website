@@ -3,6 +3,7 @@ import { ChevronDownIcon } from '@heroicons/react/24/outline'
 import { Fragment, useEffect } from 'react'
 import { Variant } from 'swell-js'
 import { ProductVariationSelectorProps } from './types'
+import { formatPriceToCHF } from '../../pages/shop/produkte/[slug]'
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
@@ -42,7 +43,7 @@ export const ProductVariationSelector = ({
         <div>
           <Menu.Button className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
             {activeVariant
-              ? `${activeVariant.name} (CHF ${activeVariant.price}.-)`
+              ? `${activeVariant.name} (${formatPriceToCHF(activeVariant.price)})`
               : 'Ausführung wählen'}
             <ChevronDownIcon
               className="-mr-1 h-5 w-5 text-gray-400"
@@ -73,7 +74,7 @@ export const ProductVariationSelector = ({
                     )}
                     onClick={() => handleVariantSelect(variant)}
                   >
-                    {`${variant.name} (CHF ${variant.price}.-)`}
+                    {`${variant.name} (${formatPriceToCHF(variant.price)})`}
                   </span>
                 </Menu.Item>
               ))}

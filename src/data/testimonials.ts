@@ -10,12 +10,6 @@ export const testimonials: Testimonial[] = [
     authorImageUrl: '/images/testimonials/tobler.jpg',
   },
   {
-    text: '«Die viel bewunderte Lampe von Wehrli Licht schmückt unser Wohnzimmer und bringt das Licht in Bewegung. Vielen Dank für die professionelle Beratung.»',
-    authorName: 'Daniel Holenstein',
-    authorTitle: 'St.Gallen',
-    authorImageUrl: '/images/testimonials/holenstein.jpg',
-  },
-  {
     text: '«Eine gute Beleuchtung ist in meinem Beruf das A und O. Herzlichen Dank für die ehrliche und professionelle Beratung.»',
     authorName: 'Stephanie Mazenauer',
     authorTitle: 'Geschäftsführerin',
