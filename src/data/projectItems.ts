@@ -16,7 +16,7 @@ export const projectItems: Project[] = [
     title: 'Projekte von Neuco AG',
     intro:
       'Gefällt Ihnen dieses Projekt? Schauen Sie sich noch weitere Projekte an und lassen Sie sich inspirieren.',
-    slug: 'inspecta-experts-office',
+    slug: 'neuco',
     lines: ['Lampenschirme: Wehrli Licht GmbH', 'Konzept und Umsetzung: Neuco AG', 'Fotografie: Alex Gemperle AG'],
     imagesPath: '/images/projects/neuco',
   },
