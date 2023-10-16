@@ -16,6 +16,7 @@ import { testimonials } from '../data/testimonials'
 import { getAllProjectsWithHeaderImages } from '../helpers/getAllProjectsWithHeaderImages'
 import { ProjectWithHeaderImage } from '../types/ProjectWithHeaderImage'
 import { Testimonial } from '../types/Testimonial'
+import TdoT from '../components/TdoT'
 
 type HomePageProps = {
   projectsWithHeaderImages: ProjectWithHeaderImage[]
@@ -46,6 +47,7 @@ const HomePage: NextPage<HomePageProps> = ({ projectsWithHeaderImages }) => {
         secondaryButton={home.secondaryButton}
       />
       <PageContainer>
+        <TdoT />
         <TitleSection title={home.offerSubTitle} />
         <AllOffersGallery />
 
