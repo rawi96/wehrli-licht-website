@@ -12,12 +12,13 @@ const benefits = [
 
 export default function TdoT() {
   return (
+    <div className='sm:mx-auto sm:max-w-7xl sm:px-6 lg:px-8'>
     <div className="bg-wehrli rounded-2xl mb-20">
       <div className="relative isolate">
         <div className="mx-auto max-w-7xl">
           <div className="mx-auto flex max-w-2xl flex-col gap-16 px-16 py-16 sm:rounded-3xl lg:mx-0 lg:max-w-none lg:flex-row lg:items-center xl:gap-x-20 xl:px-20">
             <Image
-              className="h-96 w-full flex-none rounded-2xl object-cover shadow-xl lg:aspect-square lg:h-auto lg:max-w-sm"
+              className="h-60 sm:h-96 w-full flex-none rounded-2xl object-cover shadow-xl lg:aspect-square lg:h-auto lg:max-w-sm"
               src="/images/tag-der-offene-tuer.jpeg"
               width={1000}
               height={1000}
@@ -60,6 +61,7 @@ export default function TdoT() {
           />
         </div>
       </div>
+    </div>
     </div>
   )
 }
