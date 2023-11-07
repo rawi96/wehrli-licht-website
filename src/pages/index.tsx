@@ -8,6 +8,7 @@ import { Hero } from '../components/Hero'
 import { HolidayModal } from '../components/HolidayModal'
 import { PageContainer } from '../components/PageContainer'
 import { ProjectsTeaserRow } from '../components/ProjectsTeaserRow'
+import TdoT from '../components/TdoT'
 import { Testimonial as TestimonialComponent } from '../components/Testimonial'
 import { TitleSection } from '../components/TitleSection'
 import { global } from '../data/global'
@@ -16,7 +17,6 @@ import { testimonials } from '../data/testimonials'
 import { getAllProjectsWithHeaderImages } from '../helpers/getAllProjectsWithHeaderImages'
 import { ProjectWithHeaderImage } from '../types/ProjectWithHeaderImage'
 import { Testimonial } from '../types/Testimonial'
-import TdoT from '../components/TdoT'
 
 type HomePageProps = {
   projectsWithHeaderImages: ProjectWithHeaderImage[]

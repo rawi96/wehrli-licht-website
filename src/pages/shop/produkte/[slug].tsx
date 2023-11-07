@@ -91,6 +91,15 @@ const ProductSlugPage: NextPage<ProductSlugPageProps> = ({
     return breadcrumpArray
   }
 
+  const uniqueImages = product?.images?.filter((image) => image.file?.url)?.reduce((acc: swell.Image[], current: swell.Image) => {
+  const x = acc.find(item => item.file?.url === current.file?.url);
+  if (!x) {
+    return acc.concat([current]);
+  } else {
+    return acc;
+  }
+}, []);
+
   return (
     <>
       <NextSeo title={product?.name} description={product?.description} />
@@ -105,7 +114,7 @@ const ProductSlugPage: NextPage<ProductSlugPageProps> = ({
                 {/* Image selector */}
                 <div className="mx-auto mt-6 w-full max-w-2xl lg:max-w-none">
                   <Tab.List className="grid grid-cols-2 gap-6 sm:grid-cols-4">
-                    {product?.images?.map((image) => (
+                    {uniqueImages?.map((image) => (
                       <Tab
                         key={image.id}
                         className="relative flex h-24 cursor-pointer items-center justify-center rounded-md bg-white text-sm font-medium uppercase text-gray-900 hover:bg-gray-50 focus:outline-none focus:ring focus:ring-opacity-50 focus:ring-offset-4"
@@ -141,7 +150,7 @@ const ProductSlugPage: NextPage<ProductSlugPageProps> = ({
                 </div>
 
                 <Tab.Panels className="">
-                  {product?.images?.map((image) => (
+                  {uniqueImages?.map((image) => (
                     <Tab.Panel key={image.id}>
                       {image.file?.url && (
                         <Image

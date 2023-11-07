@@ -3,11 +3,9 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 const benefits = [
-  '10% Ausstellungsrabatt',
-  'Weindegustation',
-  'Kaffee und Kuchen',
-  'Exklusive Beratung vor Ort',
-  'Grosse Auswahl an Leuchten',
+  'Handgefertigte Lampenschirme aus eigener Produktion',
+  'Sofortiger Versand',
+  'Weitere Farben und Grössen nach Wunsch',
 ]
 
 export default function TdoT() {
@@ -19,15 +17,15 @@ export default function TdoT() {
           <div className="mx-auto flex max-w-2xl flex-col gap-16 px-16 py-16 sm:rounded-3xl lg:mx-0 lg:max-w-none lg:flex-row lg:items-center xl:gap-x-20 xl:px-20">
             <Image
               className="h-60 sm:h-96 w-full flex-none rounded-2xl object-cover shadow-xl lg:aspect-square lg:h-auto lg:max-w-sm"
-              src="/images/tag-der-offene-tuer.jpeg"
+              src="/images/angebote/lampenschirme/diverse_lampenschirme.jpg"
               width={1000}
               height={1000}
-              alt="Bar Beleuchtung"
+              alt="Lampenschirme"
             />
             <div className="w-full flex-auto">
-              <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">Tag der offenen Tür</h2>
+              <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">Neu: Lampenschirme im Online Shop</h2>
               <p className="mt-6 text-lg leading-8 text-gray-300">
-                Besuchen Sie uns vom Samstag 28. - Sonntag 29. Oktober 2023 von 10.00 - 17.00 Uhr am Tag der offenen Tür in Goldach.
+                Wir präsentieren neu eine Auswahl an Lampenschirmen in unserem Online Shop. Alle weiteren Grössen und Formen fertigen wir gerne nach Mass an.
               </p>
               <ul
                 role="list"
@@ -40,9 +38,12 @@ export default function TdoT() {
                   </li>
                 ))}
               </ul>
-              <div className="mt-10 flex">
-                <Link href="/kontakt" className="text-md font-semibold leading-6 text-white">
-                  Anreise <span aria-hidden="true">&rarr;</span>
+              <div className="mt-10 flex flex-col gap-5">
+                <Link href="/angebot/lampenschirme" className="text-md font-semibold leading-6 text-white">
+                  Mehr über Lampenschirme <span aria-hidden="true">&rarr;</span>
+                </Link>
+                <Link href="/shop/kategorien/lampenschirme" className="text-md font-semibold leading-6 text-white">
+                  Zum Shop <span aria-hidden="true">&rarr;</span>
                 </Link>
               </div>
             </div>

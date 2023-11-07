@@ -15,7 +15,7 @@ export default function Contact() {
   return (
     <>
       <NextSeo title={contact.title} description={contact.intro} />
-      <CallToAction title={contact.title} intro={contact.intro}>
+      <CallToAction  intro={contact.intro}>
         <Button
           type="secondary"
           text={contact.primaryButton.text}

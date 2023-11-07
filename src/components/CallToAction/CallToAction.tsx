@@ -11,7 +11,7 @@ export const CallToAction = ({ title, intro, children }: CallToActionProps) => {
       </div>
     </div>
     <PageContainer>
-      <h1 className="text-4xl pb-16 font-bold tracking-tight text-wehrli-500" dangerouslySetInnerHTML={{ __html: title }}></h1>
+      {title && <h1 className="text-4xl pb-16 font-bold tracking-tight text-wehrli-500" dangerouslySetInnerHTML={{ __html: title }}></h1>} 
     </PageContainer>
     </>
   )

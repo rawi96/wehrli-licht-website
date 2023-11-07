@@ -1,7 +1,7 @@
 import { ReactNode } from 'react'
 
 export type CallToActionProps = {
-  title: string
+  title?: string
   intro: string
   children: ReactNode
 }
