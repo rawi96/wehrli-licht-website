@@ -34,7 +34,7 @@ export default function Contact() {
               <TitleSection title="Wir machen Ferien" />
               <Image
                 className="mb-6 inline-block w-96"
-                src="/images/vacation/ferien.jpg"
+                src="/images/vacation/winter.jpg"
                 width={1000}
                 height={1000}
                 alt="Ferien"

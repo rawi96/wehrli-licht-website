@@ -38,7 +38,7 @@ export const HolidayModal = () => {
                   <Image
                     height={1000}
                     width={1000}
-                    src="/images/vacation/ferien.jpg"
+                    src="/images/vacation/winter.jpg"
                     alt="Ferien"
                   />
                   <div className="mt-3 text-center sm:mt-5">
