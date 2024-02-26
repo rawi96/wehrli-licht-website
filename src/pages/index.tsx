@@ -46,7 +46,7 @@ const HomePage: NextPage<HomePageProps> = ({ projectsWithHeaderImages }) => {
         primaryButton={home.primaryButton}
         secondaryButton={home.secondaryButton}
       />
-      <TdoT />
+      {/* <TdoT /> */}
       <PageContainer>
         <TitleSection title={home.offerSubTitle} />
         <AllOffersGallery />
