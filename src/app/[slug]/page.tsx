@@ -31,10 +31,8 @@ export default async function ContentPage({ params: { slug }, searchParams }: Pa
   }
 
   return (
-    <>
-      <main>
-        <ContentBlocks blocks={page.content as PageModelContentField[]} searchParams={searchParams} />
-      </main>
-    </>
+    <main>
+      <ContentBlocks blocks={page.content as PageModelContentField[]} searchParams={searchParams} />
+    </main>
   );
 }

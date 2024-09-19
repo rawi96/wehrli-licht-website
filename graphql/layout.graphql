@@ -29,5 +29,17 @@ query Layout {
         }
       }
     }
+    facebookUrl
+    instagramUrl
+    linkedinUrl
+    companyName
+    street
+    zip
+    place
+    phone
+    email
+    mapsLink
+    openingHours
+    holiday
   }
 }
