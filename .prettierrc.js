@@ -1,6 +1,9 @@
-const { $schema, ...config } = require("@smartive/prettier-config");
+const { $schema, ...config } = require('@smartive/prettier-config');
 
 module.exports = {
-  plugins: ["prettier-plugin-tailwindcss"],
+  plugins: ['prettier-plugin-tailwindcss'],
   ...config,
+  rules: {
+    'react/forbid-component-props': 'off',
+  },
 };

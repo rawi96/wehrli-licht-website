@@ -8,7 +8,7 @@ export const InlineLink: FC<Props> = ({ children, href, target, rel }) => (
     href={href ?? '#'}
     target={target ?? '_self'}
     rel={rel}
-    className="border-b no-underline underline-offset-2 transition-colors hover:border-signal focus:outline-none"
+    className="hover:border-signal border-b no-underline underline-offset-2 transition-colors focus:outline-none"
   >
     {children}
   </NextLink>

@@ -1,0 +1,33 @@
+query Layout {
+  layout {
+    menu {
+      ... on DirectoryRecord {
+        label
+        slug
+        navigationItems {
+          label
+          id
+          link {
+            ... on OfferRecord {
+              slug
+            }
+            ... on PageRecord {
+              slug
+            }
+          }
+        }
+      }
+      ... on NavigationItemRecord {
+        label
+        link {
+          ... on OfferRecord {
+            slug
+          }
+          ... on PageRecord {
+            slug
+          }
+        }
+      }
+    }
+  }
+}

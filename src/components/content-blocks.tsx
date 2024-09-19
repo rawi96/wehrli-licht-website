@@ -10,7 +10,7 @@ type Props = {
 
 export const ContentBlocks: FC<Props> = ({ blocks }) => {
   return (
-    <div className="mx-auto my-24 w-11/12 max-w-content peer-[]/hero-video:mt-16 md:my-36">
+    <div className="max-w-content mx-auto my-24 w-11/12 peer-[]/hero-video:mt-16 md:my-36">
       {blocks.map((block) => {
         switch (block.__typename) {
           case 'TextRecord':

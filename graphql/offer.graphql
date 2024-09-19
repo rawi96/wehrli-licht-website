@@ -1,0 +1,27 @@
+query Offer($slug: String!) {
+  offer(filter: { slug: { eq: $slug } }) {
+    id
+    slug
+    content {
+      __typename
+      ... on TextRecord {
+        ...textBlock
+      }
+      ... on TextImageRecord {
+        ...textImageBlock
+      }
+    }
+    seo: _seoMetaTags {
+      attributes
+      content
+      tag
+    }
+  }
+  site: _site {
+    favicon: faviconMetaTags {
+      attributes
+      content
+      tag
+    }
+  }
+}

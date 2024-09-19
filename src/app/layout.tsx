@@ -1,21 +1,16 @@
 import '@/styles/globals.css';
+import PlausibleProvider from 'next-plausible';
 import { ReactNode } from 'react';
-import { Header } from '../components/layout/header';
-import { classNames } from '../utils/css';
-import { anton, inter } from './fonts';
+import { inter } from './fonts';
+import { Header } from '@/components/layout/header';
 
 const RootLayout = ({ children }: { children: ReactNode }) => {
   return (
-    <html
-      lang="de"
-      className={classNames(
-        'bg-dark font-inter text-sm text-white antialiased md:text-base',
-        inter.variable,
-        anton.variable,
-      )}
-    >
-      <head>{/* <PlausibleProvider domain="wehrli-licht.ch" /> */}</head>
-      <body>
+    <html lang="de">
+      <head>
+        <PlausibleProvider domain="wehrli-licht.ch" />
+      </head>
+      <body className={`${inter.className} h-full bg-gray-50 antialiased`}>
         <Header />
         {children}
       </body>
