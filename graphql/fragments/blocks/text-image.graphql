@@ -1,0 +1,12 @@
+fragment textImageBlock on TextImageRecord {
+  id
+  layout
+  content {
+    value
+  }
+  image {
+    responsiveImage(imgixParams: { w: 672 }) {
+      ...responsiveImageFragment
+    }
+  }
+}

@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Styles for image carousel used on the project detail page */
+div.slick-active div {
+  @apply !opacity-100 py-0;
+  transition: padding 0.4s ease-in-out;
+}
+
+li.slick-active div {
+  @apply bg-white;
+}

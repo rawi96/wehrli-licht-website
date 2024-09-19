@@ -1,0 +1,9 @@
+query AllRoutes {
+  allPages(first: 100) {
+    slug
+    lastModified: _updatedAt
+    seometatags {
+      noIndex
+    }
+  }
+}
