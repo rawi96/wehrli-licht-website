@@ -35,7 +35,7 @@ export const Address = ({ size = 's', companyName, street, zip, place, phone, em
           {phone && (
             <Link className="block p-4 underline hover:opacity-80" href={`tel:${phone}`} itemProp="telephone">
               <button
-                className={`${size === 'l' ? 'border-black' : 'text-white'} ${'relative inline-flex items-center border px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 lg:px-6'}`}
+                className={`${size === 'l' ? 'border-black' : 'text-white'} ${'relative inline-flex items-center border px-6 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 lg:px-6'}`}
               >
                 {phone}
               </button>
@@ -44,7 +44,7 @@ export const Address = ({ size = 's', companyName, street, zip, place, phone, em
           {email && (
             <Link className="block p-4 underline hover:opacity-80" href={`mailto:${email}`} itemProp="email">
               <button
-                className={`${size === 'l' ? 'border-black' : 'text-white'} ${'relative inline-flex items-center border px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 lg:px-6'}`}
+                className={`${size === 'l' ? 'border-black' : 'text-white'} ${'relative inline-flex items-center border px-6 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 lg:px-6'}`}
               >
                 {email}
               </button>
