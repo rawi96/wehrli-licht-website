@@ -10,6 +10,12 @@ query Page($slug: String!) {
       ... on TextImageRecord {
         ...textImageBlock
       }
+      ... on TeamRecord {
+        ...teamBlock
+      }
+      ... on HistoryRecord {
+        ...historyBlock
+      }
     }
     seo: _seoMetaTags {
       attributes

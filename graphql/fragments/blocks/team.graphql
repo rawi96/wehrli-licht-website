@@ -1,0 +1,14 @@
+fragment teamBlock on TeamRecord {
+  id
+  employees {
+    firstname
+    lastname
+    function
+    bio
+    image {
+      responsiveImage {
+        ...responsiveImageFragment
+      }
+    }
+  }
+}

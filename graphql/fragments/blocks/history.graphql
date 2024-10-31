@@ -1,0 +1,13 @@
+fragment historyBlock on HistoryRecord {
+  id
+  historySections {
+    title
+    text
+    year
+    image {
+      responsiveImage {
+        ...responsiveImageFragment
+      }
+    }
+  }
+}

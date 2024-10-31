@@ -3,6 +3,8 @@ import { PageModelContentField } from '@/graphql/generated';
 import { FC } from 'react';
 import { TextBlock } from './blocks/text';
 import { TextImageBlock } from './blocks/text-image';
+import { TeamBlock } from './blocks/team';
+import { HistoryBlock } from './blocks/history';
 
 type Props = {
   blocks: PageModelContentField[];
@@ -17,6 +19,10 @@ export const ContentBlocks: FC<Props> = ({ blocks }) => {
             return <TextBlock key={block.id} block={block} />;
           case 'TextImageRecord':
             return <TextImageBlock key={block.id} block={block} />;
+          case 'TeamRecord':
+            return <TeamBlock key={block.id} block={block} />;
+          case 'HistoryRecord':
+            return <HistoryBlock key={block.id} block={block} />;
           default:
             console.error('Unknown block type', block);
 
