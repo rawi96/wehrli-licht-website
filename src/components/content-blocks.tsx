@@ -6,6 +6,7 @@ import { HeaderSectionBlock } from './blocks/header-section';
 import { HistoryBlock } from './blocks/history';
 import { IframeBlock } from './blocks/iframe';
 import { ImageGridBlock } from './blocks/image-grid';
+import { LogoGridBlock } from './blocks/logo-grid';
 import { QuoteBlock } from './blocks/quote';
 import { TeamBlock } from './blocks/team';
 import { TextBlock } from './blocks/text';
@@ -38,6 +39,8 @@ export const ContentBlocks: FC<Props> = ({ blocks }) => {
             return <GalleryBlock key={block.id} block={block as unknown as GalleryBlockFragment} />; // Type assertion needed because we use aliases in the fragment
           case 'ImageGridRecord':
             return <ImageGridBlock key={block.id} block={block} />;
+          case 'LogoGridRecord':
+            return <LogoGridBlock key={block.id} block={block} />;
           default:
             console.error('Unknown block type', block);
 
