@@ -1,6 +1,7 @@
 import { SearchParams } from '@/app/page';
 import { PageModelContentField } from '@/graphql/generated';
 import { FC } from 'react';
+import { HeaderSection } from './blocks/header-section';
 import { HistoryBlock } from './blocks/history';
 import { IframeBlock } from './blocks/iframe';
 import { TeamBlock } from './blocks/team';
@@ -26,6 +27,8 @@ export const ContentBlocks: FC<Props> = ({ blocks }) => {
             return <HistoryBlock key={block.id} block={block} />;
           case 'IframeRecord':
             return <IframeBlock key={block.id} block={block} />;
+          case 'HeaderSectionRecord':
+            return <HeaderSection key={block.id} block={block} />;
           default:
             console.error('Unknown block type', block);
 

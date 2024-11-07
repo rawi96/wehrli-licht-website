@@ -10,6 +10,18 @@ query Offer($slug: String!) {
       ... on TextImageRecord {
         ...textImageBlock
       }
+      ... on TeamRecord {
+        ...teamBlock
+      }
+      ... on HistoryRecord {
+        ...historyBlock
+      }
+      ... on IframeRecord {
+        ...iframeBlock
+      }
+      ... on HeaderSectionRecord {
+        ...headerSectionBlock
+      }
     }
     seo: _seoMetaTags {
       attributes

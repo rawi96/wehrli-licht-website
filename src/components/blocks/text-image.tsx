@@ -10,8 +10,8 @@ type Props = {
   block: TextImageBlockFragment;
 };
 
-export const TextImageBlock: FC<Props> = ({ block: { content, image, layout } }) => (
-  <BlockWrapper>
+export const TextImageBlock: FC<Props> = ({ block: { content, image, layout, anchorId } }) => (
+  <BlockWrapper anchorId={anchorId}>
     <div className="grid items-center gap-8 md:grid-cols-2 lg:gap-12">
       {!isEmptyDocument(content) && (
         <div className={classNames(layout === 'image_left' && 'order-last')}>

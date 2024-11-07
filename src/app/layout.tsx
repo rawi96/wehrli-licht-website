@@ -11,7 +11,7 @@ const RootLayout = async ({ children }: { children: ReactNode }) => {
   const { headerFooter } = await queryDatoCMS({ document: HeaderFooterDocument });
 
   return (
-    <html lang="de">
+    <html lang="de" className="scroll-smooth">
       <head>
         <PlausibleProvider domain="wehrli-licht.ch" />
       </head>

@@ -1,0 +1,4 @@
+fragment factBlock on FactRecord {
+    title
+    text
+}

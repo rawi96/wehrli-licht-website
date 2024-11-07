@@ -1,0 +1,4 @@
+fragment linkBlock on LinkRecord {
+  text
+  url
+}

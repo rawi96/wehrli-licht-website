@@ -1,0 +1,15 @@
+fragment headerSectionBlock on HeaderSectionRecord {
+  title
+  description
+  links {
+    ...linkBlock
+  }
+  facts {
+    ...factBlock
+  }
+  backgroundImage {
+    responsiveImage {
+      ...responsiveImageFragment
+    }
+  }
+}
