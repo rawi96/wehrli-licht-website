@@ -22,6 +22,12 @@ query Page($slug: String!) {
       ... on HeaderSectionRecord {
         ...headerSectionBlock
       }
+      ... on QuoteRecord {
+        ...quoteBlock
+      }
+      ... on GalleryRecord {
+        ...galleryBlock
+      }
     }
     seo: _seoMetaTags {
       attributes

@@ -8,7 +8,7 @@ type Props = PropsWithChildren<{
 }>;
 
 export const BlockWrapper: FC<Props> = ({ children, className, anchorId }) => (
-  <section id={anchorId ?? undefined} className={classNames(className, 'my-12 lg:my-16')}>
+  <section id={anchorId ?? undefined} className={classNames(className, 'my-12 lg:my-24')}>
     {children}
   </section>
 );

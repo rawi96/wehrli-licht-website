@@ -1,9 +1,11 @@
 import { SearchParams } from '@/app/page';
-import { PageModelContentField } from '@/graphql/generated';
+import { GalleryBlockFragment, PageModelContentField } from '@/graphql/generated';
 import { FC } from 'react';
-import { HeaderSection } from './blocks/header-section';
+import { GalleryBlock } from './blocks/gallery';
+import { HeaderSectionBlock } from './blocks/header-section';
 import { HistoryBlock } from './blocks/history';
 import { IframeBlock } from './blocks/iframe';
+import { QuoteBlock } from './blocks/quote';
 import { TeamBlock } from './blocks/team';
 import { TextBlock } from './blocks/text';
 import { TextImageBlock } from './blocks/text-image';
@@ -28,7 +30,11 @@ export const ContentBlocks: FC<Props> = ({ blocks }) => {
           case 'IframeRecord':
             return <IframeBlock key={block.id} block={block} />;
           case 'HeaderSectionRecord':
-            return <HeaderSection key={block.id} block={block} />;
+            return <HeaderSectionBlock key={block.id} block={block} />;
+          case 'QuoteRecord':
+            return <QuoteBlock key={block.id} block={block} />;
+          case 'GalleryRecord':
+            return <GalleryBlock key={block.id} block={block as unknown as GalleryBlockFragment} />; // Type assertion needed because we use aliases in the fragment
           default:
             console.error('Unknown block type', block);
 

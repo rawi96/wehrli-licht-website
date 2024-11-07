@@ -1,0 +1,14 @@
+fragment galleryBlock on GalleryRecord {
+  id
+  gallery {
+    id
+    title
+    smallSize: responsiveImage(imgixParams: { h: 339 }) {
+      ...responsiveImageFragment
+    }
+    largeSize: responsiveImage(imgixParams: { w: 2000 }) {
+      ...responsiveImageFragment
+    }
+  }
+}
+    

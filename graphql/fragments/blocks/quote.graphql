@@ -1,0 +1,15 @@
+fragment quoteBlock on QuoteRecord {
+  id
+  testimonials {
+    text
+    authorFunction
+    authorName
+    authorImage {
+      responsiveImage {
+        ...responsiveImageFragment
+      }
+    }
+    companyName
+    companyUrl
+  }
+}

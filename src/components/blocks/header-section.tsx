@@ -8,7 +8,7 @@ type Props = {
   block: HeaderSectionBlockFragment;
 };
 
-export const HeaderSection: FC<Props> = ({ block: { title, description, links, facts, backgroundImage } }) => {
+export const HeaderSectionBlock: FC<Props> = ({ block: { title, description, links, facts, backgroundImage } }) => {
   return (
     <BlockWrapper className="relative isolate overflow-hidden bg-gray-900 py-24 sm:py-32">
       <DatoSRCImage

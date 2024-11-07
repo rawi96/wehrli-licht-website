@@ -15,7 +15,7 @@ const RootLayout = async ({ children }: { children: ReactNode }) => {
       <head>
         <PlausibleProvider domain="wehrli-licht.ch" />
       </head>
-      <body className={`${inter.className} h-full bg-gray-50 antialiased`}>
+      <body className={`${inter.className} h-full bg-gray-100 antialiased`}>
         <Header headerFooter={headerFooter as HeaderFooterRecord} />
         {children}
         <Footer headerFooter={headerFooter as HeaderFooterRecord} />
