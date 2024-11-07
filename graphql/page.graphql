@@ -16,6 +16,9 @@ query Page($slug: String!) {
       ... on HistoryRecord {
         ...historyBlock
       }
+      ... on IframeRecord {
+        ...iframeBlock
+      }
     }
     seo: _seoMetaTags {
       attributes
