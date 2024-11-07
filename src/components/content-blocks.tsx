@@ -1,10 +1,10 @@
 import { SearchParams } from '@/app/page';
 import { PageModelContentField } from '@/graphql/generated';
 import { FC } from 'react';
+import { HistoryBlock } from './blocks/history';
+import { TeamBlock } from './blocks/team';
 import { TextBlock } from './blocks/text';
 import { TextImageBlock } from './blocks/text-image';
-import { TeamBlock } from './blocks/team';
-import { HistoryBlock } from './blocks/history';
 
 type Props = {
   blocks: PageModelContentField[];

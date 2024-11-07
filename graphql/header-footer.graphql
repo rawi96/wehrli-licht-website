@@ -1,5 +1,5 @@
-query Layout {
-  layout {
+query HeaderFooter {
+  headerFooter {
     menu {
       ... on DirectoryRecord {
         label
@@ -39,7 +39,9 @@ query Layout {
     phone
     email
     mapsLink
-    openingHours
-    holiday
+    holidayTitle
+    holidayText
+    openingHoursTitle
+    openingHoursText
   }
 }

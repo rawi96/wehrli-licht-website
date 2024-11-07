@@ -1,6 +1,6 @@
 'use client';
 
-import { DirectoryRecord, NavigationItemRecord } from '@/graphql/generated';
+import { DirectoryRecord, HeaderFooterRecord, NavigationItemRecord } from '@/graphql/generated';
 import Link from 'next/link';
 import { FC } from 'react';
 import { Address } from '../address';
@@ -8,35 +8,28 @@ import { Flyout } from '../flyout';
 import { FormattedText } from '../formatted-text';
 
 type Props = {
-  menu: NavigationItemRecord[] | DirectoryRecord[];
-  companyName?: string | null;
-  linkedinUrl?: string | null;
-  instagramUrl?: string | null;
-  facebookUrl?: string | null;
-  street?: string | null;
-  zip?: string | null;
-  place?: string | null;
-  phone?: string | null;
-  email?: string | null;
-  mapsLink?: string | null;
-  openingHours?: string | null;
-  holiday?: string | null;
+  headerFooter: HeaderFooterRecord;
 };
 
 export const Footer: FC<Props> = ({
-  menu,
-  linkedinUrl,
-  instagramUrl,
-  facebookUrl,
-  companyName,
-  street,
-  zip,
-  place,
-  phone,
-  email,
-  mapsLink,
-  openingHours,
-  holiday,
+  headerFooter: {
+    menu,
+    companyName,
+    street,
+    zip,
+    place,
+    phone,
+    email,
+    mapsLink,
+    linkedinUrl,
+    instagramUrl,
+    facebookUrl,
+    openingHoursTitle,
+    openingHoursText,
+    holidayDisable,
+    holidayTitle,
+    holidayText,
+  },
 }) => {
   return (
     <footer className="bg-wehrli text-white">
@@ -89,18 +82,16 @@ export const Footer: FC<Props> = ({
           email={email}
           mapsLink={mapsLink}
         />
-        {holiday && (
+        {!holidayDisable && (
           <>
-            <h3 className="mt-10 text-center text-sm font-bold">Ferien</h3>
-            <FormattedText text={holiday} />
+            <h3 className="mt-10 text-center text-sm font-bold">{holidayTitle}</h3>
+            <FormattedText text={holidayText} />
           </>
         )}
-        {openingHours && (
-          <>
-            <h3 className="mt-10 text-center text-sm font-bold">Öffnungszeiten</h3>
-            <FormattedText text={openingHours} />
-          </>
-        )}
+        <>
+          <h3 className="mt-10 text-center text-sm font-bold">{openingHoursTitle}</h3>
+          <FormattedText text={openingHoursText} />
+        </>
       </div>
     </footer>
   );

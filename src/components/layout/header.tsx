@@ -1,6 +1,6 @@
 'use client';
 
-import { DirectoryRecord, NavigationItemRecord } from '@/graphql/generated';
+import { DirectoryRecord, HeaderFooterRecord, NavigationItemRecord } from '@/graphql/generated';
 import { Dialog } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
@@ -10,10 +10,10 @@ import { Logo } from './logo';
 import { NavigationAccordion } from './navigation-accordion';
 
 type Props = {
-  menu: NavigationItemRecord[] | DirectoryRecord[];
+  headerFooter: HeaderFooterRecord;
 };
 
-export const Header: FC<Props> = ({ menu }) => {
+export const Header: FC<Props> = ({ headerFooter: { menu } }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const closeMobileMenu = () => {
