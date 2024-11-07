@@ -28,6 +28,9 @@ query Page($slug: String!) {
       ... on GalleryRecord {
         ...galleryBlock
       }
+      ... on ImageGridRecord {
+        ...imageGridBlock
+      }
     }
     seo: _seoMetaTags {
       attributes
