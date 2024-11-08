@@ -10,6 +10,19 @@ type Props = {
   block: TeaserGridBlockFragment;
 };
 
+const getBasePath = (typeName?: 'OfferRecord' | 'ProjectRecord') => {
+  switch (typeName) {
+    case 'OfferRecord':
+      return '/angebot';
+    case 'ProjectRecord':
+      return '/projekte';
+    default:
+      console.error('Unknown type name in teaser grid block', typeName);
+
+      return '/';
+  }
+};
+
 export const TeaserGridBlock: FC<Props> = ({ block: { teasers } }) => (
   <BlockWrapper>
     <div
@@ -20,7 +33,7 @@ export const TeaserGridBlock: FC<Props> = ({ block: { teasers } }) => (
     >
       {teasers.map((teaser, index) => (
         <NextLink
-          href={`/angebot/${teaser.slug}`}
+          href={`${getBasePath(teaser.__typename)}/${teaser.slug}`}
           title={teaser.teaserTitle}
           key={index}
           className="group grid w-full grid-rows-[auto,1fr,auto] overflow-hidden rounded bg-white text-black shadow transition-shadow duration-300 hover:shadow-xl"

@@ -1,0 +1,57 @@
+query Project($slug: String!) {
+  project(filter: { slug: { eq: $slug } }) {
+    id
+    slug
+    content {
+      __typename
+      ... on TextRecord {
+        ...textBlock
+      }
+      ... on TextImageRecord {
+        ...textImageBlock
+      }
+      ... on TeamRecord {
+        ...teamBlock
+      }
+      ... on HistoryRecord {
+        ...historyBlock
+      }
+      ... on IframeRecord {
+        ...iframeBlock
+      }
+      ... on HeaderSectionRecord {
+        ...headerSectionBlock
+      }
+      ... on QuoteRecord {
+        ...quoteBlock
+      }
+      ... on GalleryRecord {
+        ...galleryBlock
+      }
+      ... on ImageGridRecord {
+        ...imageGridBlock
+      }
+      ... on LogoGridRecord {
+        ...logoGridBlock
+      }
+      ... on HomeStageRecord {
+        ...homeStageBlock
+      }
+      ... on TeaserGridRecord {
+        ...teaserGridBlock
+      }
+    }
+    seo: _seoMetaTags {
+      attributes
+      content
+      tag
+    }
+  }
+  site: _site {
+    favicon: faviconMetaTags {
+      attributes
+      content
+      tag
+    }
+  }
+}

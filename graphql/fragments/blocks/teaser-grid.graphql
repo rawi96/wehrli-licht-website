@@ -1,13 +1,28 @@
 fragment teaserGridBlock on TeaserGridRecord {
   id
   teasers {
-    teaserDescription
-    teaserTitle
-    teaserImage {
-      responsiveImage {
-        ...responsiveImageFragment
+    __typename
+    ... on OfferRecord {
+      id
+      teaserDescription
+      teaserTitle
+      teaserImage {
+        responsiveImage {
+          ...responsiveImageFragment
+        }
       }
+      slug
     }
-    slug
+    ... on ProjectRecord {
+      id
+      teaserDescription
+      teaserTitle
+      teaserImage {
+        responsiveImage {
+          ...responsiveImageFragment
+        }
+      }
+      slug
+    }
   }
 }
