@@ -1,4 +1,5 @@
 fragment homeStageBlock on HomeStageRecord {
+  id
   image {
     responsiveImage {
       ...responsiveImageFragment

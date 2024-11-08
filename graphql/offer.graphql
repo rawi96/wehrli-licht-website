@@ -37,6 +37,9 @@ query Offer($slug: String!) {
       ... on HomeStageRecord {
         ...homeStageBlock
       }
+      ... on TeaserGridRecord {
+        ...teaserGridBlock
+      }
     }
     seo: _seoMetaTags {
       attributes

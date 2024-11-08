@@ -1,4 +1,5 @@
 fragment headerSectionBlock on HeaderSectionRecord {
+  id
   title
   description
   links {

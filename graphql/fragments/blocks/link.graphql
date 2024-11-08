@@ -1,4 +1,5 @@
 fragment linkBlock on LinkRecord {
+  id
   text
   url
 }

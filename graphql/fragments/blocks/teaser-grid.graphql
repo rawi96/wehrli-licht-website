@@ -1,0 +1,13 @@
+fragment teaserGridBlock on TeaserGridRecord {
+  id
+  teasers {
+    teaserDescription
+    teaserTitle
+    teaserImage {
+      responsiveImage {
+        ...responsiveImageFragment
+      }
+    }
+    slug
+  }
+}
