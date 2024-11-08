@@ -1,0 +1,13 @@
+fragment homeStageBlock on HomeStageRecord {
+  image {
+    responsiveImage {
+      ...responsiveImageFragment
+    }
+  }
+  title
+  intro
+  callToActions {
+    text
+    url
+  }
+}

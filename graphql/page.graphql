@@ -34,6 +34,9 @@ query Page($slug: String!) {
       ... on LogoGridRecord {
         ...logoGridBlock
       }
+      ... on HomeStageRecord {
+        ...homeStageBlock
+      }
     }
     seo: _seoMetaTags {
       attributes

@@ -1,6 +1,7 @@
 'use client';
 
 import { DirectoryRecord, HeaderFooterRecord, NavigationItemRecord } from '@/graphql/generated';
+import { classNames } from '@/utils/css';
 import { Dialog } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
@@ -11,9 +12,10 @@ import { NavigationAccordion } from './navigation-accordion';
 
 type Props = {
   headerFooter: HeaderFooterRecord;
+  backgroundColor: 'bg-wehrli' | 'bg-transparent';
 };
 
-export const Header: FC<Props> = ({ headerFooter: { menu } }) => {
+export const Header: FC<Props> = ({ headerFooter: { menu }, backgroundColor }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const closeMobileMenu = () => {
@@ -22,9 +24,9 @@ export const Header: FC<Props> = ({ headerFooter: { menu } }) => {
 
   return (
     <>
-      <div className="mb-20 bg-wehrli">
+      <div className={classNames('pt-6', backgroundColor)}>
         <div className="px-6 lg:px-8">
-          <nav className="flex items-center justify-between py-6" aria-label="Global">
+          <nav className="flex items-center justify-between pb-6" aria-label="Global">
             <div className="flex lg:flex-1">
               <Link href="/" className="-m-1.5 p-1.5">
                 <span className="sr-only">Wehrli Licht GmbH</span>

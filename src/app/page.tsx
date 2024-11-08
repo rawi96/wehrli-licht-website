@@ -1,5 +1,6 @@
 import { ContentBlocks } from '@/components/content-blocks';
-import { PageDocument, PageModelContentField } from '@/graphql/generated';
+import { Footer } from '@/components/layout/footer';
+import { HeaderFooterDocument, HeaderFooterRecord, PageDocument, PageModelContentField } from '@/graphql/generated';
 import { queryDatoCMS } from '@/utils/query-dato-cms';
 import { notFound } from 'next/navigation';
 import { toNextMetadata } from 'react-datocms/seo';
@@ -23,6 +24,8 @@ export default async function HomePage({ searchParams }: SearchParams) {
     variables: { slug: 'home' },
   });
 
+  const { headerFooter } = await queryDatoCMS({ document: HeaderFooterDocument });
+
   if (!page) {
     notFound();
   }
@@ -30,6 +33,7 @@ export default async function HomePage({ searchParams }: SearchParams) {
   return (
     <>
       <main>{<ContentBlocks blocks={page.content as PageModelContentField[]} searchParams={searchParams} />}</main>
+      <Footer headerFooter={headerFooter as HeaderFooterRecord} />
     </>
   );
 }
