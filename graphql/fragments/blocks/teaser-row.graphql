@@ -1,0 +1,28 @@
+fragment teaserRowBlock on TeaserRowRecord {
+  id
+  teasers {
+    __typename
+    ... on OfferRecord {
+      id
+      teaserDescription
+      teaserTitle
+      teaserImage {
+        responsiveImage {
+          ...responsiveImageFragment
+        }
+      }
+      slug
+    }
+    ... on ProjectRecord {
+      id
+      teaserDescription
+      teaserTitle
+      teaserImage {
+        responsiveImage {
+          ...responsiveImageFragment
+        }
+      }
+      slug
+    }
+  }
+}

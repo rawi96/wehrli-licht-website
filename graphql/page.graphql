@@ -40,6 +40,9 @@ query Page($slug: String!) {
       ... on TeaserGridRecord {
         ...teaserGridBlock
       }
+      ... on TeaserRowRecord {
+        ...teaserRowBlock
+      }
     }
     seo: _seoMetaTags {
       attributes

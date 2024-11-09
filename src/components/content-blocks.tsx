@@ -1,5 +1,10 @@
 import { SearchParams } from '@/app/page';
-import { GalleryBlockFragment, PageModelContentField, TeaserGridBlockFragment } from '@/graphql/generated';
+import {
+  GalleryBlockFragment,
+  PageModelContentField,
+  TeaserGridBlockFragment,
+  TeaserRowBlockFragment,
+} from '@/graphql/generated';
 import { FC } from 'react';
 import { GalleryBlock } from './blocks/gallery';
 import { HeaderSectionBlock } from './blocks/header-section';
@@ -11,6 +16,7 @@ import { LogoGridBlock } from './blocks/logo-grid';
 import { QuoteBlock } from './blocks/quote';
 import { TeamBlock } from './blocks/team';
 import { TeaserGridBlock } from './blocks/teaser-grid';
+import { TeaserRowBlock } from './blocks/teaser-row';
 import { TextBlock } from './blocks/text';
 import { TextImageBlock } from './blocks/text-image';
 
@@ -61,6 +67,9 @@ export const ContentBlocks: FC<Props> = ({ blocks }) => {
             break;
           case 'TeaserGridRecord':
             content = <TeaserGridBlock key={block.id} block={block as TeaserGridBlockFragment} />;
+            break;
+          case 'TeaserRowRecord':
+            content = <TeaserRowBlock key={block.id} block={block as TeaserRowBlockFragment} />;
             break;
           case 'HomeStageRecord':
             return <HomeStageBlock key={block.id} block={block} />;
