@@ -6,12 +6,12 @@ import { notFound } from 'next/navigation';
 import { toNextMetadata } from 'react-datocms/seo';
 
 export async function generateMetadata() {
-  const data = await queryDatoCMS({
+  const { site, page } = await queryDatoCMS({
     document: PageDocument,
     variables: { slug: 'home' },
   });
 
-  return toNextMetadata([...data.site.favicon, ...(data.page?.seo ?? [])]);
+  return toNextMetadata([...site.favicon, ...(page?.seo ?? [])]);
 }
 
 export type SearchParams = {
