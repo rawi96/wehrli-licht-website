@@ -33,17 +33,20 @@ export const GalleryBlock: FC<Props> = ({ block: { gallery } }) => {
               key={id}
               href={`?image=${id}`}
               scroll={false}
-              className="group relative block flex-grow text-center md:h-[339px]"
+              className="group relative block flex-grow overflow-hidden text-center md:h-[339px]"
               style={{ flexBasis: (smallSize.width / smallSize.height) * 339 }}
             >
-              <div className="absolute inset-0 bg-black opacity-40 transition-opacity duration-300 group-hover:opacity-60"></div>
+              <div className="absolute inset-0 bg-black opacity-0 transition-opacity duration-300 group-hover:opacity-60" />
 
-              <h3 className="absolute inset-0 z-10 flex items-center justify-center text-lg font-semibold leading-6 text-white">
+              <h3 className="absolute inset-0 z-10 flex items-center justify-center text-lg font-semibold leading-6 text-white transition-opacity duration-300 group-hover:opacity-100">
                 <span>{smallSize.title}</span>
               </h3>
 
-              {/* Image */}
-              <DatoSRCImage data={smallSize} imgStyle={{ objectFit: 'cover', maxWidth: '100%', maxHeight: '100%' }} />
+              <DatoSRCImage
+                data={smallSize}
+                imgStyle={{ objectFit: 'cover', maxWidth: '100%', maxHeight: '100%' }}
+                imgClassName="transition-transform duration-300 group-hover:scale-110"
+              />
             </NextLink>
           );
         })}
