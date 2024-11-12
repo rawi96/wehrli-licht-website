@@ -1,4 +1,3 @@
-import { SearchParams } from '@/app/page';
 import {
   GalleryBlockFragment,
   PageModelContentField,
@@ -14,19 +13,17 @@ import { IframeBlock } from './blocks/iframe';
 import { ImageGridBlock } from './blocks/image-grid';
 import { LogoGridBlock } from './blocks/logo-grid';
 import { QuoteBlock } from './blocks/quote';
+import { AllCategoriesBlock } from './blocks/shop/all-categories';
 import { TeamBlock } from './blocks/team';
 import { TeaserGridBlock } from './blocks/teaser-grid';
 import { TeaserRowBlock } from './blocks/teaser-row';
 import { TextBlock } from './blocks/text';
 import { TextImageBlock } from './blocks/text-image';
+import { ContentWrapper } from './layout/content-wrapper';
 
 type Props = {
   blocks: PageModelContentField[];
-} & SearchParams;
-
-const Wrapper: FC<{ children: React.ReactNode }> = ({ children }) => (
-  <div className="max-w-content mx-auto my-24 w-11/12 peer-[]/hero-video:mt-16 md:my-36">{children}</div>
-);
+};
 
 export const ContentBlocks: FC<Props> = ({ blocks }) => {
   return (
@@ -53,6 +50,8 @@ export const ContentBlocks: FC<Props> = ({ blocks }) => {
           case 'HeaderSectionRecord':
             content = <HeaderSectionBlock key={block.id} block={block} />;
             break;
+          case 'HomeStageRecord':
+            return <HomeStageBlock key={block.id} block={block} />;
           case 'QuoteRecord':
             content = <QuoteBlock key={block.id} block={block} />;
             break;
@@ -71,13 +70,15 @@ export const ContentBlocks: FC<Props> = ({ blocks }) => {
           case 'TeaserRowRecord':
             content = <TeaserRowBlock key={block.id} block={block as TeaserRowBlockFragment} />;
             break;
-          case 'HomeStageRecord':
-            return <HomeStageBlock key={block.id} block={block} />;
+          case 'AllCategoriesBlockRecord':
+            content = <AllCategoriesBlock key={block.id} block={block} />;
+            break;
+
           default:
             return null;
         }
 
-        return <Wrapper key={block.id}>{content}</Wrapper>;
+        return <ContentWrapper key={block.id}>{content}</ContentWrapper>;
       })}
     </>
   );

@@ -43,6 +43,9 @@ query Page($slug: String!) {
       ... on TeaserRowRecord {
         ...teaserRowBlock
       }
+      ... on AllCategoriesBlockRecord {
+        ...allCategoriesBlock
+      }
     }
     seo: _seoMetaTags {
       attributes

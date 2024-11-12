@@ -31,6 +31,7 @@
     "react-dom": "18.3.1",
     "react-slick": "^0.30.2",
     "slick-carousel": "^1.8.1",
+    "swell-js": "^4.2.4",
     "yet-another-react-lightbox": "^3.21.6"
   },
   "devDependencies": {

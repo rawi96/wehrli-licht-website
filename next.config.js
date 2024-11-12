@@ -6,6 +6,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: '**.datocms-assets.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'cdn.swell.store',
+      },
     ],
   },
   async redirects() {

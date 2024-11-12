@@ -1,0 +1,3 @@
+fragment allCategoriesBlock on AllCategoriesBlockRecord {
+  id
+}

@@ -5,13 +5,12 @@ import { HeaderFooterDocument, HeaderFooterRecord, OfferDocument, PageModelConte
 import { queryDatoCMS } from '@/utils/query-dato-cms';
 import { notFound } from 'next/navigation';
 import { toNextMetadata } from 'react-datocms/seo';
-import { SearchParams } from '../../page';
 
 type Params = {
   params: {
     slug: string;
   };
-} & SearchParams;
+};
 
 export async function generateMetadata({ params: { slug } }: Params) {
   const { site, offer } = await queryDatoCMS({
@@ -22,7 +21,7 @@ export async function generateMetadata({ params: { slug } }: Params) {
   return toNextMetadata([...site.favicon, ...(offer?.seo ?? [])]);
 }
 
-export default async function ContentPage({ params: { slug }, searchParams }: Params) {
+export default async function ContentPage({ params: { slug } }: Params) {
   const { offer } = await queryDatoCMS({
     document: OfferDocument,
     variables: { slug },
@@ -37,7 +36,7 @@ export default async function ContentPage({ params: { slug }, searchParams }: Pa
   return (
     <main>
       <Header headerFooter={headerFooter as HeaderFooterRecord} backgroundColor={'bg-wehrli'} />
-      <ContentBlocks blocks={offer.content as PageModelContentField[]} searchParams={searchParams} />
+      <ContentBlocks blocks={offer.content as PageModelContentField[]} />
       <Footer headerFooter={headerFooter as HeaderFooterRecord} />
     </main>
   );
