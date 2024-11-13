@@ -1,5 +1,6 @@
 import { HeaderFooterDocument, HeaderFooterRecord, HomeStageBlockFragment } from '@/graphql/generated';
 import { queryDatoCMS } from '@/utils/query-dato-cms';
+import { draftMode } from 'next/headers';
 import Image from 'next/image';
 import { FC } from 'react';
 import { Button } from '../button';
@@ -10,7 +11,10 @@ type Props = {
 };
 
 export const HomeStageBlock: FC<Props> = async ({ block: { title, intro, image, callToActions } }) => {
-  const { headerFooter } = await queryDatoCMS({ document: HeaderFooterDocument });
+  const { headerFooter } = await queryDatoCMS({
+    document: HeaderFooterDocument,
+    includeDrafts: draftMode().isEnabled,
+  });
 
   return (
     <div className="relative isolate mb-20 overflow-hidden bg-gray-900">

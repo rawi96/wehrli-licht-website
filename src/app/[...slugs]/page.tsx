@@ -2,6 +2,7 @@ import { ContentBlocks } from '@/components/content-blocks';
 import { Footer } from '@/components/layout/footer';
 import { Header } from '@/components/layout/header';
 import { HeaderFooterDocument, HeaderFooterRecord, PageDocument, PageModelContentField } from '@/graphql/generated';
+import { getAllDatoRoutes } from '@/utils/get-dato-routes';
 import { queryDatoCMS } from '@/utils/query-dato-cms';
 import { draftMode } from 'next/headers';
 import { notFound } from 'next/navigation';
@@ -9,23 +10,40 @@ import { toNextMetadata } from 'react-datocms/seo';
 
 type Params = {
   params: {
-    slug: string;
+    slugs: string[];
   };
 };
 
-export async function generateMetadata({ params: { slug } }: Params) {
+const getLastSlug = (slugs: string[]): string => {
+  return slugs[slugs.length - 1];
+};
+
+export async function generateMetadata({ params: { slugs } }: Params) {
   const { site, page } = await queryDatoCMS({
     document: PageDocument,
-    variables: { slug },
+    variables: { slug: getLastSlug(slugs) },
+    includeDrafts: draftMode().isEnabled,
   });
 
   return toNextMetadata([...site.favicon, ...(page?.seo ?? [])]);
 }
 
-export default async function ContentPage({ params: { slug } }: Params) {
+export async function generateStaticParams() {
+  const routes = await getAllDatoRoutes({ pagesOnly: true });
+
+  return routes
+    .filter(({ path }) => path !== '/') // We filter out the homepage
+    .map(({ path }) => ({
+      slug: path.split('/').filter(Boolean),
+    }));
+}
+
+export const dynamicParams = true;
+
+export default async function ContentPage({ params: { slugs } }: Params) {
   const { page } = await queryDatoCMS({
     document: PageDocument,
-    variables: { slug },
+    variables: { slug: getLastSlug(slugs) },
     includeDrafts: draftMode().isEnabled,
   });
 

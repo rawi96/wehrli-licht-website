@@ -2,6 +2,10 @@ query Page($slug: String!) {
   page(filter: { slug: { eq: $slug } }) {
     id
     slug
+    parent {
+      id
+      slug
+    }
     content {
       __typename
       ... on TextRecord {

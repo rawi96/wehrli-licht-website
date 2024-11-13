@@ -8,6 +8,7 @@ import { HeaderFooterDocument, HeaderFooterRecord } from '@/graphql/generated';
 import { queryDatoCMS } from '@/utils/query-dato-cms';
 import { getAllCategories, getCategoryBySlug, getProductsByCategory } from '@/utils/shop';
 import { Metadata } from 'next';
+import { draftMode } from 'next/headers';
 
 type Props = {
   params: {
@@ -43,7 +44,10 @@ export default async function CategoryPage({ params: { slug } }: Props) {
     return <NotFound />;
   }
 
-  const { headerFooter } = await queryDatoCMS({ document: HeaderFooterDocument });
+  const { headerFooter } = await queryDatoCMS({
+    document: HeaderFooterDocument,
+    includeDrafts: draftMode().isEnabled,
+  });
 
   return (
     <main>

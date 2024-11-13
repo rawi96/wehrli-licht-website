@@ -8,9 +8,6 @@ query HeaderFooter {
           label
           id
           link {
-            ... on OfferRecord {
-              slug
-            }
             ... on PageRecord {
               slug
             }
@@ -20,9 +17,6 @@ query HeaderFooter {
       ... on NavigationItemRecord {
         label
         link {
-          ... on OfferRecord {
-            slug
-          }
           ... on PageRecord {
             slug
           }
