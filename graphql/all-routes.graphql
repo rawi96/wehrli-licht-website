@@ -1,9 +1,26 @@
 query AllRoutes {
   allPages(first: 100) {
-    slug
-    lastModified: _updatedAt
-    seometatags {
-      noIndex
+    ...pageDetails
+    parent {
+      ...pageDetails
+      parent {
+        ...pageDetails
+        parent {
+          ...pageDetails
+          parent {
+            ...pageDetails
+          }
+        }
+      }
     }
+  }
+}
+
+fragment pageDetails on PageRecord {
+  id
+  slug
+  lastModified: _updatedAt
+  seometatags {
+    noIndex
   }
 }

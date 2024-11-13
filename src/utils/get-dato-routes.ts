@@ -1,4 +1,5 @@
 import { AllRoutesDocument } from '@/graphql/generated';
+import { generatePathForRecord } from './pathnames';
 import { queryDatoCMS } from './query-dato-cms';
 
 type Route = {
@@ -12,15 +13,16 @@ type Options = {
   pagesOnly?: boolean;
 };
 
-export const getAllDatoRoutes = async ({ includeDrafts = true }: Options = {}): Promise<Route[]> => {
+export const getAllDatoRoutes = async ({ includeDrafts = true, pagesOnly = false }: Options = {}): Promise<Route[]> => {
   const data = await queryDatoCMS({
     document: AllRoutesDocument,
     includeDrafts,
   });
 
   const pages =
-    data.allPages.map(({ slug, lastModified, seometatags }) => ({
-      path: `/${slug}`,
+    data.allPages.map(({ slug, lastModified, seometatags, parent }) => ({
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      path: generatePathForRecord({ slug, type: 'PageRecord', parent }),
       lastModified,
       noIndex: seometatags?.noIndex ?? undefined,
     })) || [];
@@ -31,5 +33,9 @@ export const getAllDatoRoutes = async ({ includeDrafts = true }: Options = {}): 
     pages[homeIndex].path = '/';
   }
 
-  return pages;
+  if (pagesOnly) {
+    return pages;
+  }
+
+  return [...pages];
 };

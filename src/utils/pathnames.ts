@@ -3,7 +3,7 @@ type PageRecordParent = {
   parent?: PageRecordParent | null;
 };
 
-type PageRecord = {
+export type PageRecord = {
   id: string;
   slug: string;
   parent?: PageRecordParent | null;
