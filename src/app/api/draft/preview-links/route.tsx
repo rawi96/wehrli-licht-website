@@ -54,14 +54,14 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 
   if (parsedRequest.item.meta.status !== 'draft') {
     previewLinks.push({
-      label: 'Veröffentlichte Version',
+      label: 'Live Version 🚀',
       url: `${baseUrl}/disable?url=${url}`,
     });
   }
 
   if (parsedRequest.item.meta.status !== 'published') {
     previewLinks.push({
-      label: 'Entwurf',
+      label: 'Draft Version 🚧',
       url: `${baseUrl}/enable?url=${url}&token=${token}`,
     });
   }
