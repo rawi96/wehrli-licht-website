@@ -20,7 +20,7 @@ export const TeaserGridBlock: FC<Props> = ({ block: { teasers } }) => (
     >
       {teasers.map((teaser, index) => (
         <NextLink
-          href={`${teaser.slug}`}
+          href={`${teaser.parent?.slug ? `/${teaser.parent?.slug}` : ''}/${teaser.slug}`}
           title={teaser.teaserTitle ?? ''}
           key={index}
           className="group grid w-full grid-rows-[auto,1fr,auto] overflow-hidden rounded bg-white text-black shadow transition-shadow duration-300 hover:shadow-xl"

@@ -13,6 +13,9 @@ fragment teaserGridBlock on TeaserGridRecord {
         }
       }
       slug
+      parent {
+        slug
+      }
     }
   }
 }

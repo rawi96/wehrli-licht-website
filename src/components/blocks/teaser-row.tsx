@@ -15,7 +15,7 @@ export const TeaserRowBlock: FC<Props> = ({ block: { teasers } }) => (
         <div className="flex flex-nowrap gap-4">
           {teasers.map((teaser) => (
             <NextLink
-              href={`${teaser.slug}`}
+              href={`${teaser.parent?.slug ? `/${teaser.parent?.slug}` : ''}/${teaser.slug}`}
               title={teaser.teaserTitle ?? ''}
               key={teaser.id}
               className="group relative h-64 w-64 overflow-hidden rounded-lg bg-white shadow transition-shadow duration-300 hover:shadow-xl"

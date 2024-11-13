@@ -1,9 +1,16 @@
 import { ContentBlocks } from '@/components/content-blocks';
 import { Footer } from '@/components/layout/footer';
 import { Header } from '@/components/layout/header';
-import { HeaderFooterDocument, HeaderFooterRecord, PageDocument, PageModelContentField } from '@/graphql/generated';
+import {
+  HeaderFooterDocument,
+  HeaderFooterRecord,
+  PageDocument,
+  PageModelContentField,
+  PageRecord,
+} from '@/graphql/generated';
 import { getAllDatoRoutes } from '@/utils/get-dato-routes';
 import { queryDatoCMS } from '@/utils/query-dato-cms';
+import { validateRoutes } from '@/utils/validate-dato-routes';
 import { draftMode } from 'next/headers';
 import { notFound } from 'next/navigation';
 import { toNextMetadata } from 'react-datocms/seo';
@@ -54,6 +61,10 @@ export default async function ContentPage({ params: { slugs } }: Params) {
 
   if (!page || page.slug === 'home') {
     notFound();
+  }
+
+  if (page.parent) {
+    await validateRoutes(page as unknown as PageRecord, slugs);
   }
 
   return (

@@ -13,6 +13,9 @@ fragment teaserRowBlock on TeaserRowRecord {
         }
       }
       slug
+      parent {
+        slug
+      }
     }
   }
 }
