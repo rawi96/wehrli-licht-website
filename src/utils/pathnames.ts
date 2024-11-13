@@ -40,6 +40,6 @@ export const generatePathForRecord = ({
     case 'PageRecord':
       return pagePath;
     default:
-      return pagePath;
+      return '';
   }
 };

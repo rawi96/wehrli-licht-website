@@ -10,7 +10,7 @@ const generatePreviewUrl = async ({ item, itemType }: generatePreviewUrlParams) 
   switch (itemType.attributes.api_key) {
     case 'page':
       if (item.attributes.parent_id) {
-        // page is a child of another page, so let's find the full slug
+        // page is a child of another page, so let's find the full slug (e.g. /agentur/lohnrechner)
         const routes = await getAllDatoRoutes();
         const route = routes.find(({ path }) => path.endsWith(`/${item.attributes.slug}`));
 
