@@ -69,7 +69,7 @@ export default async function ContentPage({ params: { slugs } }: Params) {
 
   return (
     <main>
-      <Header headerFooter={headerFooter as HeaderFooterRecord} backgroundColor={'bg-wehrli'} />
+      <Header headerFooter={headerFooter as HeaderFooterRecord} />
       <ContentBlocks blocks={page.content as PageModelContentField[]} />
       <Footer headerFooter={headerFooter as HeaderFooterRecord} />
     </main>

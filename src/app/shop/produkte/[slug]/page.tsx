@@ -1,12 +1,11 @@
 import { ContentWrapper } from '@/components/layout/content-wrapper';
 import { Footer } from '@/components/layout/footer';
 import { Header } from '@/components/layout/header';
-import { Heading1, Paragraph } from '@/components/nodes';
 import NotFound from '@/components/not-found';
-import { AllProductsForCategory } from '@/components/shop/all-products-for-category';
+import { ProductDetail } from '@/components/shop/product-detail';
 import { HeaderFooterDocument, HeaderFooterRecord } from '@/graphql/generated';
 import { queryDatoCMS } from '@/utils/query-dato-cms';
-import { getAllCategories, getCategoryBySlug, getProductsByCategory } from '@/utils/shop';
+import { getAllProducts, getProductBySlug } from '@/utils/shop';
 import { Metadata } from 'next';
 import { draftMode } from 'next/headers';
 
@@ -19,28 +18,27 @@ type Props = {
 export const revalidate = 60;
 
 export async function generateStaticParams() {
-  const allCategories = await getAllCategories();
+  const allProducts = await getAllProducts();
 
-  return allCategories.map((category) => ({
-    slug: category.slug,
+  return allProducts.map((product) => ({
+    slug: product.slug,
   }));
 }
 
 export async function generateMetadata({ params: { slug } }: Props): Promise<Metadata> {
-  const category = await getCategoryBySlug(slug);
+  const product = await getProductBySlug(slug);
 
   return {
-    title: category?.name ?? 'Kategorie',
-    description: category?.description ?? 'Beschreibung',
+    title: product?.name ?? 'Produkt',
+    description: product?.description ?? 'Beschreibung',
   };
 }
 
-export default async function CategoryPage({ params: { slug } }: Props) {
-  const category = await getCategoryBySlug(slug);
-  const products = await getProductsByCategory(slug);
+export default async function ProductPage({ params: { slug } }: Props) {
+  const product = await getProductBySlug(slug);
   // const bestsellers = await getBestsellers();
 
-  if (!category) {
+  if (!product) {
     return <NotFound />;
   }
 
@@ -53,10 +51,7 @@ export default async function CategoryPage({ params: { slug } }: Props) {
     <main>
       <Header headerFooter={headerFooter as HeaderFooterRecord} />
       <ContentWrapper>
-        <Heading1>{category.name}</Heading1>
-        <Paragraph dangerouslySetInnerHTML={{ __html: category.description }} />
-        {products && <AllProductsForCategory products={products} />}
-
+        <ProductDetail product={product} />
         {/* {bestsellers && bestsellers?.length > 0 && <Bestsellers bestsellers={bestsellers} />} */}
       </ContentWrapper>
       <Footer headerFooter={headerFooter as HeaderFooterRecord} />

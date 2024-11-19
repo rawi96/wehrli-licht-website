@@ -1,9 +1,9 @@
+import { getLowestPriceFromVariantsOrProductPrice } from '@/utils/price';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FC } from 'react';
 import { Product } from 'swell-js';
-import { BlockWrapper } from '../../block-wrapper';
-import { getLowestPriceFromVariantsOrProductPrice } from '@/components/price';
+import { BlockWrapper } from '../block-wrapper';
 
 type Props = {
   products: Product[];

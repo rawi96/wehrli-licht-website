@@ -1,7 +1,7 @@
 /* eslint-disable */
 
 // @ts-expect-error: 'swell-js' has no default export, but it works at runtime.
-import swell, { Category, Product } from 'swell-js';
+import swell, { Cart, Category, ErrorResponse, Product } from 'swell-js';
 
 export const getAllCategories = async (): Promise<Category[]> => {
   initSwell();
@@ -48,6 +48,36 @@ export const getProductBySlug = async (slug: string): Promise<Product | null> =>
 
   const response = await swell.products.get(slug);
   return response || null;
+};
+
+export const getCart = async (): Promise<Cart | null> => {
+  initSwell();
+
+  return await swell.cart.get();
+};
+
+export const addToCart = async (productId?: string, variantId?: string): Promise<Cart | ErrorResponse> => {
+  initSwell();
+
+  return await swell.cart.addItem({
+    product_id: productId,
+    variant_id: variantId,
+    quantity: 1,
+  });
+};
+
+export const updateCartItem = async (itemId: string, quantity: number): Promise<Cart | ErrorResponse> => {
+  initSwell();
+
+  return await swell.cart.updateItem(itemId, {
+    quantity,
+  });
+};
+
+export const removeCartItem = async (itemId: string): Promise<Cart | ErrorResponse> => {
+  initSwell();
+
+  return await swell.cart.removeItem(itemId);
 };
 
 export const initSwell = () => {
