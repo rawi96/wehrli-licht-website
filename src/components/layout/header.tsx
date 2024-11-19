@@ -29,9 +29,63 @@ export const Header: FC<Props> = ({ headerFooter: { menu } }) => {
   const isShopPage = pathname.includes('/shop');
   const isHomePage = pathname === '/';
 
+  const renderMenuItems = (isMobile = false) => {
+    if (isShopPage) {
+      return (
+        <>
+          <Link href="/" className={isMobile ? mobileLinkClasses : desktopLinkClasses} onClick={closeMobileMenu}>
+            Zurück zur Website
+          </Link>
+          <Link href="/shop" className={isMobile ? mobileLinkClasses : desktopLinkClasses} onClick={closeMobileMenu}>
+            Shop
+          </Link>
+          <button className={isMobile ? mobileLinkClasses : desktopLinkClasses} onClick={() => setIsShowCart(true)}>
+            Warenkorb{' '}
+            {shoppingCart?.item_quantity && shoppingCart.item_quantity > 0 ? `(${shoppingCart.item_quantity})` : ''}
+          </button>
+        </>
+      );
+    }
+
+    return menu.map((item: NavigationItemRecord | DirectoryRecord) =>
+      'navigationItems' in item ? (
+        isMobile ? (
+          <div key={item.label} className="relative font-semibold">
+            <NavigationAccordion
+              key={item.label}
+              title={item.label}
+              items={item.navigationItems}
+              prefix={item.slug}
+              onLinkClick={closeMobileMenu}
+            />
+          </div>
+        ) : (
+          <div key={item.label} className="relative font-semibold">
+            <Flyout key={item.label} title={item.label} items={item.navigationItems} prefix={item.slug} />
+          </div>
+        )
+      ) : (
+        <Link
+          key={item.label}
+          href={`/${item.link?.slug}`}
+          className={isMobile ? mobileLinkClasses : desktopLinkClasses}
+          onClick={closeMobileMenu}
+        >
+          {item.label}
+        </Link>
+      ),
+    );
+  };
+
+  // CSS classes for links
+  const desktopLinkClasses = 'text-sm font-semibold leading-6 text-white';
+  const mobileLinkClasses =
+    '-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-gray-400/10';
+
   return (
     <div className={classNames('pt-6', isHomePage ? 'bg-transparent' : 'bg-wehrli')}>
       <div className="px-6 lg:px-8">
+        {/* Desktop Navigation */}
         <nav className="flex items-center justify-between pb-6" aria-label="Global">
           <div className="flex lg:flex-1">
             <Link href="/" className="-m-1.5 p-1.5">
@@ -49,31 +103,10 @@ export const Header: FC<Props> = ({ headerFooter: { menu } }) => {
               <Bars3Icon className="h-6 w-6 text-white" aria-hidden="true" />
             </button>
           </div>
-          <div className="hidden lg:flex lg:gap-x-12">
-            {menu.map((item: NavigationItemRecord | DirectoryRecord) =>
-              'navigationItems' in item ? (
-                <div key={item.label} className="relative font-semibold">
-                  <Flyout key={item.label} title={item.label} items={item.navigationItems} prefix={item.slug} />
-                </div>
-              ) : (
-                <Link
-                  key={item.label}
-                  href={`/${item.link?.slug}`}
-                  className="text-sm font-semibold leading-6 text-white"
-                  onClick={closeMobileMenu}
-                >
-                  {item.label}
-                </Link>
-              ),
-            )}
-            {isShopPage && (
-              <button className="text-sm font-semibold leading-6 text-white" onClick={() => setIsShowCart(true)}>
-                Warenkorb{' '}
-                {shoppingCart?.item_quantity && shoppingCart.item_quantity > 0 ? `(${shoppingCart.item_quantity})` : ''}
-              </button>
-            )}
-          </div>
+          <div className="hidden lg:flex lg:gap-x-12">{renderMenuItems()}</div>
         </nav>
+
+        {/* Mobile Navigation */}
         <Dialog as="div" open={isMobileMenuOpen} onClose={setIsMobileMenuOpen}>
           <Dialog.Panel className="fixed inset-0 z-10 overflow-y-auto bg-wehrli px-6 py-6 lg:hidden">
             <div className="flex items-center justify-between">
@@ -92,41 +125,7 @@ export const Header: FC<Props> = ({ headerFooter: { menu } }) => {
             </div>
             <div className="mt-6 flow-root">
               <div className="-my-6 divide-y divide-gray-500/25">
-                <div className="space-y-2 py-6">
-                  {menu.map((item: NavigationItemRecord | DirectoryRecord) =>
-                    'navigationItems' in item ? (
-                      <div key={item.label} className="relative font-semibold">
-                        <NavigationAccordion
-                          key={item.label}
-                          title={item.label}
-                          items={item.navigationItems}
-                          prefix={item.slug}
-                          onLinkClick={closeMobileMenu}
-                        />
-                      </div>
-                    ) : (
-                      <Link
-                        key={item.label}
-                        href={`/${item.link?.slug}`}
-                        className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-gray-400/10"
-                        onClick={closeMobileMenu}
-                      >
-                        {item.label}
-                      </Link>
-                    ),
-                  )}
-                  {isShopPage && (
-                    <button
-                      className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-gray-400/10"
-                      onClick={() => setIsShowCart(true)}
-                    >
-                      Warenkorb{' '}
-                      {shoppingCart?.item_quantity && shoppingCart.item_quantity > 0
-                        ? `(${shoppingCart.item_quantity})`
-                        : ''}
-                    </button>
-                  )}
-                </div>
+                <div className="space-y-2 py-6">{renderMenuItems(true)}</div>
               </div>
             </div>
           </Dialog.Panel>
