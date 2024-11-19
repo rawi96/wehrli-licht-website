@@ -38,7 +38,7 @@ export const GalleryBlock: FC<Props> = ({ block: { gallery } }) => {
             >
               <div className="absolute inset-0 bg-black opacity-0 transition-opacity duration-300 group-hover:opacity-60" />
 
-              <h3 className="absolute inset-0 z-10 flex items-center justify-center text-lg font-semibold leading-6 text-white transition-opacity duration-300 group-hover:opacity-100">
+              <h3 className="font-semibold absolute inset-0 z-10 flex items-center justify-center text-lg leading-6 text-white transition-opacity duration-300 group-hover:opacity-100">
                 <span>{smallSize.title}</span>
               </h3>
 

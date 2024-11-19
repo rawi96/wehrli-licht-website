@@ -50,7 +50,7 @@ export const Header: FC<Props> = ({ headerFooter: { menu } }) => {
     return menu.map((item: NavigationItemRecord | DirectoryRecord) =>
       'navigationItems' in item ? (
         isMobile ? (
-          <div key={item.label} className="relative font-semibold">
+          <div key={item.label} className="font-semibold relative">
             <NavigationAccordion
               key={item.label}
               title={item.label}
@@ -60,7 +60,7 @@ export const Header: FC<Props> = ({ headerFooter: { menu } }) => {
             />
           </div>
         ) : (
-          <div key={item.label} className="relative font-semibold">
+          <div key={item.label} className="font-semibold relative">
             <Flyout key={item.label} title={item.label} items={item.navigationItems} prefix={item.slug} />
           </div>
         )
@@ -96,7 +96,7 @@ export const Header: FC<Props> = ({ headerFooter: { menu } }) => {
           <div className="flex lg:hidden">
             <button
               type="button"
-              className="-m-2.5 inline-flex items-center justify-center rounded-lg p-2.5 text-gray-400"
+              className="rounded-lg text-gray-400 -m-2.5 inline-flex items-center justify-center p-2.5"
               onClick={() => setIsMobileMenuOpen(true)}
             >
               <span className="sr-only">Menu öffnen</span>
@@ -116,7 +116,7 @@ export const Header: FC<Props> = ({ headerFooter: { menu } }) => {
               </Link>
               <button
                 type="button"
-                className="-m-2.5 rounded-lg p-2.5 text-gray-400"
+                className="rounded-lg text-gray-400 -m-2.5 p-2.5"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 <span className="sr-only">Menu schliessen</span>
@@ -124,7 +124,7 @@ export const Header: FC<Props> = ({ headerFooter: { menu } }) => {
               </button>
             </div>
             <div className="mt-6 flow-root">
-              <div className="-my-6 divide-y divide-gray-500/25">
+              <div className="divide-gray-500/25 -my-6 divide-y">
                 <div className="space-y-2 py-6">{renderMenuItems(true)}</div>
               </div>
             </div>

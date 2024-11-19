@@ -20,7 +20,7 @@ export const QuoteBlock: FC<Props> = ({ block: { testimonials } }) => {
                 <StarIcon key={i} aria-hidden="true" className="h-5 w-5 flex-none" />
               ))}
             </div>
-            <blockquote className="mt-10 text-xl/8 font-semibold tracking-tight text-gray-900 sm:text-2xl/9">
+            <blockquote className="font-semibold text-gray-900 sm:text-2xl/9 mt-10 text-xl/8 tracking-tight">
               <span className="inline text-wehrli">&laquo;</span>
               {testimonial.text}
               <span className="inline text-wehrli">&raquo;</span>
@@ -32,13 +32,13 @@ export const QuoteBlock: FC<Props> = ({ block: { testimonials } }) => {
                   alt="Author photo"
                   width={48}
                   height={48}
-                  className="h-12 w-12 rounded-full bg-gray-50"
+                  className="bg-gray-50 h-12 w-12 rounded-full"
                 />
               )}
               <div className="text-sm/6">
                 <div className="font-semibold text-gray-900">{testimonial.authorFunction}</div>
-                <div className="mt-0.5 text-gray-600">{testimonial.authorName}</div>
-                <div className="mt-0.5 text-gray-600 underline hover:text-gray-900">
+                <div className="text-gray-600 mt-0.5">{testimonial.authorName}</div>
+                <div className="text-gray-600 hover:text-gray-900 mt-0.5 underline">
                   <a href={testimonial.companyUrl} target="_blank" rel="noopener noreferrer">
                     {testimonial.companyName}
                   </a>

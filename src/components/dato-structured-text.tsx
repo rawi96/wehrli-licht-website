@@ -8,7 +8,7 @@ import {
 } from 'datocms-structured-text-utils';
 import { FC, Fragment } from 'react';
 import { StructuredText, renderMarkRule, renderNodeRule } from 'react-datocms';
-import { Heading1, Heading2, Heading3, InlineLink, ListItem, OrderedList, Paragraph, Serif, UnorderedList } from './nodes';
+import { Heading, InlineLink, ListItem, OrderedList, Paragraph, Serif, UnorderedList } from './nodes';
 
 type Props = {
   data: StructuredTextType;
@@ -26,18 +26,11 @@ export const StructuredTextRenderer: FC<Props> = ({ data }) => (
         ),
       ),
       renderNodeRule(isListItem, ({ children, key }) => <ListItem key={key}>{children}</ListItem>),
-      renderNodeRule(isHeading, ({ node, children, key }) => {
-        switch (node.level) {
-          case 1:
-            return <Heading1 key={key}>{children}</Heading1>;
-          case 2:
-            return <Heading2 key={key}>{children}</Heading2>;
-          case 3:
-            return <Heading3 key={key}>{children}</Heading3>;
-          default:
-            return null;
-        }
-      }),
+      renderNodeRule(isHeading, ({ node, children, key }) => (
+        <Heading key={key} level={node.level.toString() as '1' | '2' | '3'}>
+          {children}
+        </Heading>
+      )),
       renderNodeRule(isLink, ({ node, children, key }) => {
         const target = node.meta?.find((metaItem) => metaItem.id === 'target')?.value;
         const rel = node.meta?.find((metaItem) => metaItem.id === 'rel')?.value;

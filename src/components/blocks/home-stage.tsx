@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { FC } from 'react';
 import { Button } from '../button';
 import { Header } from '../layout/header';
+import { Heading } from '../nodes';
 
 type Props = {
   block: HomeStageBlockFragment;
@@ -17,7 +18,7 @@ export const HomeStageBlock: FC<Props> = async ({ block: { title, intro, image, 
   });
 
   return (
-    <div className="relative isolate mb-20 overflow-hidden bg-gray-900">
+    <div className="relative mb-20 overflow-hidden">
       {image?.responsiveImage && (
         <Image
           src={image.responsiveImage.src}
@@ -32,8 +33,10 @@ export const HomeStageBlock: FC<Props> = async ({ block: { title, intro, image, 
       <div className="px-6 lg:px-8">
         <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
           <div className="text-center">
-            <h1 className="text-3xl font-bold tracking-tight text-white sm:text-5xl">{title}</h1>
-            <p className="mt-6 text-lg leading-8 text-white">{intro}</p>
+            <Heading color="white" level="1">
+              {title}
+            </Heading>
+            <p className="peer my-4 font-sans text-xs text-white md:max-w-prose lg:my-8 lg:text-base">{intro}</p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
               {callToActions[0] && <Button type="primary" text={callToActions[0].text} href={callToActions[0].url} />}
               {callToActions[1] && (

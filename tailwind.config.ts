@@ -1,86 +1,71 @@
 import type { Config } from 'tailwindcss';
-import defaultTheme from 'tailwindcss/defaultTheme';
 
 const config: Config = {
-  content: [
-    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
-  ],
+  content: ['./src/components/**/*.{js,ts,jsx,tsx,mdx}', './src/app/**/*.{js,ts,jsx,tsx,mdx}'],
   theme: {
+    fontFamily: {
+      sans: ['"Inter"', 'sans-serif'],
+      serif: ['"IBM Plex Serif"', 'serif'],
+    },
+    fontWeight: {
+      normal: '400',
+      bold: '600',
+    },
     fontSize: {
-      xs: ['0.75rem', { lineHeight: '1rem' }],
-      sm: ['0.875rem', { lineHeight: '1.5rem' }],
-      base: ['1rem', { lineHeight: '1.5rem' }],
-      lg: ['1.125rem', { lineHeight: '2rem' }],
-      xl: ['1.25rem', { lineHeight: '1.75rem' }],
-      '2xl': ['1.5rem', { lineHeight: '2rem' }],
-      '3xl': ['2rem', { lineHeight: '3rem' }],
-      '4xl': ['2.5rem', { lineHeight: '3rem' }],
-      '5xl': ['3rem', { lineHeight: '1' }],
-      '6xl': ['3.75rem', { lineHeight: '1' }],
-      '7xl': ['4.5rem', { lineHeight: '1' }],
-      '8xl': ['6rem', { lineHeight: '1' }],
-      '9xl': ['8rem', { lineHeight: '1' }],
+      xxs: ['0.875rem', { lineHeight: '150%' }],
+      xs: ['1rem', { lineHeight: '150%' }],
+      sm: ['1.125rem', { lineHeight: '150%' }],
+      base: ['1.5rem', { lineHeight: '150%' }],
+      lg: ['2rem', { lineHeight: '125%' }],
+      xl: ['3rem', { lineHeight: '125%' }],
+      xxl: ['5rem', { lineHeight: '6rem' }],
+    },
+    colors: {
+      black: {
+        DEFAULT: '#252525',
+      },
+      white: {
+        DEFAULT: '#F9FAFB',
+        300: '#f1f0ec',
+        200: '#F8F7F5',
+        100: '#ffffff',
+      },
+      wehrli: {
+        DEFAULT: '#214073',
+        50: '#749AD7',
+        100: '#658ED3',
+        200: '#4577CA',
+        300: '#3363B2',
+        400: '#2A5293',
+        500: '#214073',
+        600: '#142847',
+        700: '#080F1C',
+        800: '#000000',
+        900: '#000000',
+      },
+      success: '#16a34a',
+      error: '#ef4444',
+      warning: '#FFAB00',
+    },
+    borderRadius: {
+      none: '0px',
+      sm: '0.5rem',
+      DEFAULT: '1rem',
+      full: '9999px',
     },
     extend: {
-      animation: {
-        'fade-in': 'fade-in 0.5s linear forwards',
-        marquee: 'marquee var(--marquee-duration) linear infinite',
-        'spin-slow': 'spin 4s linear infinite',
-        'spin-slower': 'spin 6s linear infinite',
-        'spin-reverse': 'spin-reverse 1s linear infinite',
-        'spin-reverse-slow': 'spin-reverse 4s linear infinite',
-        'spin-reverse-slower': 'spin-reverse 6s linear infinite',
+      spacing: {
+        120: '30rem',
       },
-      borderRadius: {
-        '4xl': '2rem',
-        '5xl': '2.5rem',
+      minWidth: {
+        '2/3': '66.666667%',
+        '11/12': '91.666667%',
       },
-      colors: ({ colors }) => ({
-        gray: colors.neutral,
-        wehrli: {
-          DEFAULT: '#214073',
-          50: '#749AD7',
-          100: '#658ED3',
-          200: '#4577CA',
-          300: '#3363B2',
-          400: '#2A5293',
-          500: '#214073',
-          600: '#142847',
-          700: '#080F1C',
-          800: '#000000',
-          900: '#000000',
-        },
-      }),
-      fontFamily: {
-        sans: ['Inter', ...defaultTheme.fontFamily.sans],
-      },
-      keyframes: {
-        'fade-in': {
-          from: {
-            opacity: '0',
-          },
-          to: {
-            opacity: '1',
-          },
-        },
-        marquee: {
-          '100%': {
-            transform: 'translateY(-50%)',
-          },
-        },
-        'spin-reverse': {
-          to: {
-            transform: 'rotate(-360deg)',
-          },
-        },
-      },
-      maxWidth: {
-        '2xl': '40rem',
+      borderWidth: {
+        3: '3px',
       },
     },
-    plugins: [require('@tailwindcss/forms'), require('@tailwindcss/aspect-ratio')],
   },
+  plugins: [require('@tailwindcss/typography'), require('@tailwindcss/forms')],
 };
 export default config;

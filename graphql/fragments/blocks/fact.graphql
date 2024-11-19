@@ -1,5 +1,5 @@
 fragment factBlock on FactRecord {
-    id
-    title
-    text
+  id
+  title
+  text
 }

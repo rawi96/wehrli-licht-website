@@ -44,7 +44,7 @@ export const Footer: FC<Props> = ({
                 </div>
               ) : (
                 <div key={item.label} className="pb-6">
-                  <Link href={`/${item.link?.slug}`} className="text-sm leading-6 hover:text-gray-900">
+                  <Link href={`/${item.link?.slug}`} className="hover:text-gray-900 text-sm leading-6">
                     {item.label}
                   </Link>
                 </div>

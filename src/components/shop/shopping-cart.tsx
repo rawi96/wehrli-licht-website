@@ -76,7 +76,7 @@ export const ShoppingCart = ({ open, setOpen }: Props) => {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="hidden sm:fixed sm:inset-0 sm:block sm:bg-gray-500 sm:bg-opacity-75 sm:transition-opacity" />
+          <div className="sm:bg-gray-500 hidden sm:fixed sm:inset-0 sm:block sm:bg-opacity-75 sm:transition-opacity" />
         </Transition.Child>
 
         <div className="fixed inset-0 z-10 overflow-y-auto">
@@ -92,9 +92,9 @@ export const ShoppingCart = ({ open, setOpen }: Props) => {
             >
               <Dialog.Panel className="flex w-full max-w-3xl transform text-left text-base transition sm:my-8">
                 {shoppingCart && (
-                  <div className="relative flex w-full flex-col overflow-hidden bg-white pb-8 pt-6 sm:rounded-lg sm:pb-6 lg:py-8">
+                  <div className="sm:rounded-lg relative flex w-full flex-col overflow-hidden bg-white pb-8 pt-6 sm:pb-6 lg:py-8">
                     <div className="flex items-center justify-between px-4 sm:px-6 lg:px-8">
-                      <h2 className="text-lg font-medium text-gray-900">Warenkorb</h2>
+                      <h2 className="font-medium text-gray-900 text-lg">Warenkorb</h2>
                       <button type="button" className="text-gray-400 hover:text-gray-500" onClick={() => setOpen(false)}>
                         <span className="sr-only">Schliessen</span>
                         <XMarkIcon className="h-6 w-6" aria-hidden="true" />
@@ -106,7 +106,7 @@ export const ShoppingCart = ({ open, setOpen }: Props) => {
                         Produkte im Warenkorb
                       </h2>
 
-                      <ul role="list" className="divide-y divide-gray-200 px-4 sm:px-6 lg:px-8">
+                      <ul role="list" className="divide-gray-200 divide-y px-4 sm:px-6 lg:px-8">
                         {shoppingCart.items?.length === 0 && <p>Sie haben keine Produkte im Warenkorb.</p>}
                         {shoppingCart.items?.map((item, productIdx) => (
                           <li key={item.id} className="flex py-8 text-sm sm:items-center">
@@ -114,7 +114,7 @@ export const ShoppingCart = ({ open, setOpen }: Props) => {
                               <Image
                                 src={item.product.images[0].file?.url}
                                 alt={item.product.name}
-                                className="h-24 w-24 flex-none rounded-lg border border-gray-200 sm:h-32 sm:w-32"
+                                className="rounded-lg border-gray-200 h-24 w-24 flex-none border sm:h-32 sm:w-32"
                                 width={1000}
                                 height={1000}
                               />
@@ -125,13 +125,13 @@ export const ShoppingCart = ({ open, setOpen }: Props) => {
                                 <h3 className="font-medium text-gray-900">
                                   <Link href={`/shop/produkte/${item.product?.slug}`}>{item.product?.name}</Link>
                                   {item.options && (
-                                    <p className="pt-3 text-gray-600">
+                                    <p className="text-gray-600 pt-3">
                                       {item.options.map((option) => `${option.name}: ${option.value}`).join(', ')}
                                     </p>
                                   )}
                                 </h3>
                               </div>
-                              <p className="row-span-2 row-end-2 font-medium text-gray-900 sm:order-1 sm:ml-6 sm:w-1/3 sm:flex-none sm:text-right">
+                              <p className="font-medium text-gray-900 row-span-2 row-end-2 sm:order-1 sm:ml-6 sm:w-1/3 sm:flex-none sm:text-right">
                                 {formatPriceToCHF(item.price)}
                               </p>
                               <div className="flex items-center sm:block sm:flex-none sm:text-center">
@@ -142,7 +142,7 @@ export const ShoppingCart = ({ open, setOpen }: Props) => {
                                   id={`quantity-${productIdx}`}
                                   name={`quantity-${productIdx}`}
                                   defaultValue={item.quantity}
-                                  className="block max-w-full rounded-md border border-gray-300 py-1.5 text-left text-base font-medium leading-5 text-gray-700 shadow-sm focus:border-wehrli-500 focus:outline-none focus:ring-1 focus:ring-wehrli-500 sm:text-sm"
+                                  className="rounded-md border-gray-300 font-medium text-gray-700 block max-w-full border py-1.5 text-left text-base leading-5 shadow-sm focus:border-wehrli-500 focus:outline-none focus:ring-1 focus:ring-wehrli-500 sm:text-sm"
                                   onChange={(event) => handleSelectChange(event, item)}
                                 >
                                   <option value={1}>1</option>
@@ -159,7 +159,7 @@ export const ShoppingCart = ({ open, setOpen }: Props) => {
 
                                 <button
                                   type="button"
-                                  className={`ml-4 font-medium ${
+                                  className={`font-medium ml-4 ${
                                     isLoading ? 'text-gray-400' : 'text-wehrli'
                                   } hover:text-wehrli-600 sm:ml-0 sm:mt-2`}
                                   onClick={() => handleDeleteItem(item)}
@@ -175,13 +175,13 @@ export const ShoppingCart = ({ open, setOpen }: Props) => {
                     </section>
                     {shoppingCart.items?.length !== 0 && (
                       <section aria-labelledby="summary-heading" className="mt-auto sm:px-6 lg:px-8">
-                        <div className="bg-gray-50 p-6 sm:rounded-lg sm:p-8">
+                        <div className="bg-gray-50 sm:rounded-lg p-6 sm:p-8">
                           <h2 id="summary-heading" className="sr-only">
                             Bestellübersicht
                           </h2>
 
                           <div className="flow-root">
-                            <dl className="-my-4 divide-y divide-gray-200 text-sm">
+                            <dl className="divide-gray-200 -my-4 divide-y text-sm">
                               <div className="flex items-center justify-between py-4">
                                 <dt className="text-gray-600">Zwischentotal</dt>
                                 <dd className="font-medium text-gray-900">
@@ -196,8 +196,8 @@ export const ShoppingCart = ({ open, setOpen }: Props) => {
                               </div>
 
                               <div className="flex items-center justify-between py-4">
-                                <dt className="text-base font-medium text-gray-900">Total</dt>
-                                <dd className="text-base font-medium text-gray-900">
+                                <dt className="font-medium text-gray-900 text-base">Total</dt>
+                                <dd className="font-medium text-gray-900 text-base">
                                   {isLoading ? '...' : `CHF ${shoppingCart.grand_total}`}
                                 </dd>
                               </div>

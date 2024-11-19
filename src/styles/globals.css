@@ -1,24 +1,16 @@
-@font-face {
-  font-family: 'Inter';
-  font-weight: 100 900;
-  font-display: block;
-  font-style: normal;
-  font-named-instance: 'Regular';
-  src: url('/fonts/Inter-roman.var.woff2') format('woff2');
-}
-@font-face {
-  font-family: 'Inter';
-  font-weight: 100 900;
-  font-display: block;
-  font-style: italic;
-  font-named-instance: 'Italic';
-  src: url('/fonts/Inter-italic.var.woff2') format('woff2');
-}
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-#__next {
-  min-height: 100%;
+html {
+  -webkit-tap-highlight-color: transparent;
+}
+
+::selection {
+  @apply bg-wehrli-500;
+  @apply text-white;
+}
+
+:focus-visible {
+  outline: 3px solid theme('colors.wehrli.500');
 }

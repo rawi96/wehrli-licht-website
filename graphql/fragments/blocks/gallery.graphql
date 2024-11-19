@@ -11,4 +11,3 @@ fragment galleryBlock on GalleryRecord {
     }
   }
 }
-    

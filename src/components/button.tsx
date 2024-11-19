@@ -1,3 +1,4 @@
+import { classNames } from '@/utils/css';
 import Link from 'next/link';
 import { MouseEvent } from 'react';
 
@@ -15,50 +16,42 @@ type Props = {
 export const Button = ({ text, href, onClick, type, disabled, fullWidth, white, loading }: Props) => {
   const isDisabled = disabled ?? loading;
 
-  const primaryClasses = `
-    ${white ? 'text-wehrli bg-white hover:bg-gray-300' : 'text-white bg-wehrli hover:bg-wehrli-600'} 
-    ${fullWidth && 'w-full'} 
-    shadow-sm px-5 text-base font-semibold py-2.5 
-    focus:ring-4 focus:outline-none focus:ring-wehrli-300 
-    rounded-lg text-center inline-flex items-center justify-center 
-    ${isDisabled ? 'bg-gray-400 text-gray-200 cursor-not-allowed hover:bg-gray-400' : ''}
-  `;
+  const baseClasses = 'px-5 py-2.5 rounded text-center inline-flex items-center justify-center text-sm font-bold group';
+  const primaryClasses = classNames(
+    baseClasses,
+    white ? 'text-wehrli bg-white hover:bg-gray-300' : 'text-white bg-wehrli hover:bg-wehrli-600',
+    fullWidth && 'w-full',
+    !isDisabled && 'shadow-sm focus:ring-4 focus:outline-none focus:ring-wehrli-300',
+    isDisabled && 'bg-gray-400 cursor-not-allowed',
+  );
 
-  const secondaryClasses = `
-    ${white ? 'text-white' : ''} 
-    ${fullWidth && 'w-full'} 
-    hover:underline focus:ring-4 focus:outline-none focus:ring-wehrli-300 
-    rounded-lg text-base font-semibold px-5 py-2.5 text-center 
-    inline-flex items-center justify-center
-    ${isDisabled ? 'cursor-not-allowed text-gray-400 hover:underline' : ''}
-  `;
+  const secondaryClasses = classNames(
+    baseClasses,
+    white && 'text-white',
+    fullWidth && 'w-full',
+    'hover:underline',
+    isDisabled && 'cursor-not-allowed',
+  );
 
-  return (
-    <>
-      {href ? (
-        <Link className={type === 'primary' ? primaryClasses : secondaryClasses} href={href}>
-          {text}
-          {type === 'secondary' && <ArrowIcon />}
-        </Link>
-      ) : (
-        <button
-          type="button"
-          className={type === 'primary' ? primaryClasses : secondaryClasses}
-          onClick={onClick}
-          disabled={isDisabled}
-        >
-          {loading && <Spinner />}
-          {text}
-          {type === 'secondary' && <ArrowIcon />}
-        </button>
-      )}
-    </>
+  const buttonClasses = type === 'primary' ? primaryClasses : secondaryClasses;
+
+  return href ? (
+    <Link className={buttonClasses} href={href}>
+      {text}
+      {type === 'secondary' && <ArrowIcon />}
+    </Link>
+  ) : (
+    <button type="button" className={buttonClasses} onClick={onClick} disabled={isDisabled}>
+      {loading && <Spinner />}
+      {text}
+      {type === 'secondary' && <ArrowIcon />}
+    </button>
   );
 };
 
 const ArrowIcon = () => (
   <svg
-    className="ms-2 h-3.5 w-3.5 rtl:rotate-180"
+    className="ms-2 h-4 w-4 transition-transform duration-200 ease-in-out group-hover:translate-x-1 rtl:rotate-180"
     aria-hidden="true"
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
