@@ -1,7 +1,6 @@
 import Link from 'next/link';
 
 type AddressProps = {
-  size?: 's' | 'l';
   companyName?: string | null;
   street?: string | null;
   zip?: string | null;
@@ -11,12 +10,8 @@ type AddressProps = {
   mapsLink?: string | null;
 };
 
-export const Address = ({ size = 's', companyName, street, zip, place, phone, email, mapsLink }: AddressProps) => (
-  <address
-    className={`${size === 's' ? 'text-sm' : 'leading-6'} text-center not-italic`}
-    itemScope
-    itemType="https://schema.org/Organization"
-  >
+export const Address = ({ companyName, street, zip, place, phone, email, mapsLink }: AddressProps) => (
+  <address className={`text-center text-xxs not-italic`} itemScope itemType="https://schema.org/Organization">
     {mapsLink && (
       <span className="inline-block">
         <Link
@@ -34,18 +29,14 @@ export const Address = ({ size = 's', companyName, street, zip, place, phone, em
         <p className="mt-4">
           {phone && (
             <Link className="block p-4 underline hover:opacity-50" href={`tel:${phone}`} itemProp="telephone">
-              <span
-                className={`${size === 'l' ? 'border-black' : 'text-white'} ${'relative inline-flex items-center border px-6 py-4 text-sm lg:px-6'}`}
-              >
+              <span className={`'text-white lg:px-6'} relative inline-flex items-center border px-6 py-4 text-xxs`}>
                 {phone}
               </span>
             </Link>
           )}
           {email && (
             <Link className="block p-4 underline hover:opacity-50" href={`mailto:${email}`} itemProp="email">
-              <span
-                className={`${size === 'l' ? 'border-black' : 'text-white'} ${'relative inline-flex items-center border px-6 py-4 text-sm lg:px-6'}`}
-              >
+              <span className={`lg:px-6'} relative inline-flex items-center border px-6 py-4 text-xxs text-white`}>
                 {email}
               </span>
             </Link>

@@ -46,7 +46,7 @@ export const Footer: FC<Props> = ({
                 <div key={item.label} className="pb-6">
                   <Link
                     href={`/${item.link?.slug}`}
-                    className="border-b-2 border-transparent text-xs font-bold text-white transition-colors duration-150 hover:border-white"
+                    className="border-b-2 border-transparent font-bold text-white transition-colors duration-150 hover:border-white"
                   >
                     {item.label}
                   </Link>
@@ -75,7 +75,7 @@ export const Footer: FC<Props> = ({
           )}
         </div>
 
-        <h3 className="mt-10 text-center text-sm font-bold">Adresse</h3>
+        <h3 className="mt-10 text-center font-bold">Adresse</h3>
         <Address
           companyName={companyName}
           street={street}
@@ -87,12 +87,12 @@ export const Footer: FC<Props> = ({
         />
         {!holidayDisable && (
           <>
-            <h3 className="mt-10 text-center text-sm font-bold">{holidayTitle}</h3>
+            <h3 className="mt-10 text-center font-bold">{holidayTitle}</h3>
             <FormattedText text={holidayText} />
           </>
         )}
         <>
-          <h3 className="mt-10 text-center text-sm font-bold">{openingHoursTitle}</h3>
+          <h3 className="mt-10 text-center font-bold">{openingHoursTitle}</h3>
           <FormattedText text={openingHoursText} />
         </>
       </div>

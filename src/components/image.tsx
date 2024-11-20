@@ -14,19 +14,13 @@ type ImageProps = {
 
 export const ImageComponent: FC<ImageProps> = ({ image, priority, imgClassName }) => (
   <>
-    {image?.responsiveImage ? (
+    {image?.responsiveImage && (
       <DatoSRCImage
         data={image.responsiveImage}
         imgClassName={imgClassName ?? 'object-cover'}
         priority={priority}
         imgStyle={{ width: '100%', maxWidth: '100%', height: '100%' }}
       />
-    ) : (
-      image?.url && (
-        // to enable svg support, we need to use the img tag instead of the DatoSRCImage or NextImage component
-        // eslint-disable-next-line @next/next/no-img-element
-        <img src={image.url} alt={image?.alt ?? image?.title ?? ''} className={imgClassName ?? 'object-cover'} />
-      )
     )}
   </>
 );
