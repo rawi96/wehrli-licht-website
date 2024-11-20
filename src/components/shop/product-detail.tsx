@@ -52,7 +52,7 @@ export const ProductDetail = ({ product }: Props) => {
             {uniqueImages?.map((image) => (
               <Tab
                 key={image.id}
-                className="rounded-md font-medium text-gray-900 hover:bg-gray-50 relative flex h-24 cursor-pointer items-center justify-center bg-white text-sm uppercase focus:outline-none focus:ring focus:ring-opacity-50 focus:ring-offset-4"
+                className="rounded-md font-medium relative flex h-24 cursor-pointer items-center justify-center bg-white text-sm uppercase text-gray-900 hover:bg-gray-50 focus:outline-none focus:ring focus:ring-opacity-50 focus:ring-offset-4"
               >
                 {({ selected }) => (
                   <>
@@ -94,10 +94,10 @@ export const ProductDetail = ({ product }: Props) => {
       </Tab.Group>
 
       <div className="mt-10 px-4 sm:mt-16 sm:px-0 lg:mt-0">
-        <h1 className="text-3xl text-gray-900 font-bold tracking-tight">{product.name}</h1>
+        <h1 className="text-3xl font-bold tracking-tight text-gray-900">{product.name}</h1>
 
         <div className="mt-3">
-          <p className="text-3xl text-gray-900 tracking-tight">{formatPriceToCHF(activeVariant?.price ?? product.price)}</p>
+          <p className="text-3xl tracking-tight text-gray-900">{formatPriceToCHF(activeVariant?.price ?? product.price)}</p>
         </div>
 
         <div className="mt-6">

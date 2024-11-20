@@ -1,5 +1,7 @@
 import {
   GalleryBlockFragment,
+  HeaderSectionBlockFragment,
+  HomeStageBlockFragment,
   PageModelContentField,
   TeaserGridBlockFragment,
   TeaserRowBlockFragment,
@@ -48,10 +50,10 @@ export const ContentBlocks: FC<Props> = ({ blocks }) => {
             content = <IframeBlock key={block.id} block={block} />;
             break;
           case 'HeaderSectionRecord':
-            content = <HeaderSectionBlock key={block.id} block={block} />;
+            content = <HeaderSectionBlock key={block.id} block={block as HeaderSectionBlockFragment} />;
             break;
           case 'HomeStageRecord':
-            return <HomeStageBlock key={block.id} block={block} />;
+            return <HomeStageBlock key={block.id} block={block as HomeStageBlockFragment} />;
           case 'QuoteRecord':
             content = <QuoteBlock key={block.id} block={block} />;
             break;

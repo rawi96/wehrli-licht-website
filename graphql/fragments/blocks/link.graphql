@@ -1,5 +1,13 @@
 fragment linkBlock on LinkRecord {
   id
-  text
-  url
+  label
+  newTab
+  externalUrl
+  isExternalUrl
+  link {
+    __typename
+    ... on PageRecord {
+      ...pageRecordLink
+    }
+  }
 }

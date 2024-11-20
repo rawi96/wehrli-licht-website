@@ -38,9 +38,11 @@ export const HomeStageBlock: FC<Props> = async ({ block: { title, intro, image, 
             </Heading>
             <p className="peer my-4 font-sans text-xs text-white md:max-w-prose lg:my-8 lg:text-base">{intro}</p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
-              {callToActions[0] && <Button type="primary" text={callToActions[0].text} href={callToActions[0].url} />}
+              {callToActions[0] && (
+                <Button type="primary" text={callToActions[0].label} href={callToActions[0].link?.slug} />
+              )}
               {callToActions[1] && (
-                <Button type="secondary" white text={callToActions[1].text} href={callToActions[1].url} />
+                <Button type="secondary" white text={callToActions[1].label} href={callToActions[1].link?.slug} />
               )}
             </div>
           </div>

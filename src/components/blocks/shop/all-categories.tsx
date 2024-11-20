@@ -30,9 +30,9 @@ export const AllCategoriesBlock: FC<Props> = async () => {
                     />
                   )}
                 </div>
-                <h3 className="text-gray-900 mt-4 text-base font-bold">{category.name}</h3>
+                <h3 className="mt-4 text-base font-bold text-gray-900">{category.name}</h3>
                 <p
-                  className="text-gray-500 mt-2 text-sm"
+                  className="mt-2 text-sm text-gray-500"
                   dangerouslySetInnerHTML={{
                     __html: category.description,
                   }}

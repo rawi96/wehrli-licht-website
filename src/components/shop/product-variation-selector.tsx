@@ -52,12 +52,12 @@ export const ProductVariationSelector = ({ product, setActiveVariant }: Props) =
 
         return (
           <div key={option.id} className="mb-4">
-            <label className="font-medium text-gray-700 block text-sm">{option.name}</label>
+            <label className="font-medium block text-sm text-gray-700">{option.name}</label>
             <Menu as="div" className="relative inline-block w-full text-left">
               <div>
-                <Menu.Button className="rounded-md text-gray-900 ring-gray-300 hover:bg-gray-50 inline-flex w-full justify-center gap-x-1.5 bg-white px-3 py-2 text-sm font-bold shadow-sm ring-1 ring-inset">
+                <Menu.Button className="rounded-md inline-flex w-full justify-center gap-x-1.5 bg-white px-3 py-2 text-sm font-bold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
                   {option.values?.find((value) => value.id === selectedOptions[option.id!])?.name}
-                  <ChevronDownIcon className="text-gray-400 -mr-1 h-5 w-5" aria-hidden="true" />
+                  <ChevronDownIcon className="-mr-1 h-5 w-5 text-gray-400" aria-hidden="true" />
                 </Menu.Button>
               </div>
 
@@ -82,7 +82,7 @@ export const ProductVariationSelector = ({ product, setActiveVariant }: Props) =
                           <span
                             className={classNames(
                               value.id === selectedOptions[option.id!] ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                              'hover:bg-gray-100 block px-4 py-2 text-sm',
+                              'block px-4 py-2 text-sm hover:bg-gray-100',
                             )}
                             onClick={() => handleOptionSelect(option.id!, value.id!)}
                           >

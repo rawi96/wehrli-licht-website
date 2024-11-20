@@ -10,7 +10,7 @@ type Props = {
 
 export const HeaderSectionBlock: FC<Props> = ({ block: { title, description, links, facts, backgroundImage } }) => {
   return (
-    <BlockWrapper className="bg-gray-900 relative isolate overflow-hidden py-24 sm:py-32">
+    <BlockWrapper className="relative isolate overflow-hidden bg-gray-900 py-24 sm:py-32">
       <DatoSRCImage
         data={backgroundImage.responsiveImage}
         imgClassName="absolute inset-0 -z-10 h-full w-full object-cover object-right md:object-center blur-sm brightness-50"
@@ -23,8 +23,8 @@ export const HeaderSectionBlock: FC<Props> = ({ block: { title, description, lin
         <div className="mx-auto mt-10 max-w-2xl lg:mx-0 lg:max-w-none">
           <div className="font-semibold grid grid-cols-1 gap-x-8 gap-y-6 text-base/7 text-white sm:grid-cols-2 md:flex lg:gap-x-10">
             {links.map((link) => (
-              <a key={link.text} href={link.url} className="hover:text-gray-300 flex items-center">
-                {link.text}
+              <a key={link.id} href={link.link?.slug ?? '#'} className="flex items-center hover:text-gray-300">
+                {link.label}
                 <ArrowRightIcon className="ml-2 h-5 w-5" aria-hidden="true" />
               </a>
             ))}

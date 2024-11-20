@@ -18,7 +18,7 @@ export const Card: FC<Props> = ({ title, description, link, linkLabel, linkTitle
     href={link ?? '#'}
     title={linkTitle ?? title}
     className={classNames(
-      'bg-white-100 group grid w-full grid-rows-[auto,1fr,auto] overflow-hidden rounded text-black transition-transform active:scale-[.99]',
+      'group grid w-full grid-rows-[auto,1fr,auto] overflow-hidden rounded bg-white-100 text-black transition-transform active:scale-[.99]',
     )}
     target={'_self'}
   >
@@ -30,7 +30,7 @@ export const Card: FC<Props> = ({ title, description, link, linkLabel, linkTitle
         />
       )}
     </div>
-    <div className="text-xxs grid grid-rows-[auto,1fr,auto] p-5 font-sans font-normal md:p-6 lg:p-8 lg:text-sm">
+    <div className="grid grid-rows-[auto,1fr,auto] p-5 font-sans text-xxs font-normal md:p-6 lg:p-8 lg:text-sm">
       <div>
         <h3 className="my-4 font-sans text-sm font-bold text-wehrli peer-[p&]:mt-6 md:text-base lg:text-lg lg:peer-[p&]:mt-8">
           {title}

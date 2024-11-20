@@ -1,3 +1,5 @@
 import { FC, PropsWithChildren } from 'react';
 
-export const ListItem: FC<PropsWithChildren> = ({ children }) => <li className="md:max-w-prose">{children}</li>;
+type Props = PropsWithChildren;
+
+export const ListItem: FC<Props> = ({ children }) => <li className="md:max-w-prose">{children}</li>;

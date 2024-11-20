@@ -129,7 +129,7 @@ export const Header: FC<Props> = ({ headerFooter: { menu } }) => {
               </Link>
               <button
                 type="button"
-                className="-m-2.5 rounded-lg p-2.5 text-gray-400"
+                className="rounded-lg -m-2.5 p-2.5 text-gray-400"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 <span className="sr-only">Menu schliessen</span>
