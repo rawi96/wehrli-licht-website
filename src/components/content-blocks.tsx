@@ -1,6 +1,5 @@
 import {
   GalleryBlockFragment,
-  HeaderSectionBlockFragment,
   HomeStageBlockFragment,
   PageModelContentField,
   TeaserGridBlockFragment,
@@ -8,9 +7,9 @@ import {
 } from '@/graphql/generated';
 import { FC } from 'react';
 import { GalleryBlock } from './blocks/gallery';
-import { HeaderSectionBlock } from './blocks/header-section';
 import { HomeStageBlock } from './blocks/home-stage';
 import { IframeBlock } from './blocks/iframe';
+import { ImageBlock } from './blocks/image';
 import { ImageGridBlock } from './blocks/image-grid';
 import { LogoGridBlock } from './blocks/logo-grid';
 import { QuoteBlock } from './blocks/quote';
@@ -39,14 +38,14 @@ export const ContentBlocks: FC<Props> = ({ blocks }) => {
           case 'TextImageRecord':
             content = <TextImageBlock key={block.id} block={block} />;
             break;
+          case 'ImageRecord':
+            content = <ImageBlock key={block.id} block={block} />;
+            break;
           case 'TeamRecord':
             content = <TeamBlock key={block.id} block={block} />;
             break;
           case 'IframeRecord':
             content = <IframeBlock key={block.id} block={block} />;
-            break;
-          case 'HeaderSectionRecord':
-            content = <HeaderSectionBlock key={block.id} block={block as HeaderSectionBlockFragment} />;
             break;
           case 'HomeStageRecord':
             return <HomeStageBlock key={block.id} block={block as HomeStageBlockFragment} />;

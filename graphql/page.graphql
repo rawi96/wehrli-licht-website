@@ -14,14 +14,14 @@ query Page($slug: String!) {
       ... on TextImageRecord {
         ...textImageBlock
       }
+      ... on ImageRecord {
+        ...imageBlock
+      }
       ... on TeamRecord {
         ...teamBlock
       }
       ... on IframeRecord {
         ...iframeBlock
-      }
-      ... on HeaderSectionRecord {
-        ...headerSectionBlock
       }
       ... on QuoteRecord {
         ...quoteBlock
