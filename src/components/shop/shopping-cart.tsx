@@ -92,7 +92,7 @@ export const ShoppingCart = ({ open, setOpen }: Props) => {
             >
               <Dialog.Panel className="flex w-full max-w-3xl transform text-left text-base transition sm:my-8">
                 {shoppingCart && (
-                  <div className="sm:rounded-lg relative flex w-full flex-col overflow-hidden bg-white pb-8 pt-6 sm:pb-6 lg:py-8">
+                  <div className="relative flex w-full flex-col overflow-hidden bg-white pb-8 pt-6 sm:rounded sm:pb-6 lg:py-8">
                     <div className="flex items-center justify-between px-4 sm:px-6 lg:px-8">
                       <h2 className="font-medium text-gray-900 text-lg">Warenkorb</h2>
                       <button type="button" className="text-gray-400 hover:text-gray-500" onClick={() => setOpen(false)}>
@@ -114,7 +114,7 @@ export const ShoppingCart = ({ open, setOpen }: Props) => {
                               <Image
                                 src={item.product.images[0].file?.url}
                                 alt={item.product.name}
-                                className="rounded-lg border-gray-200 h-24 w-24 flex-none border sm:h-32 sm:w-32"
+                                className="border-gray-200 h-24 w-24 flex-none rounded border sm:h-32 sm:w-32"
                                 width={1000}
                                 height={1000}
                               />
@@ -175,7 +175,7 @@ export const ShoppingCart = ({ open, setOpen }: Props) => {
                     </section>
                     {shoppingCart.items?.length !== 0 && (
                       <section aria-labelledby="summary-heading" className="mt-auto sm:px-6 lg:px-8">
-                        <div className="bg-gray-50 sm:rounded-lg p-6 sm:p-8">
+                        <div className="bg-gray-50 p-6 sm:rounded sm:p-8">
                           <h2 id="summary-heading" className="sr-only">
                             Bestellübersicht
                           </h2>

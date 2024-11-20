@@ -25,7 +25,7 @@ export const Address = ({ size = 's', companyName, street, zip, place, phone, em
           itemProp="address"
           itemScope
           itemType="https://schema.org/PostalAddress"
-          className="hover:opacity-80"
+          className="hover:opacity-50"
         >
           {companyName && <p itemProp="name">{companyName}</p>}
           {street && <p itemProp="streetAddress">{street}</p>}
@@ -33,21 +33,21 @@ export const Address = ({ size = 's', companyName, street, zip, place, phone, em
         </Link>
         <p className="mt-4">
           {phone && (
-            <Link className="block p-4 underline hover:opacity-80" href={`tel:${phone}`} itemProp="telephone">
-              <button
-                className={`${size === 'l' ? 'border-black' : 'text-white'} ${'relative inline-flex items-center border px-6 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 lg:px-6'}`}
+            <Link className="block p-4 underline hover:opacity-50" href={`tel:${phone}`} itemProp="telephone">
+              <span
+                className={`${size === 'l' ? 'border-black' : 'text-white'} ${'relative inline-flex items-center border px-6 py-4 text-sm lg:px-6'}`}
               >
                 {phone}
-              </button>
+              </span>
             </Link>
           )}
           {email && (
-            <Link className="block p-4 underline hover:opacity-80" href={`mailto:${email}`} itemProp="email">
-              <button
-                className={`${size === 'l' ? 'border-black' : 'text-white'} ${'relative inline-flex items-center border px-6 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 lg:px-6'}`}
+            <Link className="block p-4 underline hover:opacity-50" href={`mailto:${email}`} itemProp="email">
+              <span
+                className={`${size === 'l' ? 'border-black' : 'text-white'} ${'relative inline-flex items-center border px-6 py-4 text-sm lg:px-6'}`}
               >
                 {email}
-              </button>
+              </span>
             </Link>
           )}
         </p>

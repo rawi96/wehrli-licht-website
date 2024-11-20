@@ -12,7 +12,7 @@ export const HistoryBlock: FC<Props> = ({ block: { historySections } }) => (
     <div className="mx-auto my-20 grid max-w-2xl grid-cols-1 gap-8 overflow-hidden lg:mx-0 lg:max-w-none lg:grid-cols-4">
       {historySections.map((item) => (
         <div key={item.title}>
-          <time dateTime={item.year} className="font-semibold flex items-center leading-6 text-wehrli">
+          <time dateTime={item.year} className="flex items-center font-bold leading-6 text-wehrli">
             <svg viewBox="0 0 4 4" className="mr-4 h-1 w-1 flex-none" aria-hidden="true">
               <circle cx={2} cy={2} r={2} fill="currentColor" />
             </svg>
@@ -32,7 +32,7 @@ export const HistoryBlock: FC<Props> = ({ block: { historySections } }) => (
               marginTop: '1.25rem',
             }}
           />
-          <h3 className="font-semibold mt-6 text-lg leading-8 tracking-tight">{item.title}</h3>
+          <h3 className="mt-6 text-lg font-bold leading-8 tracking-tight">{item.title}</h3>
           <p className="mt-1 text-base leading-7">{item.text}</p>
         </div>
       ))}

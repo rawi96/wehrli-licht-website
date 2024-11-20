@@ -18,7 +18,7 @@ export const AllProductsForCategory: FC<Props> = ({ products }) => (
           href={`/shop/produkte/${product.slug}`}
           className="group flex h-full flex-col justify-between"
         >
-          <div className="aspect-h-1 aspect-w-1 xl:aspect-h-8 xl:aspect-w-7 rounded-lg bg-gray-200 w-full overflow-hidden">
+          <div className="aspect-h-1 aspect-w-1 xl:aspect-h-8 xl:aspect-w-7 bg-gray-200 w-full overflow-hidden rounded">
             {product.images?.length && product.images[0].file?.url && (
               <Image
                 src={product.images[0].file.url}

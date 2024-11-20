@@ -21,7 +21,7 @@ export const Button = ({ text, href, onClick, type, disabled, fullWidth, white, 
     baseClasses,
     white ? 'text-wehrli bg-white hover:bg-gray-300' : 'text-white bg-wehrli hover:bg-wehrli-600',
     fullWidth && 'w-full',
-    !isDisabled && 'shadow-sm focus:ring-4 focus:outline-none focus:ring-wehrli-300',
+    !isDisabled && 'shadow-sm',
     isDisabled && 'bg-gray-400 cursor-not-allowed',
   );
 
@@ -29,7 +29,6 @@ export const Button = ({ text, href, onClick, type, disabled, fullWidth, white, 
     baseClasses,
     white && 'text-white',
     fullWidth && 'w-full',
-    'hover:underline',
     isDisabled && 'cursor-not-allowed',
   );
 

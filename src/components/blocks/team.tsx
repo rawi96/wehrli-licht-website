@@ -25,7 +25,7 @@ export const TeamBlock: FC<Props> = ({ block: { employees } }) => (
             }}
           />
           <div className="flex-auto">
-            <h3 className="font-semibold text-lg leading-8 tracking-tight">
+            <h3 className="text-lg font-bold leading-8 tracking-tight">
               {employee.firstname} {employee.lastname}
             </h3>
             <p className="text-base leading-7">{employee.function}</p>

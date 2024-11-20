@@ -50,7 +50,7 @@ export const Header: FC<Props> = ({ headerFooter: { menu } }) => {
     return menu.map((item: NavigationItemRecord | DirectoryRecord) =>
       'navigationItems' in item ? (
         isMobile ? (
-          <div key={item.label} className="font-semibold relative">
+          <div key={item.label} className="relative font-bold">
             <NavigationAccordion
               key={item.label}
               title={item.label}
@@ -60,7 +60,7 @@ export const Header: FC<Props> = ({ headerFooter: { menu } }) => {
             />
           </div>
         ) : (
-          <div key={item.label} className="font-semibold relative">
+          <div key={item.label} className="relative font-bold">
             <Flyout key={item.label} title={item.label} items={item.navigationItems} prefix={item.slug} />
           </div>
         )
@@ -78,9 +78,9 @@ export const Header: FC<Props> = ({ headerFooter: { menu } }) => {
   };
 
   // CSS classes for links
-  const desktopLinkClasses = 'text-sm font-semibold leading-6 text-white';
-  const mobileLinkClasses =
-    '-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-gray-400/10';
+  const desktopLinkClasses =
+    'font-bold text-xs text-white border-b-2 hover:border-white transition-colors duration-150 border-transparent';
+  const mobileLinkClasses = 'rounded -mx-3 block font-bold text-xs px-3 py-2 text-white hover:bg-wehrli-400';
 
   return (
     <div className={classNames('pt-6', isHomePage ? 'bg-transparent' : 'bg-wehrli')}>
@@ -96,7 +96,7 @@ export const Header: FC<Props> = ({ headerFooter: { menu } }) => {
           <div className="flex lg:hidden">
             <button
               type="button"
-              className="rounded-lg text-gray-400 -m-2.5 inline-flex items-center justify-center p-2.5"
+              className="text-gray-400 -m-2.5 inline-flex items-center justify-center rounded p-2.5"
               onClick={() => setIsMobileMenuOpen(true)}
             >
               <span className="sr-only">Menu öffnen</span>

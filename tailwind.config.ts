@@ -21,6 +21,7 @@ const config: Config = {
       xxl: ['5rem', { lineHeight: '6rem' }],
     },
     colors: {
+      transparent: 'transparent',
       black: {
         DEFAULT: '#252525',
       },

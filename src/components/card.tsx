@@ -18,11 +18,18 @@ export const Card: FC<Props> = ({ title, description, link, linkLabel, linkTitle
     href={link ?? '#'}
     title={linkTitle ?? title}
     className={classNames(
-      'grid w-full grid-rows-[auto,1fr,auto] overflow-hidden rounded bg-white-100 text-black transition-transform active:scale-[.99]',
+      'group grid w-full grid-rows-[auto,1fr,auto] overflow-hidden rounded bg-white-100 text-black transition-transform active:scale-[.99]',
     )}
     target={'_self'}
   >
-    <div>{image && <ImageComponent image={{ responsiveImage: image }} />}</div>
+    <div className="relative overflow-hidden">
+      {image && (
+        <ImageComponent
+          image={{ responsiveImage: image }}
+          imgClassName="transition-transform duration-300 group-hover:scale-110"
+        />
+      )}
+    </div>
     <div className="grid grid-rows-[auto,1fr,auto] p-5 font-sans text-xxs font-normal md:p-6 lg:p-8 lg:text-sm">
       <div>
         <h3 className="my-4 font-sans text-sm font-bold text-wehrli peer-[p&]:mt-6 md:text-base lg:text-lg lg:peer-[p&]:mt-8">

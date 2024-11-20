@@ -86,7 +86,7 @@ export const ProductDetail = ({ product }: Props) => {
           {uniqueImages?.map((image) => (
             <Tab.Panel key={image.id}>
               {image.file?.url && (
-                <Image src={image.file.url} alt={product.name} className="rounded-lg" width={1000} height={1000} />
+                <Image src={image.file.url} alt={product.name} className="rounded" width={1000} height={1000} />
               )}
             </Tab.Panel>
           ))}

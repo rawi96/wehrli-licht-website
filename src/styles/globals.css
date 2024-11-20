@@ -10,7 +10,3 @@ html {
   @apply bg-wehrli-500;
   @apply text-white;
 }
-
-:focus-visible {
-  outline: 3px solid theme('colors.wehrli.500');
-}

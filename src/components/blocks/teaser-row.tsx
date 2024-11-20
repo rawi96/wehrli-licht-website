@@ -18,7 +18,7 @@ export const TeaserRowBlock: FC<Props> = ({ block: { teasers } }) => (
               href={`${teaser.parent?.slug ? `/${teaser.parent?.slug}` : ''}/${teaser.slug}`}
               title={teaser.teaserTitle ?? ''}
               key={teaser.id}
-              className="rounded-lg group relative h-64 w-64 overflow-hidden bg-white shadow transition-shadow duration-300 hover:shadow-xl"
+              className="group relative h-64 w-64 overflow-hidden rounded bg-white shadow transition-shadow duration-300 hover:shadow-xl"
             >
               <div className="relative h-full w-full overflow-hidden">
                 {teaser.teaserImage && (
@@ -28,9 +28,9 @@ export const TeaserRowBlock: FC<Props> = ({ block: { teasers } }) => (
                   />
                 )}
                 <div className="from-gray-900 via-gray-900/40 absolute inset-0 bg-gradient-to-t" />
-                <div className="rounded-lg ring-gray-900/10 absolute inset-0 ring-1 ring-inset" />
+                <div className="ring-gray-900/10 absolute inset-0 rounded ring-1 ring-inset" />
                 <div className="text-gray-300 absolute bottom-0 left-0 right-0 p-4 text-sm leading-6">
-                  <h3 className="font-semibold text-lg leading-6 text-white">{teaser.teaserTitle}</h3>
+                  <h3 className="text-lg font-bold leading-6 text-white">{teaser.teaserTitle}</h3>
                   {teaser.teaserDescription && <p className="mt-1 text-sm text-white">{teaser.teaserDescription}</p>}
                   <span className="mt-4 inline-block border-b-2">{teaser.teaserLinkText ?? ''}</span>
                 </div>
