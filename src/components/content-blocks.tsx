@@ -9,7 +9,6 @@ import {
 import { FC } from 'react';
 import { GalleryBlock } from './blocks/gallery';
 import { HeaderSectionBlock } from './blocks/header-section';
-import { HistoryBlock } from './blocks/history';
 import { HomeStageBlock } from './blocks/home-stage';
 import { IframeBlock } from './blocks/iframe';
 import { ImageGridBlock } from './blocks/image-grid';
@@ -42,9 +41,6 @@ export const ContentBlocks: FC<Props> = ({ blocks }) => {
             break;
           case 'TeamRecord':
             content = <TeamBlock key={block.id} block={block} />;
-            break;
-          case 'HistoryRecord':
-            content = <HistoryBlock key={block.id} block={block} />;
             break;
           case 'IframeRecord':
             content = <IframeBlock key={block.id} block={block} />;

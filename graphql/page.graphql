@@ -17,9 +17,6 @@ query Page($slug: String!) {
       ... on TeamRecord {
         ...teamBlock
       }
-      ... on HistoryRecord {
-        ...historyBlock
-      }
       ... on IframeRecord {
         ...iframeBlock
       }
