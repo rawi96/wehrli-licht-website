@@ -52,10 +52,10 @@ export const ProductVariationSelector = ({ product, setActiveVariant }: Props) =
 
         return (
           <div key={option.id} className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">{option.name}</label>
+            <label className="font-medium block text-sm text-gray-700">{option.name}</label>
             <Menu as="div" className="relative inline-block w-full text-left">
               <div>
-                <Menu.Button className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+                <Menu.Button className="rounded-md inline-flex w-full justify-center gap-x-1.5 bg-white px-3 py-2 text-sm font-bold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
                   {option.values?.find((value) => value.id === selectedOptions[option.id!])?.name}
                   <ChevronDownIcon className="-mr-1 h-5 w-5 text-gray-400" aria-hidden="true" />
                 </Menu.Button>
@@ -70,7 +70,7 @@ export const ProductVariationSelector = ({ product, setActiveVariant }: Props) =
                 leaveFrom="transform opacity-100 scale-100"
                 leaveTo="transform opacity-0 scale-95"
               >
-                <Menu.Items className="absolute right-0 z-10 mt-2 w-full origin-top-right cursor-pointer rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                <Menu.Items className="rounded-md absolute right-0 z-10 mt-2 w-full origin-top-right cursor-pointer bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                   <div className="py-1">
                     {option.values?.map((value) => {
                       if (!value.id) {

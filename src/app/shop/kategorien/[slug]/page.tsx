@@ -1,7 +1,7 @@
 import { ContentWrapper } from '@/components/layout/content-wrapper';
 import { Footer } from '@/components/layout/footer';
 import { Header } from '@/components/layout/header';
-import { Heading1, Paragraph } from '@/components/nodes';
+import { Heading } from '@/components/nodes';
 import NotFound from '@/components/not-found';
 import { AllProductsForCategory } from '@/components/shop/all-products-for-category';
 import { HeaderFooterDocument, HeaderFooterRecord } from '@/graphql/generated';
@@ -53,8 +53,8 @@ export default async function CategoryPage({ params: { slug } }: Props) {
     <main>
       <Header headerFooter={headerFooter as HeaderFooterRecord} />
       <ContentWrapper>
-        <Heading1>{category.name}</Heading1>
-        <Paragraph dangerouslySetInnerHTML={{ __html: category.description }} />
+        <Heading level="1">{category.name}</Heading>
+        <p className="peer my-2 md:max-w-prose lg:my-4" dangerouslySetInnerHTML={{ __html: category.description }} />
         {products && <AllProductsForCategory products={products} />}
 
         {/* {bestsellers && bestsellers?.length > 0 && <Bestsellers bestsellers={bestsellers} />} */}

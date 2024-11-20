@@ -8,7 +8,6 @@ fragment homeStageBlock on HomeStageRecord {
   title
   intro
   callToActions {
-    text
-    url
+    ...linkBlock
   }
 }

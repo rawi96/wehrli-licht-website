@@ -3,6 +3,7 @@ import { Popover, Transition } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { Fragment, useRef } from 'react';
+import { usePathname } from 'next/navigation';
 
 type Props = {
   title: string;
@@ -12,12 +13,19 @@ type Props = {
 
 export const Flyout = ({ title, items, prefix }: Props) => {
   const popoverRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
+
+  const isActive = pathname.startsWith(`/${prefix}`);
 
   return (
     <Popover>
       {({ close }) => (
         <>
-          <Popover.Button className="focus:outline.white inline-flex items-center gap-x-1 text-sm leading-6 text-white focus:outline-wehrli">
+          <Popover.Button
+            className={`inline-flex items-center gap-x-1 border-b-2 text-xs font-bold text-white transition-colors duration-150 ${
+              isActive ? 'border-white' : 'border-transparent'
+            } hover:border-white`}
+          >
             <span>{title}</span>
             <ChevronDownIcon className="h-5 w-5" aria-hidden="true" />
           </Popover.Button>
@@ -35,13 +43,13 @@ export const Flyout = ({ title, items, prefix }: Props) => {
               ref={popoverRef}
               className="absolute left-1/2 z-10 mt-5 flex w-screen max-w-min -translate-x-1/2 px-4"
             >
-              <div className="w-56 shrink rounded-lg bg-white p-4 text-sm font-semibold leading-6 text-gray-900 shadow-lg ring-1 ring-gray-900/5">
+              <div className="w-56 shrink rounded bg-white p-4 text-xs font-bold">
                 {items.map((item) => (
                   <Link
                     key={item.label}
                     href={item.link?.slug ? `/${prefix}/${item.link.slug}` : '/'}
                     className="block p-2 hover:text-wehrli"
-                    onClick={close} // Close the popover on click
+                    onClick={close}
                   >
                     {item.label}
                   </Link>

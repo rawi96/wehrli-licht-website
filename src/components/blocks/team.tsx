@@ -1,38 +1,41 @@
 import { TeamBlockFragment } from '@/graphql/generated';
+import { classNames } from '@/utils/css';
 import { FC } from 'react';
-import { BlockWrapper } from '../block-wrapper';
 import { SRCImage as DatoSRCImage } from 'react-datocms';
+import { BlockWrapper } from '../block-wrapper';
+import { Grid } from '../grid';
+import { Heading3 } from '../nodes';
 
 type Props = {
   block: TeamBlockFragment;
 };
 
 export const TeamBlock: FC<Props> = ({ block: { employees } }) => (
-  <BlockWrapper className="first-of-type:text-base lg:first-of-type:text-lg">
-    <ul
-      role="list"
-      className="mx-auto my-20 grid max-w-2xl grid-cols-1 gap-x-6 gap-y-20 sm:grid-cols-2 lg:max-w-4xl lg:gap-x-8 xl:max-w-none"
-    >
-      {employees.map((employee) => (
-        <li key={employee.firstname} className="flex flex-col gap-6 xl:flex-row">
-          <DatoSRCImage
-            data={employee.image.responsiveImage}
-            imgStyle={{
-              width: '13rem',
-              aspectRatio: '4 / 5',
-              borderRadius: '0.5rem',
-              objectFit: 'cover',
-            }}
-          />
-          <div className="flex-auto">
-            <h3 className="text-lg font-semibold leading-8 tracking-tight">
-              {employee.firstname} {employee.lastname}
-            </h3>
-            <p className="text-base leading-7">{employee.function}</p>
-            <p className="mt-6 text-base leading-7">{employee.bio}</p>
+  <BlockWrapper>
+    <Grid cols={3}>
+      {employees.map(({ firstname, lastname, bio, image, function: emplFunction }) => (
+        <div className={classNames('flex flex-col overflow-hidden rounded bg-white-100')} key={firstname + lastname}>
+          <div className="w-full">
+            {image?.responsiveImage && (
+              <DatoSRCImage data={{ ...image.responsiveImage }} imgStyle={{ width: '100%', maxWidth: '100%' }} />
+            )}
           </div>
-        </li>
+          <div className="flex flex-1 flex-col p-8 font-sans text-xxs font-normal lg:text-sm">
+            <p className="md:mb-2 lg:mb-6">{emplFunction}</p>
+            <Heading3>
+              {firstname} {lastname}
+            </Heading3>
+            <p>{bio}</p>
+            <div className="mt-6 flex flex-1 flex-row flex-wrap content-end gap-x-4 gap-y-2">
+              {/* {links.map(({ label, url }) => (
+                <EmployeeContactLink key={url} href={url}>
+                  {label}
+                </EmployeeContactLink>
+              ))} */}
+            </div>
+          </div>
+        </div>
       ))}
-    </ul>
+    </Grid>
   </BlockWrapper>
 );

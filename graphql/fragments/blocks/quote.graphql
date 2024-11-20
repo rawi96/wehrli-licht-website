@@ -5,7 +5,7 @@ fragment quoteBlock on QuoteRecord {
     authorFunction
     authorName
     authorImage {
-      responsiveImage {
+      responsiveImage(imgixParams: { fit: crop, w: 128, h: 128, auto: format }) {
         ...responsiveImageFragment
       }
     }

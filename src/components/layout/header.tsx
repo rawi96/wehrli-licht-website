@@ -29,14 +29,29 @@ export const Header: FC<Props> = ({ headerFooter: { menu } }) => {
   const isShopPage = pathname.includes('/shop');
   const isHomePage = pathname === '/';
 
+  const desktopLinkClasses =
+    'font-bold text-xs text-white border-b-2 hover:border-white transition-colors duration-150 border-transparent';
+  const mobileLinkClasses = 'rounded -mx-3 block font-bold text-xs px-3 py-2 text-white hover:bg-wehrli-400';
+  const activeLinkClasses = 'border-white';
+
+  const isActive = (path: string) => pathname.startsWith(path);
+
   const renderMenuItems = (isMobile = false) => {
     if (isShopPage) {
       return (
         <>
-          <Link href="/" className={isMobile ? mobileLinkClasses : desktopLinkClasses} onClick={closeMobileMenu}>
+          <Link
+            href="/"
+            className={classNames(isMobile ? mobileLinkClasses : desktopLinkClasses, pathname === '/' && activeLinkClasses)}
+            onClick={closeMobileMenu}
+          >
             Zurück zur Website
           </Link>
-          <Link href="/shop" className={isMobile ? mobileLinkClasses : desktopLinkClasses} onClick={closeMobileMenu}>
+          <Link
+            href="/shop"
+            className={classNames(isMobile ? mobileLinkClasses : desktopLinkClasses, isActive('/shop') && activeLinkClasses)}
+            onClick={closeMobileMenu}
+          >
             Shop
           </Link>
           <button className={isMobile ? mobileLinkClasses : desktopLinkClasses} onClick={() => setIsShowCart(true)}>
@@ -50,7 +65,7 @@ export const Header: FC<Props> = ({ headerFooter: { menu } }) => {
     return menu.map((item: NavigationItemRecord | DirectoryRecord) =>
       'navigationItems' in item ? (
         isMobile ? (
-          <div key={item.label} className="relative font-semibold">
+          <div key={item.label} className="relative font-bold">
             <NavigationAccordion
               key={item.label}
               title={item.label}
@@ -60,7 +75,7 @@ export const Header: FC<Props> = ({ headerFooter: { menu } }) => {
             />
           </div>
         ) : (
-          <div key={item.label} className="relative font-semibold">
+          <div key={item.label} className="relative font-bold">
             <Flyout key={item.label} title={item.label} items={item.navigationItems} prefix={item.slug} />
           </div>
         )
@@ -68,7 +83,10 @@ export const Header: FC<Props> = ({ headerFooter: { menu } }) => {
         <Link
           key={item.label}
           href={`/${item.link?.slug}`}
-          className={isMobile ? mobileLinkClasses : desktopLinkClasses}
+          className={classNames(
+            isMobile ? mobileLinkClasses : desktopLinkClasses,
+            isActive(`/${item.link?.slug}`) && activeLinkClasses,
+          )}
           onClick={closeMobileMenu}
         >
           {item.label}
@@ -76,11 +94,6 @@ export const Header: FC<Props> = ({ headerFooter: { menu } }) => {
       ),
     );
   };
-
-  // CSS classes for links
-  const desktopLinkClasses = 'text-sm font-semibold leading-6 text-white';
-  const mobileLinkClasses =
-    '-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-gray-400/10';
 
   return (
     <div className={classNames('pt-6', isHomePage ? 'bg-transparent' : 'bg-wehrli')}>
@@ -96,7 +109,7 @@ export const Header: FC<Props> = ({ headerFooter: { menu } }) => {
           <div className="flex lg:hidden">
             <button
               type="button"
-              className="-m-2.5 inline-flex items-center justify-center rounded-lg p-2.5 text-gray-400"
+              className="-m-2.5 inline-flex items-center justify-center rounded p-2.5 text-gray-400"
               onClick={() => setIsMobileMenuOpen(true)}
             >
               <span className="sr-only">Menu öffnen</span>
@@ -116,7 +129,7 @@ export const Header: FC<Props> = ({ headerFooter: { menu } }) => {
               </Link>
               <button
                 type="button"
-                className="-m-2.5 rounded-lg p-2.5 text-gray-400"
+                className="rounded-lg -m-2.5 p-2.5 text-gray-400"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 <span className="sr-only">Menu schliessen</span>

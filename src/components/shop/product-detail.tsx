@@ -52,12 +52,12 @@ export const ProductDetail = ({ product }: Props) => {
             {uniqueImages?.map((image) => (
               <Tab
                 key={image.id}
-                className="relative flex h-24 cursor-pointer items-center justify-center rounded-md bg-white text-sm font-medium uppercase text-gray-900 hover:bg-gray-50 focus:outline-none focus:ring focus:ring-opacity-50 focus:ring-offset-4"
+                className="rounded-md font-medium relative flex h-24 cursor-pointer items-center justify-center bg-white text-sm uppercase text-gray-900 hover:bg-gray-50 focus:outline-none focus:ring focus:ring-opacity-50 focus:ring-offset-4"
               >
                 {({ selected }) => (
                   <>
                     <span className="sr-only">{product.name}</span>
-                    <span className="absolute inset-0 overflow-hidden rounded-md">
+                    <span className="rounded-md absolute inset-0 overflow-hidden">
                       {image.file?.url && (
                         <Image
                           src={image.file.url}
@@ -71,7 +71,7 @@ export const ProductDetail = ({ product }: Props) => {
                     <span
                       className={classNames(
                         selected ? 'ring-wehrli-500' : 'ring-transparent',
-                        'pointer-events-none absolute inset-0 rounded-md ring-2 ring-offset-2',
+                        'rounded-md pointer-events-none absolute inset-0 ring-2 ring-offset-2',
                       )}
                       aria-hidden="true"
                     />
@@ -86,7 +86,7 @@ export const ProductDetail = ({ product }: Props) => {
           {uniqueImages?.map((image) => (
             <Tab.Panel key={image.id}>
               {image.file?.url && (
-                <Image src={image.file.url} alt={product.name} className="rounded-lg" width={1000} height={1000} />
+                <Image src={image.file.url} alt={product.name} className="rounded" width={1000} height={1000} />
               )}
             </Tab.Panel>
           ))}

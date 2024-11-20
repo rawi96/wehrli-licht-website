@@ -39,12 +39,15 @@ export const Footer: FC<Props> = ({
             menu?.length > 0 &&
             menu.map((item: NavigationItemRecord | DirectoryRecord) => {
               return 'navigationItems' in item ? (
-                <div key={item.label} className="pb-6">
+                <div key={item.label} className="pb-6 text-black md:relative">
                   <Flyout key={item.label} title={item.label} items={item.navigationItems} prefix={item.slug} />
                 </div>
               ) : (
                 <div key={item.label} className="pb-6">
-                  <Link href={`/${item.link?.slug}`} className="text-sm leading-6 hover:text-gray-900">
+                  <Link
+                    href={`/${item.link?.slug}`}
+                    className="border-b-2 border-transparent text-xs font-bold text-white transition-colors duration-150 hover:border-white"
+                  >
                     {item.label}
                   </Link>
                 </div>
@@ -53,19 +56,19 @@ export const Footer: FC<Props> = ({
         </nav>
         <div className="mt-10 flex justify-center space-x-10">
           {linkedinUrl && (
-            <Link href={linkedinUrl} className="hover:text-gray-500">
+            <Link href={linkedinUrl} className="hover:opacity-50">
               <span className="sr-only">Linkedin</span>
               <LinkedinIcon className="h-6 w-6" />
             </Link>
           )}
           {instagramUrl && (
-            <Link href={instagramUrl} className="hover:text-gray-500">
+            <Link href={instagramUrl} className="hover:opacity-50">
               <span className="sr-only">Instagram</span>
               <InstagramIcon className="h-6 w-6" />
             </Link>
           )}
           {facebookUrl && (
-            <Link href={facebookUrl} className="hover:text-gray-500">
+            <Link href={facebookUrl} className="hover:opacity-50">
               <span className="sr-only">Facebook</span>
               <FacebookIcon className="h-6 w-6" />
             </Link>
