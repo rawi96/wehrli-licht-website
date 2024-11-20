@@ -3,6 +3,7 @@ import { Popover, Transition } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { Fragment, useRef } from 'react';
+import { usePathname } from 'next/navigation';
 
 type Props = {
   title: string;
@@ -12,12 +13,19 @@ type Props = {
 
 export const Flyout = ({ title, items, prefix }: Props) => {
   const popoverRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
+
+  const isActive = pathname.startsWith(`/${prefix}`);
 
   return (
     <Popover>
       {({ close }) => (
         <>
-          <Popover.Button className="inline-flex items-center gap-x-1 border-b-2 border-transparent text-xs font-bold text-white transition-colors duration-150 hover:border-white">
+          <Popover.Button
+            className={`inline-flex items-center gap-x-1 border-b-2 text-xs font-bold text-white transition-colors duration-150 ${
+              isActive ? 'border-white' : 'border-transparent'
+            } hover:border-white`}
+          >
             <span>{title}</span>
             <ChevronDownIcon className="h-5 w-5" aria-hidden="true" />
           </Popover.Button>

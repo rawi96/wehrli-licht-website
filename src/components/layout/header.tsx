@@ -29,14 +29,29 @@ export const Header: FC<Props> = ({ headerFooter: { menu } }) => {
   const isShopPage = pathname.includes('/shop');
   const isHomePage = pathname === '/';
 
+  const desktopLinkClasses =
+    'font-bold text-xs text-white border-b-2 hover:border-white transition-colors duration-150 border-transparent';
+  const mobileLinkClasses = 'rounded -mx-3 block font-bold text-xs px-3 py-2 text-white hover:bg-wehrli-400';
+  const activeLinkClasses = 'border-white';
+
+  const isActive = (path: string) => pathname.startsWith(path);
+
   const renderMenuItems = (isMobile = false) => {
     if (isShopPage) {
       return (
         <>
-          <Link href="/" className={isMobile ? mobileLinkClasses : desktopLinkClasses} onClick={closeMobileMenu}>
+          <Link
+            href="/"
+            className={classNames(isMobile ? mobileLinkClasses : desktopLinkClasses, pathname === '/' && activeLinkClasses)}
+            onClick={closeMobileMenu}
+          >
             Zurück zur Website
           </Link>
-          <Link href="/shop" className={isMobile ? mobileLinkClasses : desktopLinkClasses} onClick={closeMobileMenu}>
+          <Link
+            href="/shop"
+            className={classNames(isMobile ? mobileLinkClasses : desktopLinkClasses, isActive('/shop') && activeLinkClasses)}
+            onClick={closeMobileMenu}
+          >
             Shop
           </Link>
           <button className={isMobile ? mobileLinkClasses : desktopLinkClasses} onClick={() => setIsShowCart(true)}>
@@ -68,7 +83,10 @@ export const Header: FC<Props> = ({ headerFooter: { menu } }) => {
         <Link
           key={item.label}
           href={`/${item.link?.slug}`}
-          className={isMobile ? mobileLinkClasses : desktopLinkClasses}
+          className={classNames(
+            isMobile ? mobileLinkClasses : desktopLinkClasses,
+            isActive(`/${item.link?.slug}`) && activeLinkClasses,
+          )}
           onClick={closeMobileMenu}
         >
           {item.label}
@@ -76,11 +94,6 @@ export const Header: FC<Props> = ({ headerFooter: { menu } }) => {
       ),
     );
   };
-
-  // CSS classes for links
-  const desktopLinkClasses =
-    'font-bold text-xs text-white border-b-2 hover:border-white transition-colors duration-150 border-transparent';
-  const mobileLinkClasses = 'rounded -mx-3 block font-bold text-xs px-3 py-2 text-white hover:bg-wehrli-400';
 
   return (
     <div className={classNames('pt-6', isHomePage ? 'bg-transparent' : 'bg-wehrli')}>
@@ -96,7 +109,7 @@ export const Header: FC<Props> = ({ headerFooter: { menu } }) => {
           <div className="flex lg:hidden">
             <button
               type="button"
-              className="text-gray-400 -m-2.5 inline-flex items-center justify-center rounded p-2.5"
+              className="-m-2.5 inline-flex items-center justify-center rounded p-2.5 text-gray-400"
               onClick={() => setIsMobileMenuOpen(true)}
             >
               <span className="sr-only">Menu öffnen</span>
@@ -116,7 +129,7 @@ export const Header: FC<Props> = ({ headerFooter: { menu } }) => {
               </Link>
               <button
                 type="button"
-                className="rounded-lg text-gray-400 -m-2.5 p-2.5"
+                className="-m-2.5 rounded-lg p-2.5 text-gray-400"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 <span className="sr-only">Menu schliessen</span>
@@ -124,7 +137,7 @@ export const Header: FC<Props> = ({ headerFooter: { menu } }) => {
               </button>
             </div>
             <div className="mt-6 flow-root">
-              <div className="divide-gray-500/25 -my-6 divide-y">
+              <div className="-my-6 divide-y divide-gray-500/25">
                 <div className="space-y-2 py-6">{renderMenuItems(true)}</div>
               </div>
             </div>
