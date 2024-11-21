@@ -23,7 +23,7 @@ export const HomeStageBlock: FC<Props> = async ({ block: { title, intro, image, 
         {image?.responsiveImage && (
           <DatoSRCImage
             data={image.responsiveImage}
-            imgClassName={'absolute inset-0 -z-10 size-full object-cover'}
+            imgClassName={'absolute inset-0 -z-10 size-full object-cover brightness-50 blur-sm'}
             imgStyle={{ width: '100%', maxWidth: '100%', height: '100%' }}
             priority={true}
           />
