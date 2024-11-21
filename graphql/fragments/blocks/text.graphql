@@ -5,5 +5,15 @@ fragment textBlock on TextRecord {
   disableMarginBottom
   content {
     value
+    links {
+      ... on PageRecord {
+        __typename
+        id
+        slug
+        parent {
+          slug
+        }
+      }
+    }
   }
 }

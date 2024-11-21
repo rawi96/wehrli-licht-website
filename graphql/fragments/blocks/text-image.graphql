@@ -6,6 +6,16 @@ fragment textImageBlock on TextImageRecord {
   disableMarginBottom
   content {
     value
+    links {
+      ... on PageRecord {
+        __typename
+        id
+        slug
+        parent {
+          slug
+        }
+      }
+    }
   }
   image {
     responsiveImage(imgixParams: { w: 672 }) {

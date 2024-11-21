@@ -35,6 +35,7 @@ query HeaderFooter {
     mapsLink
     holidayTitle
     holidayText
+    holidayDisable
     openingHoursTitle
     openingHoursText
   }

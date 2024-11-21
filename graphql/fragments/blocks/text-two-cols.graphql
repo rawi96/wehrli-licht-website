@@ -1,0 +1,32 @@
+fragment textTwoColsBlock on TextTwoColumnRecord {
+  id
+  anchorId
+  disableMarginTop
+  disableMarginBottom
+  contentLeft {
+    value
+    links {
+      ... on PageRecord {
+        __typename
+        id
+        slug
+        parent {
+          slug
+        }
+      }
+    }
+  }
+  contentRight {
+    value
+    links {
+      ... on PageRecord {
+        __typename
+        id
+        slug
+        parent {
+          slug
+        }
+      }
+    }
+  }
+}

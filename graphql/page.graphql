@@ -11,6 +11,12 @@ query Page($slug: String!) {
       ... on TextRecord {
         ...textBlock
       }
+      ... on TextTwoColumnRecord {
+        ...textTwoColsBlock
+      }
+      ... on TextThreeColumnRecord {
+        ...textThreeColsBlock
+      }
       ... on TextImageRecord {
         ...textImageBlock
       }

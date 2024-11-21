@@ -41,7 +41,8 @@ const isLink = (props: TextLinkProps): props is Link => props.as !== 'button';
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const TextLink = forwardRef<any, TextLinkProps>((props, ref) => {
   const { children } = props;
-  const className = 'border-b-2 hover:border-apricot-500 no-underline transition-colors duration-150 focus:outline-none';
+  const className =
+    'border-b-2 border-wehrli text-wehrli hover:text-wehrli-700 hover:border-wehrli-700 no-underline transition-colors duration-150 focus:outline-none';
 
   if (isLink(props)) {
     const { newTab, href, ...rest } = props;
