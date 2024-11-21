@@ -52,12 +52,12 @@ export const ProductDetail = ({ product }: Props) => {
             {uniqueImages?.map((image) => (
               <Tab
                 key={image.id}
-                className="rounded-md font-medium relative flex h-24 cursor-pointer items-center justify-center bg-white text-sm uppercase text-gray-900 hover:bg-gray-50 focus:outline-none focus:ring focus:ring-opacity-50 focus:ring-offset-4"
+                className="relative flex h-24 cursor-pointer items-center justify-center rounded bg-white text-sm uppercase hover:bg-gray-50 focus:outline-none focus:ring focus:ring-opacity-50 focus:ring-offset-4"
               >
                 {({ selected }) => (
                   <>
                     <span className="sr-only">{product.name}</span>
-                    <span className="rounded-md absolute inset-0 overflow-hidden">
+                    <span className="absolute inset-0 overflow-hidden rounded">
                       {image.file?.url && (
                         <Image
                           src={image.file.url}
@@ -71,7 +71,7 @@ export const ProductDetail = ({ product }: Props) => {
                     <span
                       className={classNames(
                         selected ? 'ring-wehrli-500' : 'ring-transparent',
-                        'rounded-md pointer-events-none absolute inset-0 ring-2 ring-offset-2',
+                        'pointer-events-none absolute inset-0 rounded ring-2 ring-offset-2',
                       )}
                       aria-hidden="true"
                     />
@@ -94,10 +94,10 @@ export const ProductDetail = ({ product }: Props) => {
       </Tab.Group>
 
       <div className="mt-10 px-4 sm:mt-16 sm:px-0 lg:mt-0">
-        <h1 className="text-3xl font-bold tracking-tight text-gray-900">{product.name}</h1>
+        <h1 className="text-lg font-bold text-wehrli lg:text-xl">{product.name}</h1>
 
         <div className="mt-3">
-          <p className="text-3xl tracking-tight text-gray-900">{formatPriceToCHF(activeVariant?.price ?? product.price)}</p>
+          <p className="text-lg font-bold lg:text-xl">{formatPriceToCHF(activeVariant?.price ?? product.price)}</p>
         </div>
 
         <div className="mt-6">

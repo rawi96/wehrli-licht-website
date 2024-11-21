@@ -94,7 +94,7 @@ export const ShoppingCart = ({ open, setOpen }: Props) => {
                 {shoppingCart && (
                   <div className="relative flex w-full flex-col overflow-hidden bg-white pb-8 pt-6 sm:rounded sm:pb-6 lg:py-8">
                     <div className="flex items-center justify-between px-4 sm:px-6 lg:px-8">
-                      <h2 className="font-medium text-lg text-gray-900">Warenkorb</h2>
+                      <h2 className="text-lg font-bold">Warenkorb</h2>
                       <button type="button" className="text-gray-400 hover:text-gray-500" onClick={() => setOpen(false)}>
                         <span className="sr-only">Schliessen</span>
                         <XMarkIcon className="h-6 w-6" aria-hidden="true" />
@@ -122,16 +122,16 @@ export const ShoppingCart = ({ open, setOpen }: Props) => {
 
                             <div className="ml-4 grid flex-auto grid-cols-1 grid-rows-1 items-start gap-x-5 gap-y-3 sm:ml-6 sm:flex sm:items-center sm:gap-0">
                               <div className="row-end-1 flex-auto sm:pr-6">
-                                <h3 className="font-medium text-gray-900">
+                                <h3 className="font-bold">
                                   <Link href={`/shop/produkte/${item.product?.slug}`}>{item.product?.name}</Link>
                                   {item.options && (
-                                    <p className="pt-3 text-gray-600">
+                                    <p className="pt-3 font-normal">
                                       {item.options.map((option) => `${option.name}: ${option.value}`).join(', ')}
                                     </p>
                                   )}
                                 </h3>
                               </div>
-                              <p className="font-medium row-span-2 row-end-2 text-gray-900 sm:order-1 sm:ml-6 sm:w-1/3 sm:flex-none sm:text-right">
+                              <p className="row-span-2 row-end-2 font-bold sm:order-1 sm:ml-6 sm:w-1/3 sm:flex-none sm:text-right">
                                 {formatPriceToCHF(item.price)}
                               </p>
                               <div className="flex items-center sm:block sm:flex-none sm:text-center">
@@ -142,7 +142,7 @@ export const ShoppingCart = ({ open, setOpen }: Props) => {
                                   id={`quantity-${productIdx}`}
                                   name={`quantity-${productIdx}`}
                                   defaultValue={item.quantity}
-                                  className="rounded-md font-medium block max-w-full border border-gray-300 py-1.5 text-left text-base leading-5 text-gray-700 shadow-sm focus:border-wehrli-500 focus:outline-none focus:ring-1 focus:ring-wehrli-500 sm:text-sm"
+                                  className="block max-w-full rounded border border-gray-300 py-1.5 text-left text-base font-bold leading-5 shadow-sm focus:border-wehrli-500 focus:outline-none focus:ring-1 focus:ring-wehrli-500 sm:text-sm"
                                   onChange={(event) => handleSelectChange(event, item)}
                                 >
                                   <option value={1}>1</option>
@@ -159,13 +159,13 @@ export const ShoppingCart = ({ open, setOpen }: Props) => {
 
                                 <button
                                   type="button"
-                                  className={`font-medium ml-4 ${
-                                    isLoading ? 'text-gray-400' : 'text-wehrli'
+                                  className={`ml-4 font-bold ${
+                                    isLoading ? '' : 'text-wehrli'
                                   } hover:text-wehrli-600 sm:ml-0 sm:mt-2`}
                                   onClick={() => handleDeleteItem(item)}
                                   disabled={isLoading}
                                 >
-                                  <span>Entfernen</span>
+                                  <span className="">Entfernen</span>
                                 </button>
                               </div>
                             </div>
@@ -183,21 +183,17 @@ export const ShoppingCart = ({ open, setOpen }: Props) => {
                           <div className="flow-root">
                             <dl className="-my-4 divide-y divide-gray-200 text-sm">
                               <div className="flex items-center justify-between py-4">
-                                <dt className="text-gray-600">Zwischentotal</dt>
-                                <dd className="font-medium text-gray-900">
-                                  {isLoading ? '...' : `CHF ${shoppingCart.sub_total}`}
-                                </dd>
+                                <dt className="">Zwischentotal</dt>
+                                <dd className="">{isLoading ? '...' : `CHF ${shoppingCart.sub_total}`}</dd>
                               </div>
                               <div className="flex items-center justify-between py-4">
-                                <dt className="text-gray-600">Versand</dt>
-                                <dd className="font-medium text-gray-900">
-                                  {isLoading ? '...' : `CHF ${shoppingCart.shipment_price}`}
-                                </dd>
+                                <dt className="">Versand</dt>
+                                <dd className="">{isLoading ? '...' : `CHF ${shoppingCart.shipment_price}`}</dd>
                               </div>
 
                               <div className="flex items-center justify-between py-4">
-                                <dt className="font-medium text-base text-gray-900">Total</dt>
-                                <dd className="font-medium text-base text-gray-900">
+                                <dt className="text-base font-bold">Total</dt>
+                                <dd className="text-base font-bold">
                                   {isLoading ? '...' : `CHF ${shoppingCart.grand_total}`}
                                 </dd>
                               </div>

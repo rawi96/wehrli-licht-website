@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { FC } from 'react';
 import { Product } from 'swell-js';
 import { BlockWrapper } from '../block-wrapper';
+import { Grid } from '../grid';
 
 type Props = {
   products: Product[];
@@ -11,19 +12,19 @@ type Props = {
 
 export const AllProductsForCategory: FC<Props> = ({ products }) => (
   <BlockWrapper disableMarginTop={true}>
-    <div className="my-8 grid grid-cols-1 gap-x-6 gap-y-10 pb-20 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+    <Grid cols={products?.length ?? 4}>
       {products?.map((product) => (
         <Link
           key={product.id}
           href={`/shop/produkte/${product.slug}`}
           className="group flex h-full flex-col justify-between"
         >
-          <div className="aspect-h-1 aspect-w-1 xl:aspect-h-8 xl:aspect-w-7 w-full overflow-hidden rounded bg-gray-200">
+          <div className="relative overflow-hidden rounded bg-gray-200">
             {product.images?.length && product.images[0].file?.url && (
               <Image
                 src={product.images[0].file.url}
                 alt={product.name}
-                className="h-full w-full object-cover object-center group-hover:opacity-75"
+                className="h-full w-full object-cover object-center transition-transform duration-300 group-hover:scale-105"
                 width={1000}
                 height={1000}
               />
@@ -35,6 +36,6 @@ export const AllProductsForCategory: FC<Props> = ({ products }) => (
           </div>
         </Link>
       ))}
-    </div>
+    </Grid>
   </BlockWrapper>
 );
