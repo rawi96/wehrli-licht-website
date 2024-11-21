@@ -19,6 +19,7 @@ export const TeaserGridBlock: FC<Props> = ({ block: { teasers, disableMarginBott
           link={`${teaser.parent?.slug ? `/${teaser.parent?.slug}` : ''}/${teaser.slug}`}
           linkLabel={teaser.teaserLinkText}
           image={teaser.teaserImage?.responsiveImage}
+          eyebrow={teaser.teaserEyebrow}
         />
       ))}
     </Grid>

@@ -6,8 +6,8 @@ fragment teaserRowBlock on TeaserRowRecord {
     __typename
     ... on PageRecord {
       id
-      teaserDescription
       teaserTitle
+      teaserEyebrow
       teaserLinkText
       teaserImage {
         responsiveImage {

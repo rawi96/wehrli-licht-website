@@ -24,16 +24,17 @@ export const TeaserRowBlock: FC<Props> = ({ block: { teasers, disableMarginBotto
                 {teaser.teaserImage && (
                   <ImageComponent
                     image={{ responsiveImage: teaser.teaserImage.responsiveImage }}
-                    imgClassName="absolute h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
+                    imgClassName="absolute h-full w-full object-cover transition-transform duration-300 group-hover:scale-110 brightness-75"
                   />
                 )}
                 <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/40" />
                 <div className="absolute inset-0 rounded ring-1 ring-inset ring-gray-900/10" />
-                <div className="absolute bottom-0 left-0 right-0 p-4 text-sm leading-6 text-gray-300">
-                  <h3 className="my-4 font-sans text-sm font-bold text-white peer-[p&]:mt-6 md:text-base lg:text-lg lg:peer-[p&]:mt-8">
+                <div className="absolute bottom-0 left-0 right-0 p-4 text-sm leading-6 text-white">
+                  <h3 className="mt-4 inline-block text-xs text-white">{teaser.teaserEyebrow ?? ''}</h3>
+                  <p className="mb-4 mt-2 font-sans text-sm font-bold text-white peer-[p&]:mt-6 md:text-base lg:text-lg lg:peer-[p&]:mt-8">
                     {teaser.teaserTitle}
-                  </h3>
-                  <p className="mt-4 inline-block border-b-2">{teaser.teaserLinkText ?? ''}</p>
+                  </p>
+                  <p className="mt-4 inline-block border-b-2 text-xs text-white">{teaser.teaserLinkText ?? ''}</p>
                 </div>
               </div>
             </NextLink>

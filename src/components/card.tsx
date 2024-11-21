@@ -7,13 +7,14 @@ import { classNames } from '@/utils/css';
 type Props = {
   title: string;
   description?: string | null;
+  eyebrow?: string | null;
   link?: string | null;
   linkLabel?: string | null;
   linkTitle?: string;
   image?: ResponsiveImageType;
 };
 
-export const Card: FC<Props> = ({ title, description, link, linkLabel, linkTitle, image }) => (
+export const Card: FC<Props> = ({ title, description, link, linkLabel, linkTitle, image, eyebrow }) => (
   <NextLink
     href={link ?? '#'}
     title={linkTitle ?? title}
@@ -31,6 +32,7 @@ export const Card: FC<Props> = ({ title, description, link, linkLabel, linkTitle
       )}
     </div>
     <div className="grid grid-rows-[auto,1fr,auto] p-5 font-sans text-xxs font-normal md:p-6 lg:p-8 lg:text-sm">
+      {eyebrow && <p>{eyebrow}</p>}
       <div>
         <h3 className="my-4 font-sans text-sm font-bold text-wehrli peer-[p&]:mt-6 md:text-base lg:text-lg lg:peer-[p&]:mt-8">
           {title}

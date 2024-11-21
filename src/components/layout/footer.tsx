@@ -1,10 +1,7 @@
-'use client';
-
-import { DirectoryRecord, HeaderFooterRecord, NavigationItemRecord } from '@/graphql/generated';
+import { HeaderFooterRecord } from '@/graphql/generated';
 import Link from 'next/link';
 import { FC } from 'react';
 import { Address } from '../address';
-import { Flyout } from '../flyout';
 import { FormattedText } from '../formatted-text';
 
 type Props = {
@@ -13,7 +10,6 @@ type Props = {
 
 export const Footer: FC<Props> = ({
   headerFooter: {
-    menu,
     companyName,
     street,
     zip,
@@ -33,7 +29,7 @@ export const Footer: FC<Props> = ({
 }) => {
   return (
     <footer className="bg-wehrli text-white">
-      <div className="mx-auto max-w-7xl overflow-hidden px-6 pb-10 lg:px-8">
+      <div className="mx-auto max-w-7xl overflow-hidden px-6 pb-10 pt-4 lg:px-8">
         <div className="mt-10 flex justify-center space-x-10">
           {linkedinUrl && (
             <Link href={linkedinUrl} className="hover:opacity-50">
