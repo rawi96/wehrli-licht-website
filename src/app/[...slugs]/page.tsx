@@ -16,6 +16,8 @@ import { draftMode } from 'next/headers';
 import { notFound } from 'next/navigation';
 import { toNextMetadata } from 'react-datocms/seo';
 
+export const dynamic = 'force-static';
+
 type Params = {
   params: {
     slugs: string[];

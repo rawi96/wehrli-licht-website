@@ -57,7 +57,7 @@ export const AllCategoriesBlock: FC<Props> = async ({ block: { disableMarginBott
                       {category.images?.length && category.images[0].file?.url && (
                         <Image
                           src={category.images[0].file.url}
-                          alt={category.name}
+                          alt={'Übersichtsbild für die Shop Kategorie ' + category.name}
                           className="h-full w-full transform object-cover object-center transition-transform duration-300 group-hover:scale-105"
                           height={100}
                           width={1000}

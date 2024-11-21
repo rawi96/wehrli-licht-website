@@ -7,6 +7,8 @@ import { DraftModeBanner } from './api/draft/draft-mode-banner';
 import { ShopContextProvider } from './context/shop-context';
 import { inter } from './fonts';
 
+export const dynamic = 'force-static';
+
 const RootLayout = ({ children }: { children: ReactNode }) => (
   <html lang="de" className="scroll-smooth">
     <head>
