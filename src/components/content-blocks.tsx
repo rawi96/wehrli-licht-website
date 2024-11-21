@@ -5,6 +5,7 @@ import {
   TeaserRowBlockFragment,
 } from '@/graphql/generated';
 import { FC } from 'react';
+import { ContactBlock } from './blocks/contact';
 import { GalleryBlock } from './blocks/gallery';
 import { IframeBlock } from './blocks/iframe';
 import { ImageBlock } from './blocks/image';
@@ -47,6 +48,8 @@ export const ContentBlocks: FC<Props> = ({ blocks }) => (
           return <TeaserRowBlock key={block.id} block={block as TeaserRowBlockFragment} />;
         case 'AllCategoriesBlockRecord':
           return <AllCategoriesBlock key={block.id} block={block} />;
+        case 'ContactRecord':
+          return <ContactBlock key={block.id} block={block} />;
         default:
           return null;
       }

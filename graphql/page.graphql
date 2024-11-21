@@ -44,6 +44,9 @@ query Page($slug: String!) {
       ... on AllCategoriesBlockRecord {
         ...allCategoriesBlock
       }
+      ... on ContactRecord {
+        ...contactBlock
+      }
     }
     seo: _seoMetaTags {
       attributes
