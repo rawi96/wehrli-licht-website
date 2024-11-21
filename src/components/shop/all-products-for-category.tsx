@@ -10,8 +10,8 @@ type Props = {
 };
 
 export const AllProductsForCategory: FC<Props> = ({ products }) => (
-  <BlockWrapper>
-    <div className="grid grid-cols-1 gap-x-6 gap-y-10 pb-20 pt-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+  <BlockWrapper disableMarginTop={true}>
+    <div className="my-8 grid grid-cols-1 gap-x-6 gap-y-10 pb-20 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
       {products?.map((product) => (
         <Link
           key={product.id}
@@ -30,8 +30,8 @@ export const AllProductsForCategory: FC<Props> = ({ products }) => (
             )}
           </div>
           <div className="mt-4 flex flex-1 flex-col justify-end">
-            <h3 className="text-sm text-gray-700">{product.name}</h3>
-            <p className="font-medium mt-1 text-lg text-gray-900">{getLowestPriceFromVariantsOrProductPrice(product)}</p>
+            <h3 className="text-lg font-bold text-wehrli">{product.name}</h3>
+            <p className="mt-1 text-xs">{getLowestPriceFromVariantsOrProductPrice(product)}</p>
           </div>
         </Link>
       ))}

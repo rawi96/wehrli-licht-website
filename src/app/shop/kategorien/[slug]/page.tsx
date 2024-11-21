@@ -54,7 +54,7 @@ export default async function CategoryPage({ params: { slug } }: Props) {
       <Header headerFooter={headerFooter as HeaderFooterRecord} />
       <ContentWrapper>
         <Heading level="1">{category.name}</Heading>
-        <p className="peer my-2 md:max-w-prose lg:my-4" dangerouslySetInnerHTML={{ __html: category.description }} />
+        <p className="font-sans text-xs lg:text-base" dangerouslySetInnerHTML={{ __html: category.description }} />
         {products && <AllProductsForCategory products={products} />}
 
         {/* {bestsellers && bestsellers?.length > 0 && <Bestsellers bestsellers={bestsellers} />} */}

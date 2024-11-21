@@ -6,8 +6,8 @@ import swell, { Cart, Category, ErrorResponse, Product } from 'swell-js';
 export const getAllCategories = async (): Promise<Category[]> => {
   initSwell();
 
-  const response = await swell.categories.list();
-  return response?.results || [];
+  const response = await swell.categories.list({});
+  return response?.results.sort((a, b) => a.name.localeCompare(b.name)) || [];
 };
 
 export const getAllProducts = async (): Promise<Product[]> => {

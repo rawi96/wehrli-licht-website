@@ -1,3 +1,5 @@
 fragment allCategoriesBlock on AllCategoriesBlockRecord {
   id
+  disableMarginBottom
+  disableMarginTop
 }
