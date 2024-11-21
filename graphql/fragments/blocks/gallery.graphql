@@ -2,6 +2,7 @@ fragment galleryBlock on GalleryRecord {
   id
   disableMarginTop
   disableMarginBottom
+  showImageTitles
   gallery {
     id
     title

@@ -17,7 +17,7 @@ export const TextImageBlock: FC<Props> = ({
     <div
       className={classNames(
         'flex flex-col items-center gap-8 md:flex-row xl:gap-16',
-        layout === 'image-right' && 'flex-col-reverse md:flex-row-reverse',
+        layout === 'image_right' && 'flex-col-reverse md:flex-row-reverse',
       )}
     >
       {image && (

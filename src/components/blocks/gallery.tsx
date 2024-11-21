@@ -1,4 +1,5 @@
 import { GalleryBlockFragment } from '@/graphql/generated';
+import { classNames } from '@/utils/css';
 import NextLink from 'next/link';
 import { FC, Suspense } from 'react';
 import { SRCImage as DatoSRCImage } from 'react-datocms';
@@ -9,7 +10,7 @@ type Props = {
   block: GalleryBlockFragment;
 };
 
-export const GalleryBlock: FC<Props> = ({ block: { gallery, disableMarginBottom, disableMarginTop } }) => {
+export const GalleryBlock: FC<Props> = ({ block: { gallery, disableMarginBottom, disableMarginTop, showImageTitles } }) => {
   const slides = gallery.map(({ id, largeSize }) => ({
     key: id,
     src: largeSize.src,
@@ -36,16 +37,19 @@ export const GalleryBlock: FC<Props> = ({ block: { gallery, disableMarginBottom,
               className="group relative block flex-grow overflow-hidden text-center md:h-[339px]"
               style={{ flexBasis: (smallSize.width / smallSize.height) * 339 }}
             >
-              <div className="absolute inset-0 bg-black opacity-0 transition-opacity duration-300 group-hover:opacity-60" />
-
-              <h3 className="absolute inset-0 z-10 flex items-center justify-center text-lg font-bold leading-6 text-white transition-opacity duration-300 group-hover:opacity-100">
-                <span>{smallSize.title}</span>
-              </h3>
+              {showImageTitles && (
+                <h3 className="absolute inset-0 z-10 flex items-center justify-center text-base font-bold text-white transition-opacity duration-300 group-hover:opacity-100">
+                  <span>{smallSize.title}</span>
+                </h3>
+              )}
 
               <DatoSRCImage
                 data={smallSize}
                 imgStyle={{ objectFit: 'cover', maxWidth: '100%', maxHeight: '100%' }}
-                imgClassName="transition-transform duration-300 group-hover:scale-110"
+                imgClassName={classNames(
+                  'transition-transform duration-300 group-hover:scale-110',
+                  showImageTitles && 'brightness-75',
+                )}
               />
             </NextLink>
           );
