@@ -20,16 +20,16 @@ export const ContactBlock: FC<Props> = ({ block: { text, employee } }) => {
         )}
         <div>
           <p className="mb-4 whitespace-pre-line font-sans text-base font-bold text-wehrli lg:mb-8 lg:text-xl">{text}</p>
-          <div className="flex flex-wrap justify-center gap-2 lg:justify-start lg:gap-4">
+          <div className="flex flex-col items-center gap-2 lg:flex-row lg:justify-start lg:gap-4">
             <a
               href={`mailto:${email}`}
-              className="mb-2 mr-8 border-b-2 border-black font-bold no-underline transition-colors duration-150 last:mr-0 hover:border-wehrli hover:text-wehrli"
+              className="mb-2 border-b-2 border-black text-center font-bold no-underline transition-colors duration-150 hover:border-wehrli hover:text-wehrli"
             >
               {email}
             </a>
             <a
               href={`tel:${phone}`}
-              className="mb-2 mr-8 border-b-2 border-black font-bold no-underline transition-colors duration-150 last:mr-0 hover:border-wehrli hover:text-wehrli"
+              className="mb-2 border-b-2 border-black text-center font-bold no-underline transition-colors duration-150 hover:border-wehrli hover:text-wehrli"
             >
               {phone}
             </a>
