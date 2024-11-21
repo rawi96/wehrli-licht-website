@@ -1,5 +1,7 @@
 fragment quoteBlock on QuoteRecord {
   id
+  disableMarginTop
+  disableMarginBottom
   testimonials {
     text
     authorFunction

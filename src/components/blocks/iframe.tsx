@@ -6,8 +6,8 @@ type Props = {
   block: IframeBlockFragment;
 };
 
-export const IframeBlock: FC<Props> = ({ block: { src } }) => (
-  <BlockWrapper>
+export const IframeBlock: FC<Props> = ({ block: { src, disableMarginBottom, disableMarginTop } }) => (
+  <BlockWrapper disableMarginBottom={disableMarginBottom} disableMarginTop={disableMarginTop}>
     <iframe className="mb-20" src={src} width="100%" height="500" allowFullScreen loading="lazy"></iframe>
   </BlockWrapper>
 );

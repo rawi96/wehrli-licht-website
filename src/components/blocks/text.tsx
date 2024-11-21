@@ -8,8 +8,13 @@ type Props = {
   block: TextBlockFragment;
 };
 
-export const TextBlock: FC<Props> = ({ block: { content } }) => (
-  <BlockWrapper className="first-of-type:text-base lg:first-of-type:text-lg">
+export const TextBlock: FC<Props> = ({ block: { content, anchorId, disableMarginTop, disableMarginBottom } }) => (
+  <BlockWrapper
+    className="first-of-type:text-base lg:first-of-type:text-lg"
+    anchorId={anchorId}
+    disableMarginTop={disableMarginTop}
+    disableMarginBottom={disableMarginBottom}
+  >
     {!isEmptyDocument(content) && <StructuredTextRenderer data={content as StructuredTextType} />}
   </BlockWrapper>
 );

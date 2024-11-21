@@ -1,5 +1,7 @@
 fragment logoGridBlock on LogoGridRecord {
   id
+  disableMarginTop
+  disableMarginBottom
   logos {
     id
     url

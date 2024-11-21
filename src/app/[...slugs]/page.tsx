@@ -1,4 +1,5 @@
 import { ContentBlocks } from '@/components/content-blocks';
+import { ContentWrapper } from '@/components/layout/content-wrapper';
 import { Footer } from '@/components/layout/footer';
 import { Header } from '@/components/layout/header';
 import {
@@ -70,7 +71,9 @@ export default async function ContentPage({ params: { slugs } }: Params) {
   return (
     <main>
       <Header headerFooter={headerFooter as HeaderFooterRecord} />
-      <ContentBlocks blocks={page.content as PageModelContentField[]} />
+      <ContentWrapper>
+        <ContentBlocks blocks={page.content as PageModelContentField[]} />
+      </ContentWrapper>
       <Footer headerFooter={headerFooter as HeaderFooterRecord} />
     </main>
   );

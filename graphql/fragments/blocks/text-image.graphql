@@ -1,6 +1,9 @@
 fragment textImageBlock on TextImageRecord {
   id
   layout
+  anchorId
+  disableMarginTop
+  disableMarginBottom
   content {
     value
   }
@@ -9,5 +12,4 @@ fragment textImageBlock on TextImageRecord {
       ...responsiveImageFragment
     }
   }
-  anchorId
 }

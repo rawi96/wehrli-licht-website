@@ -10,8 +10,10 @@ type Props = {
   block: TextImageBlockFragment;
 };
 
-export const TextImageBlock: FC<Props> = ({ block: { content, image, layout, anchorId } }) => (
-  <BlockWrapper anchorId={anchorId}>
+export const TextImageBlock: FC<Props> = ({
+  block: { content, image, layout, anchorId, disableMarginBottom, disableMarginTop },
+}) => (
+  <BlockWrapper anchorId={anchorId} disableMarginBottom={disableMarginBottom} disableMarginTop={disableMarginTop}>
     <div
       className={classNames(
         'flex flex-col items-center gap-8 md:flex-row xl:gap-16',

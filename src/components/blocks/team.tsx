@@ -10,8 +10,8 @@ type Props = {
   block: TeamBlockFragment;
 };
 
-export const TeamBlock: FC<Props> = ({ block: { employees } }) => (
-  <BlockWrapper>
+export const TeamBlock: FC<Props> = ({ block: { employees, disableMarginBottom, disableMarginTop } }) => (
+  <BlockWrapper disableMarginBottom={disableMarginBottom} disableMarginTop={disableMarginTop}>
     <Grid cols={3}>
       {employees.map(({ firstname, lastname, bio, image, function: emplFunction }) => (
         <div className={classNames('flex flex-col overflow-hidden rounded bg-white-100')} key={firstname + lastname}>

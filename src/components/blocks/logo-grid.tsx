@@ -6,8 +6,8 @@ type Props = {
   block: LogoGridBlockFragment;
 };
 
-export const LogoGridBlock: FC<Props> = ({ block: { logos } }) => (
-  <BlockWrapper>
+export const LogoGridBlock: FC<Props> = ({ block: { logos, disableMarginBottom, disableMarginTop } }) => (
+  <BlockWrapper disableMarginBottom={disableMarginBottom} disableMarginTop={disableMarginTop}>
     <div className="grid grid-cols-3 gap-8 rounded p-10 sm:gap-12 md:grid-cols-4 md:gap-16 xl:grid-cols-6">
       {logos?.map((logo) => (
         // there is no advantage in using next/image here, because the logos are SVGs

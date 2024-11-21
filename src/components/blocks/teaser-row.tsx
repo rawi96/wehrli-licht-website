@@ -8,9 +8,9 @@ type Props = {
   block: TeaserRowBlockFragment;
 };
 
-export const TeaserRowBlock: FC<Props> = ({ block: { teasers } }) => (
-  <BlockWrapper>
-    <div className="pb-20 pt-10">
+export const TeaserRowBlock: FC<Props> = ({ block: { teasers, disableMarginBottom, disableMarginTop } }) => (
+  <BlockWrapper disableMarginBottom={disableMarginBottom} disableMarginTop={disableMarginTop}>
+    <div className="my-8">
       <div className="flex overflow-x-scroll pb-5">
         <div className="flex flex-nowrap gap-4">
           {teasers.map((teaser) => (

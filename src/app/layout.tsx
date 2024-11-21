@@ -1,11 +1,11 @@
 import '@/styles/globals.css';
+import { classNames } from '@/utils/css';
 import PlausibleProvider from 'next-plausible';
 import { draftMode } from 'next/headers';
 import { ReactNode } from 'react';
 import { DraftModeBanner } from './api/draft/draft-mode-banner';
 import { ShopContextProvider } from './context/shop-context';
 import { inter } from './fonts';
-import { classNames } from '@/utils/css';
 
 const RootLayout = ({ children }: { children: ReactNode }) => (
   <html lang="de" className="scroll-smooth">

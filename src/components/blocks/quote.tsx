@@ -7,8 +7,8 @@ type Props = {
   block: QuoteBlockFragment;
 };
 
-export const QuoteBlock: FC<Props> = ({ block: { testimonials } }) => (
-  <BlockWrapper>
+export const QuoteBlock: FC<Props> = ({ block: { testimonials, disableMarginBottom, disableMarginTop } }) => (
+  <BlockWrapper disableMarginBottom={disableMarginBottom} disableMarginTop={disableMarginTop}>
     <div className="grid gap-4 lg:grid-cols-2 lg:gap-8 xl:gap-16">
       {testimonials.map(({ text, authorImage, authorName, authorFunction, companyName, companyUrl }, index) => (
         <Testimonial

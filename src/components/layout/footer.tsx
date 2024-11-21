@@ -33,27 +33,7 @@ export const Footer: FC<Props> = ({
 }) => {
   return (
     <footer className="bg-wehrli text-white">
-      <div className="mx-auto max-w-7xl overflow-hidden px-6 pb-10 pt-20 sm:py-24 sm:pb-10 lg:px-8">
-        <nav className="relative -mb-6 columns-2 sm:flex sm:justify-center sm:space-x-12" aria-label="Footer">
-          {menu &&
-            menu?.length > 0 &&
-            menu.map((item: NavigationItemRecord | DirectoryRecord) => {
-              return 'navigationItems' in item ? (
-                <div key={item.label} className="pb-6 text-black md:relative">
-                  <Flyout key={item.label} title={item.label} items={item.navigationItems} prefix={item.slug} />
-                </div>
-              ) : (
-                <div key={item.label} className="pb-6">
-                  <Link
-                    href={`/${item.link?.slug}`}
-                    className="border-b-2 border-transparent font-bold text-white transition-colors duration-150 hover:border-white"
-                  >
-                    {item.label}
-                  </Link>
-                </div>
-              );
-            })}
-        </nav>
+      <div className="mx-auto max-w-7xl overflow-hidden px-6 pb-10 lg:px-8">
         <div className="mt-10 flex justify-center space-x-10">
           {linkedinUrl && (
             <Link href={linkedinUrl} className="hover:opacity-50">

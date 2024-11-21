@@ -8,8 +8,8 @@ type Props = {
   block: TeaserGridBlockFragment;
 };
 
-export const TeaserGridBlock: FC<Props> = ({ block: { teasers } }) => (
-  <BlockWrapper>
+export const TeaserGridBlock: FC<Props> = ({ block: { teasers, disableMarginBottom, disableMarginTop } }) => (
+  <BlockWrapper disableMarginBottom={disableMarginBottom} disableMarginTop={disableMarginTop}>
     <Grid cols={teasers?.length ?? 3}>
       {teasers?.map((teaser) => (
         <Card

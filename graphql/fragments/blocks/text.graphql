@@ -1,5 +1,8 @@
 fragment textBlock on TextRecord {
   id
+  anchorId
+  disableMarginTop
+  disableMarginBottom
   content {
     value
   }

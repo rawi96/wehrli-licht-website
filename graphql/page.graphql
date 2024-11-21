@@ -29,9 +29,6 @@ query Page($slug: String!) {
       ... on GalleryRecord {
         ...galleryBlock
       }
-      ... on ImageGridRecord {
-        ...imageGridBlock
-      }
       ... on LogoGridRecord {
         ...logoGridBlock
       }

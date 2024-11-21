@@ -9,7 +9,7 @@ type Props = {
   block: GalleryBlockFragment;
 };
 
-export const GalleryBlock: FC<Props> = ({ block: { gallery } }) => {
+export const GalleryBlock: FC<Props> = ({ block: { gallery, disableMarginBottom, disableMarginTop } }) => {
   const slides = gallery.map(({ id, largeSize }) => ({
     key: id,
     src: largeSize.src,
@@ -18,7 +18,7 @@ export const GalleryBlock: FC<Props> = ({ block: { gallery } }) => {
   }));
 
   return (
-    <BlockWrapper>
+    <BlockWrapper disableMarginBottom={disableMarginBottom} disableMarginTop={disableMarginTop}>
       <Suspense>
         <Lightbox slides={slides} />
       </Suspense>

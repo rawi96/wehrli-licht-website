@@ -1,5 +1,7 @@
 fragment teaserGridBlock on TeaserGridRecord {
   id
+  disableMarginTop
+  disableMarginBottom
   teasers {
     __typename
     ... on PageRecord {

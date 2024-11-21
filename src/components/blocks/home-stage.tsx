@@ -18,7 +18,7 @@ export const HomeStageBlock: FC<Props> = async ({ block: { title, intro, image, 
   });
 
   return (
-    <div className="bg-wehrli">
+    <div className="bg-black">
       <div className="relative isolate overflow-hidden">
         {image?.responsiveImage && (
           <DatoSRCImage
