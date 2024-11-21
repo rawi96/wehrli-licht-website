@@ -9,7 +9,6 @@ import { getAllProducts, getProductBySlug } from '@/utils/shop';
 import { Metadata } from 'next';
 import { draftMode } from 'next/headers';
 
-export const dynamic = 'force-static';
 export const revalidate = 60;
 
 type Props = {
