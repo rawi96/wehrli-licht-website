@@ -19,11 +19,17 @@ export const AllCategoriesBlock: FC<Props> = async ({ block: { disableMarginBott
     <BlockWrapper disableMarginBottom={disableMarginBottom} disableMarginTop={disableMarginTop}>
       <div className="my-8">
         {isGrid && (
-          <div className={`grid ${categories.length > 3 ? 'grid-cols-3' : `grid-cols-${categories.length}`} gap-4`}>
+          <div
+            className={`grid gap-4 ${
+              categories.length > 2
+                ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'
+                : `grid-cols-${categories.length} sm:grid-cols-${categories.length === 1 ? '1' : '2'}`
+            }`}
+          >
             {categories.map((category) => (
               <Link key={category.slug} href={`/shop/kategorien/${category.slug}`} className="group block">
                 <div className="group relative cursor-pointer">
-                  <div className="sm:aspect-h-1 sm:aspect-w-2 lg:aspect-h-1 lg:aspect-w-1 relative h-80 w-full overflow-hidden rounded bg-white sm:h-64">
+                  <div className="relative h-80 w-full overflow-hidden rounded bg-white sm:h-64">
                     {category.images?.length && category.images[0].file?.url && (
                       <Image
                         src={category.images[0].file.url}
@@ -53,7 +59,7 @@ export const AllCategoriesBlock: FC<Props> = async ({ block: { disableMarginBott
               {categories.map((category) => (
                 <Link key={category.slug} href={`/shop/kategorien/${category.slug}`} className="group block">
                   <div className="group relative w-64 cursor-pointer">
-                    <div className="sm:aspect-h-1 sm:aspect-w-2 lg:aspect-h-1 lg:aspect-w-1 relative h-80 w-full overflow-hidden rounded bg-white sm:h-64">
+                    <div className="relative h-80 w-full overflow-hidden rounded bg-white sm:h-64">
                       {category.images?.length && category.images[0].file?.url && (
                         <Image
                           src={category.images[0].file.url}
