@@ -29,6 +29,8 @@ export const GalleryBlock: FC<Props> = ({ block: { gallery, disableMarginBottom,
             return null;
           }
 
+          const [smallTitle, mainTitle] = (smallSize.title ?? '').split('-').map((part) => part.trim());
+
           return (
             <NextLink
               key={id}
@@ -38,9 +40,10 @@ export const GalleryBlock: FC<Props> = ({ block: { gallery, disableMarginBottom,
               style={{ flexBasis: (smallSize.width / smallSize.height) * 339 }}
             >
               {showImageTitles && (
-                <h3 className="absolute inset-0 z-10 flex items-center justify-center text-base font-bold text-white transition-opacity duration-300 group-hover:opacity-100">
-                  <span>{smallSize.title}</span>
-                </h3>
+                <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-base font-bold text-white transition-opacity duration-300 group-hover:opacity-100">
+                  {smallTitle && <span className="text-sm">{smallTitle}</span>}
+                  {mainTitle && <h3 className="text-lg">{mainTitle}</h3>}
+                </div>
               )}
 
               <DatoSRCImage

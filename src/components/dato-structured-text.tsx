@@ -112,7 +112,7 @@ export const StructuredTextRenderer: FC<Props> = ({ data }) => (
             return (
               <Link
                 key={record.id}
-                href={record.isExternalUrl ? (record.url as string) : internalLink}
+                href={record.isExternalUrl ? (record.externalUrl as string) : internalLink}
                 target={record.newTab ? '_blank' : '_self'}
                 rel={record.newTab ? 'noopener noreferrer' : undefined}
               >
