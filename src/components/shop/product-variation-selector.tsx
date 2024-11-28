@@ -52,7 +52,7 @@ export const ProductVariationSelector = ({ product, setActiveVariant }: Props) =
 
         return (
           <div key={option.id} className="mb-4">
-            <label className="font-medium block text-xs">{option.name}</label>
+            <label className="font-medium block text-sm">{option.name}</label>
             <Menu as="div" className="relative inline-block w-full text-left">
               <div>
                 <Menu.Button className="inline-flex w-full justify-center gap-x-1.5 rounded bg-white px-3 py-2 text-sm font-bold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">

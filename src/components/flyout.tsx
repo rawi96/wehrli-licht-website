@@ -22,7 +22,7 @@ export const Flyout = ({ title, items, prefix }: Props) => {
       {({ close }) => (
         <>
           <Popover.Button
-            className={`inline-flex items-center gap-x-1 border-b-2 text-xs font-bold text-white transition-colors duration-150 ${
+            className={`inline-flex items-center gap-x-1 border-b-2 text-sm font-bold text-white transition-colors duration-150 ${
               isActive ? 'border-white' : 'border-transparent'
             } hover:border-white`}
           >
@@ -43,7 +43,7 @@ export const Flyout = ({ title, items, prefix }: Props) => {
               ref={popoverRef}
               className="absolute left-1/2 z-10 mt-5 flex w-screen max-w-min -translate-x-1/2 px-4"
             >
-              <div className="w-56 shrink rounded bg-white p-4 text-xs font-bold">
+              <div className="w-56 shrink rounded bg-white p-4 text-sm font-bold">
                 {items.map((item) => (
                   <Link
                     key={item.label}

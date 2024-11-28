@@ -7,5 +7,5 @@ type Props = {
 };
 
 export const Copy: FC<Props> = ({ children, className = '' }) => (
-  <p className={classNames('peer my-4 font-sans text-xs md:max-w-prose lg:my-8 lg:text-base', className)}>{children}</p>
+  <p className={classNames('peer my-4 font-sans text-sm md:max-w-prose lg:my-8 lg:text-base', className)}>{children}</p>
 );

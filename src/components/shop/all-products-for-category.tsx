@@ -32,7 +32,7 @@ export const AllProductsForCategory: FC<Props> = ({ products }) => (
           </div>
           <div className="mt-4 flex flex-1 flex-col justify-end">
             <h3 className="text-lg font-bold text-wehrli">{product.name}</h3>
-            <p className="mt-1 text-xs">{getLowestPriceFromVariantsOrProductPrice(product)}</p>
+            <p className="mt-1 text-sm">{getLowestPriceFromVariantsOrProductPrice(product)}</p>
           </div>
         </Link>
       ))}

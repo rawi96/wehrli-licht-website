@@ -4,7 +4,6 @@ import { FC } from 'react';
 import { SRCImage as DatoSRCImage } from 'react-datocms';
 import { BlockWrapper } from '../block-wrapper';
 import { Grid } from '../grid';
-import { Heading3 } from '../nodes';
 
 type Props = {
   block: TeamBlockFragment;
@@ -20,11 +19,11 @@ export const TeamBlock: FC<Props> = ({ block: { employees, disableMarginBottom, 
               <DatoSRCImage data={{ ...image.responsiveImage }} imgStyle={{ width: '100%', maxWidth: '100%' }} />
             )}
           </div>
-          <div className="flex flex-1 flex-col p-8 font-sans text-xxs font-normal lg:text-sm">
-            <p className="md:mb-2 lg:mb-6">{emplFunction}</p>
-            <Heading3>
+          <div className="flex flex-1 flex-col p-8 font-sans text-sm font-normal lg:text-sm">
+            <p className="mb-6">{emplFunction}</p>
+            <h3 className="lg:text-l mb-4 break-words font-sans text-base font-bold text-wehrli md:text-lg">
               {firstname} {lastname}
-            </Heading3>
+            </h3>
             <p>{bio}</p>
             <div className="mt-6 flex flex-1 flex-row flex-wrap content-end gap-x-4 gap-y-2">
               {/* {links.map(({ label, url }) => (

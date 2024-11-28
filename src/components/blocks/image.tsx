@@ -18,7 +18,7 @@ export const ImageBlock: FC<Props> = ({ block: { images, disableMarginBottom, di
     return (
       <BlockWrapper disableMarginBottom={disableMarginBottom} disableMarginTop={disableMarginTop}>
         <ImageComponent key={image.id} image={image} imgClassName="rounded object-cover" />
-        {image?.title && <p className="mt-2 text-xs italic">{image.title}</p>}
+        {image?.title && <p className="mt-2 text-sm italic">{image.title}</p>}
       </BlockWrapper>
     );
   } else if (images.length > 1) {
@@ -28,7 +28,7 @@ export const ImageBlock: FC<Props> = ({ block: { images, disableMarginBottom, di
           {images.map((image) => (
             <div key={image.id}>
               <ImageComponent key={image.id} image={image} imgClassName="rounded object-cover" />
-              {image?.title && <p className="mt-2 text-xs italic">{image.title}</p>}
+              {image?.title && <p className="mt-2 text-sm italic">{image.title}</p>}
             </div>
           ))}
         </div>

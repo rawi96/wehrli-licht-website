@@ -7,7 +7,7 @@ export const DraftModeBanner: FC = () => {
   const pathname = usePathname();
 
   return (
-    <div className="sticky top-0 z-50 flex flex-row items-center justify-center gap-2 bg-wehrli-100 p-2 text-xxs font-bold">
+    <div className="sticky top-0 z-50 flex flex-row items-center justify-center gap-2 bg-wehrli-100 p-2 text-sm font-bold">
       <span>Draft Mode is enabled</span>
       <a
         href={`/api/draft/disable?url=${pathname}`}

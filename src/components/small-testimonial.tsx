@@ -21,7 +21,7 @@ export const SmallTestimonial: FC<Props> = ({ image, quote, authorName, authorDe
     <div className="mt-8 flex w-full items-center gap-4">
       {image && <DatoSRCImage data={image} pictureClassName="size-16 md:size-20 shrink-0" imgClassName="rounded-full" />}
       {authorName && (
-        <span className="text-xxs lg:text-sm">
+        <span className="text-sm lg:text-sm">
           <strong>{authorName}</strong>
           {authorDesc && (
             <>

@@ -12,7 +12,7 @@ type Props = {
 };
 
 export const Testimonial: FC<Props> = ({ image, quote, authorName, authorDesc, companyName, companyUrl }) => (
-  <div className="relative grid w-full grid-flow-row place-items-center overflow-hidden rounded bg-wehrli p-8 text-center font-sans text-xxs font-normal text-white lg:p-32 lg:text-sm">
+  <div className="relative grid w-full grid-flow-row place-items-center overflow-hidden rounded bg-wehrli p-8 text-center font-sans text-sm font-normal text-white lg:p-32 lg:text-sm">
     {image && (
       <div className="z-10 h-24 w-24 lg:h-32 lg:w-32">
         <DatoSRCImage data={image} imgClassName="rounded-full" />

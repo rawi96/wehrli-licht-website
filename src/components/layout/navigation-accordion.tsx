@@ -7,7 +7,7 @@ type Props = {
   title: string;
   items: NavigationItemRecord[];
   prefix: string;
-  onLinkClick?: () => void; // Callback für das Schließen des Menüs hinzufügen
+  onLinkClick?: () => void;
 };
 
 export const NavigationAccordion = ({ title, items, prefix, onLinkClick }: Props) => (
@@ -15,7 +15,7 @@ export const NavigationAccordion = ({ title, items, prefix, onLinkClick }: Props
     {({ open }) => (
       <>
         <dt>
-          <Disclosure.Button className="-mx-3 flex w-full items-start justify-between rounded px-3 py-2 text-xs font-bold leading-7 text-white hover:bg-wehrli-400">
+          <Disclosure.Button className="-mx-3 flex w-full items-start justify-between rounded px-3 py-2 text-sm font-bold leading-7 text-white hover:bg-wehrli-400">
             <span className="">{title}</span>
             <span className="ml-6 flex h-7 items-center">
               {open ? (
@@ -32,7 +32,7 @@ export const NavigationAccordion = ({ title, items, prefix, onLinkClick }: Props
               key={item.label}
               href={item.link?.slug ? `/${prefix}/${item.link.slug}` : '/'}
               className="block rounded p-2 px-3 py-2 text-white hover:bg-wehrli-400"
-              onClick={onLinkClick} // Callback hinzufügen
+              onClick={onLinkClick}
             >
               {item.label}
             </Link>

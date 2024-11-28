@@ -36,7 +36,7 @@ export const AllCategoriesBlock: FC<Props> = async ({ block: { disableMarginBott
                   </div>
                   <h3 className="my-4 font-sans text-sm font-bold text-wehrli md:text-base lg:text-lg">{category.name}</h3>
                   <p
-                    className="mt-2 text-xs"
+                    className="mt-2 text-sm"
                     dangerouslySetInnerHTML={{
                       __html: category.description,
                     }}
@@ -66,7 +66,7 @@ export const AllCategoriesBlock: FC<Props> = async ({ block: { disableMarginBott
                     </div>
                     <h3 className="my-4 font-sans text-sm font-bold text-wehrli md:text-base lg:text-lg">{category.name}</h3>
                     <p
-                      className="mt-2 text-xs"
+                      className="peer my-4 font-sans text-sm md:max-w-prose"
                       dangerouslySetInnerHTML={{
                         __html: category.description,
                       }}

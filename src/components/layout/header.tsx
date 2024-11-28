@@ -30,8 +30,8 @@ export const Header: FC<Props> = ({ headerFooter: { menu } }) => {
   const isHomePage = pathname === '/';
 
   const desktopLinkClasses =
-    'font-bold text-xs text-white border-b-2 hover:border-white transition-colors duration-150 border-transparent';
-  const mobileLinkClasses = 'rounded -mx-3 block font-bold text-xs px-3 py-2 text-white hover:bg-wehrli-400';
+    'font-bold text-sm text-white border-b-2 hover:border-white transition-colors duration-150 border-transparent';
+  const mobileLinkClasses = 'rounded -mx-3 block font-bold text-sm px-3 py-2 text-white hover:bg-wehrli-400';
   const activeLinkClasses = 'border-white';
 
   const isActive = (path: string) => pathname.startsWith(path);

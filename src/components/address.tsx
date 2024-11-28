@@ -11,7 +11,7 @@ type AddressProps = {
 };
 
 export const Address = ({ companyName, street, zip, place, phone, email, mapsLink }: AddressProps) => (
-  <address className={`text-center text-xxs not-italic`} itemScope itemType="https://schema.org/Organization">
+  <address className={`text-center text-sm not-italic`} itemScope itemType="https://schema.org/Organization">
     {mapsLink && (
       <span className="inline-block">
         <Link
@@ -29,14 +29,14 @@ export const Address = ({ companyName, street, zip, place, phone, email, mapsLin
         <p className="mt-4">
           {phone && (
             <Link className="block p-4 underline hover:opacity-50" href={`tel:${phone}`} itemProp="telephone">
-              <span className={`'text-white lg:px-6'} relative inline-flex items-center border px-6 py-4 text-xxs`}>
+              <span className={`'text-white lg:px-6'} relative inline-flex items-center border px-6 py-4 text-sm`}>
                 {phone}
               </span>
             </Link>
           )}
           {email && (
             <Link className="block p-4 underline hover:opacity-50" href={`mailto:${email}`} itemProp="email">
-              <span className={`lg:px-6'} relative inline-flex items-center border px-6 py-4 text-xxs text-white`}>
+              <span className={`lg:px-6'} relative inline-flex items-center border px-6 py-4 text-sm text-white`}>
                 {email}
               </span>
             </Link>

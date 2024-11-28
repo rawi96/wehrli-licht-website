@@ -19,9 +19,7 @@ import {
   Code,
   Copy,
   Decoration,
-  Heading1,
-  Heading2,
-  Heading3,
+  Heading,
   Link,
   ListItem,
   OrderedList,
@@ -35,7 +33,7 @@ type Props = {
 };
 
 export const StructuredTextRenderer: FC<Props> = ({ data }) => (
-  <div className="font-sans text-xs lg:text-base">
+  <div className="font-sans text-sm lg:text-base">
     <StructuredText
       data={data}
       customNodeRules={[
@@ -48,16 +46,11 @@ export const StructuredTextRenderer: FC<Props> = ({ data }) => (
         ),
         renderNodeRule(isListItem, ({ children, key }) => <ListItem key={key}>{children}</ListItem>),
         renderNodeRule(isHeading, ({ node, children, key }) => {
-          switch (node.level) {
-            case 1:
-              return <Heading1 key={key}>{children}</Heading1>;
-            case 2:
-              return <Heading2 key={key}>{children}</Heading2>;
-            case 3:
-              return <Heading3 key={key}>{children}</Heading3>;
-            default:
-              return null;
-          }
+          return (
+            <Heading level={node.level.toString() as '1' | '2' | '3'} key={key}>
+              {children}
+            </Heading>
+          );
         }),
         renderNodeRule(isLink, ({ node, children, key }) => {
           const target = node.meta?.find((metaItem) => metaItem.id === 'target')?.value;
