@@ -5,6 +5,12 @@ fragment textBlock on TextRecord {
   disableMarginBottom
   content {
     value
+    blocks {
+      ... on LinkRecord {
+        _modelApiKey
+        ...linkBlock
+      }
+    }
     links {
       ... on PageRecord {
         __typename
