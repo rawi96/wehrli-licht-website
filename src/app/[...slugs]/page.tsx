@@ -22,6 +22,8 @@ type Params = {
   };
 };
 
+export const revalidate = 60;
+
 const getLastSlug = (slugs: string[]): string => {
   return slugs[slugs.length - 1];
 };

@@ -14,6 +14,8 @@ import { draftMode } from 'next/headers';
 import { notFound } from 'next/navigation';
 import { toNextMetadata } from 'react-datocms/seo';
 
+export const revalidate = 60;
+
 export async function generateMetadata() {
   const { site, page } = await queryDatoCMS({
     document: PageDocument,

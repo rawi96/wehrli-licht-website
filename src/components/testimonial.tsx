@@ -12,33 +12,30 @@ type Props = {
 };
 
 export const Testimonial: FC<Props> = ({ image, quote, authorName, authorDesc, companyName, companyUrl }) => (
-  <div className="grid grid-rows-[1fr,auto] items-center rounded bg-white-100 p-6 lg:p-10">
-    <p className="text-center text-sm font-bold md:text-base lg:text-lg">
-      <span className="text-wehrli">&laquo;</span>
+  <div className="relative grid w-full grid-flow-row place-items-center overflow-hidden rounded bg-wehrli p-8 text-center font-sans text-xxs font-normal text-white lg:p-32 lg:text-sm">
+    {image && (
+      <div className="z-10 h-24 w-24 lg:h-32 lg:w-32">
+        <DatoSRCImage data={image} imgClassName="rounded-full" />
+      </div>
+    )}
+    <p className="z-10 mb-4 mt-4 overflow-hidden whitespace-pre-line font-sans text-base font-bold sm:overflow-visible lg:mb-8 lg:text-xl">
+      &laquo;
       {quote}
-      <span className="text-wehrli">&raquo;</span>
+      &raquo;
     </p>
-    <div className="mt-8 flex w-full items-center gap-4">
-      {image && <DatoSRCImage data={image} pictureClassName="size-16 md:size-20 shrink-0" imgClassName="rounded-full" />}
-      {authorName && (
-        <span className="text-xxs lg:text-sm">
-          <strong>{authorName}</strong>
-          {authorDesc && (
-            <>
-              <br />
-              <span>{authorDesc}</span>
-            </>
-          )}
-          {companyName && companyUrl && (
-            <>
-              <br />
-              <a href={companyUrl} className="underline" target="_blank" rel="noopener noreferrer">
-                {companyName}
-              </a>
-            </>
-          )}
-        </span>
-      )}
-    </div>
+    {authorName && (
+      <p className="z-10">
+        {authorName}
+        {authorDesc && `, ${authorDesc}`}
+        {companyName && companyUrl && (
+          <>
+            <br />
+            <a href={companyUrl} className="underline" target="_blank" rel="noopener noreferrer">
+              {companyName}
+            </a>
+          </>
+        )}
+      </p>
+    )}
   </div>
 );
