@@ -35,7 +35,7 @@ export async function queryDatoCMS<TResult = unknown>({
   }
 
   const response = await fetch('https://graphql.datocms.com/', {
-    next: { revalidate: includeDrafts ? 0 : 3600 },
+    next: { revalidate: includeDrafts ? 0 : 60 },
     method: 'POST',
     headers,
     body: JSON.stringify({ query: print(document), variables }),
