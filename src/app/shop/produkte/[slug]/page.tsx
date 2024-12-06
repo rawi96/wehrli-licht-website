@@ -1,3 +1,4 @@
+import { Breadcrumbs } from '@/components/breadcrumbs';
 import { ContentWrapper } from '@/components/layout/content-wrapper';
 import { Footer } from '@/components/layout/footer';
 import { Header } from '@/components/layout/header';
@@ -51,6 +52,14 @@ export default async function ProductPage({ params: { slug } }: Props) {
     <main>
       <Header headerFooter={headerFooter as HeaderFooterRecord} />
       <ContentWrapper>
+        <div className="mb-32">
+          <Breadcrumbs
+            customBreadcrumbs={[
+              { name: 'Shop', href: '/shop' },
+              { name: product.name ?? 'Prodikt', href: `/shop/produkte/${slug}` },
+            ]}
+          />
+        </div>
         <ProductDetail product={product} />
         {/* {bestsellers && bestsellers?.length > 0 && <Bestsellers bestsellers={bestsellers} />} */}
       </ContentWrapper>

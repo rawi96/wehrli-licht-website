@@ -1,3 +1,4 @@
+import { Breadcrumbs } from '@/components/breadcrumbs';
 import { ContentWrapper } from '@/components/layout/content-wrapper';
 import { Footer } from '@/components/layout/footer';
 import { Header } from '@/components/layout/header';
@@ -53,6 +54,14 @@ export default async function CategoryPage({ params: { slug } }: Props) {
     <main>
       <Header headerFooter={headerFooter as HeaderFooterRecord} />
       <ContentWrapper>
+        <div className="mb-20">
+          <Breadcrumbs
+            customBreadcrumbs={[
+              { name: 'Shop', href: '/shop' },
+              { name: category.name ?? 'Kategorie', href: `/shop/kategorien/${slug}` },
+            ]}
+          />
+        </div>
         <Heading level="1">{category.name}</Heading>
         <p className="font-sans text-sm lg:text-base" dangerouslySetInnerHTML={{ __html: category.description }} />
         {products && <AllProductsForCategory products={products} />}
