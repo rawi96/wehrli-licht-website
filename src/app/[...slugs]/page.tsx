@@ -1,3 +1,4 @@
+import { Breadcrumbs } from '@/components/breadcrumbs';
 import { ContentBlocks } from '@/components/content-blocks';
 import { ContentWrapper } from '@/components/layout/content-wrapper';
 import { Footer } from '@/components/layout/footer';
@@ -72,6 +73,7 @@ export default async function ContentPage({ params: { slugs } }: Params) {
     <main>
       <Header headerFooter={headerFooter as HeaderFooterRecord} />
       <ContentWrapper>
+        <Breadcrumbs page={page as unknown as PageRecord} />
         <ContentBlocks blocks={page.content as PageModelContentField[]} />
       </ContentWrapper>
       <Footer headerFooter={headerFooter as HeaderFooterRecord} />

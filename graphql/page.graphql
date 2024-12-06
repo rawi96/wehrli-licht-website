@@ -2,9 +2,11 @@ query Page($slug: String!) {
   page(filter: { slug: { eq: $slug } }) {
     id
     slug
+    title
     parent {
       id
       slug
+      title
     }
     content {
       __typename
