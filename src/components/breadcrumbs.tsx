@@ -17,8 +17,8 @@ export const Breadcrumbs = ({ page }: Props) => {
 
   return (
     <>
-      <nav aria-label="Breadcrumb" className="flex font-bold">
-        <ol role="list" className="flex items-center space-x-4">
+      <nav aria-label="Breadcrumb" className="-mb-16 flex font-bold">
+        <ol role="list" className="flex flex-wrap items-center gap-x-4 gap-y-2">
           <li>
             <div>
               <Link
@@ -30,20 +30,18 @@ export const Breadcrumbs = ({ page }: Props) => {
             </div>
           </li>
           {breadcrumbs.map((breadcrumb, index) => (
-            <li key={breadcrumb.href}>
-              <div className="flex items-center">
-                <ChevronRightIcon aria-hidden="true" className="size-5 shrink-0 text-wehrli" />
-                <Link
-                  href={breadcrumb.href}
-                  aria-current={index === breadcrumbs.length - 1 ? 'page' : undefined}
-                  className={classNames(
-                    'ml-4 border-b-2 border-transparent text-sm text-wehrli',
-                    index === breadcrumbs.length - 1 ? 'border-b-2 border-wehrli text-wehrli' : 'hover:border-wehrli',
-                  )}
-                >
-                  {breadcrumb.name}
-                </Link>
-              </div>
+            <li key={breadcrumb.href} className="flex items-center">
+              <ChevronRightIcon aria-hidden="true" className="h-4 w-4 shrink-0 text-wehrli" />
+              <Link
+                href={breadcrumb.href}
+                aria-current={index === breadcrumbs.length - 1 ? 'page' : undefined}
+                className={classNames(
+                  'ml-2 border-b-2 border-transparent text-sm text-wehrli',
+                  index === breadcrumbs.length - 1 ? 'border-b-2 border-wehrli text-wehrli' : 'hover:border-wehrli',
+                )}
+              >
+                {breadcrumb.name}
+              </Link>
             </li>
           ))}
         </ol>
@@ -83,7 +81,6 @@ const useBreadcrumbs = (page?: PageRecord | null) => {
   return getBreadcrumbs(page);
 };
 
-// Rich Snippet Hook
 const useRichSnippet = (breadcrumbs: { name: string; href: string }[]) => {
   const baseUrl = 'https://wehrli-licht.ch';
 
