@@ -34,16 +34,21 @@ export const Breadcrumbs = ({ page, customBreadcrumbs, homeText = 'Home' }: Prop
           {breadcrumbsWithHome.map((breadcrumb, index) => (
             <li key={breadcrumb.href} className="flex items-center">
               {index !== 0 && <ChevronRightIcon aria-hidden="true" className="h-4 w-4 shrink-0 text-wehrli" />}
-              <Link
-                href={breadcrumb.href}
-                aria-current={index === breadcrumbsWithHome.length - 1 ? 'page' : undefined}
-                className={classNames(
-                  'ml-2 border-b-2 border-transparent text-sm text-wehrli',
-                  index === breadcrumbsWithHome.length - 1 ? 'border-b-2 border-wehrli text-wehrli' : 'hover:border-wehrli',
-                )}
-              >
-                {breadcrumb.name}
-              </Link>
+              {index === breadcrumbsWithHome.length - 1 ? (
+                <span
+                  aria-current="page"
+                  className={classNames('ml-2 border-b-2 border-wehrli text-sm font-bold text-wehrli')}
+                >
+                  {breadcrumb.name}
+                </span>
+              ) : (
+                <Link
+                  href={breadcrumb.href}
+                  className={classNames('ml-2 border-b-2 border-transparent text-sm text-wehrli', 'hover:border-wehrli')}
+                >
+                  {breadcrumb.name}
+                </Link>
+              )}
             </li>
           ))}
         </ol>

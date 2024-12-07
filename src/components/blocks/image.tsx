@@ -7,7 +7,7 @@ type Props = {
   block: ImageBlockFragment;
 };
 
-export const ImageBlock: FC<Props> = ({ block: { images, disableMarginBottom, disableMarginTop } }) => {
+export const ImageBlock: FC<Props> = ({ block: { images, disableMarginBottom, disableMarginTop, priority } }) => {
   if (images.length === 1) {
     const image = images[0];
 
@@ -27,7 +27,7 @@ export const ImageBlock: FC<Props> = ({ block: { images, disableMarginBottom, di
         <div className="grid gap-2 sm:auto-cols-[minmax(0,_1fr)] sm:grid-flow-col sm:gap-8 xl:gap-16">
           {images.map((image) => (
             <div key={image.id}>
-              <ImageComponent key={image.id} image={image} imgClassName="rounded object-cover" />
+              <ImageComponent key={image.id} image={image} priority={priority} imgClassName="rounded object-cover" />
               {image?.title && <p className="mt-2 text-sm italic">{image.title}</p>}
             </div>
           ))}

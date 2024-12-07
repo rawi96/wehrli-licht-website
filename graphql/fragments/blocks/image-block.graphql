@@ -2,6 +2,7 @@ fragment imageBlock on ImageRecord {
   id
   disableMarginTop
   disableMarginBottom
+  priority
   images {
     id
     title
