@@ -8,5 +8,6 @@ fragment logoGridBlock on LogoGridRecord {
     width
     height
     alt
+    title
   }
 }
