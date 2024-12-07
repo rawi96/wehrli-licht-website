@@ -63,7 +63,7 @@ export default async function CategoryPage({ params: { slug } }: Props) {
           />
         </div>
         <Heading level="1">{category.name}</Heading>
-        <p className="font-sans text-sm lg:text-base" dangerouslySetInnerHTML={{ __html: category.description }} />
+        <p className="text-sm lg:text-base" dangerouslySetInnerHTML={{ __html: category.description }} />
         {products && <AllProductsForCategory products={products} />}
 
         {/* {bestsellers && bestsellers?.length > 0 && <Bestsellers bestsellers={bestsellers} />} */}

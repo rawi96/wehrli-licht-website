@@ -33,7 +33,7 @@ type Props = {
 };
 
 export const StructuredTextRenderer: FC<Props> = ({ data }) => (
-  <div className="font-sans text-sm lg:text-base">
+  <div className="text-sm lg:text-base">
     <StructuredText
       data={data}
       customNodeRules={[

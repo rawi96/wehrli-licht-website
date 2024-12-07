@@ -1,15 +1,8 @@
-import { Anton, Inter } from 'next/font/google';
+import { Jost } from 'next/font/google';
 
-export const inter = Inter({
-  variable: '--inter-font',
+export const jost = Jost({
+  variable: '--jost-font',
   subsets: ['latin'],
-  weight: ['400', '600', '700'],
-  display: 'swap',
-});
-
-export const anton = Anton({
-  variable: '--anton-font',
-  subsets: ['latin'],
-  weight: ['400'],
+  weight: ['400', '600', '700'], // Adjust weights as needed
   display: 'swap',
 });

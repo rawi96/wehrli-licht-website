@@ -19,9 +19,9 @@ export const TeamBlock: FC<Props> = ({ block: { employees, disableMarginBottom, 
               <DatoSRCImage data={{ ...image.responsiveImage }} imgStyle={{ width: '100%', maxWidth: '100%' }} />
             )}
           </div>
-          <div className="flex flex-1 flex-col p-8 font-sans text-sm font-normal lg:text-sm">
+          <div className="flex flex-1 flex-col p-8 text-sm font-normal lg:text-sm">
             <p className="mb-6">{emplFunction}</p>
-            <h3 className="lg:text-l mb-4 break-words font-sans text-base font-bold text-wehrli md:text-lg">
+            <h3 className="lg:text-l mb-4 break-words text-base font-bold text-wehrli md:text-lg">
               {firstname} {lastname}
             </h3>
             <p>{bio}</p>

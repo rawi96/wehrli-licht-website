@@ -40,7 +40,7 @@ export const AllCategoriesBlock: FC<Props> = async ({ block: { disableMarginBott
                       />
                     )}
                   </div>
-                  <h3 className="my-4 font-sans text-sm font-bold text-wehrli md:text-base lg:text-lg">{category.name}</h3>
+                  <h3 className="my-4 text-sm font-bold text-wehrli md:text-base lg:text-lg">{category.name}</h3>
                   <p
                     className="mt-2 text-sm"
                     dangerouslySetInnerHTML={{
@@ -70,9 +70,9 @@ export const AllCategoriesBlock: FC<Props> = async ({ block: { disableMarginBott
                         />
                       )}
                     </div>
-                    <h3 className="my-4 font-sans text-sm font-bold text-wehrli md:text-base lg:text-lg">{category.name}</h3>
+                    <h3 className="my-4 text-sm font-bold text-wehrli md:text-base lg:text-lg">{category.name}</h3>
                     <p
-                      className="peer my-4 font-sans text-sm md:max-w-prose"
+                      className="peer my-4 text-sm md:max-w-prose"
                       dangerouslySetInnerHTML={{
                         __html: category.description,
                       }}

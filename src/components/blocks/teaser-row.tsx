@@ -31,7 +31,7 @@ export const TeaserRowBlock: FC<Props> = ({ block: { teasers, disableMarginBotto
                 <div className="absolute inset-0 rounded ring-1 ring-inset ring-gray-900/10" />
                 <div className="absolute bottom-0 left-0 right-0 p-4 text-sm leading-6 text-white">
                   <h3 className="mt-4 inline-block text-sm text-white">{teaser.teaserEyebrow ?? ''}</h3>
-                  <p className="mb-4 mt-2 font-sans text-sm font-bold text-white peer-[p&]:mt-6 md:text-base lg:text-lg lg:peer-[p&]:mt-8">
+                  <p className="mb-4 mt-2 text-sm font-bold text-white peer-[p&]:mt-6 md:text-base lg:text-lg lg:peer-[p&]:mt-8">
                     {teaser.teaserTitle}
                   </p>
                   <p className="mt-4 inline-block border-b-2 text-sm text-white">{teaser.teaserLinkText ?? ''}</p>

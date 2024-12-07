@@ -19,7 +19,7 @@ export const ContactBlock: FC<Props> = ({ block: { text, employee } }) => {
           </div>
         )}
         <div>
-          <p className="mb-4 whitespace-pre-line font-sans text-base font-bold text-wehrli lg:mb-8 lg:text-xl">{text}</p>
+          <p className="mb-4 whitespace-pre-line text-base font-bold text-wehrli lg:mb-8 lg:text-xl">{text}</p>
           <div className="flex flex-col items-center gap-2 lg:flex-row lg:justify-start lg:gap-4">
             <a
               href={`mailto:${email}`}

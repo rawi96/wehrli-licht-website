@@ -1,9 +1,9 @@
 import { FC, ReactNode } from 'react';
 
 const HEADING_STYLES = {
-  '1': 'font-sans font-bold text-xl md:text-xxl lg:text-xxxl mb-8 break-words',
-  '2': 'font-sans font-bold text-lg md:text-xl lg:text-xl mb-6 break-words',
-  '3': 'font-sans font-bold text-base md:text-lg lg:text-xl mb-4 break-words',
+  '1': ' font-bold text-xl md:text-xxl lg:text-xxxl mb-8 break-words',
+  '2': ' font-bold text-lg md:text-xl lg:text-xl mb-6 break-words',
+  '3': ' font-bold text-base md:text-lg lg:text-xl mb-4 break-words',
 } as const;
 
 export const Heading: FC<{
