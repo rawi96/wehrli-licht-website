@@ -61,7 +61,7 @@ export const ProductDetail = ({ product }: Props) => {
                       {image.file?.url && (
                         <Image
                           src={image.file.url}
-                          alt={product.name}
+                          alt={`Bild für das Produkt ${product.name}`}
                           className="h-full w-full object-cover object-center"
                           width={1000}
                           height={1000}
@@ -86,7 +86,13 @@ export const ProductDetail = ({ product }: Props) => {
           {uniqueImages?.map((image) => (
             <Tab.Panel key={image.id}>
               {image.file?.url && (
-                <Image src={image.file.url} alt={product.name} className="rounded" width={1000} height={1000} />
+                <Image
+                  src={image.file.url}
+                  alt={`Bild für das Produkt ${product.name}`}
+                  className="rounded"
+                  width={1000}
+                  height={1000}
+                />
               )}
             </Tab.Panel>
           ))}

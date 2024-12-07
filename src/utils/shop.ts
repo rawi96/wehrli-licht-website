@@ -14,14 +14,14 @@ export const getAllProducts = async (): Promise<Product[]> => {
   initSwell();
 
   const response = await swell.products.list({ limit: 100 });
-  return response?.results || [];
+  return response?.results.sort((a, b) => a.name.localeCompare(b.name)) || [];
 };
 
 export const getBestsellers = async (): Promise<Product[] | null> => {
   initSwell();
 
   const response = await swell.products.list({ limit: 100 });
-  const products = response?.results || [];
+  const products = response?.results.sort((a, b) => a.name.localeCompare(b.name)) || [];
   return products.filter((product) => product.tags?.includes('bestseller')) || null;
 };
 
@@ -33,7 +33,7 @@ export const getProductsByCategory = async (slug: string): Promise<Product[] | n
     limit: 100,
     expand: ['variants'],
   });
-  return response?.results || null;
+  return response?.results.sort((a, b) => a.name.localeCompare(b.name)) || [];
 };
 
 export const getCategoryBySlug = async (slug: string): Promise<Category | null> => {
