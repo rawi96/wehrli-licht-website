@@ -3,15 +3,22 @@ export type Props = {
 };
 
 export const FormattedText = ({ text }: Props) => {
-  const formattedText = text ? text.split('\n') : [];
+  if (!text) return null;
 
   return (
-    <span className="text-center text-sm leading-6">
-      <div className="mb-4">
-        {formattedText.map((line, index) => (
-          <div key={index}>{line || <br />}</div>
-        ))}
-      </div>
-    </span>
+    <div className="prose-invert mx-auto text-center text-sm leading-6">
+      <style>
+        {`
+          .custom-prose a {
+            color: white;
+          }
+          .custom-prose a {
+            text-decoration: underline;
+          }
+          
+        `}
+      </style>
+      <div className="custom-prose" dangerouslySetInnerHTML={{ __html: text }} />
+    </div>
   );
 };
