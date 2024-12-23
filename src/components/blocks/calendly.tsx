@@ -24,7 +24,7 @@ export const CalendlyBlock: FC<Props> = ({ block: { disableMarginBottom, disable
     <BlockWrapper disableMarginTop={disableMarginTop} disableMarginBottom={disableMarginBottom}>
       <div
         className="calendly-inline-widget"
-        data-url="https://calendly.com/kleinstein-mariella/60min"
+        data-url="https://calendly.com/kleinstein-mariella/60min?primary_color=214073"
         style={{ minWidth: '320px', height: '700px' }}
       ></div>
     </BlockWrapper>
