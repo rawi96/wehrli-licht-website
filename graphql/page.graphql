@@ -55,6 +55,9 @@ query Page($slug: String!) {
       ... on ContactRecord {
         ...contactBlock
       }
+      ... on CalendlyRecord {
+        ...calendlyBlock
+      }
     }
     seo: _seoMetaTags {
       attributes

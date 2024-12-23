@@ -9,6 +9,7 @@ import {
   TextTwoColsBlockFragment,
 } from '@/graphql/generated';
 import { FC } from 'react';
+import { CalendlyBlock } from './blocks/calendly';
 import { ContactBlock } from './blocks/contact';
 import { GalleryBlock } from './blocks/gallery';
 import { IframeBlock } from './blocks/iframe';
@@ -60,6 +61,8 @@ export const ContentBlocks: FC<Props> = ({ blocks }) => (
           return <AllCategoriesBlock key={block.id} block={block} />;
         case 'ContactRecord':
           return <ContactBlock key={block.id} block={block} />;
+        case 'CalendlyRecord':
+          return <CalendlyBlock key={block.id} block={block} />;
         default:
           return null;
       }
