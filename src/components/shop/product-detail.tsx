@@ -116,7 +116,7 @@ export const ProductDetail = ({ product }: Props) => {
                 <div className="mr-2">
                   <Button text="Zum Warenkorb hinzufügen" type="primary" onClick={handleAddToCartClick} loading={loading} />
                 </div>
-                <Button text="Besichtigungstermin vereinbaren" type="secondary" href="/kontakt" />
+                <Button text="Besichtigungstermin vereinbaren" type="secondary" href="/kontakt#termin" />
               </div>
             </div>
           </div>
@@ -132,7 +132,7 @@ export const ProductDetail = ({ product }: Props) => {
             </div>
 
             <div className="pb-10 pt-6">
-              <Button text="Besichtigungstermin vereinbaren" type="secondary" href="/kontakt" fullWidth />
+              <Button text="Besichtigungstermin vereinbaren" type="secondary" href="/kontakt#termin" fullWidth />
             </div>
           </div>
         </div>
