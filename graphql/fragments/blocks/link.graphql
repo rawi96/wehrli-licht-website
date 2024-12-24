@@ -4,6 +4,7 @@ fragment linkBlock on LinkRecord {
   newTab
   externalUrl
   isExternalUrl
+  anchorLink
   link {
     __typename
     ... on PageRecord {

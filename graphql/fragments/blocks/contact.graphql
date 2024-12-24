@@ -5,6 +5,11 @@ fragment contactBlock on ContactRecord {
     firstname
     phone
     email
+    appointmentLink {
+      slug
+    }
+    appointmentText
+    appointmentAnchorLink
     image {
       responsiveImage(imgixParams: { fit: crop, w: 208, h: 208, auto: format }) {
         ...responsiveImageFragment
