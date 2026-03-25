@@ -10,7 +10,6 @@ import {
   isParagraph,
   isThematicBreak,
 } from 'datocms-structured-text-utils';
-import NextLink from 'next/link';
 import { FC, Fragment } from 'react';
 import { StructuredText, renderMarkRule, renderNodeRule } from 'react-datocms';
 import { ImageBlock } from './blocks/image';
@@ -57,11 +56,9 @@ export const StructuredTextRenderer: FC<Props> = ({ data }) => (
           const rel = node.meta?.find((metaItem) => metaItem.id === 'rel')?.value;
 
           return (
-            <NextLink key={key} href={node.url} passHref legacyBehavior>
-              <TextLink newTab={target === '_blank'} rel={rel}>
-                {children}
-              </TextLink>
-            </NextLink>
+            <TextLink key={key} href={node.url} newTab={target === '_blank'} rel={rel}>
+              {children}
+            </TextLink>
           );
         }),
         renderNodeRule(isParagraph, ({ children, key, ancestors }) => {
@@ -124,10 +121,8 @@ export const StructuredTextRenderer: FC<Props> = ({ data }) => (
         }
       }}
       renderLinkToRecord={({ record, children, transformedMeta }) => (
-        <NextLink
+        <TextLink
           key={record.id}
-          legacyBehavior
-          passHref
           href={
             generatePathForRecord({
               slug: record.slug as string,
@@ -135,9 +130,10 @@ export const StructuredTextRenderer: FC<Props> = ({ data }) => (
               parent: record.parent as PageRecord,
             }) ?? '#'
           }
+          {...transformedMeta}
         >
-          <TextLink {...transformedMeta}>{children}</TextLink>
-        </NextLink>
+          {children}
+        </TextLink>
       )}
     />
   </div>
