@@ -4,7 +4,7 @@ import NextLink from 'next/link';
 import { FC, Suspense } from 'react';
 import { SRCImage as DatoSRCImage } from 'react-datocms';
 import { BlockWrapper } from '../block-wrapper';
-import { Lightbox } from '../lightbox';
+import { LightboxGate } from '@/components/lightbox-gate';
 
 type Props = {
   block: GalleryBlockFragment;
@@ -20,8 +20,8 @@ export const GalleryBlock: FC<Props> = ({ block: { gallery, disableMarginBottom,
 
   return (
     <BlockWrapper disableMarginBottom={disableMarginBottom} disableMarginTop={disableMarginTop}>
-      <Suspense>
-        <Lightbox slides={slides} />
+      <Suspense fallback={null}>
+        <LightboxGate slides={slides} />
       </Suspense>
       <div className="space-y-1 md:flex md:flex-wrap md:gap-1 md:space-y-0">
         {gallery.map(({ id, smallSize }) => {
@@ -42,7 +42,7 @@ export const GalleryBlock: FC<Props> = ({ block: { gallery, disableMarginBottom,
               {showImageTitles && (
                 <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-base font-bold text-white transition-opacity duration-300 group-hover:opacity-100">
                   {smallTitle && <span className="text-sm">{smallTitle}</span>}
-                  {mainTitle && <h3 className="text-lg">{mainTitle}</h3>}
+                  {mainTitle && <span className="text-lg">{mainTitle}</span>}
                 </div>
               )}
 
