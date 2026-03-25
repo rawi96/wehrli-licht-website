@@ -11,6 +11,24 @@ html {
 }
 
 @layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  body {
+    @apply bg-white-200 text-black antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  a,
+  button,
+  [role='button'],
+  input,
+  textarea,
+  select {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-wehrli focus-visible:ring-offset-2 focus-visible:ring-offset-white-200;
+  }
+
   ::selection {
     @apply bg-wehrli-500;
     @apply text-white;
