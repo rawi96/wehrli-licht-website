@@ -28,7 +28,7 @@
     "react": "19.2.4",
     "react-datocms": "^8.0.2",
     "react-dom": "19.2.4",
-    "swell-js": "^4.2.4",
+    "swell-js": "^5.4.1",
     "yet-another-react-lightbox": "^3.29.2"
   },
   "devDependencies": {
