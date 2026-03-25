@@ -1,6 +1,5 @@
 /* eslint-disable */
 
-// @ts-expect-error: 'swell-js' has no default export, but it works at runtime.
 import swell, { Cart, Category, ErrorResponse, Product } from 'swell-js';
 
 export const getAllCategories = async (): Promise<Category[]> => {

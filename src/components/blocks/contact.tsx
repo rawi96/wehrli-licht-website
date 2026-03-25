@@ -20,11 +20,11 @@ export const ContactBlock: FC<Props> = ({ block: { text, employee } }) => {
           </div>
         )}
         <div>
-          <p className="mb-4 whitespace-pre-line text-base font-bold text-wehrli lg:mb-8 lg:text-xl">{text}</p>
+          <p className="text-wehrli mb-4 text-base font-bold whitespace-pre-line lg:mb-8 lg:text-xl">{text}</p>
           <div className="flex flex-col items-center gap-2 lg:flex-row lg:justify-start lg:gap-4">
             {appointmentLink?.slug && appointmentText && appointmentAnchorLink && (
               <Link
-                className="mb-2 border-b-2 border-black text-center font-bold no-underline transition-colors duration-150 hover:border-wehrli hover:text-wehrli"
+                className="hover:border-wehrli hover:text-wehrli mb-2 border-b-2 border-black text-center font-bold no-underline transition-colors duration-150"
                 href={'/' + appointmentLink.slug + appointmentAnchorLink}
               >
                 {appointmentText}
@@ -32,13 +32,13 @@ export const ContactBlock: FC<Props> = ({ block: { text, employee } }) => {
             )}
             <a
               href={`mailto:${email}`}
-              className="mb-2 border-b-2 border-black text-center font-bold no-underline transition-colors duration-150 hover:border-wehrli hover:text-wehrli"
+              className="hover:border-wehrli hover:text-wehrli mb-2 border-b-2 border-black text-center font-bold no-underline transition-colors duration-150"
             >
               {email}
             </a>
             <a
               href={`tel:${phone}`}
-              className="mb-2 border-b-2 border-black text-center font-bold no-underline transition-colors duration-150 hover:border-wehrli hover:text-wehrli"
+              className="hover:border-wehrli hover:text-wehrli mb-2 border-b-2 border-black text-center font-bold no-underline transition-colors duration-150"
             >
               {phone}
             </a>

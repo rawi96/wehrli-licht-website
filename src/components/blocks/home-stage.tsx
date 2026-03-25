@@ -12,9 +12,10 @@ type Props = {
 };
 
 export const HomeStageBlock: FC<Props> = async ({ block: { title, intro, image, callToActions } }) => {
+  const { isEnabled } = await draftMode();
   const { headerFooter } = await queryDatoCMS({
     document: HeaderFooterDocument,
-    includeDrafts: draftMode().isEnabled,
+    includeDrafts: isEnabled,
   });
 
   return (

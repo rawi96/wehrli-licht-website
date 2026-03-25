@@ -1,3 +1,5 @@
+@config '../../tailwind.config.ts';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -6,7 +8,9 @@ html {
   -webkit-tap-highlight-color: transparent;
 }
 
-::selection {
-  @apply bg-wehrli-500;
-  @apply text-white;
+@layer base {
+  ::selection {
+    @apply bg-wehrli-500;
+    @apply text-white;
+  }
 }

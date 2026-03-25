@@ -13,7 +13,7 @@ export const TeamBlock: FC<Props> = ({ block: { employees, disableMarginBottom, 
   <BlockWrapper disableMarginBottom={disableMarginBottom} disableMarginTop={disableMarginTop}>
     <Grid cols={3}>
       {employees.map(({ firstname, lastname, bio, image, function: emplFunction }) => (
-        <div className={classNames('flex flex-col overflow-hidden rounded bg-white-100')} key={firstname + lastname}>
+        <div className={classNames('bg-white-100 flex flex-col overflow-hidden rounded')} key={firstname + lastname}>
           <div className="w-full">
             {image?.responsiveImage && (
               <DatoSRCImage data={{ ...image.responsiveImage }} imgStyle={{ width: '100%', maxWidth: '100%' }} />
@@ -21,7 +21,7 @@ export const TeamBlock: FC<Props> = ({ block: { employees, disableMarginBottom, 
           </div>
           <div className="flex flex-1 flex-col p-8 text-sm font-normal lg:text-sm">
             <p className="mb-6">{emplFunction}</p>
-            <h3 className="lg:text-l mb-4 break-words text-base font-bold text-wehrli md:text-lg">
+            <h3 className="lg:text-l text-wehrli mb-4 text-base font-bold break-words md:text-lg">
               {firstname} {lastname}
             </h3>
             <p>{bio}</p>

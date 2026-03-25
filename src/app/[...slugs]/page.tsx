@@ -28,10 +28,11 @@ const getLastSlug = (slugs: string[]): string => {
 };
 
 export async function generateMetadata({ params: { slugs } }: Params) {
+  const { isEnabled } = await draftMode();
   const { site, page } = await queryDatoCMS({
     document: PageDocument,
     variables: { slug: getLastSlug(slugs) },
-    includeDrafts: draftMode().isEnabled,
+    includeDrafts: isEnabled,
   });
 
   return toNextMetadata([...site.favicon, ...(page?.seo ?? [])]);
@@ -50,15 +51,16 @@ export async function generateStaticParams() {
 export const dynamicParams = true;
 
 export default async function ContentPage({ params: { slugs } }: Params) {
+  const { isEnabled } = await draftMode();
   const { page } = await queryDatoCMS({
     document: PageDocument,
     variables: { slug: getLastSlug(slugs) },
-    includeDrafts: draftMode().isEnabled,
+    includeDrafts: isEnabled,
   });
 
   const { headerFooter } = await queryDatoCMS({
     document: HeaderFooterDocument,
-    includeDrafts: draftMode().isEnabled,
+    includeDrafts: isEnabled,
   });
 
   if (!page || page.slug === 'home') {

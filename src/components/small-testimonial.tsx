@@ -12,7 +12,7 @@ type Props = {
 };
 
 export const SmallTestimonial: FC<Props> = ({ image, quote, authorName, authorDesc, companyName, companyUrl }) => (
-  <div className="grid grid-rows-[1fr,auto] items-center rounded bg-wehrli p-6 text-white lg:p-10">
+  <div className="bg-wehrli grid grid-rows-[1fr,auto] items-center rounded p-6 text-white lg:p-10">
     <p className="text-center text-sm font-bold md:text-base lg:text-lg">
       <span>&laquo;</span>
       {quote}

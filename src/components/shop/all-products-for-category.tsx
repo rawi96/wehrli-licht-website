@@ -26,13 +26,13 @@ export const AllProductsForCategory: FC<Props> = ({ products }) => (
             </div>
           )}
           <div className="flex flex-1 flex-col justify-between p-4">
-            <h3 className="font-medium mt-auto text-sm">
+            <h3 className="mt-auto text-sm font-medium">
               <Link href={`/shop/produkte/${product.slug}`}>
                 <span aria-hidden="true" className="absolute inset-0" />
                 {product.name}
               </Link>
             </h3>
-            <p className="mt-2 text-base font-bold text-wehrli">{getLowestPriceFromVariantsOrProductPrice(product)}</p>
+            <p className="text-wehrli mt-2 text-base font-bold">{getLowestPriceFromVariantsOrProductPrice(product)}</p>
           </div>
         </div>
       ))}

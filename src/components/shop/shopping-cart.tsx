@@ -76,7 +76,7 @@ export const ShoppingCart = ({ open, setOpen }: Props) => {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="hidden sm:fixed sm:inset-0 sm:block sm:bg-gray-500 sm:bg-opacity-75 sm:transition-opacity" />
+          <div className="sm:bg-opacity-75 hidden sm:fixed sm:inset-0 sm:block sm:bg-gray-500 sm:transition-opacity" />
         </Transition.Child>
 
         <div className="fixed inset-0 z-10 overflow-y-auto">
@@ -92,7 +92,7 @@ export const ShoppingCart = ({ open, setOpen }: Props) => {
             >
               <Dialog.Panel className="flex w-full max-w-3xl transform text-left text-base transition sm:my-8">
                 {shoppingCart && (
-                  <div className="relative flex w-full flex-col overflow-hidden bg-white pb-8 pt-6 sm:rounded sm:pb-6 lg:py-8">
+                  <div className="relative flex w-full flex-col overflow-hidden bg-white pt-6 pb-8 sm:rounded sm:pb-6 lg:py-8">
                     <div className="flex items-center justify-between px-4 sm:px-6 lg:px-8">
                       <h2 className="text-lg font-bold">Warenkorb</h2>
                       <button type="button" className="text-gray-400 hover:text-gray-500" onClick={() => setOpen(false)}>
@@ -142,7 +142,7 @@ export const ShoppingCart = ({ open, setOpen }: Props) => {
                                   id={`quantity-${productIdx}`}
                                   name={`quantity-${productIdx}`}
                                   defaultValue={item.quantity}
-                                  className="block max-w-full rounded border border-gray-300 py-1.5 text-left text-base font-bold leading-5 shadow-sm focus:border-wehrli-500 focus:outline-none focus:ring-1 focus:ring-wehrli-500 sm:text-sm"
+                                  className="focus:border-wehrli-500 focus:ring-wehrli-500 block max-w-full rounded border border-gray-300 py-1.5 text-left text-base leading-5 font-bold shadow-sm focus:ring-1 focus:outline-none sm:text-sm"
                                   onChange={(event) => handleSelectChange(event, item)}
                                 >
                                   <option value={1}>1</option>
@@ -161,7 +161,7 @@ export const ShoppingCart = ({ open, setOpen }: Props) => {
                                   type="button"
                                   className={`ml-4 font-bold ${
                                     isLoading ? '' : 'text-wehrli'
-                                  } hover:text-wehrli-600 sm:ml-0 sm:mt-2`}
+                                  } hover:text-wehrli-600 sm:mt-2 sm:ml-0`}
                                   onClick={() => handleDeleteItem(item)}
                                   disabled={isLoading}
                                 >

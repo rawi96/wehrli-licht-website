@@ -33,18 +33,18 @@ export const Breadcrumbs = ({ page, customBreadcrumbs, homeText = 'Home' }: Prop
         <ol role="list" className="flex flex-wrap items-center gap-x-4 gap-y-2">
           {breadcrumbsWithHome.map((breadcrumb, index) => (
             <li key={breadcrumb.href} className="flex items-center">
-              {index !== 0 && <ChevronRightIcon aria-hidden="true" className="h-4 w-4 shrink-0 text-wehrli" />}
+              {index !== 0 && <ChevronRightIcon aria-hidden="true" className="text-wehrli h-4 w-4 shrink-0" />}
               {index === breadcrumbsWithHome.length - 1 ? (
                 <span
                   aria-current="page"
-                  className={classNames('ml-2 border-b-2 border-wehrli text-sm font-bold text-wehrli')}
+                  className={classNames('border-wehrli text-wehrli ml-2 border-b-2 text-sm font-bold')}
                 >
                   {breadcrumb.name}
                 </span>
               ) : (
                 <Link
                   href={breadcrumb.href}
-                  className={classNames('ml-2 border-b-2 border-transparent text-sm text-wehrli', 'hover:border-wehrli')}
+                  className={classNames('text-wehrli ml-2 border-b-2 border-transparent text-sm', 'hover:border-wehrli')}
                 >
                   {breadcrumb.name}
                 </Link>
