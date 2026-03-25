@@ -48,7 +48,7 @@ export const Flyout = ({ title, items, prefix }: Props) => {
                   <Link
                     key={item.label}
                     href={item.link?.slug ? `/${prefix}/${item.link.slug}` : '/'}
-                    className="block p-2 hover:text-wehrli"
+                    className="hover:text-wehrli block p-2"
                     onClick={close}
                   >
                     {item.label}

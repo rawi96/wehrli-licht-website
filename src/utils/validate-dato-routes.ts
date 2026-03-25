@@ -8,6 +8,7 @@ export const getLastSlug = (slugs: string[]): string => {
 };
 
 export const validateRoutes = async (page: PageRecord, slugs: string[]) => {
+  const { isEnabled } = await draftMode();
   // Change order of slugs to match the order of the page hierarchy. It's easier to work with.
   slugs = slugs.reverse();
 
@@ -31,7 +32,7 @@ export const validateRoutes = async (page: PageRecord, slugs: string[]) => {
         const { page } = await queryDatoCMS({
           document: PageDocument,
           variables: { slug: currentSlug },
-          includeDrafts: draftMode().isEnabled,
+          includeDrafts: isEnabled,
         });
         if (page?.parent?.slug !== parentSlug) {
           notFound();

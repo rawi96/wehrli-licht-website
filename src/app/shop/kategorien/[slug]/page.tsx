@@ -14,9 +14,9 @@ import { draftMode } from 'next/headers';
 export const revalidate = 60;
 
 type Props = {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 };
 
 export async function generateStaticParams() {
@@ -27,7 +27,8 @@ export async function generateStaticParams() {
   }));
 }
 
-export async function generateMetadata({ params: { slug } }: Props): Promise<Metadata> {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
   const category = await getCategoryBySlug(slug);
 
   return {
@@ -36,7 +37,9 @@ export async function generateMetadata({ params: { slug } }: Props): Promise<Met
   };
 }
 
-export default async function CategoryPage({ params: { slug } }: Props) {
+export default async function CategoryPage({ params }: Props) {
+  const { slug } = await params;
+  const { isEnabled } = await draftMode();
   const category = await getCategoryBySlug(slug);
   const products = await getProductsByCategory(slug);
   // const bestsellers = await getBestsellers();
@@ -47,7 +50,7 @@ export default async function CategoryPage({ params: { slug } }: Props) {
 
   const { headerFooter } = await queryDatoCMS({
     document: HeaderFooterDocument,
-    includeDrafts: draftMode().isEnabled,
+    includeDrafts: isEnabled,
   });
 
   return (
@@ -63,7 +66,7 @@ export default async function CategoryPage({ params: { slug } }: Props) {
           />
         </div>
         <Heading level="1">{category.name}</Heading>
-        <p className="text-sm lg:text-base" dangerouslySetInnerHTML={{ __html: category.description }} />
+        <p className="text-sm lg:text-base" dangerouslySetInnerHTML={{ __html: category.description ?? '' }} />
         {products && <AllProductsForCategory products={products} />}
 
         {/* {bestsellers && bestsellers?.length > 0 && <Bestsellers bestsellers={bestsellers} />} */}

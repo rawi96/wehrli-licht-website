@@ -18,20 +18,28 @@ import { notFound } from 'next/navigation';
 import { toNextMetadata } from 'react-datocms/seo';
 
 type Params = {
-  params: {
-    slugs: string[];
-  };
+  params: Promise<{
+    slugs?: string[];
+  }>;
 };
 
-const getLastSlug = (slugs: string[]): string => {
-  return slugs[slugs.length - 1];
+const getLastSlug = (slugs: string[]): string | undefined => {
+  return slugs.at(-1);
 };
 
-export async function generateMetadata({ params: { slugs } }: Params) {
+export async function generateMetadata({ params }: Params) {
+  const { slugs = [] } = await params;
+  const slug = getLastSlug(slugs);
+
+  if (!slug) {
+    notFound();
+  }
+
+  const { isEnabled } = await draftMode();
   const { site, page } = await queryDatoCMS({
     document: PageDocument,
-    variables: { slug: getLastSlug(slugs) },
-    includeDrafts: draftMode().isEnabled,
+    variables: { slug },
+    includeDrafts: isEnabled,
   });
 
   return toNextMetadata([...site.favicon, ...(page?.seo ?? [])]);
@@ -49,16 +57,24 @@ export async function generateStaticParams() {
 
 export const dynamicParams = true;
 
-export default async function ContentPage({ params: { slugs } }: Params) {
+export default async function ContentPage({ params }: Params) {
+  const { slugs = [] } = await params;
+  const slug = getLastSlug(slugs);
+
+  if (!slug) {
+    notFound();
+  }
+
+  const { isEnabled } = await draftMode();
   const { page } = await queryDatoCMS({
     document: PageDocument,
-    variables: { slug: getLastSlug(slugs) },
-    includeDrafts: draftMode().isEnabled,
+    variables: { slug },
+    includeDrafts: isEnabled,
   });
 
   const { headerFooter } = await queryDatoCMS({
     document: HeaderFooterDocument,
-    includeDrafts: draftMode().isEnabled,
+    includeDrafts: isEnabled,
   });
 
   if (!page || page.slug === 'home') {

@@ -29,7 +29,7 @@ export const Footer: FC<Props> = ({
 }) => {
   return (
     <footer className="bg-wehrli text-white">
-      <div className="mx-auto max-w-7xl overflow-hidden px-6 pb-10 pt-4 lg:px-8">
+      <div className="mx-auto max-w-7xl overflow-hidden px-6 pt-4 pb-10 lg:px-8">
         <div className="mt-10 flex justify-center space-x-10">
           {linkedinUrl && (
             <Link href={linkedinUrl} className="hover:opacity-50">

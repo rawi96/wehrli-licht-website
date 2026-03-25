@@ -15,7 +15,7 @@ export const NavigationAccordion = ({ title, items, prefix, onLinkClick }: Props
     {({ open }) => (
       <>
         <dt>
-          <Disclosure.Button className="-mx-3 flex w-full items-start justify-between rounded px-3 py-2 text-sm font-bold leading-7 text-white hover:bg-wehrli-400">
+          <Disclosure.Button className="hover:bg-wehrli-400 -mx-3 flex w-full items-start justify-between rounded px-3 py-2 text-sm leading-7 font-bold text-white">
             <span className="">{title}</span>
             <span className="ml-6 flex h-7 items-center">
               {open ? (
@@ -31,7 +31,7 @@ export const NavigationAccordion = ({ title, items, prefix, onLinkClick }: Props
             <Link
               key={item.label}
               href={item.link?.slug ? `/${prefix}/${item.link.slug}` : '/'}
-              className="block rounded p-2 px-3 py-2 text-white hover:bg-wehrli-400"
+              className="hover:bg-wehrli-400 block rounded p-2 px-3 py-2 text-white"
               onClick={onLinkClick}
             >
               {item.label}

@@ -21,7 +21,6 @@ export const getAllDatoRoutes = async ({ includeDrafts = true, pagesOnly = false
 
   const pages =
     data.allPages.map(({ slug, lastModified, seometatags, parent }) => ({
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       path: generatePathForRecord({ slug, type: 'PageRecord', parent }),
       lastModified,
       noIndex: seometatags?.noIndex ?? undefined,

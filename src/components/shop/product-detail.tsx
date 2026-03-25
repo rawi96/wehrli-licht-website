@@ -52,7 +52,7 @@ export const ProductDetail = ({ product }: Props) => {
             {uniqueImages?.map((image) => (
               <Tab
                 key={image.id}
-                className="relative flex h-24 cursor-pointer items-center justify-center rounded bg-white text-sm uppercase hover:bg-gray-50 focus:outline-none focus:ring focus:ring-opacity-50 focus:ring-offset-4"
+                className="focus:ring-opacity-50 relative flex h-24 cursor-pointer items-center justify-center rounded bg-white text-sm uppercase hover:bg-gray-50 focus:ring focus:ring-offset-4 focus:outline-none"
               >
                 {({ selected }) => (
                   <>
@@ -100,7 +100,7 @@ export const ProductDetail = ({ product }: Props) => {
       </Tab.Group>
 
       <div className="mt-10 px-4 sm:mt-16 sm:px-0 lg:mt-0">
-        <h1 className="text-lg font-bold text-wehrli lg:text-xl">{product.name}</h1>
+        <h1 className="text-wehrli text-lg font-bold lg:text-xl">{product.name}</h1>
 
         <div className="mt-3">
           <p className="text-lg font-bold lg:text-xl">{formatPriceToCHF(activeVariant?.price ?? product.price)}</p>
@@ -112,7 +112,7 @@ export const ProductDetail = ({ product }: Props) => {
           )}
           <div className="hidden lg:block">
             <div className="mt-3">
-              <div className="sm:flex-col1 mb-10 mt-6 flex items-center">
+              <div className="sm:flex-col1 mt-6 mb-10 flex items-center">
                 <div className="mr-2">
                   <Button text="Zum Warenkorb hinzufügen" type="primary" onClick={handleAddToCartClick} loading={loading} />
                 </div>
@@ -131,7 +131,7 @@ export const ProductDetail = ({ product }: Props) => {
               />
             </div>
 
-            <div className="pb-10 pt-6">
+            <div className="pt-6 pb-10">
               <Button text="Besichtigungstermin vereinbaren" type="secondary" href="/kontakt#termin" fullWidth />
             </div>
           </div>
