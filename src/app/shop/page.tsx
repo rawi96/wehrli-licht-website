@@ -11,9 +11,7 @@ import { JsonLd } from '@/components/seo/json-ld';
 import { buildShopOrganizationJsonLd, shopIndexMetadata } from '@/utils/shop-seo';
 import { draftMode } from 'next/headers';
 
-import { CONTENT_REVALIDATE_SECONDS } from '@/constants/cache-revalidation';
-
-export const revalidate = CONTENT_REVALIDATE_SECONDS;
+export const revalidate = 3600;
 
 export const metadata = shopIndexMetadata;
 

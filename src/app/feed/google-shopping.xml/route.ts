@@ -1,8 +1,6 @@
 import { buildGoogleShoppingFeedXml, getAllGoogleShoppingFeedItems } from '@/utils/google-shopping-feed';
 
-import { CONTENT_REVALIDATE_SECONDS } from '@/constants/cache-revalidation';
-
-export const revalidate = CONTENT_REVALIDATE_SECONDS;
+export const revalidate = 3600;
 
 export async function GET() {
   const items = await getAllGoogleShoppingFeedItems();

@@ -11,9 +11,7 @@ import { buildProductJsonLd, buildProductMetadata } from '@/utils/shop-seo';
 import { Metadata } from 'next';
 import { draftMode } from 'next/headers';
 
-import { CONTENT_REVALIDATE_SECONDS } from '@/constants/cache-revalidation';
-
-export const revalidate = CONTENT_REVALIDATE_SECONDS;
+export const revalidate = 3600;
 
 type Props = {
   params: Promise<{
