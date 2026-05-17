@@ -1,7 +1,7 @@
 import { BlockWrapper } from '@/components/block-wrapper';
-import { ImageComponent } from '@/components/image';
 import { ShopProductListItem } from '@/utils/shop';
 import { getLowestPriceFromProduct } from '@/utils/price';
+import NextImage from 'next/image';
 import Link from 'next/link';
 import { FC } from 'react';
 
@@ -18,12 +18,20 @@ export const AllProductsForCategory: FC<Props> = ({ products, basePath = '/shop'
 
         return (
           <div key={product.id} className="group relative flex flex-col overflow-hidden rounded bg-white shadow">
-            {image?.responsiveImage && (
-              <div className="relative overflow-hidden">
-                <ImageComponent
-                  image={image}
-                  imgClassName="w-full object-contain transition-transform duration-300 group-hover:scale-110"
-                />
+            {image?.responsiveImage?.src && (
+              <div
+                className="relative w-full shrink-0 overflow-hidden rounded bg-white"
+                style={{ paddingTop: '100%' }}
+              >
+                <div className="absolute inset-0">
+                  <NextImage
+                    src={image.responsiveImage.src}
+                    alt={image.alt ?? product.name}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    className="object-contain object-center p-3 transition-transform duration-300 group-hover:scale-110"
+                  />
+                </div>
               </div>
             )}
             <div className="flex flex-1 flex-col justify-between p-4">
