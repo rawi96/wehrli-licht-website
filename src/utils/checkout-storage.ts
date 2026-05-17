@@ -2,25 +2,8 @@ import { CheckoutCustomer, CheckoutPaymentMethod, CheckoutShippingAddress, Check
 import { emptyShippingAddress } from '@/utils/checkout-shipping-address';
 
 const STORAGE_KEY = 'wehrli-shop-checkout-draft';
-const LEGACY_STORAGE_KEY = 'wehrli-dato-checkout-draft';
 
 const draftListeners = new Set<() => void>();
-
-export const subscribeCheckoutDraft = (onStoreChange: () => void): (() => void) => {
-  draftListeners.add(onStoreChange);
-
-  return () => {
-    draftListeners.delete(onStoreChange);
-  };
-};
-
-const emitCheckoutDraftChange = (): void => {
-  draftListeners.forEach((listener) => listener());
-};
-
-export const getCheckoutDraftSnapshot = (): CheckoutDraft => loadCheckoutDraft() ?? defaultCheckoutDraft();
-
-export const getCheckoutDraftServerSnapshot = (): CheckoutDraft => defaultCheckoutDraft();
 
 export type CheckoutDraft = {
   customer: CheckoutCustomer;
@@ -45,34 +28,86 @@ export const defaultCheckoutDraft = (): CheckoutDraft => ({
   shippingAddress: emptyShippingAddress(),
 });
 
-export const loadCheckoutDraft = (): CheckoutDraft | null => {
-  if (typeof window === 'undefined') {
-    return null;
-  }
+const serverSnapshot = defaultCheckoutDraft();
+let cachedSnapshot: CheckoutDraft = defaultCheckoutDraft();
+let hydratedFromStorage = false;
 
+export const subscribeCheckoutDraft = (onStoreChange: () => void): (() => void) => {
+  draftListeners.add(onStoreChange);
+
+  return () => {
+    draftListeners.delete(onStoreChange);
+  };
+};
+
+const emitCheckoutDraftChange = (): void => {
+  draftListeners.forEach((listener) => listener());
+};
+
+const persistCheckoutDraftToStorage = (draft: CheckoutDraft): void => {
+  sessionStorage.setItem(STORAGE_KEY, JSON.stringify(draft));
+};
+
+const readCheckoutDraftFromStorage = (): CheckoutDraft | null => {
   try {
-    const raw = sessionStorage.getItem(STORAGE_KEY) ?? sessionStorage.getItem(LEGACY_STORAGE_KEY);
+    const raw = sessionStorage.getItem(STORAGE_KEY);
 
     if (!raw) {
       return null;
     }
 
-    const parsed = JSON.parse(raw) as CheckoutDraft & { orderNote?: string };
+    const parsed = JSON.parse(raw) as CheckoutDraft;
 
-    const draft: CheckoutDraft = {
+    return {
       customer: parsed.customer ?? emptyCheckoutCustomer(),
       shipping: parsed.shipping ?? 'pickup',
       paymentMethod: parsed.paymentMethod ?? 'prepayment',
-      comment: parsed.comment ?? parsed.orderNote ?? '',
+      comment: parsed.comment ?? '',
       shippingAddress: parsed.shippingAddress ?? emptyShippingAddress(),
     };
-
-    saveCheckoutDraft(draft);
-
-    return draft;
   } catch {
     return null;
   }
+};
+
+const hydrateCheckoutDraftFromStorage = (): void => {
+  if (hydratedFromStorage || typeof window === 'undefined') {
+    return;
+  }
+
+  hydratedFromStorage = true;
+
+  const loaded = readCheckoutDraftFromStorage();
+
+  if (!loaded) {
+    return;
+  }
+
+  cachedSnapshot = loaded;
+};
+
+export const getCheckoutDraftSnapshot = (): CheckoutDraft => {
+  hydrateCheckoutDraftFromStorage();
+
+  return cachedSnapshot;
+};
+
+export const getCheckoutDraftServerSnapshot = (): CheckoutDraft => serverSnapshot;
+
+export const loadCheckoutDraft = (): CheckoutDraft | null => {
+  if (typeof window === 'undefined') {
+    return null;
+  }
+
+  const draft = readCheckoutDraftFromStorage();
+
+  if (!draft) {
+    return null;
+  }
+
+  saveCheckoutDraft(draft);
+
+  return draft;
 };
 
 export const saveCheckoutDraft = (draft: CheckoutDraft): void => {
@@ -80,7 +115,9 @@ export const saveCheckoutDraft = (draft: CheckoutDraft): void => {
     return;
   }
 
-  sessionStorage.setItem(STORAGE_KEY, JSON.stringify(draft));
+  persistCheckoutDraftToStorage(draft);
+  cachedSnapshot = draft;
+  emitCheckoutDraftChange();
 };
 
 export const clearCheckoutDraft = (): void => {
@@ -89,6 +126,6 @@ export const clearCheckoutDraft = (): void => {
   }
 
   sessionStorage.removeItem(STORAGE_KEY);
-  sessionStorage.removeItem(LEGACY_STORAGE_KEY);
+  cachedSnapshot = defaultCheckoutDraft();
   emitCheckoutDraftChange();
 };

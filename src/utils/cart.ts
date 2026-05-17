@@ -25,7 +25,6 @@ export type Cart = {
 };
 
 const STORAGE_KEY = 'wehrli-shop-cart';
-const LEGACY_STORAGE_KEY = 'wehrli-dato-cart';
 
 export const emptyCart = (): Cart => ({
   items: [],
@@ -73,20 +72,19 @@ export const loadCartFromStorage = (): Cart => {
   }
 
   try {
-    const raw = localStorage.getItem(STORAGE_KEY) ?? localStorage.getItem(LEGACY_STORAGE_KEY);
+    const raw = localStorage.getItem(STORAGE_KEY);
+
     if (!raw) {
       return emptyCart();
     }
 
     const parsed = JSON.parse(raw) as Cart;
+
     if (!Array.isArray(parsed.items)) {
       return emptyCart();
     }
 
-    const cart = withComputedTotals(parsed.items);
-    saveCartToStorage(cart);
-
-    return cart;
+    return withComputedTotals(parsed.items);
   } catch {
     return emptyCart();
   }
