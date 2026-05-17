@@ -5,10 +5,9 @@ import { Header } from '@/components/layout/header';
 import { Heading } from '@/components/nodes';
 import NotFound from '@/components/not-found';
 import { AllProductsForCategory } from '@/components/shop/all-products-for-category';
-import { HeaderFooterDocument, HeaderFooterRecord } from '@/graphql/generated';
+import { getHeaderFooter } from '@/utils/get-header-footer';
 import { getAllCategorySlugs, getCategoryBySlug, getProductsByCategory } from '@/utils/shop';
 import { buildCategoryMetadata } from '@/utils/shop-seo';
-import { queryDatoCMS } from '@/utils/query-dato-cms';
 import { Metadata } from 'next';
 import { draftMode } from 'next/headers';
 
@@ -48,14 +47,11 @@ export default async function ShopCategoryPage({ params }: Props) {
 
   const products = await getProductsByCategory(category.id);
 
-  const { headerFooter } = await queryDatoCMS({
-    document: HeaderFooterDocument,
-    includeDrafts: isEnabled,
-  });
+  const headerFooter = await getHeaderFooter(isEnabled);
 
   return (
     <main>
-      <Header headerFooter={headerFooter as HeaderFooterRecord} />
+      <Header headerFooter={headerFooter} />
       <ContentWrapper>
         <div className="mb-20">
           <Breadcrumbs
@@ -71,7 +67,7 @@ export default async function ShopCategoryPage({ params }: Props) {
         )}
         {products.length > 0 && <AllProductsForCategory products={products} />}
       </ContentWrapper>
-      <Footer headerFooter={headerFooter as HeaderFooterRecord} />
+      <Footer headerFooter={headerFooter} />
     </main>
   );
 }

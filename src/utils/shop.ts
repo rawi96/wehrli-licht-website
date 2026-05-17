@@ -11,6 +11,7 @@ import {
   ShopProductListItemFragment,
 } from '@/graphql/generated';
 import { queryDatoCMS } from '@/utils/query-dato-cms';
+import { cache } from 'react';
 
 export type ShopCategory = ShopCategoryFragment;
 export type ShopProductListItem = ShopProductListItemFragment;
@@ -43,32 +44,32 @@ export async function getAllCategories(): Promise<ShopCategory[]> {
   return allShopCategories;
 }
 
-export async function getCategoryBySlug(slug: string): Promise<ShopCategory | null> {
+export const getCategoryBySlug = cache(async (slug: string): Promise<ShopCategory | null> => {
   const { shopCategory } = await queryDatoCMS({
     document: ShopCategoryBySlugDocument,
     variables: { slug },
   });
 
   return shopCategory ?? null;
-}
+});
 
-export async function getProductsByCategory(categoryId: string): Promise<ShopProductListItem[]> {
+export const getProductsByCategory = cache(async (categoryId: string): Promise<ShopProductListItem[]> => {
   const { allShopProducts } = await queryDatoCMS({
     document: ShopProductsByCategoryDocument,
     variables: { categoryId },
   });
 
   return allShopProducts;
-}
+});
 
-export async function getProductBySlug(slug: string): Promise<ShopProduct | null> {
+export const getProductBySlug = cache(async (slug: string): Promise<ShopProduct | null> => {
   const { shopProduct } = await queryDatoCMS({
     document: ShopProductBySlugDocument,
     variables: { slug },
   });
 
   return shopProduct ?? null;
-}
+});
 
 export async function getAllCategorySlugs(): Promise<string[]> {
   return fetchAllSlugs(async (skip) => {

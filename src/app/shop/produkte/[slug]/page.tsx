@@ -4,11 +4,10 @@ import { Footer } from '@/components/layout/footer';
 import { Header } from '@/components/layout/header';
 import NotFound from '@/components/not-found';
 import { ProductDetail } from '@/components/shop/product-detail';
-import { HeaderFooterDocument, HeaderFooterRecord } from '@/graphql/generated';
 import { JsonLd } from '@/components/seo/json-ld';
+import { getHeaderFooter } from '@/utils/get-header-footer';
 import { getAllProductSlugs, getProductBySlug } from '@/utils/shop';
 import { buildProductJsonLd, buildProductMetadata } from '@/utils/shop-seo';
-import { queryDatoCMS } from '@/utils/query-dato-cms';
 import { Metadata } from 'next';
 import { draftMode } from 'next/headers';
 
@@ -46,15 +45,12 @@ export default async function ShopProductPage({ params }: Props) {
     return <NotFound />;
   }
 
-  const { headerFooter } = await queryDatoCMS({
-    document: HeaderFooterDocument,
-    includeDrafts: isEnabled,
-  });
+  const headerFooter = await getHeaderFooter(isEnabled);
 
   return (
     <main>
       <JsonLd data={buildProductJsonLd(product)} />
-      <Header headerFooter={headerFooter as HeaderFooterRecord} />
+      <Header headerFooter={headerFooter} />
       <ContentWrapper>
         <div className="mb-32">
           <Breadcrumbs
@@ -66,7 +62,7 @@ export default async function ShopProductPage({ params }: Props) {
         </div>
         <ProductDetail product={product} />
       </ContentWrapper>
-      <Footer headerFooter={headerFooter as HeaderFooterRecord} />
+      <Footer headerFooter={headerFooter} />
     </main>
   );
 }
