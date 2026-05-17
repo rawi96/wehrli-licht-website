@@ -11,9 +11,22 @@ type Props = {
   fullWidth?: boolean;
   white?: boolean;
   loading?: boolean;
+  submit?: boolean;
+  showArrow?: boolean;
 };
 
-export const Button = ({ text, href, onClick, type, disabled, fullWidth, white, loading }: Props) => {
+export const Button = ({
+  text,
+  href,
+  onClick,
+  type,
+  disabled,
+  fullWidth,
+  white,
+  loading,
+  submit,
+  showArrow = true,
+}: Props) => {
   const isDisabled = disabled ?? loading;
 
   const baseClasses = 'px-5 py-2.5 rounded text-center inline-flex items-center justify-center text-sm font-bold group';
@@ -37,13 +50,13 @@ export const Button = ({ text, href, onClick, type, disabled, fullWidth, white, 
   return href ? (
     <Link className={buttonClasses} href={href}>
       {text}
-      {type === 'secondary' && <ArrowIcon />}
+      {type === 'secondary' && showArrow && <ArrowIcon />}
     </Link>
   ) : (
-    <button type="button" className={buttonClasses} onClick={onClick} disabled={isDisabled}>
+    <button type={submit ? 'submit' : 'button'} className={buttonClasses} onClick={onClick} disabled={isDisabled}>
       {loading && <Spinner />}
       {text}
-      {type === 'secondary' && <ArrowIcon />}
+      {type === 'secondary' && showArrow && <ArrowIcon />}
     </button>
   );
 };

@@ -23,12 +23,14 @@
     "@tailwindcss/typography": "^0.5.19",
     "@types/react": "^19.2.14",
     "@types/react-dom": "19.2.3",
+    "canvas-confetti": "^1.9.4",
     "next": "^16.2.1",
     "next-plausible": "^3.12.5",
     "react": "19.2.4",
     "react-datocms": "^8.0.2",
     "react-dom": "19.2.4",
-    "swell-js": "^5.4.1",
+    "resend": "^6.12.3",
+    "stripe": "^22.1.1",
     "yet-another-react-lightbox": "^3.29.2"
   },
   "devDependencies": {
@@ -40,6 +42,7 @@
     "@smartive/eslint-config": "^7.0.1",
     "@smartive/prettier-config": "3.1.2",
     "@tailwindcss/postcss": "^4.2.2",
+    "@types/canvas-confetti": "^1.9.0",
     "@types/node": "^24.12.0",
     "autoprefixer": "^10.4.27",
     "eslint": "^9.22.0",

@@ -1,0 +1,5 @@
+query ShopProductBySlug($slug: String!) {
+  shopProduct(filter: { slug: { eq: $slug }, active: { eq: true } }) {
+    ...shopProductDetail
+  }
+}

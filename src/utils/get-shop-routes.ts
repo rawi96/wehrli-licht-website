@@ -1,4 +1,4 @@
-import { getAllCategories, getAllProducts } from './shop';
+import { getShopSitemapRoutes } from '@/utils/shop';
 
 type Route = {
   path: string;
@@ -7,22 +7,11 @@ type Route = {
 };
 
 export const getAllShopRoutes = async (): Promise<Route[]> => {
-  const categories = await getAllCategories(); // /shop/kategorien/:slug
-  const products = await getAllProducts(); // /shop/produkte/:slug
+  const routes = await getShopSitemapRoutes();
 
-  const categoryPages = categories.map(({ slug }) => ({
-    path: `/shop/kategorien/${slug}`,
-    lastModified: new Date().toISOString(),
-    noIndex: false,
+  return routes.map(({ path, lastModified, noIndex }) => ({
+    path,
+    lastModified,
+    noIndex,
   }));
-
-  const productPages = products.map(({ slug }) => ({
-    path: `/shop/produkte/${slug}`,
-    lastModified: new Date().toISOString(),
-    noIndex: false,
-  }));
-
-  const pages = [...categoryPages, ...productPages];
-
-  return pages;
 };

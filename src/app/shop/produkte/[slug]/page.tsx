@@ -4,13 +4,14 @@ import { Footer } from '@/components/layout/footer';
 import { Header } from '@/components/layout/header';
 import NotFound from '@/components/not-found';
 import { ProductDetail } from '@/components/shop/product-detail';
-import { HeaderFooterDocument, HeaderFooterRecord } from '@/graphql/generated';
-import { queryDatoCMS } from '@/utils/query-dato-cms';
-import { getAllProducts, getProductBySlug } from '@/utils/shop';
+import { JsonLd } from '@/components/seo/json-ld';
+import { getHeaderFooter } from '@/utils/get-header-footer';
+import { getAllProductSlugs, getProductBySlug } from '@/utils/shop';
+import { buildProductJsonLd, buildProductMetadata } from '@/utils/shop-seo';
 import { Metadata } from 'next';
 import { draftMode } from 'next/headers';
 
-export const revalidate = 60;
+export const revalidate = 3600;
 
 type Props = {
   params: Promise<{
@@ -18,55 +19,50 @@ type Props = {
   }>;
 };
 
-export async function generateStaticParams() {
-  const allProducts = await getAllProducts();
+export const generateStaticParams = async (): Promise<{ slug: string }[]> => {
+  const slugs = await getAllProductSlugs();
 
-  return allProducts.map((product) => ({
-    slug: product.slug,
-  }));
-}
+  return slugs.map((slug) => ({ slug }));
+};
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export const generateMetadata = async ({ params }: Props): Promise<Metadata> => {
   const { slug } = await params;
   const product = await getProductBySlug(slug);
 
-  return {
-    title: product?.name ?? 'Produkt',
-    description: product?.description ?? 'Beschreibung',
-  };
-}
+  if (!product) {
+    return { title: 'Produkt nicht gefunden' };
+  }
 
-export default async function ProductPage({ params }: Props) {
+  return buildProductMetadata(product);
+};
+
+export default async function ShopProductPage({ params }: Props) {
   const { slug } = await params;
   const { isEnabled } = await draftMode();
   const product = await getProductBySlug(slug);
-  // const bestsellers = await getBestsellers();
 
   if (!product) {
     return <NotFound />;
   }
 
-  const { headerFooter } = await queryDatoCMS({
-    document: HeaderFooterDocument,
-    includeDrafts: isEnabled,
-  });
+  const headerFooter = await getHeaderFooter(isEnabled);
 
   return (
     <main>
-      <Header headerFooter={headerFooter as HeaderFooterRecord} />
+      <JsonLd data={buildProductJsonLd(product)} />
+      <Header headerFooter={headerFooter} />
       <ContentWrapper>
         <div className="mb-32">
           <Breadcrumbs
             customBreadcrumbs={[
               { name: 'Shop', href: '/shop' },
-              { name: product.name ?? 'Prodikt', href: `/shop/produkte/${slug}` },
+              { name: product.name, href: `/shop/produkte/${slug}` },
             ]}
           />
         </div>
         <ProductDetail product={product} />
-        {/* {bestsellers && bestsellers?.length > 0 && <Bestsellers bestsellers={bestsellers} />} */}
       </ContentWrapper>
-      <Footer headerFooter={headerFooter as HeaderFooterRecord} />
+      <Footer headerFooter={headerFooter} />
     </main>
   );
 }

@@ -1,0 +1,8 @@
+fragment shopFileImage on FileField {
+  url
+  alt
+  title
+  responsiveImage(imgixParams: { w: 1000, q: 75, auto: format }) {
+    ...responsiveImageFragment
+  }
+}

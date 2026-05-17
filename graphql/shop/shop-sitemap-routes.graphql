@@ -1,0 +1,15 @@
+query ShopSitemapRoutes {
+  meta: _allShopProductsMeta(filter: { active: { eq: true } }) {
+    count
+  }
+  allShopProducts(filter: { active: { eq: true } }, first: 500, orderBy: _updatedAt_DESC) {
+    slug
+    _updatedAt
+    seoNoindex
+  }
+  allShopCategories(first: 100, orderBy: _updatedAt_DESC) {
+    slug
+    _updatedAt
+    seoNoindex
+  }
+}

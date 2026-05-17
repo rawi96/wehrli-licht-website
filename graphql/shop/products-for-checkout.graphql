@@ -1,0 +1,20 @@
+query ShopProductsForCheckout($ids: [ItemId!]!) {
+  allShopProducts(filter: { id: { in: $ids }, active: { eq: true } }, first: 100) {
+    id
+    name
+    slug
+    price
+    deliveryTime
+    shippingCost
+    images {
+      url
+    }
+    variants {
+      price
+      selections {
+        option
+        value
+      }
+    }
+  }
+}
