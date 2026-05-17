@@ -1,5 +1,6 @@
 import { getAllDatoRoutes } from '@/utils/get-dato-routes';
 import { getAllShopRoutes } from '@/utils/get-shop-routes';
+import { getSiteUrl } from '@/utils/site-url';
 import { MetadataRoute } from 'next';
 
 export default async function robots(): Promise<MetadataRoute.Robots> {
@@ -14,6 +15,6 @@ export default async function robots(): Promise<MetadataRoute.Robots> {
       allow: '/',
       disallow: routes.filter(({ noIndex }) => noIndex).map(({ path }) => path),
     },
-    sitemap: `https://wehrli-licht.ch/sitemap.xml`,
+    sitemap: `${getSiteUrl()}/sitemap.xml`,
   };
 }

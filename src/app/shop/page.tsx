@@ -8,7 +8,7 @@ import { HeaderFooterDocument, HeaderFooterRecord } from '@/graphql/generated';
 import { getAllCategories } from '@/utils/shop';
 import { queryDatoCMS } from '@/utils/query-dato-cms';
 import { JsonLd } from '@/components/seo/json-ld';
-import { buildShopOrganizationJsonLd, shopIndexMetadata } from '@/utils/shop-seo';
+import { buildShopIndexJsonLd, shopIndexMetadata } from '@/utils/shop-seo';
 import { draftMode } from 'next/headers';
 
 export const revalidate = 3600;
@@ -26,7 +26,7 @@ export default async function ShopPage() {
 
   return (
     <main>
-      <JsonLd data={buildShopOrganizationJsonLd()} />
+      <JsonLd data={buildShopIndexJsonLd(categories)} />
       <Header headerFooter={headerFooter as HeaderFooterRecord} />
       <ContentWrapper>
         <div className="mb-20">

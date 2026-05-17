@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { PageRecord } from '@/graphql/generated';
 import { classNames } from '@/utils/css';
+import { getSiteUrl } from '@/utils/site-url';
 import { ChevronRightIcon } from '@heroicons/react/20/solid';
 
 type BreadcrumbItem = {
@@ -86,7 +87,7 @@ const useBreadcrumbs = (page?: PageRecord | null): BreadcrumbItem[] => {
 };
 
 const useRichSnippet = (breadcrumbs: BreadcrumbItem[]) => {
-  const baseUrl = 'https://wehrli-licht.ch';
+  const baseUrl = getSiteUrl();
 
   return {
     '@context': 'https://schema.org',

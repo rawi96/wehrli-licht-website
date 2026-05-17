@@ -1,16 +1,39 @@
-import { buildProductDescription, getProductOfferPrice, primaryCategory } from '@/utils/shop-seo/copy';
-import type { ProductForSeo } from '@/utils/shop-seo/types';
+import {
+  buildCategoryDescription,
+  buildProductDescription,
+  getProductOfferPrice,
+  primaryCategory,
+} from '@/utils/shop-seo/copy';
+import type { CategoryForSeo, ProductForSeo, ProductListItemForSeo } from '@/utils/shop-seo/types';
 import { getSiteUrl } from '@/utils/site-url';
 
 const SITE_NAME = 'Wehrli Licht GmbH';
 const DEFAULT_DESCRIPTION =
   'Wehrli Licht GmbH – Lichtberatung, Lichtplanung und hochwertige Leuchten in Goldach. Massgefertigte Lampenschirme und individuelle Lichtlösungen.';
 
-const productOgImage = (product: ProductForSeo): string | undefined => {
+const productOgImage = (product: Pick<ProductForSeo, 'images'>): string | undefined => {
   const image = product.images[0];
 
   return image?.responsiveImage?.src ?? image?.url ?? undefined;
 };
+
+const categoryOgImage = (category: CategoryForSeo): string | undefined => {
+  const image = category.image;
+
+  return image?.responsiveImage?.src ?? image?.url ?? undefined;
+};
+
+const shopOrganizationNode = () => ({
+  '@type': 'LightingStore',
+  name: SITE_NAME,
+  url: getSiteUrl(),
+  description: DEFAULT_DESCRIPTION,
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Goldach',
+    addressCountry: 'CH',
+  },
+});
 
 export const buildProductJsonLd = (product: ProductForSeo): Record<string, unknown> => {
   const url = `${getSiteUrl()}/shop/produkte/${product.slug}`;
@@ -25,6 +48,7 @@ export const buildProductJsonLd = (product: ProductForSeo): Record<string, unkno
         '@type': 'Product',
         name: product.name,
         description: buildProductDescription(product),
+        url,
         sku: product.slug,
         mpn: product.slug,
         brand: {
@@ -55,13 +79,87 @@ export const buildProductJsonLd = (product: ProductForSeo): Record<string, unkno
 
 export const buildShopOrganizationJsonLd = (): Record<string, unknown> => ({
   '@context': 'https://schema.org',
-  '@type': 'LightingStore',
-  name: SITE_NAME,
-  url: getSiteUrl(),
-  description: DEFAULT_DESCRIPTION,
-  address: {
-    '@type': 'PostalAddress',
-    addressLocality: 'Goldach',
-    addressCountry: 'CH',
-  },
+  ...shopOrganizationNode(),
 });
+
+export const buildCategoryJsonLd = (
+  category: CategoryForSeo,
+  products: ProductListItemForSeo[],
+): Record<string, unknown> => {
+  const url = `${getSiteUrl()}/shop/kategorien/${category.slug}`;
+  const image = categoryOgImage(category);
+
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'CollectionPage',
+        name: category.name,
+        description: buildCategoryDescription(category),
+        url,
+        ...(image ? { image: [image] } : {}),
+        isPartOf: {
+          '@type': 'WebSite',
+          name: SITE_NAME,
+          url: getSiteUrl(),
+        },
+      },
+      {
+        '@type': 'ItemList',
+        name: `${category.name} – Produkte`,
+        numberOfItems: products.length,
+        itemListElement: products.map((product, index) => {
+          const productUrl = `${getSiteUrl()}/shop/produkte/${product.slug}`;
+          const productImage = productOgImage(product);
+
+          return {
+            '@type': 'ListItem',
+            position: index + 1,
+            name: product.name,
+            url: productUrl,
+            item: {
+              '@type': 'Product',
+              name: product.name,
+              url: productUrl,
+              ...(productImage ? { image: [productImage] } : {}),
+            },
+          };
+        }),
+      },
+    ],
+  };
+};
+
+export const buildShopIndexJsonLd = (categories: Pick<CategoryForSeo, 'name' | 'slug'>[]): Record<string, unknown> => {
+  const url = `${getSiteUrl()}/shop`;
+
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      shopOrganizationNode(),
+      {
+        '@type': 'CollectionPage',
+        name: 'Shop – Leuchten & Lampen',
+        description:
+          'Entdecken Sie Pendel-, Decken-, Wand- und Tischleuchten im Online-Shop von Wehrli Licht. Lichtberatung und Lieferung in der Schweiz.',
+        url,
+        isPartOf: {
+          '@type': 'WebSite',
+          name: SITE_NAME,
+          url: getSiteUrl(),
+        },
+      },
+      {
+        '@type': 'ItemList',
+        name: 'Leuchten-Kategorien',
+        numberOfItems: categories.length,
+        itemListElement: categories.map((category, index) => ({
+          '@type': 'ListItem',
+          position: index + 1,
+          name: category.name,
+          url: `${getSiteUrl()}/shop/kategorien/${category.slug}`,
+        })),
+      },
+    ],
+  };
+};

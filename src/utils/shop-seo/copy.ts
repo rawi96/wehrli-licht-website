@@ -1,5 +1,5 @@
 import type { CategoryForSeo, ProductForSeo } from '@/utils/shop-seo/types';
-import { truncateText } from '@/utils/text';
+import { stripHtml, truncateText } from '@/utils/text';
 
 const plainTextFromStructured = (value: unknown): string => {
   if (!value || typeof value !== 'object') {
@@ -99,8 +99,9 @@ export const buildCategoryDescription = (category: CategoryForSeo): string => {
   }
 
   const trimmedDescription = category.description?.trim();
+  const plainDescription = trimmedDescription ? stripHtml(trimmedDescription) : '';
   const defaultDescription = `${category.name} entdecken bei Wehrli Licht: Pendel-, Decken-, Wand- und Tischleuchten. Lichtberatung in Goldach.`;
-  const fallback = trimmedDescription?.length ? trimmedDescription : defaultDescription;
+  const fallback = plainDescription.length ? plainDescription : defaultDescription;
 
   return truncateText(fallback, 160);
 };

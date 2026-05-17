@@ -23,3 +23,5 @@ export type CategoryForSeo = Pick<
   ShopCategory,
   'name' | 'slug' | 'seoTitle' | 'seoDescription' | 'seoNoindex' | 'description' | 'image'
 >;
+
+export type ProductListItemForSeo = Pick<ShopProduct, 'name' | 'slug' | 'images'>;

@@ -7,7 +7,8 @@ import NotFound from '@/components/not-found';
 import { AllProductsForCategory } from '@/components/shop/all-products-for-category';
 import { getHeaderFooter } from '@/utils/get-header-footer';
 import { getAllCategorySlugs, getCategoryBySlug, getProductsByCategory } from '@/utils/shop';
-import { buildCategoryMetadata } from '@/utils/shop-seo';
+import { JsonLd } from '@/components/seo/json-ld';
+import { buildCategoryJsonLd, buildCategoryMetadata } from '@/utils/shop-seo';
 import { Metadata } from 'next';
 import { draftMode } from 'next/headers';
 
@@ -51,6 +52,7 @@ export default async function ShopCategoryPage({ params }: Props) {
 
   return (
     <main>
+      <JsonLd data={buildCategoryJsonLd(category, products)} />
       <Header headerFooter={headerFooter} />
       <ContentWrapper>
         <div className="mb-20">
@@ -61,11 +63,20 @@ export default async function ShopCategoryPage({ params }: Props) {
             ]}
           />
         </div>
-        <Heading level="1">{category.name}</Heading>
-        {category.description && (
-          <p className="text-sm lg:text-base" dangerouslySetInnerHTML={{ __html: category.description }} />
+        <header className="mb-8 max-w-3xl">
+          <Heading level="1">{category.name}</Heading>
+          {category.description && (
+            <p className="mt-4 text-sm lg:text-base" dangerouslySetInnerHTML={{ __html: category.description }} />
+          )}
+        </header>
+        {products.length > 0 && (
+          <section aria-labelledby="category-products-heading">
+            <h2 id="category-products-heading" className="sr-only">
+              {products.length === 1 ? '1 Produkt' : `${products.length} Produkte`} in {category.name}
+            </h2>
+            <AllProductsForCategory products={products} />
+          </section>
         )}
-        {products.length > 0 && <AllProductsForCategory products={products} />}
       </ContentWrapper>
       <Footer headerFooter={headerFooter} />
     </main>

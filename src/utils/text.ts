@@ -1,3 +1,9 @@
+export const stripHtml = (html: string): string =>
+  html
+    .replace(/<[^>]*>/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+
 export const truncateText = (text: string, max: number): string => {
   const normalized = text.replace(/\s+/g, ' ').trim();
   if (normalized.length <= max) {
