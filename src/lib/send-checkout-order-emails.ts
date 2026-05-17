@@ -1,4 +1,4 @@
-import { buildCustomerOrderEmail, buildShopOrderEmail } from '@/lib/checkout-order-email-templates';
+import { buildCustomerOrderEmail, buildShopOrderEmail } from '@/lib/checkout-order-email';
 import { logCheckoutEmailFailure } from '@/lib/checkout-email-log';
 import { getResendConfig } from '@/lib/resend';
 import { CheckoutOrderEmailData } from '@/types/checkout-order-email';
@@ -9,16 +9,14 @@ export type SendCheckoutEmailsResult = {
   message?: string;
 };
 
-export function isCheckoutEmailDelivered(result: SendCheckoutEmailsResult): boolean {
-  return result.ok && !result.skipped;
-}
+export const isCheckoutEmailDelivered = (result: SendCheckoutEmailsResult): boolean => result.ok && !result.skipped;
 
-export async function sendCheckoutOrderEmails(order: CheckoutOrderEmailData): Promise<SendCheckoutEmailsResult> {
+export const sendCheckoutOrderEmails = async (order: CheckoutOrderEmailData): Promise<SendCheckoutEmailsResult> => {
   const config = getResendConfig();
 
   if (!config) {
     const technicalError =
-      'E-Mail-Versand nicht konfiguriert (RESEND_API_KEY, RESEND_FROM_EMAIL, SHOP_ORDER_NOTIFICATION_EMAIL)';
+      'E-Mail-Versand nicht konfiguriert (RESEND_API_KEY, RESEND_FROM_EMAIL, SHOP_ORDER_NOTIFICATION_EMAIL[_2])';
 
     logCheckoutEmailFailure('sendCheckoutOrderEmails', technicalError, order);
 
@@ -46,7 +44,7 @@ export async function sendCheckoutOrderEmails(order: CheckoutOrderEmailData): Pr
       }),
       config.client.emails.send({
         from: config.from,
-        to: config.shopNotificationEmail,
+        to: config.shopNotificationEmails,
         replyTo: order.customer.email,
         subject: shopEmail.subject,
         html: shopEmail.html,
@@ -77,4 +75,4 @@ export async function sendCheckoutOrderEmails(order: CheckoutOrderEmailData): Pr
 
     return { ok: false, message };
   }
-}
+};

@@ -5,7 +5,7 @@ import type Stripe from 'stripe';
 
 export const runtime = 'nodejs';
 
-export async function POST(req: NextRequest): Promise<NextResponse> {
+export const POST = async (req: NextRequest): Promise<NextResponse> => {
   const signature = req.headers.get('stripe-signature');
 
   if (!signature) {
@@ -43,4 +43,4 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 
     return NextResponse.json({ error: message }, { status: 500 });
   }
-}
+};

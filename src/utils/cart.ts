@@ -35,7 +35,7 @@ export const emptyCart = (): Cart => ({
   grand_total: 0,
 });
 
-export function getVariantKey(selections: CartSelection[]): string {
+export const getVariantKey = (selections: CartSelection[]): string => {
   if (selections.length === 0) {
     return '';
   }
@@ -44,13 +44,12 @@ export function getVariantKey(selections: CartSelection[]): string {
     .sort((a, b) => a.option.localeCompare(b.option))
     .map((selection) => `${selection.option}:${selection.value}`)
     .join('|');
-}
+};
 
-export function createLineItemId(productId: string, variantKey: string): string {
-  return variantKey ? `${productId}::${variantKey}` : productId;
-}
+export const createLineItemId = (productId: string, variantKey: string): string =>
+  variantKey ? `${productId}::${variantKey}` : productId;
 
-function computeTotals(items: CartItem[]): Pick<Cart, 'item_quantity' | 'sub_total' | 'shipment_price' | 'grand_total'> {
+const computeTotals = (items: CartItem[]): Pick<Cart, 'item_quantity' | 'sub_total' | 'shipment_price' | 'grand_total'> => {
   const item_quantity = items.reduce((sum, item) => sum + item.quantity, 0);
   const sub_total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
   const shipment_price = 0;
@@ -61,16 +60,14 @@ function computeTotals(items: CartItem[]): Pick<Cart, 'item_quantity' | 'sub_tot
     shipment_price,
     grand_total: sub_total + shipment_price,
   };
-}
+};
 
-export function withComputedTotals(items: CartItem[]): Cart {
-  return {
-    items,
-    ...computeTotals(items),
-  };
-}
+export const withComputedTotals = (items: CartItem[]): Cart => ({
+  items,
+  ...computeTotals(items),
+});
 
-export function loadCartFromStorage(): Cart {
+export const loadCartFromStorage = (): Cart => {
   if (typeof window === 'undefined') {
     return emptyCart();
   }
@@ -93,19 +90,19 @@ export function loadCartFromStorage(): Cart {
   } catch {
     return emptyCart();
   }
-}
+};
 
-export function saveCartToStorage(cart: Cart): void {
+export const saveCartToStorage = (cart: Cart): void => {
   if (typeof window === 'undefined') {
     return;
   }
 
   localStorage.setItem(STORAGE_KEY, JSON.stringify(cart));
-}
+};
 
 type ProductVariant = ShopProduct['variants'][number];
 
-export function buildCartItemFromProduct(product: ShopProduct, variant: ProductVariant | null): CartItem | null {
+export const buildCartItemFromProduct = (product: ShopProduct, variant: ProductVariant | null): CartItem | null => {
   if (product.variants.length > 0 && !variant) {
     return null;
   }
@@ -132,9 +129,9 @@ export function buildCartItemFromProduct(product: ShopProduct, variant: ProductV
     quantity: 1,
     selections: selections && selections.length > 0 ? selections : undefined,
   };
-}
+};
 
-export function addItemToCart(cart: Cart, item: CartItem): Cart {
+export const addItemToCart = (cart: Cart, item: CartItem): Cart => {
   const existing = cart.items.find((line) => line.id === item.id);
 
   if (existing) {
@@ -146,18 +143,18 @@ export function addItemToCart(cart: Cart, item: CartItem): Cart {
   }
 
   return withComputedTotals([...cart.items, item]);
-}
+};
 
-export function updateCartItemQuantity(cart: Cart, lineId: string, quantity: number): Cart {
+export const updateCartItemQuantity = (cart: Cart, lineId: string, quantity: number): Cart => {
   const items = cart.items
     .map((line) => (line.id === lineId ? { ...line, quantity } : line))
     .filter((line) => line.quantity > 0);
 
   return withComputedTotals(items);
-}
+};
 
-export function removeCartItem(cart: Cart, lineId: string): Cart {
+export const removeCartItem = (cart: Cart, lineId: string): Cart => {
   const items = cart.items.filter((line) => line.id !== lineId);
 
   return withComputedTotals(items);
-}
+};

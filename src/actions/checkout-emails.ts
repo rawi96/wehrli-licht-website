@@ -7,10 +7,8 @@ import { SignedCheckoutOrder } from '@/types/checkout';
 
 export type CheckoutEmailResult = SendCheckoutEmailsResult;
 
-export async function sendManualCheckoutOrderEmails(order: SignedCheckoutOrder): Promise<CheckoutEmailResult> {
-  return sendCheckoutOrderEmails(orderEmailDataFromSignedOrder(order));
-}
+export const sendManualCheckoutOrderEmails = async (order: SignedCheckoutOrder): Promise<CheckoutEmailResult> =>
+  sendCheckoutOrderEmails(orderEmailDataFromSignedOrder(order));
 
-export async function sendStripeCheckoutOrderEmails(sessionId: string): Promise<CheckoutEmailResult> {
-  return sendStripeCheckoutEmails(sessionId);
-}
+export const sendStripeCheckoutOrderEmails = async (sessionId: string): Promise<CheckoutEmailResult> =>
+  sendStripeCheckoutEmails(sessionId);

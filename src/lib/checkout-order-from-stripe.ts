@@ -1,14 +1,12 @@
 import { getStripe } from '@/lib/stripe';
 import { CheckoutOrderEmailData } from '@/types/checkout-order-email';
-import { CheckoutCustomer, CheckoutOrderItem, CheckoutShippingMethod } from '@/types/checkout';
+import { CheckoutCustomer, CheckoutOrderItem, CheckoutShippingAddress, CheckoutShippingMethod } from '@/types/checkout';
 
 const SHIPPING_LINE_NAME = 'Versand per Post';
 
-function parseShippingMethod(value: string | undefined): CheckoutShippingMethod {
-  return value === 'post' ? 'post' : 'pickup';
-}
+const parseShippingMethod = (value: string | undefined): CheckoutShippingMethod => (value === 'post' ? 'post' : 'pickup');
 
-function parseCustomerName(fullName: string): Pick<CheckoutCustomer, 'firstName' | 'lastName'> {
+const parseCustomerName = (fullName: string): Pick<CheckoutCustomer, 'firstName' | 'lastName'> => {
   const parts = fullName.trim().split(/\s+/);
 
   if (parts.length === 0) {
@@ -23,9 +21,9 @@ function parseCustomerName(fullName: string): Pick<CheckoutCustomer, 'firstName'
     firstName: parts[0],
     lastName: parts.slice(1).join(' '),
   };
-}
+};
 
-function parseShippingAddress(metadataAddress: string | undefined) {
+const parseShippingAddress = (metadataAddress: string | undefined): CheckoutShippingAddress | undefined => {
   if (!metadataAddress) {
     return undefined;
   }
@@ -40,11 +38,11 @@ function parseShippingAddress(metadataAddress: string | undefined) {
     street: match[1].trim(),
     postalCode: match[2],
     city: match[3].trim(),
-    country: 'CH' as const,
+    country: 'CH',
   };
-}
+};
 
-export async function loadCheckoutOrderEmailDataFromStripe(sessionId: string): Promise<CheckoutOrderEmailData | null> {
+export const loadCheckoutOrderEmailDataFromStripe = async (sessionId: string): Promise<CheckoutOrderEmailData | null> => {
   const stripe = getStripe();
   const session = await stripe.checkout.sessions.retrieve(sessionId);
 
@@ -119,4 +117,4 @@ export async function loadCheckoutOrderEmailDataFromStripe(sessionId: string): P
           })
         : undefined,
   };
-}
+};

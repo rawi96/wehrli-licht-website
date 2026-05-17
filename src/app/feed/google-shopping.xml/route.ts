@@ -1,8 +1,8 @@
-import { buildGoogleShoppingFeedXml, getAllGoogleShoppingFeedItems } from '@/utils/google-shopping-feed';
+import { buildGoogleShoppingFeedXml, getAllGoogleShoppingFeedItems } from '@/utils/google-shopping';
 
 export const revalidate = 3600;
 
-export async function GET() {
+export const GET = async (): Promise<Response> => {
   const items = await getAllGoogleShoppingFeedItems();
   const xml = buildGoogleShoppingFeedXml(items);
 
@@ -12,4 +12,4 @@ export async function GET() {
       'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400',
     },
   });
-}
+};

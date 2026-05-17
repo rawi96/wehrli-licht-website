@@ -5,7 +5,6 @@ type DatoEntity = {
   attributes?: Record<string, unknown>;
 };
 
-/** Custom Mustache payload (existing CMS pages) or native DatoCMS webhook body. */
 export type DatoWebhookPayload = {
   event_type?: string;
   entity_slug?: string;
@@ -16,13 +15,13 @@ export type DatoWebhookPayload = {
   related_entities?: DatoEntity[];
 };
 
-function getSlugFromEntity(entity?: DatoEntity): string | null {
+const getSlugFromEntity = (entity?: DatoEntity): string | null => {
   const slug = entity?.attributes?.slug;
 
   return typeof slug === 'string' && slug.length > 0 ? slug : null;
-}
+};
 
-function getModelApiKey(payload: DatoWebhookPayload): string | null {
+const getModelApiKey = (payload: DatoWebhookPayload): string | null => {
   if (payload.item_type) {
     return payload.item_type;
   }
@@ -31,18 +30,18 @@ function getModelApiKey(payload: DatoWebhookPayload): string | null {
   const apiKey = itemType?.attributes?.api_key;
 
   return typeof apiKey === 'string' ? apiKey : null;
-}
+};
 
-function revalidateShopIndexAndFeeds(paths: string[]): void {
+const revalidateShopIndexAndFeeds = (paths: string[]): void => {
   const sharedPaths = ['/shop', '/sitemap.xml', '/robots.txt', '/feed/google-shopping.xml'] as const;
 
   for (const path of sharedPaths) {
     revalidatePath(path);
     paths.push(path);
   }
-}
+};
 
-function revalidatePage(slug: string, paths: string[]): void {
+const revalidatePage = (slug: string, paths: string[]): void => {
   if (slug === 'home') {
     revalidatePath('/');
     paths.push('/');
@@ -53,24 +52,23 @@ function revalidatePage(slug: string, paths: string[]): void {
   const path = `/${slug}`;
   revalidatePath(path);
   paths.push(path);
-}
+};
 
-function revalidateProductSlug(slug: string, paths: string[]): void {
+const revalidateProductSlug = (slug: string, paths: string[]): void => {
   const path = `/shop/produkte/${slug}`;
   revalidatePath(path);
   paths.push(path);
   revalidateShopIndexAndFeeds(paths);
-}
+};
 
-function revalidateCategorySlug(slug: string, paths: string[]): void {
+const revalidateCategorySlug = (slug: string, paths: string[]): void => {
   const path = `/shop/kategorien/${slug}`;
   revalidatePath(path);
   paths.push(path);
   revalidateShopIndexAndFeeds(paths);
-}
+};
 
-/** Revalidates paths affected by a DatoCMS webhook. Returns list of invalidated paths. */
-export function revalidateFromDatoWebhook(payload: DatoWebhookPayload): string[] {
+export const revalidateFromDatoWebhook = (payload: DatoWebhookPayload): string[] => {
   const model = getModelApiKey(payload);
   const paths: string[] = [];
 
@@ -120,4 +118,4 @@ export function revalidateFromDatoWebhook(payload: DatoWebhookPayload): string[]
   }
 
   return [...new Set(paths)];
-}
+};

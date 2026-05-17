@@ -14,7 +14,7 @@ type Props = {
   setActiveVariant: (variant: ProductVariant | null) => void;
 };
 
-function getOptionGroups(variants: ProductVariant[]) {
+const getOptionGroups = (variants: ProductVariant[]): { option: string; values: string[] }[] => {
   const groups = new Map<string, Set<string>>();
 
   for (const variant of variants) {
@@ -29,15 +29,15 @@ function getOptionGroups(variants: ProductVariant[]) {
     option,
     values: [...values],
   }));
-}
+};
 
-function findMatchingVariant(variants: ProductVariant[], selectedOptions: SelectedOptions) {
+const findMatchingVariant = (variants: ProductVariant[], selectedOptions: SelectedOptions): ProductVariant | null => {
   return (
     variants.find((variant) =>
       variant.selections.every((selection) => selectedOptions[selection.option] === selection.value),
     ) ?? null
   );
-}
+};
 
 export const ProductVariationSelector = ({ product, setActiveVariant }: Props) => {
   const optionGroups = useMemo(() => getOptionGroups(product.variants), [product.variants]);

@@ -1,11 +1,11 @@
 import { CheckoutOrderEmailData } from '@/types/checkout-order-email';
 
-export function logCheckoutEmailFailure(
+export const logCheckoutEmailFailure = (
   context: string,
   technicalError: string | undefined,
   order: Pick<CheckoutOrderEmailData, 'orderId' | 'customer' | 'paymentMethod'>,
   extra?: Record<string, unknown>,
-): void {
+): void => {
   console.error('[checkout-email]', {
     context,
     technicalError: technicalError ?? 'Unbekannter Fehler',
@@ -14,4 +14,4 @@ export function logCheckoutEmailFailure(
     paymentMethod: order.paymentMethod,
     ...extra,
   });
-}
+};

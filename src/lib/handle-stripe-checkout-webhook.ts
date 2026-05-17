@@ -7,7 +7,7 @@ export const SHOP_CHECKOUT_SOURCE = 'shop';
 
 export type StripeCheckoutWebhookResult = { status: 'ignored' } | { status: 'sent' } | { status: 'failed'; message: string };
 
-export async function handleStripeCheckoutWebhookEvent(event: Stripe.Event): Promise<StripeCheckoutWebhookResult> {
+export const handleStripeCheckoutWebhookEvent = async (event: Stripe.Event): Promise<StripeCheckoutWebhookResult> => {
   if (event.type !== 'checkout.session.completed') {
     return { status: 'ignored' };
   }
@@ -49,4 +49,4 @@ export async function handleStripeCheckoutWebhookEvent(event: Stripe.Event): Pro
   }
 
   return { status: 'sent' };
-}
+};

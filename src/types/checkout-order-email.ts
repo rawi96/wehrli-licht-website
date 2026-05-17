@@ -21,22 +21,18 @@ export type CheckoutOrderEmailData = {
   shippingAddress?: CheckoutShippingAddress;
 };
 
-export function orderEmailDataFromSignedOrder(order: SignedCheckoutOrder): CheckoutOrderEmailData {
-  return {
-    orderId: order.orderId,
-    customer: order.customer,
-    shipping: order.shipping,
-    paymentMethod: order.paymentMethod,
-    items: order.items,
-    subTotalChf: order.subTotalChf,
-    shippingCostChf: order.shippingCostChf,
-    grandTotalChf: order.grandTotalChf,
-    deliveryTimeSummary: order.deliveryTimeSummary,
-    comment: order.comment,
-    shippingAddress: order.shippingAddress,
-  };
-}
+export const orderEmailDataFromSignedOrder = (order: SignedCheckoutOrder): CheckoutOrderEmailData => ({
+  orderId: order.orderId,
+  customer: order.customer,
+  shipping: order.shipping,
+  paymentMethod: order.paymentMethod,
+  items: order.items,
+  subTotalChf: order.subTotalChf,
+  shippingCostChf: order.shippingCostChf,
+  grandTotalChf: order.grandTotalChf,
+  deliveryTimeSummary: order.deliveryTimeSummary,
+  comment: order.comment,
+  shippingAddress: order.shippingAddress,
+});
 
-export function formatOrderReference(orderId: string): string {
-  return orderId.slice(0, 8).toUpperCase();
-}
+export const formatOrderReference = (orderId: string): string => orderId.slice(0, 8).toUpperCase();

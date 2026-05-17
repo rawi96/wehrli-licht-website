@@ -11,7 +11,7 @@ type Variables = {
   skip?: number;
 };
 
-type Options<TResult = unknown> = {
+type QueryDatoCmsOptions<TResult> = {
   document: TypedDocumentNode<TResult, Variables>;
   variables?: Variables;
   includeDrafts?: boolean;
@@ -24,13 +24,12 @@ const INITIAL_RETRY_MS = 750;
 let inFlight = 0;
 const waitQueue: (() => void)[] = [];
 
-function sleep(ms: number): Promise<void> {
-  return new Promise((resolve) => {
+const sleep = (ms: number): Promise<void> =>
+  new Promise((resolve) => {
     setTimeout(resolve, ms);
   });
-}
 
-function acquireSlot(): Promise<void> {
+const acquireSlot = (): Promise<void> => {
   if (inFlight < MAX_CONCURRENT_REQUESTS) {
     inFlight += 1;
 
@@ -43,18 +42,18 @@ function acquireSlot(): Promise<void> {
       resolve();
     });
   });
-}
+};
 
-function releaseSlot(): void {
+const releaseSlot = (): void => {
   inFlight -= 1;
   const next = waitQueue.shift();
 
   if (next) {
     next();
   }
-}
+};
 
-function retryDelayMs(response: Response, attempt: number): number {
+const retryDelayMs = (response: Response, attempt: number): number => {
   const retryAfterHeader = response.headers.get('Retry-After');
   const retryAfterSeconds = retryAfterHeader ? Number(retryAfterHeader) : Number.NaN;
 
@@ -63,9 +62,9 @@ function retryDelayMs(response: Response, attempt: number): number {
   }
 
   return Math.min(INITIAL_RETRY_MS * 2 ** attempt, 15_000);
-}
+};
 
-async function fetchDatoCMS(body: string, headers: Record<string, string>, includeDrafts: boolean): Promise<Response> {
+const fetchDatoCMS = async (body: string, headers: Record<string, string>, includeDrafts: boolean): Promise<Response> => {
   await acquireSlot();
 
   try {
@@ -98,13 +97,13 @@ async function fetchDatoCMS(body: string, headers: Record<string, string>, inclu
   } finally {
     releaseSlot();
   }
-}
+};
 
-export async function queryDatoCMS<TResult = unknown>({
+export const queryDatoCMS = async <TResult = unknown>({
   document,
   variables,
   includeDrafts,
-}: Options<TResult>): Promise<TResult> {
+}: QueryDatoCmsOptions<TResult>): Promise<TResult> => {
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
     Accept: 'application/json',
@@ -125,4 +124,4 @@ export async function queryDatoCMS<TResult = unknown>({
   const { data } = (await response.json()) as { data: TResult };
 
   return data;
-}
+};

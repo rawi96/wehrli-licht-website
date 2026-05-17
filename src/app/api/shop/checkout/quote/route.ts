@@ -13,7 +13,7 @@ type QuoteRequestBody = {
   shipping?: CheckoutShippingMethod;
 };
 
-export async function POST(req: NextRequest): Promise<NextResponse> {
+export const POST = async (req: NextRequest): Promise<NextResponse> => {
   try {
     const body = (await req.json()) as QuoteRequestBody;
 
@@ -47,4 +47,4 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 
     return NextResponse.json({ error: message }, { status: 400 });
   }
-}
+};

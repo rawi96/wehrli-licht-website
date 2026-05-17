@@ -2,7 +2,7 @@ import Stripe from 'stripe';
 
 let stripeClient: Stripe | null = null;
 
-export function getStripe(): Stripe {
+export const getStripe = (): Stripe => {
   const secretKey = process.env.STRIPE_SECRET_KEY;
 
   if (!secretKey) {
@@ -12,9 +12,9 @@ export function getStripe(): Stripe {
   stripeClient ??= new Stripe(secretKey);
 
   return stripeClient;
-}
+};
 
-export function getStripeWebhookSecret(): string {
+export const getStripeWebhookSecret = (): string => {
   const secret = process.env.STRIPE_WEBHOOK_SECRET;
 
   if (!secret) {
@@ -22,4 +22,4 @@ export function getStripeWebhookSecret(): string {
   }
 
   return secret;
-}
+};

@@ -1,7 +1,7 @@
 import { loadCheckoutOrderEmailDataFromStripe } from '@/lib/checkout-order-from-stripe';
 import { sendCheckoutOrderEmails, SendCheckoutEmailsResult } from '@/lib/send-checkout-order-emails';
 
-export async function sendStripeCheckoutOrderEmails(sessionId: string): Promise<SendCheckoutEmailsResult> {
+export const sendStripeCheckoutOrderEmails = async (sessionId: string): Promise<SendCheckoutEmailsResult> => {
   try {
     const order = await loadCheckoutOrderEmailDataFromStripe(sessionId);
 
@@ -17,4 +17,4 @@ export async function sendStripeCheckoutOrderEmails(sessionId: string): Promise<
 
     return { ok: false, message };
   }
-}
+};

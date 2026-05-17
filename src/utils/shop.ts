@@ -23,7 +23,7 @@ export type ShopSitemapRoute = {
   noIndex: boolean;
 };
 
-async function fetchAllSlugs(queryFn: (skip: number) => Promise<{ slugs: string[]; total: number }>): Promise<string[]> {
+const fetchAllSlugs = async (queryFn: (skip: number) => Promise<{ slugs: string[]; total: number }>): Promise<string[]> => {
   const pageSize = 100;
   const first = await queryFn(0);
   const slugs = [...first.slugs];
@@ -34,15 +34,15 @@ async function fetchAllSlugs(queryFn: (skip: number) => Promise<{ slugs: string[
   }
 
   return slugs;
-}
+};
 
-export async function getAllCategories(): Promise<ShopCategory[]> {
+export const getAllCategories = async (): Promise<ShopCategory[]> => {
   const { allShopCategories } = await queryDatoCMS({
     document: AllShopCategoriesDocument,
   });
 
   return allShopCategories;
-}
+};
 
 export const getCategoryBySlug = cache(async (slug: string): Promise<ShopCategory | null> => {
   const { shopCategory } = await queryDatoCMS({
@@ -71,7 +71,7 @@ export const getProductBySlug = cache(async (slug: string): Promise<ShopProduct 
   return shopProduct ?? null;
 });
 
-export async function getAllCategorySlugs(): Promise<string[]> {
+export const getAllCategorySlugs = async (): Promise<string[]> => {
   return fetchAllSlugs(async (skip) => {
     const { allShopCategories, meta } = await queryDatoCMS({
       document: AllShopCategorySlugsDocument,
@@ -83,9 +83,9 @@ export async function getAllCategorySlugs(): Promise<string[]> {
       total: meta.count,
     };
   });
-}
+};
 
-export async function getAllProductSlugs(): Promise<string[]> {
+export const getAllProductSlugs = async (): Promise<string[]> => {
   return fetchAllSlugs(async (skip) => {
     const { allShopProducts, meta } = await queryDatoCMS({
       document: AllShopProductSlugsDocument,
@@ -97,9 +97,9 @@ export async function getAllProductSlugs(): Promise<string[]> {
       total: meta.count,
     };
   });
-}
+};
 
-export async function getShopSitemapRoutes(): Promise<ShopSitemapRoute[]> {
+export const getShopSitemapRoutes = async (): Promise<ShopSitemapRoute[]> => {
   const { allShopProducts, allShopCategories } = await queryDatoCMS({
     document: ShopSitemapRoutesDocument,
   });
@@ -123,4 +123,4 @@ export async function getShopSitemapRoutes(): Promise<ShopSitemapRoute[]> {
   }));
 
   return [shopIndex, ...categories, ...products];
-}
+};

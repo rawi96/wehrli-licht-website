@@ -1,26 +1,19 @@
-import { STRIPE_CHECKOUT_PAYMENT_METHODS } from '@/constants/stripe-payment-methods';
-import { getStripe } from '@/lib/stripe';
+import { CHECKOUT_API_ERROR_CODE } from '@/constants/checkout-errors';
+import { logCheckoutEmailFailure } from '@/lib/checkout-email-log';
+import { createStripeCheckoutSessionWithFallback, buildStripeLineItems } from '@/lib/shop-checkout-stripe';
+import { isCheckoutEmailDelivered, sendCheckoutOrderEmails } from '@/lib/send-checkout-order-emails';
 import { CheckoutRequestBody, CheckoutShippingAddress } from '@/types/checkout';
+import { orderEmailDataFromSignedOrder } from '@/types/checkout-order-email';
 import { validateCheckoutCustomer } from '@/utils/checkout-customer';
 import { formatShippingAddress, validateShippingAddress } from '@/utils/checkout-shipping-address';
 import { signCheckoutOrder } from '@/utils/checkout-order-token';
-import {
-  chfToStripeAmount,
-  computeCheckoutTotals,
-  fetchCheckoutCommerceMeta,
-  verifyCheckoutCartItems,
-} from '@/utils/cart-checkout';
-import { CHECKOUT_API_ERROR_CODE } from '@/constants/checkout-errors';
-import { logCheckoutEmailFailure } from '@/lib/checkout-email-log';
-import { sendCheckoutOrderEmails, isCheckoutEmailDelivered } from '@/lib/send-checkout-order-emails';
-import { orderEmailDataFromSignedOrder } from '@/types/checkout-order-email';
+import { computeCheckoutTotals, fetchCheckoutCommerceMeta, verifyCheckoutCartItems } from '@/utils/cart-checkout';
 import { summarizeDeliveryTimes } from '@/utils/product-commerce';
 import { getSiteUrl } from '@/utils/site-url';
 import { randomUUID } from 'crypto';
 import { NextRequest, NextResponse } from 'next/server';
-import type Stripe from 'stripe';
 
-function validateCustomer(customer: CheckoutRequestBody['customer']): void {
+const assertValidCustomer = (customer: CheckoutRequestBody['customer']): void => {
   const error = validateCheckoutCustomer({
     firstName: customer.firstName,
     lastName: customer.lastName,
@@ -31,50 +24,9 @@ function validateCustomer(customer: CheckoutRequestBody['customer']): void {
   if (error) {
     throw new Error(error);
   }
-}
+};
 
-function buildStripeLineItems(
-  items: Awaited<ReturnType<typeof verifyCheckoutCartItems>>,
-  shippingCostChf: number,
-): Stripe.Checkout.SessionCreateParams['line_items'] {
-  const lineItems: NonNullable<Stripe.Checkout.SessionCreateParams['line_items']> = items.map((item) => ({
-    quantity: item.quantity,
-    price_data: {
-      currency: 'chf',
-      unit_amount: chfToStripeAmount(item.unitPriceChf),
-      product_data: {
-        name: item.name,
-        ...(item.imageUrl ? { images: [item.imageUrl] } : {}),
-      },
-    },
-  }));
-
-  if (shippingCostChf > 0) {
-    lineItems.push({
-      quantity: 1,
-      price_data: {
-        currency: 'chf',
-        unit_amount: chfToStripeAmount(shippingCostChf),
-        product_data: { name: 'Versand per Post' },
-      },
-    });
-  }
-
-  return lineItems;
-}
-
-async function createStripeCheckoutSession(
-  stripe: ReturnType<typeof getStripe>,
-  params: Omit<Stripe.Checkout.SessionCreateParams, 'payment_method_types'>,
-  paymentMethodTypes: Stripe.Checkout.SessionCreateParams['payment_method_types'],
-) {
-  return stripe.checkout.sessions.create({
-    ...params,
-    payment_method_types: paymentMethodTypes,
-  });
-}
-
-export async function POST(req: NextRequest): Promise<NextResponse> {
+export const POST = async (req: NextRequest): Promise<NextResponse> => {
   try {
     const body = (await req.json()) as CheckoutRequestBody;
 
@@ -82,7 +34,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       return NextResponse.json({ error: 'Der Warenkorb ist leer.' }, { status: 400 });
     }
 
-    validateCustomer(body.customer);
+    assertValidCustomer(body.customer);
 
     if (body.shipping !== 'pickup' && body.shipping !== 'post') {
       return NextResponse.json({ error: 'Bitte eine Versandart wählen.' }, { status: 400 });
@@ -116,7 +68,6 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     const deliveryTimeSummary = summarizeDeliveryTimes(verifiedItems, productCommerce) ?? undefined;
     const siteUrl = getSiteUrl();
     const customerName = `${body.customer.firstName.trim()} ${body.customer.lastName.trim()}`;
-
     const comment = body.comment?.trim() ?? '';
     const orderId = randomUUID();
 
@@ -143,41 +94,19 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     }
 
     if (body.paymentMethod === 'online') {
-      const stripe = getStripe();
-
-      const sessionParams = {
-        mode: 'payment' as const,
+      const session = await createStripeCheckoutSessionWithFallback({
+        mode: 'payment',
         currency: 'chf',
-        locale: 'de' as const,
+        locale: 'de',
         customer_email: body.customer.email.trim(),
         line_items: buildStripeLineItems(verifiedItems, totals.shippingCostChf),
         success_url: `${siteUrl}/shop/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
         cancel_url: `${siteUrl}/shop/checkout/cancelled`,
         metadata,
-      };
+      });
 
-      const fallbackMethods: Stripe.Checkout.SessionCreateParams['payment_method_types'][] = [
-        STRIPE_CHECKOUT_PAYMENT_METHODS,
-        ['card', 'twint', 'link', 'paypal'],
-        ['card', 'twint'],
-      ];
-
-      let session: Stripe.Checkout.Session | null = null;
-      let lastError: unknown;
-
-      for (const paymentMethodTypes of fallbackMethods) {
-        try {
-          session = await createStripeCheckoutSession(stripe, sessionParams, paymentMethodTypes);
-          break;
-        } catch (error) {
-          lastError = error;
-        }
-      }
-
-      if (!session?.url) {
-        const message = lastError instanceof Error ? lastError.message : 'Checkout konnte nicht gestartet werden.';
-
-        return NextResponse.json({ error: message }, { status: 400 });
+      if (!session.url) {
+        return NextResponse.json({ error: 'Checkout konnte nicht gestartet werden.' }, { status: 400 });
       }
 
       return NextResponse.json({ type: 'redirect', url: session.url });
@@ -234,4 +163,4 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 
     return NextResponse.json({ error: message }, { status: 400 });
   }
-}
+};

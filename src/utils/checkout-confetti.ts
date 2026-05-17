@@ -2,7 +2,7 @@ import confetti from 'canvas-confetti';
 
 const CONFETTI_COLORS = ['#c41e3a', '#1a1a1a', '#f5f5f5'];
 
-function burstFromSides(particleCount = 2): void {
+const burstFromSides = (particleCount = 2): void => {
   void confetti({
     particleCount,
     angle: 60,
@@ -19,9 +19,9 @@ function burstFromSides(particleCount = 2): void {
     origin: { x: 1, y: 0.65 },
     colors: CONFETTI_COLORS,
   });
-}
+};
 
-function burstFromCenter(particleCount = 12, startVelocity = 22): void {
+const burstFromCenter = (particleCount = 12, startVelocity = 22): void => {
   void confetti({
     particleCount,
     spread: 70,
@@ -29,9 +29,9 @@ function burstFromCenter(particleCount = 12, startVelocity = 22): void {
     origin: { x: 0.5, y: 0.5 },
     colors: CONFETTI_COLORS,
   });
-}
+};
 
-function burstFromTop(): void {
+const burstFromTop = (): void => {
   void confetti({
     particleCount: 40,
     spread: 100,
@@ -40,10 +40,9 @@ function burstFromTop(): void {
     origin: { x: 0.5, y: 0.2 },
     colors: CONFETTI_COLORS,
   });
-}
+};
 
-/** Big celebration when the success screen appears. */
-function playOpeningBurst(): void {
+const playOpeningBurst = (): void => {
   burstFromCenter(80, 42);
   burstFromSides(25);
   burstFromTop();
@@ -57,10 +56,9 @@ function playOpeningBurst(): void {
     burstFromCenter(35, 26);
     burstFromSides(12);
   }, 380);
-}
+};
 
-/** Starts a gentle, ongoing confetti loop. Call the returned stop function on unmount. */
-export function startCheckoutConfetti(): () => void {
+export const startCheckoutConfetti = (): (() => void) => {
   playOpeningBurst();
 
   const sideInterval = window.setInterval(burstFromSides, 400);
@@ -71,4 +69,4 @@ export function startCheckoutConfetti(): () => void {
     window.clearInterval(centerInterval);
     confetti.reset();
   };
-}
+};

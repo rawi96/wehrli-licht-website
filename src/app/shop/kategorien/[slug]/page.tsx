@@ -19,13 +19,13 @@ type Props = {
   }>;
 };
 
-export async function generateStaticParams() {
+export const generateStaticParams = async (): Promise<{ slug: string }[]> => {
   const slugs = await getAllCategorySlugs();
 
   return slugs.map((slug) => ({ slug }));
-}
+};
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export const generateMetadata = async ({ params }: Props): Promise<Metadata> => {
   const { slug } = await params;
   const category = await getCategoryBySlug(slug);
 
@@ -34,7 +34,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   return buildCategoryMetadata(category);
-}
+};
 
 export default async function ShopCategoryPage({ params }: Props) {
   const { slug } = await params;

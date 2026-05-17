@@ -5,7 +5,7 @@ import { CHECKOUT_PAYMENT_LABELS, CHECKOUT_SHIPPING_LABELS } from '@/constants/c
 import { CheckoutCustomer, CheckoutPaymentMethod, CheckoutShippingAddress, CheckoutShippingMethod } from '@/types/checkout';
 import { checkoutInlineErrorClass } from '@/components/shop/checkout-styles';
 import { formatShippingAddress } from '@/utils/checkout-shipping-address';
-import { formatOrderShippingCostLabel } from '@/utils/product-commerce';
+import { formatShippingCostLabel } from '@/utils/product-commerce';
 import { formatPriceToCHF } from '@/utils/price';
 
 type CartLine = {
@@ -121,7 +121,7 @@ export const CheckoutReviewStep = ({
           </div>
           <div className="flex justify-between gap-4">
             <dt className="text-gray-500">Versand</dt>
-            <dd>{formatOrderShippingCostLabel(shipping, shippingCostChf)}</dd>
+            <dd>{formatShippingCostLabel(shipping, shippingCostChf)}</dd>
           </div>
           <div className="flex justify-between gap-4 font-bold">
             <dt>Total</dt>

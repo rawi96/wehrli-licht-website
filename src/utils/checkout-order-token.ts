@@ -3,7 +3,7 @@ import { createHmac, timingSafeEqual } from 'crypto';
 
 const TOKEN_MAX_AGE_MS = 1000 * 60 * 60 * 24;
 
-function getSecret(): string {
+const getSecret = (): string => {
   const secret = process.env.CHECKOUT_ORDER_SECRET ?? process.env.STRIPE_SECRET_KEY;
 
   if (!secret) {
@@ -11,16 +11,16 @@ function getSecret(): string {
   }
 
   return secret;
-}
+};
 
-export function signCheckoutOrder(order: SignedCheckoutOrder): string {
+export const signCheckoutOrder = (order: SignedCheckoutOrder): string => {
   const data = Buffer.from(JSON.stringify(order)).toString('base64url');
   const signature = createHmac('sha256', getSecret()).update(data).digest('base64url');
 
   return `${data}.${signature}`;
-}
+};
 
-export function verifyCheckoutOrderToken(token: string): SignedCheckoutOrder | null {
+export const verifyCheckoutOrderToken = (token: string): SignedCheckoutOrder | null => {
   const [data, signature] = token.split('.');
 
   if (!data || !signature) {
@@ -46,4 +46,4 @@ export function verifyCheckoutOrderToken(token: string): SignedCheckoutOrder | n
   } catch {
     return null;
   }
-}
+};

@@ -1,7 +1,7 @@
 import { DatoWebhookPayload, revalidateFromDatoWebhook } from '@/lib/revalidate-dato-webhook';
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function POST(req: NextRequest): Promise<NextResponse> {
+export const POST = async (req: NextRequest): Promise<NextResponse> => {
   const token = req.nextUrl.searchParams.get('token');
 
   if (token !== process.env.CACHE_INVALIDATION_SECRET_TOKEN) {
@@ -24,4 +24,4 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 
     return NextResponse.json({ error: message }, { status: 500 });
   }
-}
+};
