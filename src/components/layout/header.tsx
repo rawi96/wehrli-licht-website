@@ -15,9 +15,10 @@ import { NavigationAccordion } from './navigation-accordion';
 
 type Props = {
   headerFooter: HeaderFooterRecord;
+  variant?: 'overlay' | 'solid';
 };
 
-export const Header: FC<Props> = ({ headerFooter: { menu } }) => {
+export const Header: FC<Props> = ({ headerFooter: { menu }, variant = 'solid' }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const closeMobileMenu = () => {
@@ -26,15 +27,14 @@ export const Header: FC<Props> = ({ headerFooter: { menu } }) => {
 
   const { shoppingCart, isShowCart, setIsShowCart } = useShopContext();
   const pathname = usePathname();
-  const isShopPage = pathname.startsWith('/shop');
-  const isHomePage = pathname === '/';
+  const isShopPage = pathname?.startsWith('/shop') ?? false;
 
   const desktopLinkClasses =
     'font-bold text-sm text-white border-b-2 hover:border-white transition-colors duration-150 border-transparent';
   const mobileLinkClasses = 'rounded -mx-3 block font-bold text-sm px-3 py-2 text-white hover:bg-wehrli-400';
   const activeLinkClasses = 'border-white';
 
-  const isActive = (path: string) => pathname.startsWith(path);
+  const isActive = (path: string) => pathname?.startsWith(path) ?? false;
 
   const renderMenuItems = (isMobile = false) => {
     if (isShopPage) {
@@ -105,7 +105,7 @@ export const Header: FC<Props> = ({ headerFooter: { menu } }) => {
   };
 
   return (
-    <div className={classNames('pt-6', isHomePage ? 'bg-transparent' : 'bg-wehrli')}>
+    <div className={classNames('pt-6', variant === 'overlay' ? 'bg-transparent' : 'bg-wehrli')}>
       <div className="px-6 lg:px-8">
         <nav className="flex items-center justify-between pb-6" aria-label="Global">
           <div className="flex lg:flex-1">
