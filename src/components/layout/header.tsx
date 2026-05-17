@@ -26,7 +26,7 @@ export const Header: FC<Props> = ({ headerFooter: { menu } }) => {
 
   const { shoppingCart, isShowCart, setIsShowCart } = useShopContext();
   const pathname = usePathname();
-  const isShopPage = pathname.includes('/shop');
+  const isShopPage = pathname.startsWith('/shop');
   const isHomePage = pathname === '/';
 
   const desktopLinkClasses =
@@ -54,9 +54,18 @@ export const Header: FC<Props> = ({ headerFooter: { menu } }) => {
           >
             Shop
           </Link>
-          <button className={isMobile ? mobileLinkClasses : desktopLinkClasses} onClick={() => setIsShowCart(true)}>
-            Warenkorb{' '}
-            {shoppingCart?.item_quantity && shoppingCart.item_quantity > 0 ? `(${shoppingCart.item_quantity})` : ''}
+          <button
+            type="button"
+            className={classNames(
+              isMobile ? mobileLinkClasses : desktopLinkClasses,
+              isActive('/shop/checkout') && activeLinkClasses,
+            )}
+            onClick={() => {
+              setIsShowCart(true);
+              closeMobileMenu();
+            }}
+          >
+            Warenkorb {shoppingCart.item_quantity > 0 ? `(${shoppingCart.item_quantity})` : ''}
           </button>
         </>
       );
@@ -98,7 +107,6 @@ export const Header: FC<Props> = ({ headerFooter: { menu } }) => {
   return (
     <div className={classNames('pt-6', isHomePage ? 'bg-transparent' : 'bg-wehrli')}>
       <div className="px-6 lg:px-8">
-        {/* Desktop Navigation */}
         <nav className="flex items-center justify-between pb-6" aria-label="Global">
           <div className="flex lg:flex-1">
             <Link href="/" className="-m-1.5 p-1.5">
@@ -119,7 +127,6 @@ export const Header: FC<Props> = ({ headerFooter: { menu } }) => {
           <div className="hidden lg:flex lg:gap-x-12">{renderMenuItems()}</div>
         </nav>
 
-        {/* Mobile Navigation */}
         <Dialog as="div" open={isMobileMenuOpen} onClose={setIsMobileMenuOpen}>
           <Dialog.Panel className="bg-wehrli fixed inset-0 z-10 overflow-y-auto px-6 py-6 lg:hidden">
             <div className="flex items-center justify-between">
@@ -143,7 +150,7 @@ export const Header: FC<Props> = ({ headerFooter: { menu } }) => {
             </div>
           </Dialog.Panel>
         </Dialog>
-        <ShoppingCart open={isShowCart} setOpen={setIsShowCart} />
+        {isShopPage && <ShoppingCart open={isShowCart} setOpen={setIsShowCart} />}
       </div>
     </div>
   );

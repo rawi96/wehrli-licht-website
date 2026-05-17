@@ -1,0 +1,9 @@
+query ShopProductsByCategory($categoryId: ItemId!) {
+  allShopProducts(
+    filter: { active: { eq: true }, categories: { anyIn: [$categoryId] } }
+    orderBy: name_ASC
+    first: 100
+  ) {
+    ...shopProductListItem
+  }
+}

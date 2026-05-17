@@ -1,0 +1,67 @@
+fragment shopProductDetail on ShopProductRecord {
+  id
+  name
+  slug
+  seoTitle
+  seoDescription
+  seoNoindex
+  _updatedAt
+  price
+  deliveryTime
+  shippingCost
+  description {
+    value
+  }
+  images {
+    ...shopFileImage
+  }
+  variants {
+    price
+    selections {
+      option
+      value
+    }
+  }
+  categories {
+    id
+    slug
+    name
+  }
+  dimmable
+  heightAdjustable
+  batteryOperated
+  swivelable
+  switchIntegrated
+  power
+  brightness
+  lightColor
+  lightDistribution
+  protectionFactor
+  protectionClass
+  input
+  output
+  chargerIncluded
+  size
+  height
+  overallHeight
+  length
+  width
+  depth
+  diameter
+  dimensions
+  reach
+  colors
+  metalColors
+  fabricColors
+  glass
+  crystal
+  shade
+  cover
+  lowerCover
+  basePlate
+  head
+  profile
+  material
+  mounting
+  showroomNote
+}

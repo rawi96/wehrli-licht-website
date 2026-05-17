@@ -3,6 +3,8 @@ import { print } from 'graphql';
 
 type Variables = {
   slug?: string;
+  categoryId?: string;
+  ids?: string[] | string;
   categories?: string[] | string;
   objectTypes?: string[] | string;
   skip?: number;

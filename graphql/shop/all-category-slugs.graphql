@@ -1,0 +1,8 @@
+query AllShopCategorySlugs($skip: IntType) {
+  meta: _allShopCategoriesMeta {
+    count
+  }
+  allShopCategories(first: 100, skip: $skip) {
+    slug
+  }
+}

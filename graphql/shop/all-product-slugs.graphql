@@ -1,0 +1,8 @@
+query AllShopProductSlugs($skip: IntType) {
+  meta: _allShopProductsMeta(filter: { active: { eq: true } }) {
+    count
+  }
+  allShopProducts(filter: { active: { eq: true } }, first: 100, skip: $skip) {
+    slug
+  }
+}

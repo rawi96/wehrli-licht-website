@@ -1,0 +1,33 @@
+fragment shopGoogleShoppingProduct on ShopProductRecord {
+  id
+  name
+  slug
+  seoTitle
+  seoDescription
+  seoNoindex
+  price
+  shippingCost
+  description {
+    value
+  }
+  images {
+    ...shopFileImage
+  }
+  variants {
+    price
+    selections {
+      option
+      value
+    }
+  }
+  categories {
+    id
+    name
+    slug
+  }
+  dimmable
+  power
+  brightness
+  lightColor
+  deliveryTime
+}

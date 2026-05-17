@@ -1,0 +1,5 @@
+query ShopCategoryBySlug($slug: String!) {
+  shopCategory(filter: { slug: { eq: $slug } }) {
+    ...shopCategory
+  }
+}

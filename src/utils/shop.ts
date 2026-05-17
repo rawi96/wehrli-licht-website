@@ -1,92 +1,125 @@
-/* eslint-disable */
+import {
+  AllShopCategoriesDocument,
+  AllShopCategorySlugsDocument,
+  AllShopProductSlugsDocument,
+  ShopCategoryBySlugDocument,
+  ShopProductBySlugDocument,
+  ShopProductsByCategoryDocument,
+  ShopSitemapRoutesDocument,
+  ShopCategoryFragment,
+  ShopProductDetailFragment,
+  ShopProductListItemFragment,
+} from '@/graphql/generated';
+import { queryDatoCMS } from '@/utils/query-dato-cms';
 
-import swell, { Cart, Category, ErrorResponse, Product } from 'swell-js';
+export type ShopCategory = ShopCategoryFragment;
+export type ShopProductListItem = ShopProductListItemFragment;
+export type ShopProduct = ShopProductDetailFragment;
 
-export const getAllCategories = async (): Promise<Category[]> => {
-  initSwell();
-
-  const response = await swell.categories.list({});
-  return response?.results.sort((a, b) => a.name.localeCompare(b.name)) || [];
+export type ShopSitemapRoute = {
+  path: string;
+  lastModified: string;
+  noIndex: boolean;
 };
 
-export const getAllProducts = async (): Promise<Product[]> => {
-  initSwell();
+async function fetchAllSlugs(queryFn: (skip: number) => Promise<{ slugs: string[]; total: number }>): Promise<string[]> {
+  const pageSize = 100;
+  const first = await queryFn(0);
+  const slugs = [...first.slugs];
 
-  const response = await swell.products.list({ limit: 100 });
-  return response?.results.sort((a, b) => a.name.localeCompare(b.name)) || [];
-};
-
-export const getBestsellers = async (): Promise<Product[] | null> => {
-  initSwell();
-
-  const response = await swell.products.list({ limit: 100 });
-  const products = response?.results.sort((a, b) => a.name.localeCompare(b.name)) || [];
-  return products.filter((product) => product.tags?.includes('bestseller')) || null;
-};
-
-export const getProductsByCategory = async (slug: string): Promise<Product[] | null> => {
-  initSwell();
-
-  const response = await swell.products.list({
-    category: slug,
-    limit: 100,
-    expand: ['variants'],
-  });
-  return response?.results.sort((a, b) => a.name.localeCompare(b.name)) || [];
-};
-
-export const getCategoryBySlug = async (slug: string): Promise<Category | null> => {
-  initSwell();
-
-  const response = await swell.categories.get(slug);
-  return response || null;
-};
-
-export const getProductBySlug = async (slug: string): Promise<Product | null> => {
-  initSwell();
-
-  const response = await swell.products.get(slug);
-  return response || null;
-};
-
-export const getCart = async (): Promise<Cart | null> => {
-  initSwell();
-
-  return await swell.cart.get();
-};
-
-export const addToCart = async (productId?: string, variantId?: string): Promise<Cart | ErrorResponse> => {
-  initSwell();
-
-  return await swell.cart.addItem({
-    product_id: productId,
-    variant_id: variantId,
-    quantity: 1,
-  });
-};
-
-export const updateCartItem = async (itemId: string, quantity: number): Promise<Cart | ErrorResponse> => {
-  initSwell();
-
-  return await swell.cart.updateItem(itemId, {
-    quantity,
-  });
-};
-
-export const removeCartItem = async (itemId: string): Promise<Cart | ErrorResponse> => {
-  initSwell();
-
-  return await swell.cart.removeItem(itemId);
-};
-
-export const initSwell = () => {
-  const storeId = process.env.NEXT_PUBLIC_SWELL_STORE_ID;
-  const apiKey = process.env.NEXT_PUBLIC_SWELL_API_KEY;
-
-  if (!storeId || !apiKey) {
-    console.error('Error: SWELL store ID and API key are required to initialize.');
-    return;
+  for (let skip = pageSize; skip < first.total; skip += pageSize) {
+    const page = await queryFn(skip);
+    slugs.push(...page.slugs);
   }
 
-  swell.init(storeId, apiKey);
-};
+  return slugs;
+}
+
+export async function getAllCategories(): Promise<ShopCategory[]> {
+  const { allShopCategories } = await queryDatoCMS({
+    document: AllShopCategoriesDocument,
+  });
+
+  return allShopCategories;
+}
+
+export async function getCategoryBySlug(slug: string): Promise<ShopCategory | null> {
+  const { shopCategory } = await queryDatoCMS({
+    document: ShopCategoryBySlugDocument,
+    variables: { slug },
+  });
+
+  return shopCategory ?? null;
+}
+
+export async function getProductsByCategory(categoryId: string): Promise<ShopProductListItem[]> {
+  const { allShopProducts } = await queryDatoCMS({
+    document: ShopProductsByCategoryDocument,
+    variables: { categoryId },
+  });
+
+  return allShopProducts;
+}
+
+export async function getProductBySlug(slug: string): Promise<ShopProduct | null> {
+  const { shopProduct } = await queryDatoCMS({
+    document: ShopProductBySlugDocument,
+    variables: { slug },
+  });
+
+  return shopProduct ?? null;
+}
+
+export async function getAllCategorySlugs(): Promise<string[]> {
+  return fetchAllSlugs(async (skip) => {
+    const { allShopCategories, meta } = await queryDatoCMS({
+      document: AllShopCategorySlugsDocument,
+      variables: { skip },
+    });
+
+    return {
+      slugs: allShopCategories.map((category) => category.slug),
+      total: meta.count,
+    };
+  });
+}
+
+export async function getAllProductSlugs(): Promise<string[]> {
+  return fetchAllSlugs(async (skip) => {
+    const { allShopProducts, meta } = await queryDatoCMS({
+      document: AllShopProductSlugsDocument,
+      variables: { skip },
+    });
+
+    return {
+      slugs: allShopProducts.map((product) => product.slug),
+      total: meta.count,
+    };
+  });
+}
+
+export async function getShopSitemapRoutes(): Promise<ShopSitemapRoute[]> {
+  const { allShopProducts, allShopCategories } = await queryDatoCMS({
+    document: ShopSitemapRoutesDocument,
+  });
+
+  const shopIndex: ShopSitemapRoute = {
+    path: '/shop',
+    lastModified: new Date().toISOString(),
+    noIndex: false,
+  };
+
+  const categories = allShopCategories.map((category) => ({
+    path: `/shop/kategorien/${category.slug}`,
+    lastModified: category._updatedAt,
+    noIndex: category.seoNoindex ?? false,
+  }));
+
+  const products = allShopProducts.map((product) => ({
+    path: `/shop/produkte/${product.slug}`,
+    lastModified: product._updatedAt,
+    noIndex: product.seoNoindex ?? false,
+  }));
+
+  return [shopIndex, ...categories, ...products];
+}

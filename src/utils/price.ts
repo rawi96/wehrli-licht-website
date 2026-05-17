@@ -1,4 +1,7 @@
-import { Product } from 'swell-js';
+type ProductPrice = {
+  price?: number | null;
+  variants: { price: number | null }[];
+};
 
 export const formatPriceToCHF = (price?: number) => {
   if (!price) {
@@ -11,15 +14,14 @@ export const formatPriceToCHF = (price?: number) => {
   });
 };
 
-export const getLowestPriceFromVariantsOrProductPrice = (product: Product) => {
-  const variants = product.variants;
-  if (variants && variants.results.length > 0) {
-    const variantsWithPrice = variants.results.filter((variant) => typeof variant.price === 'number');
+export const getLowestPriceFromProduct = (product: ProductPrice) => {
+  const variantPrices = product.variants
+    .map((variant) => variant.price)
+    .filter((price): price is number => typeof price === 'number');
 
-    const prices = variantsWithPrice.map((variant) => variant.price!);
-
-    return `Ab ${formatPriceToCHF(Math.min(...prices))}`;
+  if (variantPrices.length > 0) {
+    return `Ab ${formatPriceToCHF(Math.min(...variantPrices))}`;
   }
 
-  return formatPriceToCHF(product.price);
+  return formatPriceToCHF(product.price ?? undefined);
 };

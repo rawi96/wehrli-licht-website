@@ -1,0 +1,13 @@
+fragment shopCategory on ShopCategoryRecord {
+  id
+  name
+  slug
+  seoTitle
+  seoDescription
+  seoNoindex
+  _updatedAt
+  description
+  image {
+    ...shopFileImage
+  }
+}

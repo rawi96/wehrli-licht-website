@@ -1,0 +1,12 @@
+fragment shopProductListItem on ShopProductRecord {
+  id
+  name
+  slug
+  price
+  images {
+    ...shopFileImage
+  }
+  variants {
+    price
+  }
+}

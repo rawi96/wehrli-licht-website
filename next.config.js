@@ -6,10 +6,6 @@ const nextConfig = {
         protocol: 'https',
         hostname: '**.datocms-assets.com',
       },
-      {
-        protocol: 'https',
-        hostname: 'cdn.swell.store',
-      },
     ],
   },
   async redirects() {
@@ -19,6 +15,16 @@ const nextConfig = {
         // We redirect it here, because its prettier to have / instead of /home for the home page.
         source: '/home',
         destination: '/',
+        permanent: true,
+      },
+      {
+        source: '/new-shop',
+        destination: '/shop',
+        permanent: true,
+      },
+      {
+        source: '/new-shop/:path*',
+        destination: '/shop/:path*',
         permanent: true,
       },
     ];
