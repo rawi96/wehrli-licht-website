@@ -11,7 +11,9 @@ import { buildCategoryMetadata } from '@/utils/shop-seo';
 import { Metadata } from 'next';
 import { draftMode } from 'next/headers';
 
-export const revalidate = 60;
+import { CONTENT_REVALIDATE_SECONDS } from '@/constants/cache-revalidation';
+
+export const revalidate = CONTENT_REVALIDATE_SECONDS;
 
 type Props = {
   params: Promise<{

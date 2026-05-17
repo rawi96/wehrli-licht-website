@@ -1,3 +1,4 @@
+import { CONTENT_REVALIDATE_SECONDS } from '@/constants/cache-revalidation';
 import { TypedDocumentNode } from '@graphql-typed-document-node/core';
 import { print } from 'graphql';
 
@@ -70,7 +71,7 @@ async function fetchDatoCMS(body: string, headers: Record<string, string>, inclu
   try {
     for (let attempt = 0; attempt <= MAX_RETRIES; attempt += 1) {
       const response = await fetch('https://graphql.datocms.com/', {
-        next: { revalidate: includeDrafts ? 0 : 60 },
+        next: { revalidate: includeDrafts ? 0 : CONTENT_REVALIDATE_SECONDS },
         method: 'POST',
         headers,
         body,
