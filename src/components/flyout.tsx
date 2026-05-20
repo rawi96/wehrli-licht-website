@@ -22,12 +22,12 @@ export const Flyout = ({ title, items, prefix }: Props) => {
       {({ close }) => (
         <>
           <Popover.Button
-            className={`inline-flex items-center gap-x-1 border-b-2 text-sm font-bold text-white transition-colors duration-150 ${
+            className={`inline-flex items-center gap-x-1 border-b-2 pb-0.5 text-sm leading-none font-bold text-white transition-colors duration-150 ${
               isActive ? 'border-white' : 'border-transparent'
             } hover:border-white`}
           >
             <span>{title}</span>
-            <ChevronDownIcon className="h-5 w-5" aria-hidden="true" />
+            <ChevronDownIcon className="size-4 shrink-0" aria-hidden="true" />
           </Popover.Button>
 
           <Transition

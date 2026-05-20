@@ -5,6 +5,7 @@ import { Header } from '@/components/layout/header';
 import { Heading } from '@/components/nodes';
 import NotFound from '@/components/not-found';
 import { AllProductsForCategory } from '@/components/shop/all-products-for-category';
+import { ShopBrowseLayout } from '@/components/shop/shop-browse-layout';
 import { getHeaderFooter } from '@/utils/get-header-footer';
 import { getAllCategorySlugs, getCategoryBySlug, getProductsByCategory } from '@/utils/shop';
 import { JsonLd } from '@/components/seo/json-ld';
@@ -63,20 +64,22 @@ export default async function ShopCategoryPage({ params }: Props) {
             ]}
           />
         </div>
-        <header className="mb-8 max-w-3xl">
-          <Heading level="1">{category.name}</Heading>
-          {category.description && (
-            <p className="mt-4 text-sm lg:text-base" dangerouslySetInnerHTML={{ __html: category.description }} />
+        <ShopBrowseLayout activeCategorySlug={slug}>
+          <header className="mb-8 max-w-3xl">
+            <Heading level="1">{category.name}</Heading>
+            {category.description && (
+              <p className="mt-4 text-sm lg:text-base" dangerouslySetInnerHTML={{ __html: category.description }} />
+            )}
+          </header>
+          {products.length > 0 && (
+            <section aria-labelledby="category-products-heading">
+              <h2 id="category-products-heading" className="sr-only">
+                {products.length === 1 ? '1 Produkt' : `${products.length} Produkte`} in {category.name}
+              </h2>
+              <AllProductsForCategory products={products} />
+            </section>
           )}
-        </header>
-        {products.length > 0 && (
-          <section aria-labelledby="category-products-heading">
-            <h2 id="category-products-heading" className="sr-only">
-              {products.length === 1 ? '1 Produkt' : `${products.length} Produkte`} in {category.name}
-            </h2>
-            <AllProductsForCategory products={products} />
-          </section>
-        )}
+        </ShopBrowseLayout>
       </ContentWrapper>
       <Footer headerFooter={headerFooter} />
     </main>

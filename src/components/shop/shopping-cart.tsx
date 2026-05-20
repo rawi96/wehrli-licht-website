@@ -55,7 +55,7 @@ export const ShoppingCart = ({ open, setOpen }: Props) => {
                     </button>
                   </div>
 
-                  <CartContent onGoToCheckout={handleGoToCheckout} />
+                  <CartContent onGoToCheckout={handleGoToCheckout} onShopLinkClick={() => setOpen(false)} />
                 </div>
               </Dialog.Panel>
             </Transition.Child>

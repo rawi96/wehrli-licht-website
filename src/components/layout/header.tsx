@@ -3,12 +3,15 @@
 import { useShopContext } from '@/app/context/shop-context';
 import { DirectoryRecord, HeaderFooterRecord, NavigationItemRecord } from '@/graphql/generated';
 import { classNames } from '@/utils/css';
+import { splitHeaderMenu } from '@/utils/navigation';
 import { Dialog } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { FC, useState } from 'react';
 import { Flyout } from '../flyout';
+import { ShopCartButton } from '../shop/shop-cart-button';
+import { ShopMobileNav } from '../shop/shop-mobile-nav';
 import { ShoppingCart } from '../shop/shopping-cart';
 import { Logo } from './logo';
 import { NavigationAccordion } from './navigation-accordion';
@@ -20,101 +23,82 @@ type Props = {
 
 export const Header: FC<Props> = ({ headerFooter: { menu }, variant = 'solid' }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { primary, contact } = splitHeaderMenu(menu);
 
   const closeMobileMenu = () => {
     setIsMobileMenuOpen(false);
   };
 
-  const { shoppingCart, isShowCart, setIsShowCart } = useShopContext();
+  const { isShowCart, setIsShowCart } = useShopContext();
   const pathname = usePathname();
-  const isShopPage = pathname?.startsWith('/shop') ?? false;
 
-  const desktopLinkClasses =
-    'font-bold text-sm text-white border-b-2 hover:border-white transition-colors duration-150 border-transparent';
+  const desktopNavItemClasses =
+    'inline-flex items-center border-b-2 border-transparent pb-0.5 text-sm font-bold leading-none text-white transition-colors duration-150 hover:border-white';
   const mobileLinkClasses = 'rounded -mx-3 block font-bold text-sm px-3 py-2 text-white hover:bg-wehrli-400';
-  const activeLinkClasses = 'border-white';
+  const activeNavClasses = 'border-white';
+  const contactButtonClasses =
+    'inline-flex items-center justify-center rounded bg-white px-3 py-1.5 text-sm font-bold leading-none text-wehrli transition-colors hover:bg-gray-100';
+  const contactButtonMobileClasses =
+    'inline-flex w-full items-center justify-center rounded bg-white px-5 py-2.5 text-sm font-bold text-wehrli transition-colors hover:bg-gray-100';
 
   const isActive = (path: string) => pathname?.startsWith(path) ?? false;
 
-  const renderMenuItems = (isMobile = false) => {
-    if (isShopPage) {
-      return (
-        <>
-          <Link
-            href="/"
-            className={classNames(isMobile ? mobileLinkClasses : desktopLinkClasses, pathname === '/' && activeLinkClasses)}
-            onClick={closeMobileMenu}
-          >
-            Zurück zur Website
-          </Link>
-          <Link
-            href="/shop"
-            className={classNames(isMobile ? mobileLinkClasses : desktopLinkClasses, isActive('/shop') && activeLinkClasses)}
-            onClick={closeMobileMenu}
-          >
-            Shop
-          </Link>
-          <button
-            type="button"
-            className={classNames(
-              isMobile ? mobileLinkClasses : desktopLinkClasses,
-              isActive('/shop/checkout') && activeLinkClasses,
-            )}
-            onClick={() => {
-              setIsShowCart(true);
-              closeMobileMenu();
-            }}
-          >
-            Warenkorb {shoppingCart.item_quantity > 0 ? `(${shoppingCart.item_quantity})` : ''}
-          </button>
-        </>
-      );
-    }
-
-    return menu.map((item: NavigationItemRecord | DirectoryRecord) =>
-      'navigationItems' in item ? (
-        isMobile ? (
-          <div key={item.label} className="relative font-bold">
-            <NavigationAccordion
-              key={item.label}
-              title={item.label}
-              items={item.navigationItems}
-              prefix={item.slug}
-              onLinkClick={closeMobileMenu}
-            />
-          </div>
-        ) : (
-          <div key={item.label} className="relative font-bold">
-            <Flyout key={item.label} title={item.label} items={item.navigationItems} prefix={item.slug} />
-          </div>
-        )
+  const renderPrimaryItem = (item: NavigationItemRecord | DirectoryRecord, isMobile = false) =>
+    'navigationItems' in item ? (
+      isMobile ? (
+        <div key={item.label} className="relative font-bold">
+          <NavigationAccordion
+            title={item.label}
+            items={item.navigationItems}
+            prefix={item.slug}
+            onLinkClick={closeMobileMenu}
+          />
+        </div>
       ) : (
-        <Link
-          key={item.label}
-          href={`/${item.link?.slug}`}
-          className={classNames(
-            isMobile ? mobileLinkClasses : desktopLinkClasses,
-            isActive(`/${item.link?.slug}`) && activeLinkClasses,
-          )}
-          onClick={closeMobileMenu}
-        >
-          {item.label}
-        </Link>
-      ),
+        <Flyout key={item.label} title={item.label} items={item.navigationItems} prefix={item.slug} />
+      )
+    ) : (
+      <Link
+        key={item.label}
+        href={`/${item.link?.slug}`}
+        className={classNames(
+          isMobile ? mobileLinkClasses : desktopNavItemClasses,
+          isActive(`/${item.link?.slug}`) && activeNavClasses,
+        )}
+        onClick={closeMobileMenu}
+      >
+        {item.label}
+      </Link>
     );
-  };
+
+  const renderShopLink = (isMobile = false) => (
+    <Link
+      href="/shop"
+      className={classNames(isMobile ? mobileLinkClasses : desktopNavItemClasses, isActive('/shop') && activeNavClasses)}
+      onClick={closeMobileMenu}
+    >
+      Shop
+    </Link>
+  );
+
+  const contactHref = contact?.link?.slug ? `/${contact.link.slug}` : '/kontakt';
 
   return (
-    <div className={classNames('pt-6', variant === 'overlay' ? 'bg-transparent' : 'bg-wehrli')}>
+    <header className={classNames('pt-6 pb-6', variant === 'overlay' ? 'bg-transparent' : 'bg-wehrli')}>
       <div className="px-6 lg:px-8">
-        <nav className="flex items-center justify-between pb-6" aria-label="Global">
-          <div className="flex lg:flex-1">
-            <Link href="/" className="-m-1.5 p-1.5">
+        <nav
+          className="flex items-center justify-between lg:grid lg:grid-cols-[1fr_auto_1fr] lg:items-center"
+          aria-label="Global"
+        >
+          <div className="flex items-center lg:justify-self-start">
+            <Link href="/" className="-m-1.5 flex items-center p-1.5">
               <span className="sr-only">Wehrli Licht GmbH</span>
               <Logo />
             </Link>
           </div>
-          <div className="flex lg:hidden">
+
+          <div className="flex items-center gap-x-3 lg:hidden">
+            <ShopCartButton onClick={closeMobileMenu} />
             <button
               type="button"
               className="-m-2.5 inline-flex items-center justify-center rounded p-2.5 text-gray-400"
@@ -124,13 +108,26 @@ export const Header: FC<Props> = ({ headerFooter: { menu }, variant = 'solid' })
               <Bars3Icon className="h-6 w-6 text-white" aria-hidden="true" />
             </button>
           </div>
-          <div className="hidden lg:flex lg:gap-x-12">{renderMenuItems()}</div>
+
+          <div className="hidden items-center justify-center gap-x-10 lg:flex">
+            {primary.map((item) => renderPrimaryItem(item))}
+            {renderShopLink()}
+          </div>
+
+          <div className="hidden items-center justify-end gap-x-5 lg:flex">
+            {contact && (
+              <Link href={contactHref} className={contactButtonClasses}>
+                {contact.label}
+              </Link>
+            )}
+            <ShopCartButton />
+          </div>
         </nav>
 
         <Dialog as="div" open={isMobileMenuOpen} onClose={setIsMobileMenuOpen}>
           <Dialog.Panel className="bg-wehrli fixed inset-0 z-10 overflow-y-auto px-6 py-6 lg:hidden">
             <div className="flex items-center justify-between">
-              <Link href="/" className="-m-1.5 p-1.5">
+              <Link href="/" className="-m-1.5 p-1.5" onClick={closeMobileMenu}>
                 <span className="sr-only">Wehrli Licht GmbH</span>
                 <Logo />
               </Link>
@@ -144,14 +141,23 @@ export const Header: FC<Props> = ({ headerFooter: { menu }, variant = 'solid' })
               </button>
             </div>
             <div className="mt-6 flow-root">
-              <div className="-my-6 divide-y divide-gray-500/25">
-                <div className="space-y-2 py-6">{renderMenuItems(true)}</div>
+              <div className="space-y-2 py-6">
+                {primary.map((item) => renderPrimaryItem(item, true))}
+                {renderShopLink(true)}
+                <ShopMobileNav onLinkClick={closeMobileMenu} />
+                {contact && (
+                  <div className="border-t border-white/20 pt-4">
+                    <Link href={contactHref} className={contactButtonMobileClasses} onClick={closeMobileMenu}>
+                      {contact.label}
+                    </Link>
+                  </div>
+                )}
               </div>
             </div>
           </Dialog.Panel>
         </Dialog>
-        {isShopPage && <ShoppingCart open={isShowCart} setOpen={setIsShowCart} />}
+        <ShoppingCart open={isShowCart} setOpen={setIsShowCart} />
       </div>
-    </div>
+    </header>
   );
 };

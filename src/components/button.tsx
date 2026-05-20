@@ -48,7 +48,7 @@ export const Button = ({
   const buttonClasses = type === 'primary' ? primaryClasses : secondaryClasses;
 
   return href ? (
-    <Link className={buttonClasses} href={href}>
+    <Link className={buttonClasses} href={href} onClick={onClick}>
       {text}
       {type === 'secondary' && showArrow && <ArrowIcon />}
     </Link>

@@ -4,6 +4,7 @@ import { Footer } from '@/components/layout/footer';
 import { Header } from '@/components/layout/header';
 import NotFound from '@/components/not-found';
 import { ProductDetail } from '@/components/shop/product-detail';
+import { ShopBrowseLayout } from '@/components/shop/shop-browse-layout';
 import { JsonLd } from '@/components/seo/json-ld';
 import { getHeaderFooter } from '@/utils/get-header-footer';
 import { getAllProductSlugs, getProductBySlug } from '@/utils/shop';
@@ -60,7 +61,9 @@ export default async function ShopProductPage({ params }: Props) {
             ]}
           />
         </div>
-        <ProductDetail product={product} />
+        <ShopBrowseLayout>
+          <ProductDetail product={product} />
+        </ShopBrowseLayout>
       </ContentWrapper>
       <Footer headerFooter={headerFooter} />
     </main>

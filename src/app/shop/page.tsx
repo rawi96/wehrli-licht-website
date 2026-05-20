@@ -4,6 +4,7 @@ import { Footer } from '@/components/layout/footer';
 import { Header } from '@/components/layout/header';
 import { Heading } from '@/components/nodes';
 import { AllCategoriesGrid } from '@/components/shop/all-categories-grid';
+import { ShopBrowseLayout } from '@/components/shop/shop-browse-layout';
 import { HeaderFooterDocument, HeaderFooterRecord } from '@/graphql/generated';
 import { getAllCategories } from '@/utils/shop';
 import { queryDatoCMS } from '@/utils/query-dato-cms';
@@ -32,8 +33,10 @@ export default async function ShopPage() {
         <div className="mb-20">
           <Breadcrumbs customBreadcrumbs={[{ name: 'Shop', href: '/shop' }]} />
         </div>
-        <Heading level="1">Shop</Heading>
-        <AllCategoriesGrid categories={categories} disableMarginTop />
+        <ShopBrowseLayout>
+          <Heading level="1">Shop</Heading>
+          <AllCategoriesGrid categories={categories} disableMarginTop />
+        </ShopBrowseLayout>
       </ContentWrapper>
       <Footer headerFooter={headerFooter as HeaderFooterRecord} />
     </main>

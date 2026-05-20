@@ -9,9 +9,10 @@ import { ChangeEvent } from 'react';
 
 type Props = {
   onGoToCheckout?: () => void;
+  onShopLinkClick?: () => void;
 };
 
-export const CartContent = ({ onGoToCheckout }: Props) => {
+export const CartContent = ({ onGoToCheckout, onShopLinkClick }: Props) => {
   const { shoppingCart, updateItemQuantity, removeItem, isHydrated } = useShopContext();
 
   const handleSelectChange = (event: ChangeEvent<HTMLSelectElement>, lineId: string) => {
@@ -30,7 +31,14 @@ export const CartContent = ({ onGoToCheckout }: Props) => {
         </h2>
 
         <ul role="list" className="divide-y divide-gray-200 px-4 sm:px-6 lg:px-8">
-          {shoppingCart.items.length === 0 && <p className="py-4">Sie haben keine Produkte im Warenkorb.</p>}
+          {shoppingCart.items.length === 0 && (
+            <li className="py-4">
+              <p className="text-sm text-gray-600">Sie haben keine Produkte im Warenkorb.</p>
+              <div className="mt-4">
+                <Button text="Zum Shop" type="primary" href="/shop" showArrow={false} onClick={onShopLinkClick} />
+              </div>
+            </li>
+          )}
           {shoppingCart.items.map((item, productIdx) => (
             <li key={item.id} className="flex py-8 text-sm sm:items-center">
               {item.imageUrl && (

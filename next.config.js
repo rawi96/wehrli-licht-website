@@ -18,13 +18,8 @@ const nextConfig = {
         permanent: true,
       },
       {
-        source: '/new-shop',
-        destination: '/shop',
-        permanent: true,
-      },
-      {
-        source: '/new-shop/:path*',
-        destination: '/shop/:path*',
+        source: '/ueber-uns',
+        destination: '/atelier',
         permanent: true,
       },
     ];
