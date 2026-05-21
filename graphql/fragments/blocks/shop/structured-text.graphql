@@ -1,0 +1,59 @@
+fragment shopStructuredTextField on ShopStorefrontHeroModelIntroField {
+  value
+  links {
+    ... on PageRecord {
+      __typename
+      id
+      slug
+      parent {
+        slug
+      }
+    }
+  }
+  blocks {
+    ... on LinkRecord {
+      _modelApiKey
+      ...linkBlock
+    }
+  }
+}
+
+fragment shopFeaturedDescriptionField on ShopSfFeaturedModelDescriptionField {
+  value
+  links {
+    ... on PageRecord {
+      __typename
+      id
+      slug
+      parent {
+        slug
+      }
+    }
+  }
+  blocks {
+    ... on LinkRecord {
+      _modelApiKey
+      ...linkBlock
+    }
+  }
+}
+
+fragment shopServiceDescriptionField on ShopServiceSectionModelDescriptionField {
+  value
+  links {
+    ... on PageRecord {
+      __typename
+      id
+      slug
+      parent {
+        slug
+      }
+    }
+  }
+  blocks {
+    ... on LinkRecord {
+      _modelApiKey
+      ...linkBlock
+    }
+  }
+}

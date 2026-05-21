@@ -1,0 +1,31 @@
+query ShopPage {
+  site: _site {
+    favicon: faviconMetaTags {
+      attributes
+      content
+      tag
+    }
+  }
+  shopPage {
+    seo: _seoMetaTags {
+      attributes
+      content
+      tag
+    }
+    sections {
+      __typename
+      ... on ShopStorefrontHeroRecord {
+        ...shopStorefrontHero
+      }
+      ... on ShopCategorySectionRecord {
+        ...shopCategorySection
+      }
+      ... on ShopSfFeaturedRecord {
+        ...shopFeaturedSection
+      }
+      ... on ShopServiceSectionRecord {
+        ...shopServiceSection
+      }
+    }
+  }
+}

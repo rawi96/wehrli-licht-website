@@ -1,0 +1,9 @@
+query ShopFeaturedProducts {
+  allShopProducts(
+    filter: { active: { eq: true }, featured: { eq: true } }
+    first: 8
+    orderBy: [featuredSort_ASC, name_ASC]
+  ) {
+    ...shopProductListItem
+  }
+}

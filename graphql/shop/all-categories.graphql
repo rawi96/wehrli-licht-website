@@ -1,5 +1,5 @@
 query AllShopCategories {
-  allShopCategories(orderBy: name_ASC, first: 100) {
+  allShopCategories(filter: { showInShop: { eq: true } }, orderBy: name_ASC, first: 100) {
     ...shopCategory
   }
 }

@@ -2,6 +2,7 @@ fragment shopCategory on ShopCategoryRecord {
   id
   name
   slug
+  showInShop
   seoTitle
   seoDescription
   seoNoindex

@@ -2,7 +2,10 @@ import {
   AllShopCategoriesDocument,
   AllShopCategorySlugsDocument,
   AllShopProductSlugsDocument,
+  ShopAllProductsDocument,
   ShopCategoryBySlugDocument,
+  ShopFeaturedProductsDocument,
+  ShopPageDocument,
   ShopProductBySlugDocument,
   ShopProductsByCategoryDocument,
   ShopSitemapRoutesDocument,
@@ -10,6 +13,7 @@ import {
   ShopProductDetailFragment,
   ShopProductListItemFragment,
 } from '@/graphql/generated';
+import { SHOP_ALL_PRODUCTS_PATH } from '@/constants/shop-paths';
 import { queryDatoCMS } from '@/utils/query-dato-cms';
 import { cache } from 'react';
 
@@ -23,26 +27,54 @@ export type ShopSitemapRoute = {
   noIndex: boolean;
 };
 
-const fetchAllSlugs = async (queryFn: (skip: number) => Promise<{ slugs: string[]; total: number }>): Promise<string[]> => {
-  const pageSize = 100;
-  const first = await queryFn(0);
-  const slugs = [...first.slugs];
+const PAGE_SIZE = 100;
 
-  for (let skip = pageSize; skip < first.total; skip += pageSize) {
+const fetchAllPaginated = async <T>(queryFn: (skip: number) => Promise<{ items: T[]; total: number }>): Promise<T[]> => {
+  const first = await queryFn(0);
+  const items = [...first.items];
+
+  for (let skip = PAGE_SIZE; skip < first.total; skip += PAGE_SIZE) {
     const page = await queryFn(skip);
-    slugs.push(...page.slugs);
+    items.push(...page.items);
   }
+
+  return items;
+};
+
+const fetchAllSlugs = async (queryFn: (skip: number) => Promise<{ slugs: string[]; total: number }>): Promise<string[]> => {
+  const slugs = await fetchAllPaginated(async (skip) => {
+    const result = await queryFn(skip);
+
+    return { items: result.slugs, total: result.total };
+  });
 
   return slugs;
 };
 
-export const getAllCategories = async (): Promise<ShopCategory[]> => {
+export const getAllCategories = cache(async (): Promise<ShopCategory[]> => {
   const { allShopCategories } = await queryDatoCMS({
     document: AllShopCategoriesDocument,
   });
 
   return allShopCategories;
-};
+});
+
+export const getFeaturedShopProducts = cache(async (limit = 8): Promise<ShopProductListItem[]> => {
+  const { allShopProducts } = await queryDatoCMS({
+    document: ShopFeaturedProductsDocument,
+  });
+
+  return allShopProducts.slice(0, limit);
+});
+
+export const getShopPage = cache(async (includeDrafts = false) => {
+  const { site, shopPage } = await queryDatoCMS({
+    document: ShopPageDocument,
+    includeDrafts,
+  });
+
+  return { site, shopPage };
+});
 
 export const getCategoryBySlug = cache(async (slug: string): Promise<ShopCategory | null> => {
   const { shopCategory } = await queryDatoCMS({
@@ -61,6 +93,18 @@ export const getProductsByCategory = cache(async (categoryId: string): Promise<S
 
   return allShopProducts;
 });
+
+export const getAllShopProducts = cache(
+  async (): Promise<ShopProductListItem[]> =>
+    fetchAllPaginated(async (skip) => {
+      const { allShopProducts, meta } = await queryDatoCMS({
+        document: ShopAllProductsDocument,
+        variables: { skip },
+      });
+
+      return { items: allShopProducts, total: meta.count };
+    }),
+);
 
 export const getProductBySlug = cache(async (slug: string): Promise<ShopProduct | null> => {
   const { shopProduct } = await queryDatoCMS({
@@ -110,6 +154,12 @@ export const getShopSitemapRoutes = async (): Promise<ShopSitemapRoute[]> => {
     noIndex: false,
   };
 
+  const allProducts: ShopSitemapRoute = {
+    path: SHOP_ALL_PRODUCTS_PATH,
+    lastModified: new Date().toISOString(),
+    noIndex: false,
+  };
+
   const categories = allShopCategories.map((category) => ({
     path: `/shop/kategorien/${category.slug}`,
     lastModified: category._updatedAt,
@@ -122,5 +172,5 @@ export const getShopSitemapRoutes = async (): Promise<ShopSitemapRoute[]> => {
     noIndex: product.seoNoindex ?? false,
   }));
 
-  return [shopIndex, ...categories, ...products];
+  return [shopIndex, allProducts, ...categories, ...products];
 };

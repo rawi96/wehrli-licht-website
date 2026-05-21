@@ -1,0 +1,10 @@
+fragment shopFeaturedSection on ShopSfFeaturedRecord {
+  id
+  title
+  intro: description {
+    ...shopFeaturedDescriptionField
+  }
+  actionLink {
+    ...shopLink
+  }
+}

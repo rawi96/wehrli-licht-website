@@ -74,11 +74,45 @@ export const buildCategoryMetadata = (category: CategoryForSeo): Metadata =>
     noIndex: category.seoNoindex ?? false,
   });
 
+export const shopAllProductsMetadata: Metadata = {
+  ...baseMetadata({
+    title: 'Alle Leuchten – Leuchten Shop | Wehrli Licht',
+    description:
+      'Alle Leuchten im Online-Shop von Wehrli Licht: Pendelleuchten, Deckenleuchten, Wandleuchten und Tischleuchten für Zuhause und Gewerbe in der Schweiz.',
+    path: '/shop/alle-leuchten',
+  }),
+  keywords: [
+    'Alle Leuchten',
+    'Leuchten Shop',
+    'Pendelleuchte',
+    'Deckenleuchte',
+    'Wandleuchte',
+    'Tischleuchte',
+    'Wehrli Licht',
+  ],
+};
+
 export const shopIndexMetadata: Metadata = {
   ...baseMetadata({
-    title: 'Shop – Leuchten & Lampen',
+    title: 'Leuchten Shop | Lampenschirme nach Mass & Lichtberatung | Wehrli Licht',
     description:
-      'Entdecken Sie Pendel-, Decken-, Wand- und Tischleuchten im Online-Shop von Wehrli Licht. Lichtberatung und Lieferung in der Schweiz.',
+      'Leuchten online kaufen bei Wehrli Licht in Goldach: Pendelleuchten, Deckenleuchten, Wandleuchten und Tischleuchten. Dazu massgefertigte Lampenschirme nach Mass, Lampenschirm überziehen, Lichtberatung und Lichtplanung in der Schweiz.',
     path: '/shop',
   }),
+  keywords: [
+    'Leuchten online kaufen',
+    'Lampen Shop Schweiz',
+    'Pendelleuchte',
+    'Deckenleuchte',
+    'Wandleuchte',
+    'Tischleuchte',
+    'Lampenschirme nach Mass',
+    'Lampenschirm überziehen',
+    'Lampenschirm reparieren',
+    'Lampenschirm bedrucken',
+    'Lichtberatung Goldach',
+    'Lichtplanung',
+    'Wehrli Licht',
+    'Goldach',
+  ],
 };

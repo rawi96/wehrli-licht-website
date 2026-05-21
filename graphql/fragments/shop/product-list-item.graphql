@@ -2,6 +2,8 @@ fragment shopProductListItem on ShopProductRecord {
   id
   name
   slug
+  featured
+  featuredSort
   price
   images {
     ...shopFileImage

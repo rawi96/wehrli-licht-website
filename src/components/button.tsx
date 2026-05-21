@@ -13,6 +13,7 @@ type Props = {
   loading?: boolean;
   submit?: boolean;
   showArrow?: boolean;
+  newTab?: boolean;
 };
 
 export const Button = ({
@@ -26,6 +27,7 @@ export const Button = ({
   loading,
   submit,
   showArrow = true,
+  newTab,
 }: Props) => {
   const isDisabled = disabled ?? loading;
 
@@ -48,7 +50,13 @@ export const Button = ({
   const buttonClasses = type === 'primary' ? primaryClasses : secondaryClasses;
 
   return href ? (
-    <Link className={buttonClasses} href={href} onClick={onClick}>
+    <Link
+      className={buttonClasses}
+      href={href}
+      onClick={onClick}
+      target={newTab ? '_blank' : undefined}
+      rel={newTab ? 'noopener noreferrer' : undefined}
+    >
       {text}
       {type === 'secondary' && showArrow && <ArrowIcon />}
     </Link>

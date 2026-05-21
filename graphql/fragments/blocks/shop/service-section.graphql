@@ -1,0 +1,13 @@
+fragment shopServiceSection on ShopServiceSectionRecord {
+  id
+  title
+  intro: description {
+    ...shopServiceDescriptionField
+  }
+  offersLink {
+    ...shopLink
+  }
+  items {
+    ...shopServiceCard
+  }
+}

@@ -1,8 +1,9 @@
 'use client';
 
+import { getShopCategoryPath, SHOP_ALL_PRODUCTS_PATH } from '@/constants/shop-paths';
 import { ShopCategory } from '@/utils/shop';
 import { classNames } from '@/utils/css';
-import { Squares2X2Icon } from '@heroicons/react/24/outline';
+import { LightBulbIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { FC } from 'react';
@@ -10,6 +11,7 @@ import { FC } from 'react';
 type Props = {
   categories: ShopCategory[];
   activeCategorySlug?: string;
+  showAllProductsActive?: boolean;
   linkClassName?: string;
   activeLinkClassName?: string;
   onLinkClick?: () => void;
@@ -30,13 +32,14 @@ const getCategoryInitial = (name: string) => name.trim().charAt(0).toUpperCase()
 export const ShopNavLinks: FC<Props> = ({
   categories,
   activeCategorySlug,
+  showAllProductsActive,
   linkClassName,
   activeLinkClassName,
   onLinkClick,
   showIcons = true,
 }) => {
   const pathname = usePathname();
-  const isShopHome = pathname === '/shop';
+  const isAllProductsPage = showAllProductsActive ?? pathname === SHOP_ALL_PRODUCTS_PATH;
   const useSidebarStyles = showIcons && !linkClassName;
 
   const resolvedLinkClassName = linkClassName ?? sidebarLinkClasses;
@@ -46,22 +49,22 @@ export const ShopNavLinks: FC<Props> = ({
     <ul role="list" className={useSidebarStyles ? '-mx-2 space-y-1' : 'space-y-1'}>
       <li>
         <Link
-          href="/shop"
-          className={classNames(resolvedLinkClassName, isShopHome && resolvedActiveLinkClassName)}
-          aria-current={isShopHome ? 'page' : undefined}
+          href={SHOP_ALL_PRODUCTS_PATH}
+          className={classNames(resolvedLinkClassName, isAllProductsPage && resolvedActiveLinkClassName)}
+          aria-current={isAllProductsPage ? 'page' : undefined}
           onClick={onLinkClick}
         >
           {useSidebarStyles && (
-            <Squares2X2Icon
+            <LightBulbIcon
               aria-hidden="true"
-              className={classNames(sidebarIconClasses, isShopHome && sidebarIconActiveClasses)}
+              className={classNames(sidebarIconClasses, isAllProductsPage && sidebarIconActiveClasses)}
             />
           )}
-          <span className="truncate">Alle Kategorien</span>
+          <span className="truncate">Alle Leuchten</span>
         </Link>
       </li>
       {categories.map((category) => {
-        const href = `/shop/kategorien/${category.slug}`;
+        const href = getShopCategoryPath(category.slug);
         const isActive = activeCategorySlug === category.slug || pathname === href;
 
         return (

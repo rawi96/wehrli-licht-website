@@ -1,0 +1,9 @@
+fragment shopServiceCard on ShopServiceCardRecord {
+  id
+  title
+  description
+  icon
+  link {
+    ...shopLink
+  }
+}

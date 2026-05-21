@@ -1,0 +1,17 @@
+fragment shopStorefrontHero on ShopStorefrontHeroRecord {
+  id
+  eyebrow
+  title
+  intro {
+    ...shopStructuredTextField
+  }
+  primaryCta {
+    ...shopLink
+  }
+  secondaryCta {
+    ...shopLink
+  }
+  heroCategories {
+    ...shopCategory
+  }
+}

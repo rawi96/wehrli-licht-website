@@ -6,9 +6,10 @@ import { FC } from 'react';
 
 type Props = {
   activeCategorySlug?: string;
+  showAllProductsActive?: boolean;
 };
 
-export const ShopSidebar: FC<Props> = ({ activeCategorySlug }) => {
+export const ShopSidebar: FC<Props> = ({ activeCategorySlug, showAllProductsActive }) => {
   const categories = useShopCategories();
 
   if (categories.length === 0) {
@@ -20,7 +21,11 @@ export const ShopSidebar: FC<Props> = ({ activeCategorySlug }) => {
       <div>
         <p className="text-xs/6 font-semibold tracking-wide text-gray-400 uppercase">Kategorien</p>
         <div className="mt-2">
-          <ShopNavLinks categories={categories} activeCategorySlug={activeCategorySlug} />
+          <ShopNavLinks
+            categories={categories}
+            activeCategorySlug={activeCategorySlug}
+            showAllProductsActive={showAllProductsActive}
+          />
         </div>
       </div>
     </nav>

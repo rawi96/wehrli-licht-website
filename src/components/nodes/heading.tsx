@@ -10,9 +10,14 @@ export const Heading: FC<{
   children: ReactNode;
   level: keyof typeof HEADING_STYLES;
   color?: 'white' | 'wehrli';
-}> = ({ children, level, color = 'wehrli' }) => {
+  id?: string;
+}> = ({ children, level, color = 'wehrli', id }) => {
   const Tag: `h${keyof typeof HEADING_STYLES}` = `h${level}`;
   const colorClass = color === 'white' ? 'text-white' : 'text-wehrli';
 
-  return <Tag className={`${HEADING_STYLES[level]} ${colorClass}`}>{children}</Tag>;
+  return (
+    <Tag id={id} className={`${HEADING_STYLES[level]} ${colorClass}`}>
+      {children}
+    </Tag>
+  );
 };

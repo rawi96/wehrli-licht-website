@@ -1,4 +1,4 @@
-import { AllCategoriesGrid } from '@/components/shop/all-categories-grid';
+import { AllCategoriesGrid, shopCategoryToGridItem } from '@/components/shop/all-categories-grid';
 import { AllCategoriesBlockFragment } from '@/graphql/generated';
 import { getAllCategories } from '@/utils/shop';
 import { FC } from 'react';
@@ -12,7 +12,7 @@ export const AllCategoriesBlock: FC<Props> = async ({ block: { disableMarginBott
 
   return (
     <AllCategoriesGrid
-      categories={categories}
+      items={categories.map((category) => shopCategoryToGridItem(category))}
       layout={layout === 'row' ? 'row' : 'grid'}
       disableMarginBottom={disableMarginBottom}
       disableMarginTop={disableMarginTop}

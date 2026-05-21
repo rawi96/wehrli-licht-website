@@ -130,18 +130,18 @@ export const buildCategoryJsonLd = (
   };
 };
 
-export const buildShopIndexJsonLd = (categories: Pick<CategoryForSeo, 'name' | 'slug'>[]): Record<string, unknown> => {
-  const url = `${getSiteUrl()}/shop`;
+export const buildAllProductsJsonLd = (products: ProductListItemForSeo[]): Record<string, unknown> => {
+  const url = `${getSiteUrl()}/shop/alle-leuchten`;
+  const description =
+    'Alle Leuchten im Online-Shop von Wehrli Licht: Pendelleuchten, Deckenleuchten, Wandleuchten und Tischleuchten.';
 
   return {
     '@context': 'https://schema.org',
     '@graph': [
-      shopOrganizationNode(),
       {
         '@type': 'CollectionPage',
-        name: 'Shop – Leuchten & Lampen',
-        description:
-          'Entdecken Sie Pendel-, Decken-, Wand- und Tischleuchten im Online-Shop von Wehrli Licht. Lichtberatung und Lieferung in der Schweiz.',
+        name: 'Alle Leuchten',
+        description,
         url,
         isPartOf: {
           '@type': 'WebSite',
@@ -151,15 +151,104 @@ export const buildShopIndexJsonLd = (categories: Pick<CategoryForSeo, 'name' | '
       },
       {
         '@type': 'ItemList',
-        name: 'Leuchten-Kategorien',
-        numberOfItems: categories.length,
-        itemListElement: categories.map((category, index) => ({
-          '@type': 'ListItem',
-          position: index + 1,
-          name: category.name,
-          url: `${getSiteUrl()}/shop/kategorien/${category.slug}`,
-        })),
+        name: 'Alle Leuchten im Shop',
+        numberOfItems: products.length,
+        itemListElement: products.map((product, index) => {
+          const productUrl = `${getSiteUrl()}/shop/produkte/${product.slug}`;
+          const productImage = productOgImage(product);
+
+          return {
+            '@type': 'ListItem',
+            position: index + 1,
+            name: product.name,
+            url: productUrl,
+            item: {
+              '@type': 'Product',
+              name: product.name,
+              url: productUrl,
+              ...(productImage ? { image: [productImage] } : {}),
+            },
+          };
+        }),
       },
     ],
+  };
+};
+
+type ShopFaqItem = {
+  title: string;
+  description: string;
+};
+
+export const buildShopStorefrontFaqJsonLd = (items: ShopFaqItem[]): Record<string, unknown> | null => {
+  if (items.length === 0) {
+    return null;
+  }
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: items.map((item) => ({
+      '@type': 'Question',
+      name: item.title,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.description,
+      },
+    })),
+  };
+};
+
+export const buildShopIndexJsonLd = (
+  categories: Pick<CategoryForSeo, 'name' | 'slug'>[],
+  featuredProducts: ProductListItemForSeo[] = [],
+): Record<string, unknown> => {
+  const url = `${getSiteUrl()}/shop`;
+  const shopDescription =
+    'Leuchten online kaufen bei Wehrli Licht in Goldach: Pendelleuchten, Deckenleuchten, Wandleuchten und Tischleuchten. Massgefertigte Lampenschirme nach Mass, Lichtberatung und Lichtplanung in der Schweiz.';
+
+  const graph: Record<string, unknown>[] = [
+    shopOrganizationNode(),
+    {
+      '@type': 'CollectionPage',
+      name: 'Leuchten Shop | Lampenschirme nach Mass | Wehrli Licht',
+      description: shopDescription,
+      url,
+      isPartOf: {
+        '@type': 'WebSite',
+        name: SITE_NAME,
+        url: getSiteUrl(),
+      },
+    },
+    {
+      '@type': 'ItemList',
+      name: 'Leuchten-Kategorien',
+      numberOfItems: categories.length,
+      itemListElement: categories.map((category, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        name: category.name,
+        url: `${getSiteUrl()}/shop/kategorien/${category.slug}`,
+      })),
+    },
+  ];
+
+  if (featuredProducts.length > 0) {
+    graph.push({
+      '@type': 'ItemList',
+      name: 'Auswahl Leuchten im Shop',
+      numberOfItems: featuredProducts.length,
+      itemListElement: featuredProducts.map((product, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        name: product.name,
+        url: `${getSiteUrl()}/shop/produkte/${product.slug}`,
+      })),
+    });
+  }
+
+  return {
+    '@context': 'https://schema.org',
+    '@graph': graph,
   };
 };

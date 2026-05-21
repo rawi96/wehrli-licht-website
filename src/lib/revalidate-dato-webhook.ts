@@ -33,7 +33,7 @@ const getModelApiKey = (payload: DatoWebhookPayload): string | null => {
 };
 
 const revalidateShopIndexAndFeeds = (paths: string[]): void => {
-  const sharedPaths = ['/shop', '/sitemap.xml', '/robots.txt', '/feed/google-shopping.xml'] as const;
+  const sharedPaths = ['/shop', '/shop/alle-leuchten', '/sitemap.xml', '/robots.txt', '/feed/google-shopping.xml'] as const;
 
   for (const path of sharedPaths) {
     revalidatePath(path);
@@ -111,6 +111,10 @@ export const revalidateFromDatoWebhook = (payload: DatoWebhookPayload): string[]
         revalidateCategorySlug(previousSlug, paths);
       }
 
+      break;
+    }
+    case 'shop_page': {
+      revalidateShopIndexAndFeeds(paths);
       break;
     }
     default:

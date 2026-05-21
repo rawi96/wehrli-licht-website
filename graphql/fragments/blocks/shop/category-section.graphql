@@ -1,0 +1,9 @@
+fragment shopCategorySection on ShopCategorySectionRecord {
+  id
+  title
+  body: description
+  sectionId
+  actionLink {
+    ...shopLink
+  }
+}
