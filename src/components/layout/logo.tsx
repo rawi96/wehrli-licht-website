@@ -1,5 +1,16 @@
-export const Logo = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width={200} height={50} viewBox="0 0 755.90668 226.77333">
+type LogoProps = {
+  className?: string;
+};
+
+export const Logo = ({ className }: LogoProps) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={200}
+    height={50}
+    viewBox="0 0 755.90668 226.77333"
+    className={className}
+    aria-hidden="true"
+  >
     <defs>
       <clipPath id="a" clipPathUnits="userSpaceOnUse">
         <path d="M30.707 15.309H1334.18V1681.07H30.707Z" />
