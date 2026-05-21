@@ -3,7 +3,7 @@ import { ContentWrapper } from '@/components/layout/content-wrapper';
 import { Footer } from '@/components/layout/footer';
 import { Header } from '@/components/layout/header';
 import { Heading } from '@/components/nodes';
-import { AllProductsForCategory } from '@/components/shop/all-products-for-category';
+import { ShopProductCatalog } from '@/components/shop/shop-product-catalog';
 import { ShopBrowseLayout } from '@/components/shop/shop-browse-layout';
 import { SHOP_ALL_PRODUCTS_PATH } from '@/constants/shop-paths';
 import { getHeaderFooter } from '@/utils/get-header-footer';
@@ -37,7 +37,7 @@ export default async function ShopAllProductsPage() {
           <header className="mb-8 max-w-3xl">
             <Heading level="1">Alle Leuchten</Heading>
             <p className="mt-4 text-sm lg:text-base">
-              Entdecken Sie unser gesamtes Sortiment an Pendel-, Decken-, Wand- und Tischleuchten – oder filtern Sie nach
+              Entdecken Sie unser gesamtes Sortiment an Pendel-, Decken-, Wand- und Tischleuchten – oder wählen Sie eine
               Kategorie in der Navigation.
             </p>
           </header>
@@ -46,7 +46,7 @@ export default async function ShopAllProductsPage() {
               <h2 id="all-products-heading" className="sr-only">
                 {products.length === 1 ? '1 Leuchte' : `${products.length} Leuchten`} im Shop
               </h2>
-              <AllProductsForCategory products={products} />
+              <ShopProductCatalog products={products} />
             </section>
           )}
         </ShopBrowseLayout>

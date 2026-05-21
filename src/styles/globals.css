@@ -23,10 +23,16 @@ html {
   a,
   button,
   [role='button'],
-  input,
+  input:not(.field-focus-plain),
   textarea,
   select {
     @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-wehrli focus-visible:ring-offset-2 focus-visible:ring-offset-white-200;
+  }
+
+  .field-focus-plain:focus,
+  .field-focus-plain:focus-visible {
+    outline: none;
+    box-shadow: none;
   }
 
   ::selection {

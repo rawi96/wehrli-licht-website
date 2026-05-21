@@ -19,7 +19,7 @@ export const ShopSidebar: FC<Props> = ({ activeCategorySlug, showAllProductsActi
   return (
     <nav aria-label="Shop-Kategorien" className="flex flex-col gap-y-5">
       <div>
-        <p className="text-xs/6 font-semibold tracking-wide text-gray-400 uppercase">Kategorien</p>
+        <p className="text-xs font-semibold tracking-wide text-gray-400 uppercase">Kategorien</p>
         <div className="mt-2">
           <ShopNavLinks
             categories={categories}

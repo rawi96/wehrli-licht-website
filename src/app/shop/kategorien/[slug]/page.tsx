@@ -4,7 +4,7 @@ import { Footer } from '@/components/layout/footer';
 import { Header } from '@/components/layout/header';
 import { Heading } from '@/components/nodes';
 import NotFound from '@/components/not-found';
-import { AllProductsForCategory } from '@/components/shop/all-products-for-category';
+import { ShopProductCatalog } from '@/components/shop/shop-product-catalog';
 import { ShopBrowseLayout } from '@/components/shop/shop-browse-layout';
 import { getHeaderFooter } from '@/utils/get-header-footer';
 import { getAllCategorySlugs, getCategoryBySlug, getProductsByCategory } from '@/utils/shop';
@@ -76,7 +76,7 @@ export default async function ShopCategoryPage({ params }: Props) {
               <h2 id="category-products-heading" className="sr-only">
                 {products.length === 1 ? '1 Produkt' : `${products.length} Produkte`} in {category.name}
               </h2>
-              <AllProductsForCategory products={products} />
+              <ShopProductCatalog products={products} />
             </section>
           )}
         </ShopBrowseLayout>

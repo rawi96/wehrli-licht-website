@@ -32,7 +32,7 @@ export const ShopMobileNav: FC<Props> = ({ onLinkClick }) => {
         linkClassName={mobileLinkClasses}
         activeLinkClassName={classNames(mobileLinkClasses, mobileActiveClasses)}
         onLinkClick={onLinkClick}
-        showIcons={false}
+        variant="plain"
       />
     </div>
   );
