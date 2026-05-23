@@ -1,0 +1,15 @@
+query AllFaqs {
+  allFaqs(first: 100, orderBy: sortOrder_ASC) {
+    id
+    question
+    slug
+    answer
+    sortOrder
+    topic {
+      id
+      title
+      slug
+      sortOrder
+    }
+  }
+}

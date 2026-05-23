@@ -1,0 +1,19 @@
+query FaqPageMeta($slug: String!) {
+  page(filter: { slug: { eq: $slug } }) {
+    title
+    teaserEyebrow
+    teaserDescription
+    seo: _seoMetaTags {
+      attributes
+      content
+      tag
+    }
+  }
+  site: _site {
+    favicon: faviconMetaTags {
+      attributes
+      content
+      tag
+    }
+  }
+}
