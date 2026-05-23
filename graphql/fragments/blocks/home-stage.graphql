@@ -1,7 +1,13 @@
 fragment homeStageBlock on HomeStageRecord {
   id
   image {
-    responsiveImage(imgixParams: { w: 900, q: 55, auto: format }) {
+    responsiveImage(imgixParams: { w: 1920, q: 60, auto: format, fit: crop }) {
+      ...responsiveImageFragment
+    }
+  }
+  slideshowImages: images {
+    id
+    responsiveImage(imgixParams: { w: 1920, q: 60, auto: format, fit: crop }) {
       ...responsiveImageFragment
     }
   }

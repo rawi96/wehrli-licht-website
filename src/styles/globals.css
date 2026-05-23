@@ -40,3 +40,85 @@ html {
     @apply text-white;
   }
 }
+
+@layer utilities {
+  @keyframes ken-burns {
+    0% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(1.18);
+    }
+  }
+
+  @keyframes hero-reveal {
+    0% {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes scroll-hint {
+    0%,
+    100% {
+      opacity: 0.4;
+      transform: translateY(0);
+    }
+    50% {
+      opacity: 1;
+      transform: translateY(6px);
+    }
+  }
+
+  @keyframes light-beam {
+    0%,
+    100% {
+      opacity: 0.3;
+    }
+    50% {
+      opacity: 0.6;
+    }
+  }
+
+  .animate-ken-burns {
+    animation: ken-burns 16s ease-out forwards;
+  }
+
+  .animate-hero-reveal {
+    animation: hero-reveal 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .animate-scroll-hint {
+    animation: scroll-hint 2s ease-in-out infinite;
+  }
+
+  .animate-light-beam {
+    animation: light-beam 4s ease-in-out infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-ken-burns,
+    .animate-scroll-hint,
+    .animate-light-beam {
+      animation: none;
+    }
+
+    .animate-hero-reveal {
+      animation: none;
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .hero-text-shadow {
+    text-shadow: 0 2px 24px rgb(8 15 28 / 0.65), 0 1px 4px rgb(8 15 28 / 0.5);
+  }
+}
