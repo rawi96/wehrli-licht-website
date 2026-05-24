@@ -1,0 +1,13 @@
+fragment highlightOffersTeaser on HighlightOffersTeaserRecord {
+  id
+  disableMarginTop
+  disableMarginBottom
+  title
+  subline
+  footerCta {
+    ...linkBlock
+  }
+  offers {
+    ...highlightOfferItem
+  }
+}

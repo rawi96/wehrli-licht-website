@@ -1,4 +1,5 @@
 import '@/styles/globals.css';
+import '@/styles/highlight-teaser.css';
 import { classNames } from '@/utils/css';
 import PlausibleProvider from 'next-plausible';
 import type { Metadata } from 'next';

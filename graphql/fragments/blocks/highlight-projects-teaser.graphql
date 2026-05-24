@@ -1,0 +1,13 @@
+fragment highlightProjectsTeaser on HighlightProjectsTeaserRecord {
+  id
+  disableMarginTop
+  disableMarginBottom
+  title
+  subline
+  primaryCta {
+    ...linkBlock
+  }
+  projects {
+    ...highlightProjectItem
+  }
+}

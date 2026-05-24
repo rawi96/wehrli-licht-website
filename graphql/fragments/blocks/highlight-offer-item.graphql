@@ -1,0 +1,11 @@
+fragment highlightOfferItem on HighlightOfferItemRecord {
+  id
+  title
+  eyebrow
+  offerLink {
+    ...linkBlock
+  }
+  image {
+    ...highlightFileImage
+  }
+}

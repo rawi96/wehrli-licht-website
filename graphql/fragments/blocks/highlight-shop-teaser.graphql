@@ -1,0 +1,19 @@
+fragment highlightShopTeaser on HighlightShopTeaserRecord {
+  id
+  disableMarginTop
+  disableMarginBottom
+  eyebrow
+  title
+  subline
+  popularCategoriesLabel
+  moreCategoriesLabel
+  primaryCta {
+    ...linkBlock
+  }
+  secondaryCta {
+    ...linkBlock
+  }
+  featuredCategories {
+    ...shopCategory
+  }
+}

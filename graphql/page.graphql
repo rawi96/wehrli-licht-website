@@ -58,6 +58,15 @@ query Page($slug: String!) {
       ... on CalendlyRecord {
         ...calendlyBlock
       }
+      ... on HighlightProjectsTeaserRecord {
+        ...highlightProjectsTeaser
+      }
+      ... on HighlightOffersTeaserRecord {
+        ...highlightOffersTeaser
+      }
+      ... on HighlightShopTeaserRecord {
+        ...highlightShopTeaser
+      }
     }
     seo: _seoMetaTags {
       attributes

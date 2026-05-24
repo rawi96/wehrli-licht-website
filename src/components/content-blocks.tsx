@@ -1,5 +1,8 @@
 import {
   GalleryBlockFragment,
+  HighlightOffersTeaserFragment,
+  HighlightProjectsTeaserFragment,
+  HighlightShopTeaserFragment,
   PageModelContentField,
   TeaserGridBlockFragment,
   TeaserRowBlockFragment,
@@ -12,6 +15,9 @@ import { FC } from 'react';
 import { CalendlyBlock } from './blocks/calendly';
 import { ContactBlock } from './blocks/contact';
 import { GalleryBlock } from './blocks/gallery';
+import { HighlightOffersTeaserBlock } from './blocks/highlight/highlight-offers-teaser';
+import { HighlightProjectsTeaserBlock } from './blocks/highlight/highlight-projects-teaser';
+import { HighlightShopTeaserBlock } from './blocks/highlight/highlight-shop-teaser';
 import { IframeBlock } from './blocks/iframe';
 import { ImageBlock } from './blocks/image';
 import { LogoGridBlock } from './blocks/logo-grid';
@@ -63,6 +69,12 @@ export const ContentBlocks: FC<Props> = ({ blocks }) => (
           return <ContactBlock key={block.id} block={block} />;
         case 'CalendlyRecord':
           return <CalendlyBlock key={block.id} block={block} />;
+        case 'HighlightProjectsTeaserRecord':
+          return <HighlightProjectsTeaserBlock key={block.id} block={block as HighlightProjectsTeaserFragment} />;
+        case 'HighlightOffersTeaserRecord':
+          return <HighlightOffersTeaserBlock key={block.id} block={block as HighlightOffersTeaserFragment} />;
+        case 'HighlightShopTeaserRecord':
+          return <HighlightShopTeaserBlock key={block.id} block={block as HighlightShopTeaserFragment} />;
         default:
           return null;
       }

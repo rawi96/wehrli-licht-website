@@ -42,15 +42,16 @@ export default async function HomePage() {
     notFound();
   }
 
-  const homeStageBlock = page.content?.find((block) => block.__typename === 'HomeStageRecord');
+  const content = page.content ?? [];
+  const homeStageBlock = content.find((block) => block.__typename === 'HomeStageRecord');
+  const pageBlocks = content.filter((block) => block.__typename !== 'HomeStageRecord');
 
   return (
     <>
       <main>
-        {/* Home Contains a Component which contains a Header */}
         {homeStageBlock && <HomeStageBlock key={homeStageBlock.id} block={homeStageBlock as HomeStageBlockFragment} />}
         <ContentWrapper>
-          <ContentBlocks blocks={page.content as PageModelContentField[]} />
+          <ContentBlocks blocks={pageBlocks as PageModelContentField[]} />
         </ContentWrapper>
       </main>
       <Footer headerFooter={headerFooter as HeaderFooterRecord} />

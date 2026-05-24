@@ -1,0 +1,13 @@
+fragment highlightProjectItem on HighlightProjectItemRecord {
+  id
+  offer
+  title
+  company
+  description
+  projectLink {
+    ...linkBlock
+  }
+  image {
+    ...highlightFileImage
+  }
+}

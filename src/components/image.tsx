@@ -11,29 +11,37 @@ type ImageProps = {
   } | null;
   imgClassName?: string;
   priority?: boolean;
+  sizes?: string;
 };
 
-export const ImageComponent: FC<ImageProps> = ({ image, priority, imgClassName }) => (
-  <>
-    {image?.responsiveImage?.src &&
-      (priority ? (
-        <NextImage
-          src={image.responsiveImage.src}
-          width={image.responsiveImage.width ?? 1200}
-          height={image.responsiveImage.height ?? 900}
-          sizes="100vw"
-          alt={image.alt ?? ''}
-          priority
-          fetchPriority="high"
-          className={imgClassName ?? 'object-cover'}
-          style={{ width: '100%', height: '100%' }}
-        />
-      ) : (
-        <DatoSRCImage
-          data={image.responsiveImage}
-          imgClassName={imgClassName ?? 'object-cover'}
-          imgStyle={{ width: '100%', maxWidth: '100%', height: '100%' }}
-        />
-      ))}
-  </>
-);
+export const ImageComponent: FC<ImageProps> = ({ image, priority, imgClassName, sizes = '100vw' }) => {
+  const responsiveImage = image?.responsiveImage;
+
+  if (!responsiveImage?.src) {
+    return null;
+  }
+
+  const alt = image?.alt ?? '';
+  const srcData = { ...responsiveImage, alt };
+
+  return priority ? (
+    <NextImage
+      src={responsiveImage.src}
+      width={responsiveImage.width ?? 1200}
+      height={responsiveImage.height ?? 900}
+      sizes={sizes}
+      alt={alt}
+      priority
+      fetchPriority="high"
+      className={imgClassName ?? 'object-cover'}
+      style={{ width: '100%', height: '100%' }}
+    />
+  ) : (
+    <DatoSRCImage
+      data={srcData}
+      sizes={sizes}
+      imgClassName={imgClassName ?? 'object-cover'}
+      imgStyle={{ width: '100%', maxWidth: '100%', height: '100%' }}
+    />
+  );
+};

@@ -1,0 +1,7 @@
+fragment highlightFileImage on FileField {
+  responsiveImage(imgixParams: { w: 1600, q: 75, auto: format }) {
+    ...responsiveImageFragment
+  }
+  alt
+  title
+}
