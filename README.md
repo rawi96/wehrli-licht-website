@@ -4,6 +4,6 @@
 
 ```bash
 npm ci
-cp .env.template .env.local # and fill in the required values
+cp .env.template .env.local
 npm run dev
 ```
