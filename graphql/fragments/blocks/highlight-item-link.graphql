@@ -1,0 +1,17 @@
+fragment highlightItemLink on LinkRecord {
+  id
+  label
+  newTab
+  externalUrl
+  isExternalUrl
+  anchorLink
+  link {
+    __typename
+    ... on PageRecord {
+      ...pageRecordLink
+      teaserImage {
+        ...highlightPageTeaserImage
+      }
+    }
+  }
+}

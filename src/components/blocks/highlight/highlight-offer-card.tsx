@@ -1,7 +1,7 @@
 import { ImageComponent } from '@/components/image';
 import { HighlightOfferItemFragment } from '@/graphql/generated';
 import { getCmsLinkHref } from '@/utils/cms-link';
-import { HIGHLIGHT_IMAGE_SIZES, highlightImageAlt } from '@/utils/highlight-teaser';
+import { HIGHLIGHT_IMAGE_SIZES, getHighlightLinkedTeaserImage, highlightImageAlt } from '@/utils/highlight-teaser';
 import { classNames } from '@/utils/css';
 import Link from 'next/link';
 import { FC } from 'react';
@@ -26,7 +26,8 @@ export const HighlightOfferCard: FC<Props> = ({ offer, priority, featured, class
     return null;
   }
 
-  const imageAlt = highlightImageAlt(offer.image?.alt, offer.title);
+  const teaserImage = getHighlightLinkedTeaserImage(offer.offerLink);
+  const imageAlt = highlightImageAlt(teaserImage?.alt, offer.title);
 
   return (
     <Link
@@ -41,7 +42,7 @@ export const HighlightOfferCard: FC<Props> = ({ offer, priority, featured, class
       )}
     >
       <ImageComponent
-        image={offer.image ? { ...offer.image, alt: imageAlt } : null}
+        image={teaserImage ? { ...teaserImage, alt: imageAlt } : null}
         priority={priority}
         sizes={featured ? HIGHLIGHT_IMAGE_SIZES.offerFeatured : HIGHLIGHT_IMAGE_SIZES.offerCompact}
         imgClassName="size-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04] motion-reduce:transition-none"

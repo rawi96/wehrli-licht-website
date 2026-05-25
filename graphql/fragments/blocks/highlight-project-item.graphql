@@ -5,9 +5,6 @@ fragment highlightProjectItem on HighlightProjectItemRecord {
   company
   description
   projectLink {
-    ...linkBlock
-  }
-  image {
-    ...highlightFileImage
+    ...highlightItemLink
   }
 }

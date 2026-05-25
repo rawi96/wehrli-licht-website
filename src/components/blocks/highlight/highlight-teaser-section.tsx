@@ -30,7 +30,7 @@ export const HighlightTeaserSection = ({
     <BlockWrapper disableMarginTop={disableMarginTop} disableMarginBottom={disableMarginBottom} className="!my-0">
       <section
         aria-labelledby={headingId}
-        className={classNames('highlight-teaser-breakout bg-white-200', bordered && 'border-t border-black/5')}
+        className={classNames('highlight-teaser-breakout bg-white-200', bordered && 'border-b border-black/5')}
       >
         <div className="highlight-teaser-container py-12 sm:py-16 md:py-24">
           <header className="mb-8 max-w-xl sm:mb-10 md:mb-12">

@@ -1,4 +1,4 @@
-fragment highlightFileImage on FileField {
+fragment highlightPageTeaserImage on ImageFileField {
   responsiveImage(imgixParams: { w: 1600, q: 75, auto: format }) {
     ...responsiveImageFragment
   }

@@ -39,3 +39,32 @@ export const highlightImageAlt = (alt: string | null | undefined, fallback: stri
 
   return trimmed && trimmed.length > 0 ? trimmed : fallback;
 };
+
+type HighlightTeaserImage =
+  | {
+      alt?: string | null;
+      title?: string | null;
+      responsiveImage?: {
+        src: string;
+        width: number;
+        height: number;
+        alt?: string | null;
+        title?: string | null;
+        base64?: string | null;
+        sizes: string;
+      } | null;
+    }
+  | null
+  | undefined;
+
+type HighlightItemLink =
+  | {
+      link?: {
+        teaserImage?: HighlightTeaserImage;
+      } | null;
+    }
+  | null
+  | undefined;
+
+export const getHighlightLinkedTeaserImage = (link: HighlightItemLink): HighlightTeaserImage =>
+  link?.link?.teaserImage ?? null;

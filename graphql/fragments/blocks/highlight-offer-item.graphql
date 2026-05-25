@@ -3,9 +3,6 @@ fragment highlightOfferItem on HighlightOfferItemRecord {
   title
   eyebrow
   offerLink {
-    ...linkBlock
-  }
-  image {
-    ...highlightFileImage
+    ...highlightItemLink
   }
 }

@@ -1,7 +1,7 @@
 import { ImageComponent } from '@/components/image';
 import { HighlightProjectItemFragment } from '@/graphql/generated';
 import { getCmsLinkHref } from '@/utils/cms-link';
-import { HIGHLIGHT_IMAGE_SIZES, highlightImageAlt } from '@/utils/highlight-teaser';
+import { HIGHLIGHT_IMAGE_SIZES, getHighlightLinkedTeaserImage, highlightImageAlt } from '@/utils/highlight-teaser';
 import { classNames } from '@/utils/css';
 import Link from 'next/link';
 import { FC } from 'react';
@@ -60,7 +60,8 @@ export const HighlightProjectFeaturedCard: FC<FeaturedProps> = ({ project, prior
     return null;
   }
 
-  const imageAlt = highlightImageAlt(project.image?.alt, `${project.title} – ${project.company}`);
+  const teaserImage = getHighlightLinkedTeaserImage(project.projectLink);
+  const imageAlt = highlightImageAlt(teaserImage?.alt, `${project.title} – ${project.company}`);
 
   return (
     <Link
@@ -73,7 +74,7 @@ export const HighlightProjectFeaturedCard: FC<FeaturedProps> = ({ project, prior
     >
       <div className="relative aspect-[16/11] min-h-[11rem] overflow-hidden sm:min-h-[13rem] lg:col-span-7 lg:aspect-auto lg:min-h-full">
         <ImageComponent
-          image={project.image ? { ...project.image, alt: imageAlt } : null}
+          image={teaserImage ? { ...teaserImage, alt: imageAlt } : null}
           priority={priority}
           sizes={HIGHLIGHT_IMAGE_SIZES.projectFeatured}
           imgClassName="size-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03] motion-reduce:transition-none"
@@ -95,7 +96,8 @@ export const HighlightProjectCompactCard: FC<CompactProps> = ({ project }) => {
     return null;
   }
 
-  const imageAlt = highlightImageAlt(project.image?.alt, `${project.title} – ${project.company}`);
+  const teaserImage = getHighlightLinkedTeaserImage(project.projectLink);
+  const imageAlt = highlightImageAlt(teaserImage?.alt, `${project.title} – ${project.company}`);
 
   return (
     <Link
@@ -104,7 +106,7 @@ export const HighlightProjectCompactCard: FC<CompactProps> = ({ project }) => {
     >
       <div className="relative aspect-[4/3] overflow-hidden">
         <ImageComponent
-          image={project.image ? { ...project.image, alt: imageAlt } : null}
+          image={teaserImage ? { ...teaserImage, alt: imageAlt } : null}
           sizes={HIGHLIGHT_IMAGE_SIZES.projectCompact}
           imgClassName="size-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03] motion-reduce:transition-none"
         />
