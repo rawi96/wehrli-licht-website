@@ -1,5 +1,9 @@
 import '@/styles/globals.css';
 import '@/styles/highlight-teaser.css';
+import { ContactClickTracking } from '@/components/analytics/contact-click-tracking';
+import { CookieBanner } from '@/components/analytics/cookie-banner';
+import { GoogleTag } from '@/components/analytics/google-tag';
+import { isTrackingEnabled } from '@/lib/analytics/config';
 import { classNames } from '@/utils/css';
 import type { Metadata } from 'next';
 import { draftMode } from 'next/headers';
@@ -34,10 +38,17 @@ const RootLayout = async ({ children }: { children: ReactNode }) => {
       <head>
         <link rel="preconnect" href="https://www.datocms-assets.com" crossOrigin="" />
         <link rel="dns-prefetch" href="https://www.datocms-assets.com" />
+        <GoogleTag />
       </head>
       <body className={classNames(jost.className, 'bg-white-200 h-full antialiased')}>
         {isEnabled && <DraftModeBanner />}
         <ShopContextProvider>{children}</ShopContextProvider>
+        {isTrackingEnabled && (
+          <>
+            <CookieBanner />
+            <ContactClickTracking />
+          </>
+        )}
       </body>
     </html>
   );

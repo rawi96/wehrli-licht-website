@@ -11,14 +11,30 @@ import { ShopProduct } from '@/utils/shop';
 import { classNames } from '@/utils/css';
 import { DEFAULT_SHIPPING_COST_CHF } from '@/constants/shop-commerce';
 import { formatPriceToCHF } from '@/utils/price';
+import { trackEvent } from '@/lib/analytics/gtag';
 import { Tab } from '@headlessui/react';
-import { useState } from 'react';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 type ProductVariant = ShopProduct['variants'][number];
 
 type Props = {
   product: ShopProduct;
 };
+
+const toAnalyticsItem = (product: ShopProduct, variant: ProductVariant | null) => {
+  const hasSelections = variant !== null && variant.selections.length > 0;
+
+  return {
+    item_id: product.id,
+    item_name: product.name,
+    price: variant?.price ?? product.price ?? undefined,
+    item_variant: hasSelections ? variant.selections.map((selection) => selection.value).join(' / ') : undefined,
+  };
+};
+
+const productQuestionHref = (product: ShopProduct) =>
+  `/kontakt?${new URLSearchParams({ anliegen: 'leuchte', produkt: product.name }).toString()}#kontaktformular`;
 
 export const ProductDetail = ({ product }: Props) => {
   const [activeVariant, setActiveVariant] = useState<ProductVariant | null>(null);
@@ -33,11 +49,20 @@ export const ProductDetail = ({ product }: Props) => {
     }));
   const displayPrice = activeVariant?.price ?? product.price;
 
+  useEffect(() => {
+    const item = toAnalyticsItem(product, null);
+    trackEvent('view_item', { currency: 'CHF', value: item.price, items: [item] });
+  }, [product]);
+
+  const handleViewingClick = () => trackEvent('besichtigung_klick', { item_name: product.name });
+
   const handleAddToCartClick = () => {
     setLoading(true);
 
     const added = addToCart(product, activeVariant);
     if (added) {
+      const item = toAnalyticsItem(product, activeVariant);
+      trackEvent('add_to_cart', { currency: 'CHF', value: item.price, items: [{ ...item, quantity: 1 }] });
       setIsShowCart(true);
     } else {
       console.error('Produkt konnte nicht in den Warenkorb gelegt werden.');
@@ -112,7 +137,12 @@ export const ProductDetail = ({ product }: Props) => {
                 <div className="mr-2">
                   <Button text="Zum Warenkorb hinzufügen" type="primary" onClick={handleAddToCartClick} loading={loading} />
                 </div>
-                <Button text="Besichtigungstermin vereinbaren" type="secondary" href="/kontakt#termin" />
+                <Button
+                  text="Besichtigungstermin vereinbaren"
+                  type="secondary"
+                  href="/kontakt#termin"
+                  onClick={handleViewingClick}
+                />
               </div>
             </div>
           </div>
@@ -128,9 +158,22 @@ export const ProductDetail = ({ product }: Props) => {
             </div>
 
             <div className="pt-6 pb-10">
-              <Button text="Besichtigungstermin vereinbaren" type="secondary" href="/kontakt#termin" fullWidth />
+              <Button
+                text="Besichtigungstermin vereinbaren"
+                type="secondary"
+                href="/kontakt#termin"
+                onClick={handleViewingClick}
+                fullWidth
+              />
             </div>
           </div>
+
+          <p className="-mt-4 mb-10 text-sm">
+            Fragen zu dieser Leuchte?{' '}
+            <Link href={productQuestionHref(product)} className="text-wehrli font-bold underline">
+              Schreiben Sie uns
+            </Link>
+          </p>
         </div>
 
         {product.description?.value !== undefined &&

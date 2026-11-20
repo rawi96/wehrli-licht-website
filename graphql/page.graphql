@@ -58,6 +58,9 @@ query Page($slug: String!) {
       ... on CalendlyRecord {
         ...calendlyBlock
       }
+      ... on ContactFormRecord {
+        ...contactFormBlock
+      }
       ... on HighlightProjectsTeaserRecord {
         ...highlightProjectsTeaser
       }
