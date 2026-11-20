@@ -94,19 +94,25 @@ export const HomeStageSlideshow: FC<Props> = ({ slides, intervalMs = 7000 }) => 
           >
             {isPaused ? <PlayIcon /> : <PauseIcon />}
           </button>
-          <div className="flex gap-2" role="group" aria-label="Hintergrundbild auswählen">
+          <div className="flex" role="group" aria-label="Hintergrundbild auswählen">
             {slides.map((slide, index) => (
+              // 24px tap target (WCAG 2.5.8) around the small visual dot.
               <button
                 key={slide.id}
                 type="button"
                 aria-label={`Bild ${index + 1} von ${slides.length}`}
                 aria-current={index === activeIndex ? 'true' : undefined}
                 onClick={() => setActiveIndex(index)}
-                className={classNames(
-                  'h-1.5 rounded-full transition-all duration-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none',
-                  index === activeIndex ? 'w-8 bg-white' : 'w-1.5 bg-white/40 hover:bg-white/70',
-                )}
-              />
+                className="group/dot flex h-6 min-w-6 items-center justify-center rounded-full px-1 focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none"
+              >
+                <span
+                  aria-hidden="true"
+                  className={classNames(
+                    'h-1.5 rounded-full transition-all duration-500',
+                    index === activeIndex ? 'w-8 bg-white' : 'w-1.5 bg-white/40 group-hover/dot:bg-white/70',
+                  )}
+                />
+              </button>
             ))}
           </div>
         </div>

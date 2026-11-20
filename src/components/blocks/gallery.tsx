@@ -8,9 +8,14 @@ import { LightboxGate } from '@/components/lightbox-gate';
 
 type Props = {
   block: GalleryBlockFragment;
+  /** Block is near the top of the page: load the first image eagerly (LCP). */
+  aboveFold?: boolean;
 };
 
-export const GalleryBlock: FC<Props> = ({ block: { gallery, disableMarginBottom, disableMarginTop, showImageTitles } }) => {
+export const GalleryBlock: FC<Props> = ({
+  block: { gallery, disableMarginBottom, disableMarginTop, showImageTitles },
+  aboveFold = false,
+}) => {
   const slides = gallery.map(({ id, largeSize }) => ({
     key: id,
     src: largeSize.src,
@@ -24,7 +29,7 @@ export const GalleryBlock: FC<Props> = ({ block: { gallery, disableMarginBottom,
         <LightboxGate slides={slides} />
       </Suspense>
       <div className="space-y-1 md:flex md:flex-wrap md:gap-1 md:space-y-0">
-        {gallery.map(({ id, smallSize }) => {
+        {gallery.map(({ id, smallSize }, index) => {
           if (!smallSize) {
             return null;
           }
@@ -48,6 +53,7 @@ export const GalleryBlock: FC<Props> = ({ block: { gallery, disableMarginBottom,
 
               <DatoSRCImage
                 data={smallSize}
+                priority={aboveFold && index === 0}
                 imgStyle={{ objectFit: 'cover', maxWidth: '100%', maxHeight: '100%' }}
                 imgClassName={classNames(
                   'transition-transform duration-300 group-hover:scale-110',
