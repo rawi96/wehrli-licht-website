@@ -41,12 +41,15 @@ export async function generateMetadata({ params }: Params) {
   return buildDatoPageMetadata([...site.favicon, ...(page?.seo ?? [])], `/${slugs.join('/')}`);
 }
 
+const PATHS_WITH_DEDICATED_ROUTES = new Set(['/', '/shop', '/faq']);
+
 export async function generateStaticParams() {
   const routes = await getAllDatoRoutes({ pagesOnly: true, includeDrafts: false });
 
   // The param must be named like the route segment ([...slugs]), otherwise nothing is prerendered.
+  // The homepage and paths served by dedicated routes (app/shop, app/faq) are skipped.
   return routes
-    .filter(({ path }) => path !== '/') // We filter out the homepage
+    .filter(({ path }) => !PATHS_WITH_DEDICATED_ROUTES.has(path))
     .map(({ path }) => ({
       slugs: path.split('/').filter(Boolean),
     }));

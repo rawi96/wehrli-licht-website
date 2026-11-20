@@ -10,7 +10,10 @@ type Props = {
 
 /** Content is max 1280px wide (max-w-7xl) and 11/12 of the viewport below that. */
 const SINGLE_IMAGE_SIZES = '(min-width: 1400px) 1280px, 92vw';
-const GRID_IMAGE_SIZES = '(min-width: 1400px) 640px, (min-width: 640px) 46vw, 92vw';
+
+/** Images sit side by side from 640px (grid-flow-col), so each gets 1/n of the content width. */
+const gridImageSizes = (count: number): string =>
+  `(min-width: 1400px) ${Math.round(1280 / count)}px, (min-width: 640px) ${Math.round(92 / count)}vw, 92vw`;
 
 export const ImageBlock: FC<Props> = ({
   block: { images, disableMarginBottom, disableMarginTop, priority: cmsPriority },
@@ -32,6 +35,7 @@ export const ImageBlock: FC<Props> = ({
           image={image}
           priority={priority}
           sizes={SINGLE_IMAGE_SIZES}
+          altFromTitle={false}
           imgClassName="rounded object-cover"
         />
         {image?.title && <p className="mt-2 text-sm italic">{image.title}</p>}
@@ -47,7 +51,8 @@ export const ImageBlock: FC<Props> = ({
                 key={image.id}
                 image={image}
                 priority={priority}
-                sizes={GRID_IMAGE_SIZES}
+                sizes={gridImageSizes(images.length)}
+                altFromTitle={false}
                 imgClassName="rounded object-cover"
               />
               {image?.title && <p className="mt-2 text-sm italic">{image.title}</p>}

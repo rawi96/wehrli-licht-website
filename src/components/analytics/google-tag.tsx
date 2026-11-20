@@ -3,8 +3,8 @@ import Script from 'next/script';
 import { FC } from 'react';
 
 /**
- * The gtag library itself is loaded lazily (after page load) to keep it out of
- * the critical path; events queue in dataLayer until then.
+ * gtag.js stays afterInteractive (not lazyOnload): it must read the landing URL
+ * (gclid) before a client-side navigation removes it, or Ads clicks go unattributed.
  *
  * Sets the consent defaults before the Google tag loads, then configures GA4
  * and Google Ads. Runs inline in <head> so no hit is sent before consent is known.
@@ -15,6 +15,7 @@ function gtag(){dataLayer.push(arguments);}
 window.gtag = gtag;
 var choice = null;
 try { choice = localStorage.getItem(${JSON.stringify(CONSENT_STORAGE_KEY)}); } catch (e) {}
+if (choice !== 'granted' && choice !== 'denied') { choice = null; }
 if (choice) { document.documentElement.dataset.consent = choice; }
 var ads = choice === 'granted' ? 'granted' : 'denied';
 gtag('consent', 'default', {
@@ -42,7 +43,7 @@ export const GoogleTag: FC = () => {
         // eslint-disable-next-line @eslint-react/dom-no-dangerously-set-innerhtml -- static, trusted init snippet
         dangerouslySetInnerHTML={{ __html: buildInitScript(GA_MEASUREMENT_ID, GOOGLE_ADS_ID) }}
       />
-      <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`} strategy="lazyOnload" />
+      <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`} strategy="afterInteractive" />
     </>
   );
 };

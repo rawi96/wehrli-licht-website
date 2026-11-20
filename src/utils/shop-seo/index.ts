@@ -17,7 +17,6 @@ export {
   buildCategoryJsonLd,
   buildProductJsonLd,
   buildShopIndexJsonLd,
-  buildShopOrganizationJsonLd,
   buildShopStorefrontFaqJsonLd,
 } from '@/utils/shop-seo/json-ld';
 export type { CategoryForSeo, ProductForSeo, ProductListItemForSeo } from '@/utils/shop-seo/types';
