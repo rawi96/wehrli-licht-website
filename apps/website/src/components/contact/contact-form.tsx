@@ -1,13 +1,13 @@
 'use client';
 
-import { setEnhancedConversionEmail, trackEvent } from '@/lib/analytics/gtag';
 import {
   ContactFieldErrors,
   ContactFormValues,
   HONEYPOT_FIELD,
   PRODUCT_PREFILL_PARAM,
   validateContactForm,
-} from '@/lib/contact-form/schema';
+} from '@/features/contact/schema';
+import { analytics } from '@/integrations/client';
 import { ContactForm as ContactFormView, ContactFormStatus } from '@wehrli/design-system';
 import { FC, useEffect, useRef, useState } from 'react';
 
@@ -96,8 +96,11 @@ export const ContactForm: FC<Props> = ({ formId, topics, privacyHref }) => {
         return;
       }
 
-      setEnhancedConversionEmail(values.email);
-      trackEvent('generate_lead', { lead_source: 'kontaktformular', ...(values.topic && { anliegen: values.topic }) });
+      analytics.setLeadEmail(values.email);
+      analytics.trackEvent('generate_lead', {
+        lead_source: 'kontaktformular',
+        ...(values.topic && { anliegen: values.topic }),
+      });
       setStatus('sent');
     } catch {
       setErrorMessage('Die Anfrage konnte nicht gesendet werden. Bitte prüfen Sie Ihre Internetverbindung.');

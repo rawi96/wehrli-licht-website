@@ -1,8 +1,8 @@
 import { content } from '@/integrations';
 import { SitePage } from '@/components/layout/site-page';
 import { Container } from '@wehrli/design-system';
-import { CheckoutSuccess } from '@/components/shop/checkout-success';
-import { resolveCheckoutSuccessStatus } from '@/lib/resolve-checkout-success-status';
+import { CheckoutSuccess } from '@/components/checkout/checkout-success';
+import { resolveCheckoutSuccessStatus } from '@/features/checkout/service';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {

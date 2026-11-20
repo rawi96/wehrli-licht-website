@@ -1,9 +1,8 @@
 import '@/styles/globals.css';
 import { ContactClickTracking } from '@/components/analytics/contact-click-tracking';
 import { CookieBanner } from '@/components/analytics/cookie-banner';
-import { GoogleTag } from '@/components/analytics/google-tag';
 import { SiteJsonLd } from '@/components/seo/site-json-ld';
-import { isTrackingEnabled } from '@/lib/analytics/config';
+import { analytics } from '@/integrations/client';
 import { getSiteUrl } from '@/utils/site-url';
 import type { Metadata } from 'next';
 import { draftMode } from 'next/headers';
@@ -36,15 +35,15 @@ export const metadata: Metadata = {
 const RootLayout = async ({ children }: { children: ReactNode }) => {
   const { isEnabled } = await draftMode();
   // Only needed for the cookie banner; the banner still works without the link if DatoCMS fails.
-  const privacyHref = isTrackingEnabled ? getCmsPagePath((await getHeaderFooter().catch(() => null))?.privacyPage) : null;
+  const privacyHref = analytics.isEnabled ? getCmsPagePath((await getHeaderFooter().catch(() => null))?.privacyPage) : null;
 
   return (
-    // data-consent is set on <html> by the Google tag init script before hydration.
+    // data-consent is set on <html> by the analytics head script before hydration.
     <html lang="de" className="scroll-smooth" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://www.datocms-assets.com" crossOrigin="" />
         <link rel="dns-prefetch" href="https://www.datocms-assets.com" />
-        <GoogleTag />
+        <analytics.HeadScripts />
       </head>
       <body className={cn(jost.className, 'bg-white-200 h-full antialiased')}>
         {isEnabled && <DraftModeBanner />}
@@ -53,7 +52,7 @@ const RootLayout = async ({ children }: { children: ReactNode }) => {
           {children}
           <ShoppingCart />
         </ShopContextProvider>
-        {isTrackingEnabled && (
+        {analytics.isEnabled && (
           <>
             <CookieBanner privacyHref={privacyHref} />
             <ContactClickTracking />

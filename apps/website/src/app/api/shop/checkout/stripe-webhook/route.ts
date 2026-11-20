@@ -1,35 +1,18 @@
-import { handleStripeCheckoutWebhookEvent } from '@/lib/handle-stripe-checkout-webhook';
-import { getStripe, getStripeWebhookSecret } from '@/lib/stripe';
+import { handlePaymentWebhook } from '@/features/checkout/service';
 import { NextRequest, NextResponse } from 'next/server';
-import type Stripe from 'stripe';
 
+// Webhook of the payment provider (URL registered in the Stripe dashboard).
 export const runtime = 'nodejs';
 
 export const POST = async (req: NextRequest): Promise<NextResponse> => {
-  const signature = req.headers.get('stripe-signature');
-
-  if (!signature) {
-    return NextResponse.json({ error: 'Missing stripe-signature header' }, { status: 400 });
-  }
-
-  let event: Stripe.Event;
-
   try {
-    const body = await req.text();
-    const stripe = getStripe();
-    const webhookSecret = getStripeWebhookSecret();
+    const result = await handlePaymentWebhook(await req.text(), req.headers);
 
-    event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
-  } catch (error) {
-    const message = error instanceof Error ? error.message : 'Webhook signature verification failed';
+    if (result.status === 'rejected') {
+      console.error('[stripe-webhook]', result.message);
 
-    console.error('[stripe-webhook]', message);
-
-    return NextResponse.json({ error: message }, { status: 400 });
-  }
-
-  try {
-    const result = await handleStripeCheckoutWebhookEvent(event);
+      return NextResponse.json({ error: result.message }, { status: 400 });
+    }
 
     if (result.status === 'failed') {
       return NextResponse.json({ error: result.message }, { status: 500 });

@@ -13,8 +13,8 @@ import {
   resolveSelectedOptions,
   SelectedOptions,
 } from '@/domain/shop/variants';
-import { trackEvent } from '@/lib/analytics/gtag';
-import { CONTACT_FORM_ANCHOR, PRODUCT_PREFILL_PARAM } from '@/lib/contact-form/schema';
+import { analytics } from '@/integrations/client';
+import { CONTACT_FORM_ANCHOR, PRODUCT_PREFILL_PARAM } from '@/features/contact/schema';
 import { ProductDetail as ProductDetailView, VariationSelector } from '@wehrli/design-system';
 import { ReactNode, useEffect, useMemo, useState } from 'react';
 
@@ -70,16 +70,16 @@ export const ProductDetail = ({ product, description, contactHref, viewingHref }
 
   useEffect(() => {
     const item = toAnalyticsItem(product, null);
-    trackEvent('view_item', { currency: 'CHF', value: item.price, items: [item] });
+    analytics.trackEvent('view_item', { currency: 'CHF', value: item.price, items: [item] });
   }, [product]);
 
-  const handleViewingClick = () => trackEvent('besichtigung_klick', { item_name: product.name });
+  const handleViewingClick = () => analytics.trackEvent('besichtigung_klick', { item_name: product.name });
 
   const handleAddToCartClick = () => {
     const added = addToCart(product, activeVariant);
     if (added) {
       const item = toAnalyticsItem(product, activeVariant);
-      trackEvent('add_to_cart', { currency: 'CHF', value: item.price, items: [{ ...item, quantity: 1 }] });
+      analytics.trackEvent('add_to_cart', { currency: 'CHF', value: item.price, items: [{ ...item, quantity: 1 }] });
       setIsShowCart(true);
     } else {
       console.error('Produkt konnte nicht in den Warenkorb gelegt werden.');

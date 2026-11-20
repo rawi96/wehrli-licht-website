@@ -1,6 +1,6 @@
 import { ContactForm } from '@/components/contact/contact-form';
 import { ContactFormBlockFragment } from '@/graphql/generated';
-import { CONTACT_FORM_ANCHOR } from '@/lib/contact-form/schema';
+import { CONTACT_FORM_ANCHOR } from '@/features/contact/schema';
 import { getCmsPagePath } from '@/utils/cms-page-path';
 import { getHeaderFooter } from '@/utils/get-header-footer';
 import { toLines } from '@/utils/text';
