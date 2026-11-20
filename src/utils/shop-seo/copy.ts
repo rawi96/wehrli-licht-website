@@ -53,15 +53,22 @@ const productTechnicalSnippet = (product: ProductForSeo): string => {
   return parts.join(', ');
 };
 
+/** Brand appended to generated shop titles (CMS-provided SEO titles are used as-is). */
+const BRAND_SUFFIX = ' | Wehrli Licht';
+
+/** Appends the brand to CMS titles that do not mention it yet, if it still fits in 60 chars. */
+const withBrand = (title: string): string =>
+  title.includes('Wehrli') || title.length + BRAND_SUFFIX.length > 60 ? title : `${title}${BRAND_SUFFIX}`;
+
 export const buildProductTitle = (product: ProductForSeo): string => {
   if (product.seoTitle?.trim()) {
-    return product.seoTitle.trim();
+    return withBrand(product.seoTitle.trim());
   }
 
   const category = primaryCategory(product);
   const categoryPart = category ? ` – ${category.name}` : '';
 
-  return truncateText(`${product.name}${categoryPart}`, 60);
+  return `${truncateText(`${product.name}${categoryPart}`, 60 - BRAND_SUFFIX.length)}${BRAND_SUFFIX}`;
 };
 
 export const buildProductDescription = (product: ProductForSeo): string => {
@@ -86,10 +93,10 @@ export const buildProductDescription = (product: ProductForSeo): string => {
 
 export const buildCategoryTitle = (category: CategoryForSeo): string => {
   if (category.seoTitle?.trim()) {
-    return category.seoTitle.trim();
+    return withBrand(category.seoTitle.trim());
   }
 
-  return truncateText(`${category.name} – Leuchten online kaufen`, 60);
+  return `${truncateText(`${category.name} online kaufen`, 60 - BRAND_SUFFIX.length)}${BRAND_SUFFIX}`;
 };
 
 export const buildCategoryDescription = (category: CategoryForSeo): string => {

@@ -1,0 +1,16 @@
+query LlmsPages {
+  allPages(first: 100) {
+    title
+    slug
+    seometatags {
+      description
+      noIndex
+    }
+    parent {
+      slug
+      parent {
+        slug
+      }
+    }
+  }
+}

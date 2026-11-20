@@ -1,3 +1,4 @@
+import { JsonLd } from '@/components/seo/json-ld';
 import Link from 'next/link';
 import { PageRecord } from '@/graphql/generated';
 import { classNames } from '@/utils/css';
@@ -54,12 +55,7 @@ export const Breadcrumbs = ({ page, customBreadcrumbs, homeText = 'Home' }: Prop
           ))}
         </ol>
       </nav>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(richSnippet),
-        }}
-      />
+      <JsonLd data={richSnippet} />
     </>
   );
 };

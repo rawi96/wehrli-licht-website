@@ -6,7 +6,7 @@ import { HeaderFooterDocument, HeaderFooterRecord, PageDocument } from '@/graphq
 import { queryDatoCMS } from '@/utils/query-dato-cms';
 import { draftMode } from 'next/headers';
 import { notFound } from 'next/navigation';
-import { toNextMetadata } from 'react-datocms/seo';
+import { buildDatoPageMetadata } from '@/utils/dato-metadata';
 
 export async function generateMetadata() {
   const { isEnabled } = await draftMode();
@@ -16,7 +16,7 @@ export async function generateMetadata() {
     includeDrafts: isEnabled,
   });
 
-  return toNextMetadata([...site.favicon, ...(page?.seo ?? [])]);
+  return buildDatoPageMetadata([...site.favicon, ...(page?.seo ?? [])], '/');
 }
 
 export default async function HomePage() {
