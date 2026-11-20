@@ -1,6 +1,7 @@
-import { AllCategoriesGrid, shopCategoryToGridItem } from '@/components/shop/all-categories-grid';
 import { AllCategoriesBlockFragment } from '@/graphql/generated';
 import { getAllCategories } from '@/utils/shop';
+import { toShopCategoryCardData } from '@/utils/shop-cards';
+import { ShopCategoryGrid } from '@wehrli/design-system';
 import { FC } from 'react';
 
 type Props = {
@@ -11,11 +12,11 @@ export const AllCategoriesBlock: FC<Props> = async ({ block: { disableMarginBott
   const categories = await getAllCategories();
 
   return (
-    <AllCategoriesGrid
-      items={categories.map((category) => shopCategoryToGridItem(category))}
+    <ShopCategoryGrid
+      items={categories.map((category) => ({ ...toShopCategoryCardData(category), linkLabel: 'Kategorie entdecken' }))}
       layout={layout === 'row' ? 'row' : 'grid'}
-      disableMarginBottom={disableMarginBottom}
-      disableMarginTop={disableMarginTop}
+      marginBottom={!disableMarginBottom}
+      marginTop={!disableMarginTop}
     />
   );
 };

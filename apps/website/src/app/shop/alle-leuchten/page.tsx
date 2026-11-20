@@ -1,5 +1,5 @@
 import { Breadcrumbs } from '@/components/breadcrumbs';
-import { Container, Heading } from '@wehrli/design-system';
+import { CatalogHeader, Container } from '@wehrli/design-system';
 import { Footer } from '@/components/layout/footer';
 import { Header } from '@/components/layout/header';
 import { ShopProductCatalog } from '@/components/shop/shop-product-catalog';
@@ -33,20 +33,16 @@ export default async function ShopAllProductsPage() {
           />
         </div>
         <ShopBrowseLayout showAllProductsActive>
-          <header className="mb-8 max-w-3xl">
-            <Heading level="1">Alle Leuchten</Heading>
-            <p className="mt-4 text-sm lg:text-base">
-              Entdecken Sie unser gesamtes Sortiment an Pendel-, Decken-, Wand- und Tischleuchten – oder wählen Sie eine
-              Kategorie in der Navigation.
-            </p>
-          </header>
+          <CatalogHeader
+            title="Alle Leuchten"
+            description="Entdecken Sie unser gesamtes Sortiment an Pendel-, Decken-, Wand- und Tischleuchten – oder wählen Sie eine Kategorie in der Navigation."
+          />
           {products.length > 0 && (
-            <section aria-labelledby="all-products-heading">
-              <h2 id="all-products-heading" className="sr-only">
-                {products.length === 1 ? '1 Leuchte' : `${products.length} Leuchten`} im Shop
-              </h2>
-              <ShopProductCatalog products={products} />
-            </section>
+            <ShopProductCatalog
+              products={products}
+              headingId="all-products-heading"
+              heading={`${products.length === 1 ? '1 Leuchte' : `${products.length} Leuchten`} im Shop`}
+            />
           )}
         </ShopBrowseLayout>
       </Container>

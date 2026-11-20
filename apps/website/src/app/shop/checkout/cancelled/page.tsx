@@ -1,4 +1,5 @@
-import { Button, Container } from '@wehrli/design-system';
+import { CheckoutCancelled, Container } from '@wehrli/design-system';
+import { SHOP_HOME_PATH } from '@/constants/shop-paths';
 import { Footer } from '@/components/layout/footer';
 import { Header } from '@/components/layout/header';
 import { HeaderFooterDocument, HeaderFooterRecord } from '@/graphql/generated';
@@ -23,15 +24,7 @@ export default async function CheckoutCancelledPage() {
     <main>
       <Header headerFooter={headerFooter as HeaderFooterRecord} />
       <Container>
-        <div className="mx-auto max-w-lg py-12">
-          <h1 className="text-xl font-bold">Zahlung abgebrochen</h1>
-          <p className="mt-2 text-sm">Warenkorb ist noch da.</p>
-          <div className="mt-8">
-            <Button variant="primary" href="/shop" showArrow={false}>
-              Zum Shop
-            </Button>
-          </div>
-        </div>
+        <CheckoutCancelled shopHref={SHOP_HOME_PATH} />
       </Container>
       <Footer headerFooter={headerFooter as HeaderFooterRecord} />
     </main>
