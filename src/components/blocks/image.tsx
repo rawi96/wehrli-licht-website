@@ -2,17 +2,15 @@ import { ImageBlockFragment } from '@/graphql/generated';
 import { FC } from 'react';
 import { BlockWrapper } from '../block-wrapper';
 import { ImageComponent } from '../image';
+import { CONTENT_IMAGE_SIZES } from '@/utils/image-sizes';
 
 type Props = {
   block: ImageBlockFragment;
   aboveFold?: boolean;
 };
 
-/** Content is max 1280px wide (max-w-7xl) and 11/12 of the viewport below that. */
-const SINGLE_IMAGE_SIZES = '(min-width: 1400px) 1280px, 92vw';
-
 /** Images sit side by side from 640px (grid-flow-col), so each gets 1/n of the content width. */
-const gridImageSizes = (count: number): string =>
+const sideBySideImageSizes = (count: number): string =>
   `(min-width: 1400px) ${Math.round(1280 / count)}px, (min-width: 640px) ${Math.round(92 / count)}vw, 92vw`;
 
 export const ImageBlock: FC<Props> = ({
@@ -34,7 +32,7 @@ export const ImageBlock: FC<Props> = ({
           key={image.id}
           image={image}
           priority={priority}
-          sizes={SINGLE_IMAGE_SIZES}
+          sizes={CONTENT_IMAGE_SIZES.full}
           altFromTitle={false}
           imgClassName="rounded object-cover"
         />
@@ -51,7 +49,7 @@ export const ImageBlock: FC<Props> = ({
                 key={image.id}
                 image={image}
                 priority={priority}
-                sizes={gridImageSizes(images.length)}
+                sizes={sideBySideImageSizes(images.length)}
                 altFromTitle={false}
                 imgClassName="rounded object-cover"
               />

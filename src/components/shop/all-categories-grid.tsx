@@ -1,5 +1,6 @@
 import { BlockWrapper } from '@/components/block-wrapper';
 import { ImageComponent } from '@/components/image';
+import { CONTENT_IMAGE_SIZES } from '@/utils/image-sizes';
 import { ShopHorizontalScroll, ShopHorizontalScrollItem } from '@/components/shop/shop-horizontal-scroll';
 import { getShopCategoryPath } from '@/constants/shop-paths';
 import { ShopCategory } from '@/utils/shop';
@@ -50,6 +51,7 @@ const CategoryCard = ({ item, compact }: { item: CategoryGridItem; compact?: boo
         <div className={`relative ${SCROLL_CARD_IMAGE_HEIGHT} w-full shrink-0 overflow-hidden bg-gray-100`}>
           {item.image?.responsiveImage && (
             <ImageComponent
+              sizes="256px"
               image={item.image}
               imgClassName="h-full w-full object-cover object-center transition-transform duration-300 group-hover:scale-105"
             />
@@ -87,6 +89,7 @@ const CategoryCard = ({ item, compact }: { item: CategoryGridItem; compact?: boo
         <div className="relative h-80 w-full overflow-hidden rounded bg-white shadow sm:h-64">
           {item.image?.responsiveImage && (
             <ImageComponent
+              sizes={CONTENT_IMAGE_SIZES.thirds}
               image={item.image}
               imgClassName="h-full w-full transform object-cover object-center transition-transform duration-300 group-hover:scale-105"
             />

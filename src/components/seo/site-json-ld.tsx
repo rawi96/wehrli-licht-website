@@ -2,6 +2,9 @@ import { JsonLd } from '@/components/seo/json-ld';
 import { getHeaderFooter } from '@/utils/get-header-footer';
 import { getSiteUrl } from '@/utils/site-url';
 
+/** Blumenstrasse 66, 9403 Goldach (OpenStreetMap). Update together with the address in DatoCMS. */
+const BUSINESS_GEO = { '@type': 'GeoCoordinates', latitude: 47.47785, longitude: 9.47299 } as const;
+
 export const SITE_DESCRIPTION =
   'Fachgeschäft für hochwertige Innenbeleuchtung in Goldach (SG): massgefertigte Lampenschirme, Lichtberatung, Lichtplanung und Leuchten für Wohnen und Gewerbe in der ganzen Schweiz.';
 
@@ -50,6 +53,7 @@ export const SiteJsonLd = async () => {
               addressRegion: 'SG',
               addressCountry: 'CH',
             },
+            geo: BUSINESS_GEO,
             ...(headerFooter.mapsLink && { hasMap: headerFooter.mapsLink }),
             areaServed: [
               { '@type': 'AdministrativeArea', name: 'Ostschweiz' },
