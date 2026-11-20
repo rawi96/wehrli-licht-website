@@ -1,0 +1,45 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "tasks": {
+    "transit": {
+      "dependsOn": ["^transit"]
+    },
+    "build": {
+      "outputs": ["storybook-static/**"]
+    },
+    "@wehrli/website#build": {
+      "dependsOn": ["transit"],
+      "outputs": [".next/**", "!.next/cache/**", "!.next/dev/**"],
+      "env": [
+        "NEXT_DATOCMS_*",
+        "NEXT_PUBLIC_*",
+        "DATOCMS_*",
+        "CACHE_INVALIDATION_SECRET_TOKEN",
+        "DRAFT_SECRET_TOKEN",
+        "CONTACT_FORM_EMAIL",
+        "CHECKOUT_ORDER_SECRET",
+        "STRIPE_*",
+        "RESEND_*",
+        "SHOP_ORDER_NOTIFICATION_EMAIL_*",
+        "SHOP_ORDER_NOTIFICATION_EMAIL",
+        "VERCEL",
+        "VERCEL_ENV",
+        "VERCEL_TARGET_ENV",
+        "VERCEL_GIT_COMMIT_REF"
+      ],
+      "passThroughEnv": ["VERCEL_URL", "VERCEL_BRANCH_URL", "VERCEL_PROJECT_PRODUCTION_URL"]
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "lint": {
+      "dependsOn": ["transit"]
+    },
+    "e2e": {
+      "dependsOn": ["@wehrli/website#build"],
+      "cache": false,
+      "passThroughEnv": ["CI", "BASE_URL"]
+    }
+  }
+}

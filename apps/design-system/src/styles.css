@@ -1,0 +1,82 @@
+@layer theme, base, components, utilities;
+
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/preflight.css' layer(base);
+@import 'tailwindcss/utilities.css' layer(utilities);
+@import './fundamentals/tokens.css';
+@import './fundamentals/animations.css';
+@source '.';
+@source not './**/*.stories.tsx';
+@source not './docs';
+@source not './fundamentals';
+@source not './**/*.mocks.ts';
+@source not './**/*.mocks.tsx';
+@source not './blocks/block-decorator.tsx';
+
+/* Base styles for text inputs, selects, checkboxes and radios. */
+@plugin '@tailwindcss/forms';
+
+html {
+  -webkit-tap-highlight-color: transparent;
+}
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  body {
+    @apply bg-white-200 text-black antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* One keyboard focus style for every interactive element. Inputs that show focus with their border opt out with field-focus-plain. */
+  a,
+  button,
+  [role='button'],
+  input:not(.field-focus-plain),
+  textarea,
+  select {
+    @apply focus-visible:ring-wehrli focus-visible:ring-offset-white-200 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none;
+  }
+
+  .field-focus-plain:focus,
+  .field-focus-plain:focus-visible {
+    outline: none;
+    box-shadow: none;
+  }
+
+  ::selection {
+    @apply bg-wehrli-500;
+    @apply text-white;
+  }
+}
+
+@layer utilities {
+  /* Respect the OS setting for reduced motion: decorative animations stop, reveals show their end state. */
+  @media (prefers-reduced-motion: reduce) {
+    .animate-ken-burns,
+    .animate-scroll-hint,
+    .animate-light-beam {
+      animation: none;
+    }
+
+    .animate-hero-reveal {
+      animation: none;
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+/* Legible white text on photos */
+@utility hero-text-shadow {
+  text-shadow:
+    0 2px 24px --theme(--color-wehrli-700 / 65%),
+    0 1px 4px --theme(--color-wehrli-700 / 50%);
+}
+
+/* Cookie banner: hidden before first paint when a choice is already stored (set by the website's Google tag script). */
+html[data-consent] [data-cookie-banner]:not([data-open]) {
+  display: none;
+}
