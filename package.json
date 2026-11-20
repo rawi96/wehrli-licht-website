@@ -14,7 +14,9 @@
     "type-check": "tsc --noEmit",
     "lint": "eslint src --ext .js,.jsx,.ts,.tsx && npm run type-check && npm run check:unused",
     "lint:fix": "eslint src --ext .js,.jsx,.ts,.tsx --fix",
-    "generate": "graphql-codegen"
+    "generate": "graphql-codegen",
+    "dato:migrate": "datocms migrations:run --source=main --destination=migration-sandbox",
+    "dato:migrate:primary": "datocms migrations:run --source=main --in-place --allow-primary"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.10",
@@ -23,6 +25,7 @@
     "@tailwindcss/typography": "^0.5.20",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
+    "botid": "^1.5.13",
     "canvas-confetti": "^1.9.4",
     "next": "^16.4.6",
     "react": "^19.3.1",
@@ -33,6 +36,7 @@
     "yet-another-react-lightbox": "^3.33.1"
   },
   "devDependencies": {
+    "@datocms/cli": "^4.0.29",
     "@graphql-codegen/cli": "^8.0.0",
     "@graphql-codegen/typed-document-node": "^8.0.0",
     "@graphql-codegen/typescript": "^7.0.1",

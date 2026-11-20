@@ -1,11 +1,18 @@
 import { HeaderFooterRecord } from '@/graphql/generated';
 import { mapFooterNavigationFromDato } from '@/utils/map-footer-navigation';
+import { CookieSettingsButton } from '@/components/analytics/cookie-banner';
+import { isTrackingEnabled } from '@/lib/analytics/config';
 import Link from 'next/link';
 import { FC, SVGProps } from 'react';
 import { FooterContact } from './footer-contact';
 import { FooterNavigationColumns } from './footer-navigation-columns';
 import { FacebookIcon, InstagramIcon, LinkedinIcon } from './footer-social-icons';
-import { footerBodyTextClassName, footerSocialLinkClassName, footerTextColorClassName } from './footer-styles';
+import {
+  footerBodyTextClassName,
+  footerLinkClassName,
+  footerSocialLinkClassName,
+  footerTextColorClassName,
+} from './footer-styles';
 
 type Props = {
   headerFooter: HeaderFooterRecord;
@@ -53,9 +60,15 @@ export const Footer: FC<Props> = ({ headerFooter }) => {
         </div>
 
         <div className="mt-6 flex flex-col gap-4 border-t border-white/10 pt-5 sm:flex-row sm:items-center sm:justify-between">
-          <p className={footerBodyTextClassName}>
-            &copy; {year} {companyName ?? 'Wehrli Licht GmbH'}. Alle Rechte vorbehalten.
-          </p>
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-6">
+            <p className={footerBodyTextClassName}>
+              &copy; {year} {companyName ?? 'Wehrli Licht GmbH'}. Alle Rechte vorbehalten.
+            </p>
+            <Link href="/datenschutz" className={footerLinkClassName}>
+              Datenschutz
+            </Link>
+            {isTrackingEnabled && <CookieSettingsButton className={`${footerLinkClassName} text-left`} />}
+          </div>
 
           {socialLinks.length > 0 && (
             <ul className="flex gap-4" aria-label="Social Media">

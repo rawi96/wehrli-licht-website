@@ -2,6 +2,7 @@ import { PageQuery } from '@/graphql/generated';
 import { FC } from 'react';
 import { CalendlyBlock } from './blocks/calendly';
 import { ContactBlock } from './blocks/contact';
+import { ContactFormBlock } from './blocks/contact-form';
 import { GalleryBlock } from './blocks/gallery';
 import { HighlightOffersTeaserBlock } from './blocks/highlight/highlight-offers-teaser';
 import { HighlightProjectsTeaserBlock } from './blocks/highlight/highlight-projects-teaser';
@@ -59,6 +60,8 @@ export const ContentBlocks: FC<Props> = ({ blocks }) => (
           return <ContactBlock key={block.id} block={block} />;
         case 'CalendlyRecord':
           return <CalendlyBlock key={block.id} block={block} />;
+        case 'ContactFormRecord':
+          return <ContactFormBlock key={block.id} block={block} />;
         case 'HighlightProjectsTeaserRecord':
           return <HighlightProjectsTeaserBlock key={block.id} block={block} />;
         case 'HighlightOffersTeaserRecord':

@@ -3,6 +3,7 @@
 import { useShopContext } from '@/app/context/shop-context';
 import { Button } from '@/components/button';
 import { CheckoutErrorAlert } from '@/components/shop/checkout-error-alert';
+import { trackPurchaseOnce } from '@/lib/analytics/purchase';
 import { CHECKOUT_PAYMENT_LABELS, CHECKOUT_SHIPPING_LABELS, CHECKOUT_SUCCESS_HEADING } from '@/constants/checkout-labels';
 import { CheckoutSuccessStatus } from '@/types/checkout-success-status';
 import { formatShippingAddress } from '@/utils/checkout-shipping-address';
@@ -35,6 +36,14 @@ export const CheckoutSuccess = ({ status }: Props) => {
     clearCart();
     clearCheckoutDraft();
   }, [isComplete, clearCart]);
+
+  const purchase = status.kind === 'invalid' ? null : status.purchase;
+
+  useEffect(() => {
+    if (purchase) {
+      trackPurchaseOnce(purchase);
+    }
+  }, [purchase]);
 
   useEffect(() => {
     if (!isComplete) {

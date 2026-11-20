@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "default": {
+      "apiTokenEnvName": "DATOCMS_CMA_TOKEN",
+      "migrations": {
+        "directory": "./migrations",
+        "modelApiKey": "schema_migration"
+      }
+    }
+  }
+}
