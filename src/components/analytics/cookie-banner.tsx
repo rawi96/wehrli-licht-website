@@ -8,30 +8,42 @@ import { FC, useEffect, useState } from 'react';
 const buttonBase =
   'min-h-11 rounded px-4 py-2 text-sm font-bold transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-wehrli';
 
+type BannerState = 'initial' | 'closed' | 'reopened';
+
+/**
+ * The banner is rendered into the server HTML so it paints together with the
+ * page instead of popping in after hydration (it would otherwise become the
+ * LCP element on mobile). Visitors who already chose are hidden by CSS before
+ * first paint via `html[data-consent]`, set by the Google tag init script.
+ */
 export const CookieBanner: FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [state, setState] = useState<BannerState>('initial');
 
   useEffect(() => {
-    // eslint-disable-next-line @eslint-react/set-state-in-effect -- the choice lives in localStorage, only readable after mount
-    setIsOpen(readConsentChoice() === null);
+    if (readConsentChoice() !== null) {
+      // eslint-disable-next-line @eslint-react/set-state-in-effect -- the choice lives in localStorage, only readable after mount
+      setState('closed');
+    }
 
-    const open = () => setIsOpen(true);
+    const open = () => setState('reopened');
     window.addEventListener(OPEN_CONSENT_BANNER_EVENT, open);
 
     return () => window.removeEventListener(OPEN_CONSENT_BANNER_EVENT, open);
   }, []);
 
-  if (!isOpen) {
+  if (state === 'closed') {
     return null;
   }
 
   const choose = (choice: ConsentChoice) => {
     applyConsentChoice(choice);
-    setIsOpen(false);
+    setState('closed');
   };
 
   return (
     <section
+      data-cookie-banner
+      data-open={state === 'reopened' ? '' : undefined}
       aria-label="Cookie-Einstellungen"
       className="fixed inset-x-4 bottom-4 z-50 mx-auto max-w-md rounded bg-white p-4 shadow-lg ring-1 ring-gray-200 sm:left-6 sm:mx-0"
     >

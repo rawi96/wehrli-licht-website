@@ -42,6 +42,8 @@ export const readConsentChoice = (): ConsentChoice | null => {
  * - declined: everything off
  */
 export const applyConsentChoice = (choice: ConsentChoice) => {
+  document.documentElement.dataset.consent = choice;
+
   try {
     window.localStorage.setItem(CONSENT_STORAGE_KEY, choice);
   } catch {

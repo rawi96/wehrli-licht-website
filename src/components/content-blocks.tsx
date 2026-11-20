@@ -28,7 +28,7 @@ type Props = {
 
 export const ContentBlocks: FC<Props> = ({ blocks }) => (
   <>
-    {blocks.map((block) => {
+    {blocks.map((block, index) => {
       switch (block.__typename) {
         case 'TextRecord':
           return <TextBlock key={block.id} block={block} />;
@@ -39,7 +39,8 @@ export const ContentBlocks: FC<Props> = ({ blocks }) => (
         case 'TextImageRecord':
           return <TextImageBlock key={block.id} block={block} />;
         case 'ImageRecord':
-          return <ImageBlock key={block.id} block={block} />;
+          // Images in the first two blocks are usually above the fold: load them eagerly (LCP).
+          return <ImageBlock key={block.id} block={block} aboveFold={index < 2} />;
         case 'TeamRecord':
           return <TeamBlock key={block.id} block={block} />;
         case 'IframeRecord':

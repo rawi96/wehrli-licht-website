@@ -21,7 +21,8 @@ export const ImageComponent: FC<ImageProps> = ({ image, priority, imgClassName, 
     return null;
   }
 
-  const alt = image?.alt ?? '';
+  // Fall back to the image title so CMS images without alt text still describe themselves.
+  const alt = [image?.alt, image?.title].map((text) => text?.trim()).find(Boolean) ?? '';
   const srcData = { ...responsiveImage, alt };
 
   return priority ? (
