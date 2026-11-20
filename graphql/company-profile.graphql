@@ -1,0 +1,14 @@
+query CompanyProfile {
+  companyProfile {
+    description
+    llmsIntro
+    foundingYear
+    addressRegion
+    areaServed
+    expertise
+    location {
+      latitude
+      longitude
+    }
+  }
+}

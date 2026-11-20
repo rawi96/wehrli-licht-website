@@ -89,6 +89,17 @@ export const revalidateFromDatoWebhook = (payload: DatoWebhookPayload): string[]
         revalidatePage(previousSlug, paths);
       }
 
+      // Page titles and SEO descriptions are listed in llms.txt.
+      revalidatePath('/llms.txt');
+      paths.push('/llms.txt');
+
+      break;
+    }
+    case 'company_profile': {
+      // Business facts are in the site-wide JSON-LD (root layout) and in llms.txt.
+      revalidatePath('/', 'layout');
+      revalidatePath('/llms.txt');
+      paths.push('/ (layout)', '/llms.txt');
       break;
     }
     case 'shop_product': {

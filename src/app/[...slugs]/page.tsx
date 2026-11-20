@@ -88,7 +88,7 @@ export default async function ContentPage({ params }: Params) {
   return (
     <main>
       <Header headerFooter={headerFooter as HeaderFooterRecord} />
-      {page.parent?.slug === 'blog' && (
+      {page.isArticle && (
         <JsonLd
           data={buildBlogPostingJsonLd({
             title: page.title,

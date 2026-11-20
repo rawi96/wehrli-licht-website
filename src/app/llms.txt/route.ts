@@ -1,57 +1,67 @@
-import { SITE_DESCRIPTION } from '@/components/seo/site-json-ld';
-import { LlmsPagesDocument, PageRecord } from '@/graphql/generated';
+import { getShopCategoryPath } from '@/constants/shop-paths';
+import { LlmsPagesDocument } from '@/graphql/generated';
+import { getCompanyProfile } from '@/utils/company-profile';
 import { getHeaderFooter } from '@/utils/get-header-footer';
 import { generatePathForRecord } from '@/utils/pathnames';
 import { queryDatoCMS } from '@/utils/query-dato-cms';
 import { getAllCategories } from '@/utils/shop';
-import { getShopCategoryPath } from '@/constants/shop-paths';
 import { getSiteUrl } from '@/utils/site-url';
 
 /**
- * llms.txt (https://llmstxt.org): a compact, Markdown overview of the business
- * and its most important pages for AI assistants and LLM-based search.
+ * llms.txt (https://llmstxt.org): a compact Markdown overview of the business and its pages for
+ * AI assistants. Fully generated from DatoCMS: texts from «Firmenprofil (SEO & KI)», sections from
+ * the page tree (every parent page with child pages becomes a section).
  */
-export const revalidate = 86400;
+// Same interval as the content pages; the DatoCMS webhook also revalidates it on changes.
+export const revalidate = 3600;
 
-type Section = { title: string; parentSlug: string | null };
+type LinkItem = { title: string; url: string; description?: string };
 
-const SECTIONS: Section[] = [
-  { title: 'Angebot', parentSlug: 'angebot' },
-  { title: 'Projekte', parentSlug: 'projekte' },
-  { title: 'Blog', parentSlug: 'blog' },
-];
+/** Markdown-safe single line: no link-breaking brackets, no line breaks in list items. */
+const clean = (text: string) => text.replace(/[[\]]/g, '').replace(/\s+/g, ' ').trim();
+
+const line = ({ title, url, description }: LinkItem) => `- [${title}](${url})${description ? `: ${description}` : ''}`;
+
+const section = (title: string, items: LinkItem[]) =>
+  items.length > 0 ? `## ${clean(title)}\n\n${items.map(line).join('\n')}` : '';
 
 export const GET = async (): Promise<Response> => {
   const siteUrl = getSiteUrl();
-  const [{ allPages }, categories, headerFooter] = await Promise.all([
+  const [{ allPages }, categories, headerFooter, profile] = await Promise.all([
     queryDatoCMS({ document: LlmsPagesDocument }),
     getAllCategories(),
     getHeaderFooter(),
+    getCompanyProfile(),
   ]);
 
-  // Markdown-safe single line: no link-breaking brackets, no line breaks in list items.
-  const clean = (text: string) => text.replace(/[[\]]/g, '').replace(/\s+/g, ' ').trim();
-
   const pages = allPages
-    // home is the site itself, shop is listed in its own section below
+    // home is the site itself, the shop has its own section below
     .filter((page) => !page.seometatags?.noIndex && page.slug !== 'home' && page.slug !== 'shop')
     .map((page) => ({
-      title: clean(page.title),
-      description: page.seometatags?.description ? clean(page.seometatags.description) : undefined,
-      parentSlug: page.parent?.slug ?? null,
-      url: `${siteUrl}${generatePathForRecord({ slug: page.slug, type: 'PageRecord', parent: page.parent as PageRecord | null })}`,
+      id: page.id,
+      parent: page.parent,
+      item: {
+        title: clean(page.title),
+        description: page.seometatags?.description ? clean(page.seometatags.description) : undefined,
+        url: `${siteUrl}${generatePathForRecord({ slug: page.slug, type: 'PageRecord', parent: page.parent })}`,
+      },
     }));
 
-  const line = ({ title, url, description }: { title: string; url: string; description?: string }) =>
-    `- [${title}](${url})${description ? `: ${description}` : ''}`;
+  // Parent pages (e.g. «Angebot», «Projekte», «Blog») become sections listing their child pages.
+  const parents = new Map<string, { id: string; title: string }>();
+  for (const { parent } of pages) {
+    if (parent) {
+      parents.set(parent.id, parent);
+    }
+  }
+  const sections = [...parents.values()].map((parent) =>
+    section(
+      parent.title,
+      pages.filter((page) => page.parent?.id === parent.id).map(({ item }) => item),
+    ),
+  );
+  const topLevelPages = pages.filter(({ parent }) => !parent).map(({ item }) => item);
 
-  const sectionBlocks = SECTIONS.map(({ title, parentSlug }) => {
-    const items = pages.filter((page) => page.parentSlug === parentSlug);
-
-    return items.length > 0 ? `## ${title}\n\n${items.map(line).join('\n')}` : '';
-  }).filter(Boolean);
-
-  const otherPages = pages.filter((page) => !SECTIONS.some(({ parentSlug }) => parentSlug === page.parentSlug));
   const contact = [
     headerFooter.street &&
       headerFooter.zip &&
@@ -62,22 +72,18 @@ export const GET = async (): Promise<Response> => {
 
   const body = [
     `# ${headerFooter.companyName ?? 'Wehrli Licht GmbH'}`,
-    `> ${SITE_DESCRIPTION}`,
-    [
-      'Seit 1947 (früher Wehrli Lampenatelier) fertigt das Familienunternehmen Lampenschirme in Handarbeit, heute in dritter Generation.',
-      'Kernkompetenz sind Lampenschirme nach Mass sowie das Neu-Überziehen und Reparieren bestehender Lampenschirme im eigenen Atelier.',
-      'Dazu kommen persönliche Lichtberatung und Lichtplanung sowie ausgewählte Leuchten im Showroom und im Online-Shop (Lieferung innerhalb der Schweiz).',
-      'Beratung im Atelier in Goldach nach Terminvereinbarung.',
-    ].join(' '),
-    contact.length > 0 ? `Kontakt: ${contact.join(' · ')}. Termin online: ${siteUrl}/kontakt` : '',
-    ...sectionBlocks,
-    `## Shop\n\n${[
-      line({ title: 'Online-Shop', url: `${siteUrl}/shop` }),
-      ...categories.map((category) =>
-        line({ title: clean(category.name), url: `${siteUrl}${getShopCategoryPath(category.slug)}` }),
-      ),
-    ].join('\n')}`,
-    `## Weitere Seiten\n\n${[...otherPages.map(line), line({ title: 'Häufige Fragen (FAQ)', url: `${siteUrl}/faq` })].join('\n')}`,
+    profile?.description ? `> ${clean(profile.description)}` : '',
+    profile?.llmsIntro?.trim() ?? '',
+    contact.length > 0 ? `Kontakt: ${contact.join(' · ')}.` : '',
+    ...sections,
+    section('Shop', [
+      { title: 'Online-Shop', url: `${siteUrl}/shop` },
+      ...categories.map((category) => ({
+        title: clean(category.name),
+        url: `${siteUrl}${getShopCategoryPath(category.slug)}`,
+      })),
+    ]),
+    section('Weitere Seiten', [...topLevelPages, { title: 'Häufige Fragen (FAQ)', url: `${siteUrl}/faq` }]),
   ]
     .filter(Boolean)
     .join('\n\n');

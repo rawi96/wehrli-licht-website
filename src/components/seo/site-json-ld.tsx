@@ -1,23 +1,19 @@
 import { JsonLd } from '@/components/seo/json-ld';
+import { getCompanyProfile, toLines } from '@/utils/company-profile';
 import { getHeaderFooter } from '@/utils/get-header-footer';
 import { getSiteUrl } from '@/utils/site-url';
 
-/** Blumenstrasse 66, 9403 Goldach (OpenStreetMap). Update together with the address in DatoCMS. */
-const BUSINESS_GEO = { '@type': 'GeoCoordinates', latitude: 47.47785, longitude: 9.47299 } as const;
-
-export const SITE_DESCRIPTION =
-  'Fachgeschäft für hochwertige Innenbeleuchtung in Goldach (SG): massgefertigte Lampenschirme, Lichtberatung, Lichtplanung und Leuchten für Wohnen und Gewerbe in der ganzen Schweiz.';
-
 /**
- * Site-wide structured data: the business (local SEO, knowledge panel, AI
- * answers) and the website. Contact data comes from the DatoCMS footer.
+ * Site-wide structured data: the business (local SEO, knowledge panel, AI answers) and the
+ * website. Everything comes from DatoCMS: contact data from «Header & Footer», business facts
+ * from «Firmenprofil (SEO & KI)». Empty CMS fields are simply omitted.
  */
 export const SiteJsonLd = async () => {
   // Structured data must never take a page down: skip it if DatoCMS is unavailable.
-  const headerFooter = await getHeaderFooter().catch((error: unknown) => {
-    console.error('[site-json-ld] header/footer unavailable', error);
+  const [headerFooter, profile] = await Promise.all([getHeaderFooter(), getCompanyProfile()]).catch((error: unknown) => {
+    console.error('[site-json-ld] DatoCMS unavailable', error);
 
-    return null;
+    return [null, null] as const;
   });
   if (!headerFooter) {
     return null;
@@ -28,6 +24,8 @@ export const SiteJsonLd = async () => {
   const sameAs = [headerFooter.instagramUrl, headerFooter.facebookUrl, headerFooter.linkedinUrl].filter(
     (link): link is string => Boolean(link),
   );
+  const areaServed = toLines(profile?.areaServed);
+  const expertise = toLines(profile?.expertise);
 
   return (
     <JsonLd
@@ -41,38 +39,35 @@ export const SiteJsonLd = async () => {
             url,
             logo: `${url}/wehrli-licht-logo.svg`,
             image: `${url}/wehrli-licht-logo.svg`,
-            description: SITE_DESCRIPTION,
-            foundingDate: '1947',
+            ...(profile?.description && { description: profile.description }),
+            ...(profile?.foundingYear && { foundingDate: String(profile.foundingYear) }),
             ...(headerFooter.phone && { telephone: headerFooter.phone }),
             ...(headerFooter.email && { email: headerFooter.email }),
             address: {
               '@type': 'PostalAddress',
               ...(headerFooter.street && { streetAddress: headerFooter.street }),
               ...(headerFooter.zip && { postalCode: headerFooter.zip }),
-              addressLocality: headerFooter.place ?? 'Goldach',
-              addressRegion: 'SG',
+              ...(headerFooter.place && { addressLocality: headerFooter.place }),
+              ...(profile?.addressRegion && { addressRegion: profile.addressRegion }),
               addressCountry: 'CH',
             },
-            geo: BUSINESS_GEO,
+            ...(profile?.location && {
+              geo: {
+                '@type': 'GeoCoordinates',
+                latitude: profile.location.latitude,
+                longitude: profile.location.longitude,
+              },
+            }),
             ...(headerFooter.mapsLink && { hasMap: headerFooter.mapsLink }),
-            areaServed: [
-              { '@type': 'AdministrativeArea', name: 'Ostschweiz' },
-              { '@type': 'Country', name: 'Schweiz' },
-            ],
-            knowsAbout: [
-              'Lampenschirme nach Mass',
-              'Lampenschirme neu überziehen und reparieren',
-              'Lichtplanung',
-              'Lichtberatung',
-              'Leuchten',
-            ],
+            ...(areaServed.length > 0 && { areaServed: areaServed.map((name) => ({ '@type': 'Place', name })) }),
+            ...(expertise.length > 0 && { knowsAbout: expertise }),
             ...(sameAs.length > 0 && { sameAs }),
           },
           {
             '@type': 'WebSite',
             '@id': `${url}/#website`,
             url,
-            name: 'Wehrli Licht',
+            name: headerFooter.companyName ?? 'Wehrli Licht GmbH',
             inLanguage: 'de-CH',
             publisher: { '@id': businessId },
           },

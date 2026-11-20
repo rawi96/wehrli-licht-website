@@ -1,5 +1,6 @@
 query LlmsPages {
   allPages(first: 100) {
+    id
     title
     slug
     seometatags {
@@ -7,6 +8,8 @@ query LlmsPages {
       noIndex
     }
     parent {
+      id
+      title
       slug
       parent {
         slug
