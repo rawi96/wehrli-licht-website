@@ -1,12 +1,13 @@
 import { getAllDatoRoutes } from '@/utils/get-dato-routes';
-import { getAllShopRoutes } from '@/utils/get-shop-routes';
+import { getShopSitemapRoutes } from '@/domain/shop/sitemap';
+import { catalog } from '@/integrations';
 import { getSiteUrl } from '@/utils/site-url';
 import { MetadataRoute } from 'next';
 import { DEDICATED_ROUTES } from '@/constants/dedicated-routes';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const datoRoutes = await getAllDatoRoutes({ includeDrafts: false });
-  const shopRoutes = await getAllShopRoutes();
+  const shopRoutes = getShopSitemapRoutes(await catalog.listSitemapEntries());
 
   // A path can exist both as a DatoCMS page and as a dedicated route (e.g. /shop): keep each URL once.
   const routes = new Map<string, { path: string; lastModified?: string; noIndex?: boolean }>();

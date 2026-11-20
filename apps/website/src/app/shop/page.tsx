@@ -1,47 +1,37 @@
 import { SitePage } from '@/components/layout/site-page';
 import { JsonLd } from '@/components/seo/json-ld';
-import { ShopStorefront } from '@/components/shop/shop-storefront';
-import { findShopServiceSection } from '@/utils/shop-page-sections';
-import { getAllCategories, getFeaturedShopProducts, getShopPage } from '@/utils/shop';
-import { buildShopIndexJsonLd, buildShopStorefrontFaqJsonLd, shopIndexMetadata } from '@/utils/shop-seo';
-import { draftMode } from 'next/headers';
+import { buildShopIndexJsonLd, buildShopStorefrontFaqJsonLd } from '@/features/shop-seo/json-ld';
+import { shopIndexMetadata } from '@/features/shop-seo/metadata';
+import { catalog } from '@/integrations';
+import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { toNextMetadata } from 'react-datocms/seo';
 
 export const revalidate = 3600;
 
-export async function generateMetadata() {
-  const { isEnabled } = await draftMode();
-  const { site, shopPage } = await getShopPage(isEnabled);
+export async function generateMetadata(): Promise<Metadata> {
+  const page = await catalog.getShopStartPage();
 
-  if (shopPage?.seo?.length) {
-    return toNextMetadata([...site.favicon, ...shopPage.seo]);
-  }
-
-  return shopIndexMetadata;
+  return page?.metadata ?? shopIndexMetadata;
 }
 
 export default async function ShopPage() {
-  const { isEnabled } = await draftMode();
-
-  const [categories, featuredProducts, { shopPage }] = await Promise.all([
-    getAllCategories(),
-    getFeaturedShopProducts(),
-    getShopPage(isEnabled),
+  const [categories, featuredProducts, page] = await Promise.all([
+    catalog.listCategories(),
+    catalog.listFeaturedProducts(),
+    catalog.getShopStartPage(),
   ]);
 
-  if (!shopPage?.sections.length) {
+  if (!page) {
     notFound();
   }
 
-  const serviceSection = findShopServiceSection(shopPage.sections);
-  const faqJsonLd = serviceSection ? buildShopStorefrontFaqJsonLd(serviceSection.items) : null;
+  const faqJsonLd = buildShopStorefrontFaqJsonLd(page.faq);
 
   return (
     <SitePage>
       <JsonLd data={buildShopIndexJsonLd(categories, featuredProducts)} />
       {faqJsonLd && <JsonLd data={faqJsonLd} />}
-      <ShopStorefront sections={shopPage.sections} categories={categories} featuredProducts={featuredProducts} />
+      {page.content}
     </SitePage>
   );
 }

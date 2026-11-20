@@ -1,6 +1,6 @@
 import { SitePage } from '@/components/layout/site-page';
 import { CheckoutCancelled, Container } from '@wehrli/design-system';
-import { SHOP_HOME_PATH } from '@/constants/shop-paths';
+import { SHOP_HOME_PATH } from '@/domain/shop/paths';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {

@@ -1,6 +1,6 @@
 'use client';
 
-import { useShopContext } from '@/app/context/shop-context';
+import { useShopContext } from '@/components/shop/shop-context';
 import { CartButton } from '@wehrli/design-system';
 import { FC } from 'react';
 

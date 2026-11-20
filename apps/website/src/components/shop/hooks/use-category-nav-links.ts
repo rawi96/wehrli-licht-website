@@ -1,7 +1,7 @@
 'use client';
 
-import { useShopCategories } from '@/app/context/shop-nav-context';
-import { getShopCategoryPath, SHOP_ALL_PRODUCTS_PATH } from '@/constants/shop-paths';
+import { useShopCategories } from '@/components/shop/shop-nav-context';
+import { getShopCategoryPath, SHOP_ALL_PRODUCTS_PATH } from '@/domain/shop/paths';
 import type { CategoryNavLink } from '@wehrli/design-system';
 import { usePathname } from 'next/navigation';
 
@@ -34,7 +34,7 @@ export const useCategoryNavLinks = ({ activeCategorySlug, showAllProductsActive 
         label: category.name,
         href,
         active: activeCategorySlug === category.slug || pathname === href,
-        thumbnailSrc: category.image?.responsiveImage?.src,
+        thumbnailSrc: category.image?.responsive?.src,
       };
     }),
   ];

@@ -1,12 +1,12 @@
 import { DEDICATED_ROUTES, isDedicatedRoute } from '@/constants/dedicated-routes';
 import { SITE_NAME } from '@/constants/site';
-import { SHOP_HOME_PATH, getShopCategoryPath } from '@/constants/shop-paths';
+import { SHOP_HOME_PATH, getShopCategoryPath } from '@/domain/shop/paths';
 import { LlmsPagesDocument } from '@/graphql/generated';
 import { getCompanyProfile } from '@/utils/company-profile';
+import { catalog } from '@/integrations';
 import { getHeaderFooter } from '@/utils/get-header-footer';
 import { getPublicPagePath } from '@/utils/pathnames';
 import { queryDatoCMS } from '@/utils/query-dato-cms';
-import { getAllCategories } from '@/utils/shop';
 import { getSiteUrl } from '@/utils/site-url';
 
 /**
@@ -31,7 +31,7 @@ export const GET = async (): Promise<Response> => {
   const siteUrl = getSiteUrl();
   const [{ allPages }, categories, headerFooter, profile] = await Promise.all([
     queryDatoCMS({ document: LlmsPagesDocument }),
-    getAllCategories(),
+    catalog.listCategories(),
     getHeaderFooter(),
     getCompanyProfile(),
   ]);

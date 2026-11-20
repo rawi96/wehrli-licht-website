@@ -1,7 +1,6 @@
 'use client';
 
-import { MAX_LINE_QUANTITY } from '@/constants/shop-commerce';
-import { useShopContext } from '@/app/context/shop-context';
+import { useShopContext } from '@/components/shop/shop-context';
 import { useCheckoutCommerce } from '@/components/shop/hooks/use-checkout-commerce';
 import { useCheckoutDraft } from '@/components/shop/hooks/use-checkout-draft';
 import { useCheckoutNavigation } from '@/components/shop/hooks/use-checkout-navigation';
@@ -13,9 +12,9 @@ import {
   CHECKOUT_STEP_HEADINGS,
   CHECKOUT_STEP_TITLES,
 } from '@/constants/checkout-labels';
-import { SHOP_HOME_PATH } from '@/constants/shop-paths';
+import { SHOP_HOME_PATH } from '@/domain/shop/paths';
 import { CheckoutPaymentMethod, CheckoutStep } from '@/types/checkout';
-import { toCartLine } from '@/utils/cart';
+import { toCartLine } from '@/components/shop/cart-line';
 import { computeCheckoutTotals } from '@/utils/cart-checkout';
 import { validateCheckoutCustomer } from '@/utils/checkout-customer';
 import {
@@ -26,8 +25,13 @@ import {
 } from '@/utils/checkout-shipping-address';
 import { buildCheckoutItemsFromCart } from '@/utils/build-checkout-payload';
 import { clearCheckoutDraft } from '@/utils/checkout-storage';
-import { formatPriceToCHF } from '@/utils/price';
-import { formatShippingCostLabel, resolveCartShippingCostChf, summarizeDeliveryTimes } from '@/utils/product-commerce';
+import { formatPriceToCHF } from '@/domain/shop/price';
+import {
+  MAX_LINE_QUANTITY,
+  formatShippingCostLabel,
+  resolveCartShippingCostChf,
+  summarizeDeliveryTimes,
+} from '@/domain/shop/commerce';
 import {
   CheckoutCartSummary,
   CheckoutDetailsStep,

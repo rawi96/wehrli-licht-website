@@ -1,21 +1,20 @@
 import { ShopCategoryFragment } from '@/graphql/generated';
 import { toImage } from '@/utils/image';
-import { ShopCategory } from '@/utils/shop';
 import type { ImageData } from '@wehrli/design-system';
 
 const DEFAULT_SHOP_CATEGORY_SLUGS = ['pendelleuchte', 'deckenleuchte', 'stehleuchte'] as const;
 
 export const pickHighlightShopCategories = (
   cmsCategories: ShopCategoryFragment[],
-  fallbackCategories: ShopCategory[],
+  fallbackCategories: ShopCategoryFragment[],
 ): ShopCategoryFragment[] => {
   if (cmsCategories.length > 0) {
     return cmsCategories.slice(0, 3);
   }
 
   const bySlug = new Map(fallbackCategories.map((category) => [category.slug, category]));
-  const featured = DEFAULT_SHOP_CATEGORY_SLUGS.map((slug) => bySlug.get(slug)).filter((category): category is ShopCategory =>
-    Boolean(category),
+  const featured = DEFAULT_SHOP_CATEGORY_SLUGS.map((slug) => bySlug.get(slug)).filter(
+    (category): category is ShopCategoryFragment => Boolean(category),
   );
 
   if (featured.length >= 3) {

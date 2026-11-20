@@ -5,7 +5,7 @@ import {
   fetchCheckoutCommerceMeta,
   verifyCheckoutCartItems,
 } from '@/utils/cart-checkout';
-import { summarizeDeliveryTimes } from '@/utils/product-commerce';
+import { summarizeDeliveryTimes } from '@/domain/shop/commerce';
 import { NextRequest, NextResponse } from 'next/server';
 
 type QuoteRequestBody = {

@@ -2,8 +2,8 @@ import { CHECKOUT_EMAIL_BRAND } from '@/constants/checkout-email-brand';
 import { CHECKOUT_PAYMENT_LABELS, CHECKOUT_SHIPPING_LABELS } from '@/constants/checkout-labels';
 import { CheckoutOrderEmailData, formatOrderReference } from '@/types/checkout-order-email';
 import { formatShippingAddress } from '@/utils/checkout-shipping-address';
-import { formatShippingCostLabel } from '@/utils/product-commerce';
-import { formatPriceToCHF } from '@/utils/price';
+import { formatShippingCostLabel } from '@/domain/shop/commerce';
+import { formatPriceToCHF } from '@/domain/shop/price';
 import { escapeHtml } from '@/utils/text';
 
 const { primary: brandColor } = CHECKOUT_EMAIL_BRAND;

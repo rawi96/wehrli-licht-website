@@ -3,9 +3,10 @@ import { Breadcrumbs } from '@/components/breadcrumbs';
 import { CatalogHeader, Container } from '@wehrli/design-system';
 import { ShopProductCatalog } from '@/components/shop/shop-product-catalog';
 import { ShopBrowseLayout } from '@/components/shop/shop-browse-layout';
-import { SHOP_ALL_PRODUCTS_PATH } from '@/constants/shop-paths';
-import { getAllShopProducts } from '@/utils/shop';
-import { buildAllProductsJsonLd, shopAllProductsMetadata } from '@/utils/shop-seo';
+import { SHOP_ALL_PRODUCTS_PATH } from '@/domain/shop/paths';
+import { buildAllProductsJsonLd } from '@/features/shop-seo/json-ld';
+import { shopAllProductsMetadata } from '@/features/shop-seo/metadata';
+import { catalog } from '@/integrations';
 import { JsonLd } from '@/components/seo/json-ld';
 
 export const revalidate = 3600;
@@ -13,7 +14,7 @@ export const revalidate = 3600;
 export const metadata = shopAllProductsMetadata;
 
 export default async function ShopAllProductsPage() {
-  const products = await getAllShopProducts();
+  const products = await catalog.listProducts();
 
   return (
     <SitePage>

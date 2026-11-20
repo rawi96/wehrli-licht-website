@@ -1,10 +1,10 @@
 'use client';
 
-import { MAX_LINE_QUANTITY } from '@/constants/shop-commerce';
-import { useShopContext } from '@/app/context/shop-context';
-import { SHOP_HOME_PATH } from '@/constants/shop-paths';
-import { toCartLine } from '@/utils/cart';
-import { formatPriceToCHF } from '@/utils/price';
+import { toCartLine } from '@/components/shop/cart-line';
+import { useShopContext } from '@/components/shop/shop-context';
+import { MAX_LINE_QUANTITY } from '@/domain/shop/commerce';
+import { SHOP_HOME_PATH } from '@/domain/shop/paths';
+import { formatPriceToCHF } from '@/domain/shop/price';
 import { CartContent, CartDialog } from '@wehrli/design-system';
 import { useRouter } from 'next/navigation';
 

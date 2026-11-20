@@ -8,7 +8,7 @@ import { validateCheckoutCustomer } from '@/utils/checkout-customer';
 import { formatShippingAddress, validateShippingAddress } from '@/utils/checkout-shipping-address';
 import { signCheckoutOrder } from '@/utils/checkout-order-token';
 import { computeCheckoutTotals, fetchCheckoutCommerceMeta, verifyCheckoutCartItems } from '@/utils/cart-checkout';
-import { summarizeDeliveryTimes } from '@/utils/product-commerce';
+import { summarizeDeliveryTimes } from '@/domain/shop/commerce';
 import { getSiteUrl } from '@/utils/site-url';
 import { randomUUID } from 'crypto';
 import { NextRequest, NextResponse } from 'next/server';

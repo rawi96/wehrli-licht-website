@@ -1,9 +1,13 @@
-import { MAX_LINE_QUANTITY } from '@/constants/shop-commerce';
+import {
+  MAX_LINE_QUANTITY,
+  ProductCommerceMeta,
+  mapProductsToCommerceMeta,
+  resolveCartShippingCostChf,
+} from '@/domain/shop/commerce';
 import { ShopProductsForCheckoutDocument } from '@/graphql/generated';
 import { CheckoutShippingMethod } from '@/types/checkout';
-import { CartSelection } from '@/utils/cart';
+import { CartSelection } from '@/domain/shop/cart';
 import { formatLineItemName, resolveUnitPrice } from '@/utils/cart-checkout-helpers';
-import { ProductCommerceMeta, mapProductsToCommerceMeta, resolveCartShippingCostChf } from '@/utils/product-commerce';
 import { queryDatoCMS } from '@/utils/query-dato-cms';
 
 export type CheckoutCartItemPayload = {

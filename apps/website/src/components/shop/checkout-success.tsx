@@ -1,15 +1,15 @@
 'use client';
 
-import { useShopContext } from '@/app/context/shop-context';
+import { useShopContext } from '@/components/shop/shop-context';
 import { CHECKOUT_ERROR_ALERT_COPY } from '@/constants/checkout-errors';
-import { SHOP_HOME_PATH } from '@/constants/shop-paths';
+import { SHOP_HOME_PATH } from '@/domain/shop/paths';
 import { trackPurchaseOnce } from '@/lib/analytics/purchase';
 import { CHECKOUT_PAYMENT_LABELS, CHECKOUT_SHIPPING_LABELS } from '@/constants/checkout-labels';
 import { CheckoutSuccessStatus } from '@/types/checkout-success-status';
 import { formatShippingAddress } from '@/utils/checkout-shipping-address';
 import { startCheckoutConfetti } from '@/utils/checkout-confetti';
 import { clearCheckoutDraft } from '@/utils/checkout-storage';
-import { formatPriceToCHF } from '@/utils/price';
+import { formatPriceToCHF } from '@/domain/shop/price';
 import { CheckoutSuccess as CheckoutSuccessView } from '@wehrli/design-system';
 import { ComponentProps, useEffect } from 'react';
 

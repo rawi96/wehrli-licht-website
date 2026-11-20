@@ -1,4 +1,4 @@
-import { content } from '@/integrations';
+import { catalog, content } from '@/integrations';
 import { SitePage } from '@/components/layout/site-page';
 import { Breadcrumbs } from '@/components/breadcrumbs';
 import { Container } from '@wehrli/design-system';
@@ -6,8 +6,8 @@ import NotFound from '@/components/not-found';
 import { ProductDetail } from '@/components/shop/product-detail';
 import { ShopBrowseLayout } from '@/components/shop/shop-browse-layout';
 import { JsonLd } from '@/components/seo/json-ld';
-import { getAllProductSlugs, getProductBySlug } from '@/utils/shop';
-import { buildProductJsonLd, buildProductMetadata } from '@/utils/shop-seo';
+import { buildProductJsonLd } from '@/features/shop-seo/json-ld';
+import { buildProductMetadata } from '@/features/shop-seo/metadata';
 import { Metadata } from 'next';
 
 export const revalidate = 3600;
@@ -19,29 +19,31 @@ type Props = {
 };
 
 export const generateStaticParams = async (): Promise<{ slug: string }[]> => {
-  const slugs = await getAllProductSlugs();
+  const slugs = await catalog.listProductSlugs();
 
   return slugs.map((slug) => ({ slug }));
 };
 
 export const generateMetadata = async ({ params }: Props): Promise<Metadata> => {
   const { slug } = await params;
-  const product = await getProductBySlug(slug);
+  const found = await catalog.getProduct(slug);
 
-  if (!product) {
+  if (!found) {
     return { title: 'Produkt nicht gefunden' };
   }
 
-  return buildProductMetadata(product);
+  return buildProductMetadata(found.product);
 };
 
 export default async function ShopProductPage({ params }: Props) {
   const { slug } = await params;
-  const product = await getProductBySlug(slug);
+  const found = await catalog.getProduct(slug);
 
-  if (!product) {
+  if (!found) {
     return <NotFound />;
   }
+
+  const { product, description } = found;
 
   const contactPath = await content.getContactPath();
 
@@ -57,7 +59,12 @@ export default async function ShopProductPage({ params }: Props) {
           ]}
         />
         <ShopBrowseLayout>
-          <ProductDetail product={product} contactHref={contactPath} viewingHref={`${contactPath}#termin`} />
+          <ProductDetail
+            product={product}
+            description={description}
+            contactHref={contactPath}
+            viewingHref={`${contactPath}#termin`}
+          />
         </ShopBrowseLayout>
       </Container>
     </SitePage>

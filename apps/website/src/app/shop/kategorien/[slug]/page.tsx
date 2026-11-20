@@ -5,9 +5,10 @@ import { CmsHtml } from '@/components/cms-html';
 import NotFound from '@/components/not-found';
 import { ShopProductCatalog } from '@/components/shop/shop-product-catalog';
 import { ShopBrowseLayout } from '@/components/shop/shop-browse-layout';
-import { getAllCategorySlugs, getCategoryBySlug, getProductsByCategory } from '@/utils/shop';
 import { JsonLd } from '@/components/seo/json-ld';
-import { buildCategoryJsonLd, buildCategoryMetadata } from '@/utils/shop-seo';
+import { buildCategoryJsonLd } from '@/features/shop-seo/json-ld';
+import { buildCategoryMetadata } from '@/features/shop-seo/metadata';
+import { catalog } from '@/integrations';
 import { Metadata } from 'next';
 
 export const revalidate = 3600;
@@ -19,31 +20,31 @@ type Props = {
 };
 
 export const generateStaticParams = async (): Promise<{ slug: string }[]> => {
-  const slugs = await getAllCategorySlugs();
+  const slugs = await catalog.listCategorySlugs();
 
   return slugs.map((slug) => ({ slug }));
 };
 
 export const generateMetadata = async ({ params }: Props): Promise<Metadata> => {
   const { slug } = await params;
-  const category = await getCategoryBySlug(slug);
+  const found = await catalog.getCategory(slug);
 
-  if (!category) {
+  if (!found) {
     return { title: 'Kategorie nicht gefunden' };
   }
 
-  return buildCategoryMetadata(category);
+  return buildCategoryMetadata(found.category);
 };
 
 export default async function ShopCategoryPage({ params }: Props) {
   const { slug } = await params;
-  const category = await getCategoryBySlug(slug);
+  const found = await catalog.getCategory(slug);
 
-  if (!category) {
+  if (!found) {
     return <NotFound />;
   }
 
-  const products = await getProductsByCategory(category.id);
+  const { category, products } = found;
 
   return (
     <SitePage>
@@ -59,7 +60,7 @@ export default async function ShopCategoryPage({ params }: Props) {
         <ShopBrowseLayout activeCategorySlug={slug}>
           <CatalogHeader
             title={category.name}
-            description={category.description ? <CmsHtml html={category.description} /> : null}
+            description={category.descriptionHtml ? <CmsHtml html={category.descriptionHtml} /> : null}
           />
           {products.length > 0 && (
             <ShopProductCatalog

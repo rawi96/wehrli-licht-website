@@ -1,6 +1,6 @@
-import { Cart } from '@/utils/cart';
+import { Cart } from '@/domain/shop/cart';
 import { cartCheckoutFingerprint } from '@/utils/build-checkout-payload';
-import { ProductCommerceMeta } from '@/utils/product-commerce';
+import { ProductCommerceMeta } from '@/domain/shop/commerce';
 import { useEffect, useState } from 'react';
 
 type CommerceResponse = { commerce?: ProductCommerceMeta[] };

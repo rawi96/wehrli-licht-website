@@ -1,9 +1,9 @@
-import { getShopCategoryPath } from '@/constants/shop-paths';
+import { getShopCategoryPath } from '@/domain/shop/paths';
 import { HighlightShopTeaserFragment } from '@/graphql/generated';
 import { toLink } from '@/utils/cms-link';
 import { pickHighlightShopCategories } from '@/utils/highlight-teaser';
 import { toImage } from '@/utils/image';
-import { getAllCategories } from '@/utils/shop';
+import { getAllCategories } from '@/integrations/datocms/catalog/queries';
 import { HighlightShopTeaserBlock as HighlightShopTeaserBlockView } from '@wehrli/design-system';
 
 type Props = {

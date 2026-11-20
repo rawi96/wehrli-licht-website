@@ -1,13 +1,13 @@
 'use client';
 
-import { ShopProductListItem } from '@/utils/shop';
-import { toProductCardData } from '@/utils/shop-cards';
-import { getVisibleShopProducts, SHOP_PRODUCT_SORT_OPTIONS, ShopProductSortKey } from '@/utils/shop-product-list';
+import { toProductCardData } from '@/components/shop/cards';
+import type { ProductSummary } from '@/domain/shop/product';
+import { getVisibleShopProducts, SHOP_PRODUCT_SORT_OPTIONS, ShopProductSortKey } from '@/domain/shop/product-list';
 import { ProductCatalog, SortMenu } from '@wehrli/design-system';
 import { FC, useMemo, useState } from 'react';
 
 type Props = {
-  products: ShopProductListItem[];
+  products: ProductSummary[];
   /** Visually hidden heading of the list. */
   heading: string;
   headingId: string;

@@ -1,4 +1,4 @@
-import { Cart } from '@/utils/cart';
+import { Cart } from '@/domain/shop/cart';
 import { buildCheckoutItemsFromCart, cartCheckoutFingerprint } from '@/utils/build-checkout-payload';
 import { CheckoutShippingMethod, CheckoutStep } from '@/types/checkout';
 import type { VerifiedCheckoutQuote } from '@/types/checkout-quote';

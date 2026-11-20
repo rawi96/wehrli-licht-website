@@ -1,4 +1,4 @@
-import { Cart } from '@/utils/cart';
+import { Cart } from '@/domain/shop/cart';
 import { CheckoutStep } from '@/types/checkout';
 import type { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import { useEffect } from 'react';

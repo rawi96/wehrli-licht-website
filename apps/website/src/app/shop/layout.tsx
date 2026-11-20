@@ -1,9 +1,9 @@
-import { ShopNavProvider } from '@/app/context/shop-nav-context';
-import { getAllCategories } from '@/utils/shop';
+import { ShopNavProvider } from '@/components/shop/shop-nav-context';
+import { catalog } from '@/integrations';
 import { ReactNode } from 'react';
 
 export default async function ShopLayout({ children }: { children: ReactNode }) {
-  const categories = await getAllCategories();
+  const categories = await catalog.listCategories();
 
   return <ShopNavProvider categories={categories}>{children}</ShopNavProvider>;
 }

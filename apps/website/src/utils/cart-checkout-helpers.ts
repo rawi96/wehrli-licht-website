@@ -1,4 +1,4 @@
-import { formatCartSelections, CartSelection } from '@/utils/cart';
+import { formatCartSelections, CartSelection } from '@/domain/shop/cart';
 
 type CheckoutProduct = {
   id: string;

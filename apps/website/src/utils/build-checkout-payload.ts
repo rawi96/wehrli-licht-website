@@ -1,5 +1,5 @@
 import { CheckoutCartItemPayload } from '@/utils/cart-checkout';
-import { Cart } from '@/utils/cart';
+import { Cart } from '@/domain/shop/cart';
 
 export const buildCheckoutItemsFromCart = (cart: Cart): CheckoutCartItemPayload[] =>
   cart.items.map((item) => ({

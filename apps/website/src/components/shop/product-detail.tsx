@@ -1,36 +1,34 @@
 'use client';
 
-import { useShopContext } from '@/app/context/shop-context';
-import { StructuredTextRenderer } from '@/components/dato-structured-text';
-import { DEFAULT_SHIPPING_COST_CHF } from '@/constants/shop-commerce';
-import { trackEvent } from '@/lib/analytics/gtag';
-import { CONTACT_FORM_ANCHOR, PRODUCT_PREFILL_PARAM } from '@/lib/contact-form/schema';
-import { toImage } from '@/utils/image';
-import { formatShippingCostLabel } from '@/utils/product-commerce';
-import { toStructuredTextValue } from '@/utils/shop-structured-text';
-import { formatPriceToCHF } from '@/utils/price';
-import { ShopProduct } from '@/utils/shop';
+import { toImageData } from '@/components/shop/catalog-image';
+import { useShopContext } from '@/components/shop/shop-context';
+import { formatShippingCostLabel, getProductShippingCostChf } from '@/domain/shop/commerce';
+import { formatPriceToCHF } from '@/domain/shop/price';
+import type { Product, ProductVariant } from '@/domain/shop/product';
 import {
   findMatchingVariant,
   pickVariantOptions,
   getProductSpecRows,
   getVariationOptions,
-  ProductVariant,
   resolveSelectedOptions,
   SelectedOptions,
-} from '@/utils/shop-product-detail';
+} from '@/domain/shop/variants';
+import { trackEvent } from '@/lib/analytics/gtag';
+import { CONTACT_FORM_ANCHOR, PRODUCT_PREFILL_PARAM } from '@/lib/contact-form/schema';
 import { ProductDetail as ProductDetailView, VariationSelector } from '@wehrli/design-system';
-import { useEffect, useMemo, useState } from 'react';
+import { ReactNode, useEffect, useMemo, useState } from 'react';
 
 type Props = {
-  product: ShopProduct;
+  product: Product;
+  /** The product's description, rendered rich text (from the catalog). */
+  description: ReactNode;
   /** Contact page from DatoCMS («Header & Footer»); the question link is hidden if not set. */
   contactHref: string | null;
   /** Booking of a showroom visit: the contact page's appointment section. */
   viewingHref: string;
 };
 
-const toAnalyticsItem = (product: ShopProduct, variant: ProductVariant | null) => {
+const toAnalyticsItem = (product: Product, variant: ProductVariant | null) => {
   const hasSelections = variant !== null && variant.selections.length > 0;
 
   return {
@@ -41,10 +39,10 @@ const toAnalyticsItem = (product: ShopProduct, variant: ProductVariant | null) =
   };
 };
 
-const productQuestionHref = (contactHref: string, product: ShopProduct) =>
+const productQuestionHref = (contactHref: string, product: Product) =>
   `${contactHref}?${new URLSearchParams({ [PRODUCT_PREFILL_PARAM]: product.name }).toString()}#${CONTACT_FORM_ANCHOR}`;
 
-export const ProductDetail = ({ product, contactHref, viewingHref }: Props) => {
+export const ProductDetail = ({ product, description, contactHref, viewingHref }: Props) => {
   const [pickedOptions, setPickedOptions] = useState<SelectedOptions>({});
   const { addToCart, setIsShowCart } = useShopContext();
 
@@ -59,17 +57,16 @@ export const ProductDetail = ({ product, contactHref, viewingHref }: Props) => {
   );
 
   const images = product.images
-    .filter((image) => Boolean(image.responsiveImage?.src) || Boolean(image.url))
+    .filter((image) => Boolean(image.responsive?.src) || Boolean(image.url))
     .map((image, index, list) => ({
       id: image.url,
-      image: toImage({
+      image: toImageData({
         ...image,
         alt: image.alt?.trim() ? image.alt : `${product.name}${list.length > 1 ? ` – Bild ${index + 1}` : ''}`,
       }),
     }));
   const displayPrice = activeVariant?.price ?? product.price;
-  const shippingCost = typeof product.shippingCost === 'number' ? product.shippingCost : DEFAULT_SHIPPING_COST_CHF;
-  const description = toStructuredTextValue(product.description);
+  const shippingCost = getProductShippingCostChf(product);
 
   useEffect(() => {
     const item = toAnalyticsItem(product, null);
@@ -111,7 +108,7 @@ export const ProductDetail = ({ product, contactHref, viewingHref }: Props) => {
       viewingHref={viewingHref}
       onViewingClick={handleViewingClick}
       questionHref={contactHref ? productQuestionHref(contactHref, product) : null}
-      description={description ? <StructuredTextRenderer data={description} /> : null}
+      description={description}
       specs={getProductSpecRows(product)}
     />
   );

@@ -11,7 +11,7 @@ import { IframeBlock } from './blocks/iframe';
 import { ImageBlock } from './blocks/image';
 import { LogoGridBlock } from './blocks/logo-grid';
 import { QuoteBlock } from './blocks/quote';
-import { AllCategoriesBlock } from './blocks/shop/all-categories';
+import { AllCategoriesBlock } from '@/integrations/datocms/blocks/shop/all-categories';
 import { TeamBlock } from './blocks/team';
 import { TeaserGridBlock } from './blocks/teaser-grid';
 import { TeaserRowBlock } from './blocks/teaser-row';

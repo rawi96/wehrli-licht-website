@@ -9,7 +9,7 @@ import type { Metadata } from 'next';
 import { draftMode } from 'next/headers';
 import { ReactNode } from 'react';
 import { DraftModeBanner } from './api/draft/draft-mode-banner';
-import { ShopContextProvider } from './context/shop-context';
+import { ShopContextProvider } from '@/components/shop/shop-context';
 import { ShoppingCart } from '@/components/shop/shopping-cart';
 import { jost } from './fonts';
 import { SITE_NAME } from '@/constants/site';
