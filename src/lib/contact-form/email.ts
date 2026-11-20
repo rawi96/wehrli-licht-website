@@ -28,7 +28,10 @@ export const buildContactRequestEmail = (values: ContactFormValues, pageUrl: str
     <p style="margin:24px 0 0;font-size:13px;color:#666;">Mit «Antworten» geht Ihre Antwort direkt an ${escapeHtml(values.name.trim())}.</p>`;
 
   return {
-    subject: topic ? `Kontaktanfrage: ${topic} – ${values.name.trim()}` : `Kontaktanfrage – ${values.name.trim()}`,
+    // Free-text values: keep the subject on one line.
+    subject: (topic ? `Kontaktanfrage: ${topic} – ${values.name}` : `Kontaktanfrage – ${values.name}`)
+      .replace(/\s+/g, ' ')
+      .trim(),
     html: emailLayout('Neue Kontaktanfrage', body),
   };
 };
