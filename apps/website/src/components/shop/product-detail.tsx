@@ -1,11 +1,11 @@
 'use client';
 
 import { useShopContext } from '@/app/context/shop-context';
-import { StructuredTextRenderer } from '@/components/dato-structured-text';
+import { StructuredTextRenderer } from '@/integrations/datocms/blocks/structured-text';
 import { DEFAULT_SHIPPING_COST_CHF } from '@/constants/shop-commerce';
 import { trackEvent } from '@/lib/analytics/gtag';
 import { CONTACT_FORM_ANCHOR, PRODUCT_PREFILL_PARAM } from '@/lib/contact-form/schema';
-import { toImage } from '@/utils/image';
+import { toImage } from '@/integrations/datocms/image';
 import { formatShippingCostLabel } from '@/utils/product-commerce';
 import { toStructuredTextValue } from '@/utils/shop-structured-text';
 import { formatPriceToCHF } from '@/utils/price';

@@ -1,65 +1,17 @@
 import { JsonLd } from '@/components/seo/json-ld';
-import { PageRecord } from '@/graphql/generated';
+import type { Breadcrumb } from '@/domain/content/page';
 import { getSiteUrl } from '@/utils/site-url';
 import { Breadcrumbs as BreadcrumbsView } from '@wehrli/design-system';
 import { ComponentProps } from 'react';
 
-type BreadcrumbItem = {
-  name: string;
-  href: string;
-};
-
 type Props = {
-  page?: PageRecord | null;
-  customBreadcrumbs?: BreadcrumbItem[];
+  /** The trail after the home page. */
+  customBreadcrumbs: Breadcrumb[];
   spacing?: ComponentProps<typeof BreadcrumbsView>['spacing'];
   homeText?: string;
 };
 
-export const Breadcrumbs = ({ page, customBreadcrumbs, homeText = 'Home', spacing }: Props) => {
-  const generatedBreadcrumbs = useBreadcrumbs(page);
-
-  const breadcrumbs = customBreadcrumbs ?? generatedBreadcrumbs;
-
-  const breadcrumbsWithHome = [{ name: homeText, href: '/' }, ...breadcrumbs];
-
-  const richSnippet = useRichSnippet(breadcrumbsWithHome);
-
-  if (!breadcrumbsWithHome.length) {
-    return null;
-  }
-
-  return (
-    <>
-      <BreadcrumbsView items={breadcrumbsWithHome.map(({ name, href }) => ({ label: name, href }))} spacing={spacing} />
-      <JsonLd data={richSnippet} />
-    </>
-  );
-};
-
-const useBreadcrumbs = (page?: PageRecord | null): BreadcrumbItem[] => {
-  if (!page) {
-    return [];
-  }
-
-  const getBreadcrumbs = (currentPage: PageRecord, breadcrumbs: BreadcrumbItem[] = []): BreadcrumbItem[] => {
-    const breadcrumb = {
-      name: currentPage.title || currentPage.slug,
-      href: `/${currentPage.slug}`,
-    };
-    breadcrumbs.unshift(breadcrumb);
-
-    if (currentPage.parent) {
-      return getBreadcrumbs(currentPage.parent, breadcrumbs);
-    }
-
-    return breadcrumbs;
-  };
-
-  return getBreadcrumbs(page);
-};
-
-const useRichSnippet = (breadcrumbs: BreadcrumbItem[]) => {
+const toRichSnippet = (breadcrumbs: Breadcrumb[]) => {
   const baseUrl = getSiteUrl();
 
   return {
@@ -72,4 +24,16 @@ const useRichSnippet = (breadcrumbs: BreadcrumbItem[]) => {
       item: `${baseUrl}${breadcrumb.href}`,
     })),
   };
+};
+
+/** The breadcrumb trail, starting at the home page, with its structured data. */
+export const Breadcrumbs = ({ customBreadcrumbs, homeText = 'Home', spacing }: Props) => {
+  const breadcrumbsWithHome = [{ name: homeText, href: '/' }, ...customBreadcrumbs];
+
+  return (
+    <>
+      <BreadcrumbsView items={breadcrumbsWithHome.map(({ name, href }) => ({ label: name, href }))} spacing={spacing} />
+      <JsonLd data={toRichSnippet(breadcrumbsWithHome)} />
+    </>
+  );
 };

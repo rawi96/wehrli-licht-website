@@ -14,7 +14,7 @@ import {
   ShopProductListItemFragment,
 } from '@/graphql/generated';
 import { SHOP_ALL_PRODUCTS_PATH } from '@/constants/shop-paths';
-import { queryDatoCMS } from '@/utils/query-dato-cms';
+import { queryDatoCMS } from '@/integrations/datocms/client';
 import { cache } from 'react';
 
 export type ShopCategory = ShopCategoryFragment;

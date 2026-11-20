@@ -1,10 +1,10 @@
-import { StructuredTextRenderer } from '@/components/dato-structured-text';
+import { StructuredTextRenderer } from '@/integrations/datocms/blocks/structured-text';
 import { SHOP_ALL_PRODUCTS_PATH } from '@/constants/shop-paths';
 import { ShopStorefrontHeroFragment } from '@/graphql/generated';
 import { toShopCategoryCardData } from '@/utils/shop-cards';
 import { shopSectionHeadingId } from '@/utils/shop-page-sections';
 import { ShopCategory } from '@/utils/shop';
-import { toLink } from '@/utils/cms-link';
+import { toLink } from '@/integrations/datocms/links';
 import { toStructuredTextValue } from '@/utils/shop-structured-text';
 import { StorefrontHero } from '@wehrli/design-system';
 import { FC } from 'react';

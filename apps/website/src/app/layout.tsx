@@ -8,13 +8,12 @@ import { getSiteUrl } from '@/utils/site-url';
 import type { Metadata } from 'next';
 import { draftMode } from 'next/headers';
 import { ReactNode } from 'react';
-import { DraftModeBanner } from './api/draft/draft-mode-banner';
+import { DraftModeBanner } from '@/components/layout/draft-mode-banner';
 import { ShopContextProvider } from './context/shop-context';
 import { ShoppingCart } from '@/components/shop/shopping-cart';
 import { jost } from './fonts';
 import { SITE_NAME } from '@/constants/site';
-import { getCmsPagePath } from '@/utils/cms-page-path';
-import { getHeaderFooter } from '@/utils/get-header-footer';
+import { content } from '@/integrations';
 import { cn } from '@wehrli/design-system';
 
 export const metadata: Metadata = {
@@ -35,15 +34,20 @@ export const metadata: Metadata = {
 
 const RootLayout = async ({ children }: { children: ReactNode }) => {
   const { isEnabled } = await draftMode();
-  // Only needed for the cookie banner; the banner still works without the link if DatoCMS fails.
-  const privacyHref = isTrackingEnabled ? getCmsPagePath((await getHeaderFooter().catch(() => null))?.privacyPage) : null;
+  // Only needed for the cookie banner; the banner still works without the link if the CMS fails.
+  const privacyHref = isTrackingEnabled
+    ? await content.getSiteLayout().then(
+        ({ privacyPath }) => privacyPath,
+        () => null,
+      )
+    : null;
 
   return (
     // data-consent is set on <html> by the Google tag init script before hydration.
     <html lang="de" className="scroll-smooth" suppressHydrationWarning>
       <head>
-        <link rel="preconnect" href="https://www.datocms-assets.com" crossOrigin="" />
-        <link rel="dns-prefetch" href="https://www.datocms-assets.com" />
+        <link rel="preconnect" href={content.assetOrigin} crossOrigin="" />
+        <link rel="dns-prefetch" href={content.assetOrigin} />
         <GoogleTag />
       </head>
       <body className={cn(jost.className, 'bg-white-200 h-full antialiased')}>

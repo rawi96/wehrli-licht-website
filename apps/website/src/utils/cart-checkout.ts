@@ -4,7 +4,7 @@ import { CheckoutShippingMethod } from '@/types/checkout';
 import { CartSelection } from '@/utils/cart';
 import { formatLineItemName, resolveUnitPrice } from '@/utils/cart-checkout-helpers';
 import { ProductCommerceMeta, mapProductsToCommerceMeta, resolveCartShippingCostChf } from '@/utils/product-commerce';
-import { queryDatoCMS } from '@/utils/query-dato-cms';
+import { queryDatoCMS } from '@/integrations/datocms/client';
 
 export type CheckoutCartItemPayload = {
   productId: string;

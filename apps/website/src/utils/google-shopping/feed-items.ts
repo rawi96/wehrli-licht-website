@@ -3,7 +3,7 @@ import { GoogleShoppingFeedProductsDocument, ShopGoogleShoppingProductFragment }
 import type { GoogleShoppingFeedItem } from '@/utils/google-shopping/types';
 import { buildProductDescription, buildProductTitle } from '@/utils/shop-seo';
 import { getSiteUrl } from '@/utils/site-url';
-import { queryDatoCMS } from '@/utils/query-dato-cms';
+import { queryDatoCMS } from '@/integrations/datocms/client';
 import { slugifyToken, truncateText } from '@/utils/text';
 
 const MAX_TITLE = 150;

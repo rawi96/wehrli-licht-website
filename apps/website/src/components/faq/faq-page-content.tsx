@@ -1,8 +1,7 @@
 'use client';
 
-import type { FaqTopicGroup } from '@/utils/faq/group-by-topic';
-import { countFaqsInGroups, filterFaqGroups } from '@/utils/faq/filter-faq-groups';
-import { formatFaqCount, formatFaqSearchStatus } from '@/utils/faq/format-faq-count';
+import { countFaqsInGroups, filterFaqGroups, type FaqTopicGroup } from '@/domain/content/faq';
+import { formatFaqCount, formatFaqSearchStatus } from './format-faq-count';
 import { FaqContactCta, FaqIntro, FaqLink, FaqNoResults, FaqSearch, FaqTopics } from '@wehrli/design-system';
 import { FC, useMemo, useState } from 'react';
 
@@ -10,7 +9,7 @@ type Props = {
   title: string;
   intro?: string | null;
   groups: FaqTopicGroup[];
-  /** Contact page from DatoCMS (Header & Footer). */
+  /** Contact page (from the CMS). */
   contactHref: string;
 };
 

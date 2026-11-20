@@ -1,6 +1,6 @@
 import { CmsHtml } from '@/components/cms-html';
 import { getShopCategoryPath, getShopProductPath } from '@/constants/shop-paths';
-import { toImage } from '@/utils/image';
+import { toImage } from '@/integrations/datocms/image';
 import { getLowestPriceFromProduct } from '@/utils/price';
 import { ShopCategory, ShopProductListItem } from '@/utils/shop';
 import type { ProductCardData, ShopCategoryCardData } from '@wehrli/design-system';

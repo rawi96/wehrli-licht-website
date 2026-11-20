@@ -1,6 +1,7 @@
-import { DatoWebhookPayload, revalidateFromDatoWebhook } from '@/lib/revalidate-dato-webhook';
+import { content } from '@/integrations';
 import { NextRequest, NextResponse } from 'next/server';
 
+/** Webhook of the CMS: revalidates the pages affected by a change. */
 export const POST = async (req: NextRequest): Promise<NextResponse> => {
   const token = req.nextUrl.searchParams.get('token');
 
@@ -9,14 +10,13 @@ export const POST = async (req: NextRequest): Promise<NextResponse> => {
   }
 
   try {
-    const payload = (await req.json()) as DatoWebhookPayload;
-    const paths = revalidateFromDatoWebhook(payload);
+    const { paths, model, eventType } = content.revalidateChangedContent(await req.json());
 
     return NextResponse.json({
       revalidated: true,
       paths,
-      model: payload.item_type ?? null,
-      event_type: payload.event_type ?? null,
+      model,
+      event_type: eventType,
       now: Date.now(),
     });
   } catch (error: unknown) {

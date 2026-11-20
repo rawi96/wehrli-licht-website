@@ -1,7 +1,7 @@
 import 'server-only';
 import { ShopProductsForCheckoutDocument } from '@/graphql/generated';
 import type { Catalog } from '@/ports/catalog';
-import { queryDatoCMS } from '@/utils/query-dato-cms';
+import { queryDatoCMS } from './client';
 
 export const datocmsCatalog: Catalog = {
   getCheckoutProducts: async (ids) => {
