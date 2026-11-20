@@ -54,14 +54,13 @@ export default async function ShopProductPage({ params }: Props) {
       <JsonLd data={buildProductJsonLd(product)} />
       <Header headerFooter={headerFooter} />
       <Container>
-        <div className="mb-32">
-          <Breadcrumbs
-            customBreadcrumbs={[
-              { name: 'Shop', href: '/shop' },
-              { name: product.name, href: `/shop/produkte/${slug}` },
-            ]}
-          />
-        </div>
+        <Breadcrumbs
+          spacing="loose"
+          customBreadcrumbs={[
+            { name: 'Shop', href: '/shop' },
+            { name: product.name, href: `/shop/produkte/${slug}` },
+          ]}
+        />
         <ShopBrowseLayout>
           <ProductDetail
             product={product}

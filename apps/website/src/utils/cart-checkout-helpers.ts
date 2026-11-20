@@ -1,4 +1,4 @@
-import { CartSelection } from '@/utils/cart';
+import { formatCartSelections, CartSelection } from '@/utils/cart';
 
 type CheckoutProduct = {
   id: string;
@@ -45,13 +45,9 @@ export const resolveUnitPrice = (product: CheckoutProduct, selections?: CartSele
 };
 
 export const formatLineItemName = (productName: string, selections?: CartSelection[]): string => {
-  if (!selections || selections.length === 0) {
-    return productName;
-  }
+  const variantLabel = formatCartSelections(selections);
 
-  const variantLabel = selections.map((selection) => `${selection.option}: ${selection.value}`).join(', ');
-
-  return `${productName} (${variantLabel})`;
+  return variantLabel ? `${productName} (${variantLabel})` : productName;
 };
 
 export type { CheckoutProduct };

@@ -56,7 +56,6 @@ export const HighlightProjectCard: FC<Props> = ({
       <span
         className={cn(
           'text-wehrli/80 group-hover:text-wehrli mt-4 inline-block text-sm font-bold transition-colors group-hover:underline group-hover:underline-offset-4 sm:mt-5',
-          compact && 'mt-4',
         )}
       >
         {linkLabel}

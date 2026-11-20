@@ -5,7 +5,6 @@ import { GoogleTag } from '@/components/analytics/google-tag';
 import { SiteJsonLd } from '@/components/seo/site-json-ld';
 import { isTrackingEnabled } from '@/lib/analytics/config';
 import { getSiteUrl } from '@/utils/site-url';
-import { classNames } from '@/utils/css';
 import type { Metadata } from 'next';
 import { draftMode } from 'next/headers';
 import { ReactNode } from 'react';
@@ -15,6 +14,7 @@ import { jost } from './fonts';
 import { SITE_NAME } from '@/constants/site';
 import { getCmsPagePath } from '@/utils/cms-page-path';
 import { getHeaderFooter } from '@/utils/get-header-footer';
+import { cn } from '@wehrli/design-system';
 
 export const metadata: Metadata = {
   metadataBase: new URL(getSiteUrl()),
@@ -45,7 +45,7 @@ const RootLayout = async ({ children }: { children: ReactNode }) => {
         <link rel="dns-prefetch" href="https://www.datocms-assets.com" />
         <GoogleTag />
       </head>
-      <body className={classNames(jost.className, 'bg-white-200 h-full antialiased')}>
+      <body className={cn(jost.className, 'bg-white-200 h-full antialiased')}>
         {isEnabled && <DraftModeBanner />}
         <SiteJsonLd />
         <ShopContextProvider>{children}</ShopContextProvider>

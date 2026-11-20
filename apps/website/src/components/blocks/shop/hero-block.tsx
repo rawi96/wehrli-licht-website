@@ -1,7 +1,7 @@
 import { StructuredTextRenderer } from '@/components/dato-structured-text';
-import { getShopCategoryPath, SHOP_ALL_PRODUCTS_PATH } from '@/constants/shop-paths';
+import { SHOP_ALL_PRODUCTS_PATH } from '@/constants/shop-paths';
 import { ShopStorefrontHeroFragment } from '@/graphql/generated';
-import { toImage } from '@/utils/image';
+import { toShopCategoryCardData } from '@/utils/shop-cards';
 import { shopSectionHeadingId } from '@/utils/shop-page-sections';
 import { ShopCategory } from '@/utils/shop';
 import { toLink } from '@/utils/cms-link';
@@ -26,12 +26,7 @@ export const ShopHeroBlock: FC<Props> = ({ block, fallbackCategories }) => {
       intro={intro && <StructuredTextRenderer data={intro} />}
       primaryCta={toLink(block.primaryCta)}
       secondaryCta={toLink(block.secondaryCta)}
-      categories={categories.map((category) => ({
-        id: category.id,
-        name: category.name,
-        href: getShopCategoryPath(category.slug),
-        image: toImage(category.image),
-      }))}
+      categories={categories.map(toShopCategoryCardData)}
       allProductsLink={{ href: SHOP_ALL_PRODUCTS_PATH, label: 'Alle Leuchten' }}
     />
   );

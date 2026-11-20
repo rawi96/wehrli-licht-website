@@ -33,14 +33,15 @@ export const Card: FC<Props> = ({
     href={href}
     title={linkTitle ?? title}
     prefetch={prefetch}
-    className="group bg-white-100 grid w-full grid-rows-[auto,1fr,auto] overflow-hidden rounded-lg text-black transition-transform active:scale-[.99]"
+    className="group bg-white-100 grid w-full grid-rows-[auto_1fr_auto] overflow-hidden rounded-lg text-black transition-transform active:scale-[.99]"
     target="_self"
   >
     <div className="relative overflow-hidden">
       <Image image={image} sizes={imageSizes} fit="fill" hoverZoom="strong" />
     </div>
-    <div className="grid grid-rows-[auto,1fr,auto] p-5 text-sm font-normal md:p-6 lg:p-8 lg:text-sm">
-      {eyebrow && <p>{eyebrow}</p>}
+    <div className="grid grid-rows-[auto_1fr_auto] p-5 text-sm font-normal md:p-6 lg:p-8 lg:text-sm">
+      {/* Always three rows (eyebrow, text, link), so the link sits at the bottom of equal-height cards. */}
+      {eyebrow ? <p>{eyebrow}</p> : <span aria-hidden="true" />}
       <div>
         <h2 className="text-wehrli my-4 text-lg font-bold peer-[p&]:mt-6 md:text-base lg:text-lg lg:peer-[p&]:mt-8">
           {title}

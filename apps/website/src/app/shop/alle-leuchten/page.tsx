@@ -24,14 +24,13 @@ export default async function ShopAllProductsPage() {
       <JsonLd data={buildAllProductsJsonLd(products)} />
       <Header headerFooter={headerFooter} />
       <Container>
-        <div className="mb-20">
-          <Breadcrumbs
-            customBreadcrumbs={[
-              { name: 'Shop', href: '/shop' },
-              { name: 'Alle Leuchten', href: SHOP_ALL_PRODUCTS_PATH },
-            ]}
-          />
-        </div>
+        <Breadcrumbs
+          spacing="tight"
+          customBreadcrumbs={[
+            { name: 'Shop', href: '/shop' },
+            { name: 'Alle Leuchten', href: SHOP_ALL_PRODUCTS_PATH },
+          ]}
+        />
         <ShopBrowseLayout showAllProductsActive>
           <CatalogHeader
             title="Alle Leuchten"

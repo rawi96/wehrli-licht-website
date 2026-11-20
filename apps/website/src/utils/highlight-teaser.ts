@@ -27,12 +27,6 @@ export const pickHighlightShopCategories = (
   return [...featured, ...fallbackCategories.filter((category) => !used.has(category.id))].slice(0, 3);
 };
 
-export const highlightImageAlt = (alt: string | null | undefined, fallback: string): string => {
-  const trimmed = alt?.trim();
-
-  return trimmed && trimmed.length > 0 ? trimmed : fallback;
-};
-
 type HighlightTeaserImage = NonNullable<Parameters<typeof toImage>[0]> | null;
 
 type HighlightItemLink =
@@ -48,5 +42,5 @@ type HighlightItemLink =
 export const highlightLinkedImage = (link: HighlightItemLink, fallbackAlt: string): ImageData | undefined => {
   const teaserImage = link?.link?.teaserImage;
 
-  return teaserImage ? toImage({ ...teaserImage, alt: highlightImageAlt(teaserImage.alt, fallbackAlt) }) : undefined;
+  return toImage(teaserImage, { fallbackAlt });
 };

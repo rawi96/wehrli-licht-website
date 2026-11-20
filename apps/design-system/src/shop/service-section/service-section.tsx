@@ -1,8 +1,8 @@
 import { BuildingStorefrontIcon, CreditCardIcon, EyeIcon, SparklesIcon, TruckIcon } from '@heroicons/react/24/outline';
-import Link from 'next/link';
 import { ComponentType, FC, ReactNode, SVGProps } from 'react';
 import { ShopSectionHeader } from '../section-header/section-header';
 import { LinkData } from '../../typography/text-link/text-link';
+import { ShopTextLink } from '../text-link/text-link';
 
 const SERVICE_ICONS: Record<string, ComponentType<SVGProps<SVGSVGElement>>> = {
   shipping: TruckIcon,
@@ -40,17 +40,7 @@ const ServiceCard: FC<{ item: ShopServiceItem }> = ({ item }) => {
       </div>
       <h3 className="text-wehrli mt-5 text-base font-bold">{item.title}</h3>
       <p className="mt-2 flex-1 text-sm text-gray-600">{item.description}</p>
-      {item.link && (
-        <Link
-          href={item.link.href}
-          className="text-wehrli mt-4 inline-flex min-h-11 items-center text-sm font-bold hover:underline"
-          target={item.link.newTab ? '_blank' : undefined}
-          rel={item.link.newTab ? 'noopener noreferrer' : undefined}
-        >
-          {item.link.label}
-          <span aria-hidden="true"> →</span>
-        </Link>
-      )}
+      {item.link && <ShopTextLink {...item.link} spacing="top" />}
     </article>
   );
 };

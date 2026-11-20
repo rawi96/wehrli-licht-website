@@ -1,19 +1,10 @@
 import type { ImageData } from '../content/image/image';
+import { placeholderImage } from '../docs/placeholders';
 
 // Story-only mock images (inline SVG) for the blocks and their content parts: no external images, no CMS content.
 
-const svg = (width: number, height: number, from: string, to: string) =>
-  `data:image/svg+xml,${encodeURIComponent(
-    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${from}"/><stop offset="1" stop-color="${to}"/></linearGradient></defs><rect width="${width}" height="${height}" fill="url(#g)"/></svg>`,
-  )}`;
-
-const mockImage = (alt: string, width = 1200, height = 800, from = '#749ad7', to = '#142847'): ImageData => ({
-  src: svg(width, height, from, to),
-  width,
-  height,
-  aspectRatio: width / height,
-  alt,
-});
+const mockImage = (alt: string, width = 1200, height = 800, from = '#749ad7', to = '#142847'): ImageData =>
+  placeholderImage(alt, { width, height, from, to });
 
 export const MOCK_AVATAR = mockImage('Porträt', 400, 400, '#f1f0ec', '#9ca3af');
 

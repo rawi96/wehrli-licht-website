@@ -14,7 +14,7 @@ export const toProductCardData = (product: ShopProductListItem, basePath?: strin
     name: product.name,
     href: getShopProductPath(product.slug, basePath),
     price: getLowestPriceFromProduct(product),
-    image: image ? toImage({ ...image, alt: image.alt?.trim() ? image.alt : product.name }) : undefined,
+    image: toImage(image, { fallbackAlt: product.name }),
   };
 };
 

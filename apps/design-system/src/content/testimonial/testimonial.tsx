@@ -32,7 +32,7 @@ export const Testimonial: FC<Props> = ({
   size = 'large',
 }) =>
   size === 'small' ? (
-    <div className="bg-wehrli grid grid-rows-[1fr,auto] items-center rounded-lg p-6 text-white lg:p-10">
+    <div className="bg-wehrli grid grid-rows-[1fr_auto] items-center rounded-lg p-6 text-white lg:p-10">
       <p className="text-center text-sm font-bold md:text-base lg:text-lg">
         <span>&laquo;</span>
         {quote}

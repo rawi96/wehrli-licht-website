@@ -1,7 +1,7 @@
 import { getShopCategoryPath } from '@/constants/shop-paths';
 import { HighlightShopTeaserFragment } from '@/graphql/generated';
 import { toLink } from '@/utils/cms-link';
-import { highlightImageAlt, pickHighlightShopCategories } from '@/utils/highlight-teaser';
+import { pickHighlightShopCategories } from '@/utils/highlight-teaser';
 import { toImage } from '@/utils/image';
 import { getAllCategories } from '@/utils/shop';
 import { HighlightShopTeaserBlock as HighlightShopTeaserBlockView } from '@wehrli/design-system';
@@ -43,12 +43,7 @@ export const HighlightShopTeaserBlock = async ({ block, aboveFold = false }: Pro
         id: category.id,
         name: category.name,
         href: getShopCategoryPath(category.slug),
-        image: category.image?.responsiveImage
-          ? toImage({
-              ...category.image,
-              alt: highlightImageAlt(category.image.alt, `${category.name} – Leuchten-Kategorie`),
-            })
-          : undefined,
+        image: toImage(category.image, { fallbackAlt: `${category.name} – Leuchten-Kategorie` }),
       }))}
       moreCategories={fallbackCategories
         .filter((category) => !featuredIds.has(category.id))

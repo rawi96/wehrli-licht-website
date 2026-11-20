@@ -2,6 +2,7 @@ import { JsonLd } from '@/components/seo/json-ld';
 import { PageRecord } from '@/graphql/generated';
 import { getSiteUrl } from '@/utils/site-url';
 import { Breadcrumbs as BreadcrumbsView } from '@wehrli/design-system';
+import { ComponentProps } from 'react';
 
 type BreadcrumbItem = {
   name: string;
@@ -11,10 +12,11 @@ type BreadcrumbItem = {
 type Props = {
   page?: PageRecord | null;
   customBreadcrumbs?: BreadcrumbItem[];
+  spacing?: ComponentProps<typeof BreadcrumbsView>['spacing'];
   homeText?: string;
 };
 
-export const Breadcrumbs = ({ page, customBreadcrumbs, homeText = 'Home' }: Props) => {
+export const Breadcrumbs = ({ page, customBreadcrumbs, homeText = 'Home', spacing }: Props) => {
   const generatedBreadcrumbs = useBreadcrumbs(page);
 
   const breadcrumbs = customBreadcrumbs ?? generatedBreadcrumbs;
@@ -29,7 +31,7 @@ export const Breadcrumbs = ({ page, customBreadcrumbs, homeText = 'Home' }: Prop
 
   return (
     <>
-      <BreadcrumbsView items={breadcrumbsWithHome.map(({ name, href }) => ({ label: name, href }))} />
+      <BreadcrumbsView items={breadcrumbsWithHome.map(({ name, href }) => ({ label: name, href }))} spacing={spacing} />
       <JsonLd data={richSnippet} />
     </>
   );

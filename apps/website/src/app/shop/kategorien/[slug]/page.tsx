@@ -56,14 +56,13 @@ export default async function ShopCategoryPage({ params }: Props) {
       <JsonLd data={buildCategoryJsonLd(category, products)} />
       <Header headerFooter={headerFooter} />
       <Container>
-        <div className="mb-20">
-          <Breadcrumbs
-            customBreadcrumbs={[
-              { name: 'Shop', href: '/shop' },
-              { name: category.name, href: `/shop/kategorien/${slug}` },
-            ]}
-          />
-        </div>
+        <Breadcrumbs
+          spacing="tight"
+          customBreadcrumbs={[
+            { name: 'Shop', href: '/shop' },
+            { name: category.name, href: `/shop/kategorien/${slug}` },
+          ]}
+        />
         <ShopBrowseLayout activeCategorySlug={slug}>
           <CatalogHeader
             title={category.name}

@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { FC } from 'react';
 import { Image } from '../../content/image/image';
 import { cn } from '../../fundamentals/cn';
+import type { BlockMargins } from '../../blocks/block-margins';
 import { Section } from '../../layout/section/section';
 import { ShopCategoryCardData } from '../category-card/category-card';
 import { HorizontalScroll, HorizontalScrollItem } from '../horizontal-scroll/horizontal-scroll';
@@ -13,12 +14,10 @@ export type ShopCategoryGridItem = ShopCategoryCardData & {
   linkLabel?: string | null;
 };
 
-type Props = {
+type Props = BlockMargins & {
   items: ShopCategoryGridItem[];
   /** `grid`: 1 column, 2 from sm, 3 from lg. `row`: fixed-width cards in a horizontal scroll row. */
   layout?: 'grid' | 'row';
-  marginTop?: boolean;
-  marginBottom?: boolean;
   /** Accessible name of the scroll row. */
   rowLabel?: string;
 };

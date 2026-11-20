@@ -23,6 +23,6 @@ export const ShopSectionHeader: FC<Props> = ({ headingId, title, description, ac
       </Heading>
       <div className="-mt-1 text-sm leading-relaxed md:-mt-2 md:text-base">{description}</div>
     </div>
-    {action && <ShopTextLink {...action} inverted={inverted} stacked />}
+    {action && <ShopTextLink {...action} inverted={inverted} spacing="stacked" />}
   </div>
 );

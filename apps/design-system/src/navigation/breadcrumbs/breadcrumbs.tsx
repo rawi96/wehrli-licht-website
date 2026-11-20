@@ -1,21 +1,31 @@
 import { ChevronRightIcon } from '@heroicons/react/20/solid';
 import Link from 'next/link';
 import { FC } from 'react';
+import { cn } from '../../fundamentals/cn';
 import type { NavigationLink } from '../flyout/flyout';
 
 type Props = {
   /** From the start page to the current page; the last item is the current page. */
   items: NavigationLink[];
+  /**
+   * Space to the content below. `overlap` (content pages): the next section's top margin starts at the breadcrumbs.
+   * `tight`: 16px, above a catalog. `loose`: 64px, above the product detail.
+   */
+  spacing?: keyof typeof SPACING;
+  /** Accessible name of the navigation. */
+  label?: string;
 };
 
+const SPACING = { overlap: '-mb-16', tight: 'mb-4', loose: 'mb-16' } as const;
+
 /** Path to the current page, above the page title. */
-export const Breadcrumbs: FC<Props> = ({ items }) => {
+export const Breadcrumbs: FC<Props> = ({ items, spacing = 'overlap', label = 'Breadcrumb' }) => {
   if (!items.length) {
     return null;
   }
 
   return (
-    <nav aria-label="Breadcrumb" className="-mb-16 flex font-bold">
+    <nav aria-label={label} className={cn('flex font-bold', SPACING[spacing])}>
       <ol role="list" className="flex flex-wrap items-center gap-x-4 gap-y-2">
         {items.map((item, index) => (
           <li key={item.href} className="flex items-center">

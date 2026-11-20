@@ -15,7 +15,8 @@ const preview: Preview = {
         order: [
           'Introduction',
           'Fundamentals',
-          ['Colors', 'Typography', 'Spacing', 'Radii', 'Shadows', 'Breakpoints', 'Motion', 'Icons'],
+          ['Colors', 'Typography', 'Spacing', 'Radii', 'Shadows', 'Breakpoints', 'Motion'],
+          'Icons',
           'Typography',
           'Actions',
           'Forms',
