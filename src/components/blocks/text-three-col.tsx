@@ -1,5 +1,5 @@
 import { TextThreeColsBlockFragment } from '@/graphql/generated';
-import { StructuredText as StructuredTextType, isEmptyDocument } from 'datocms-structured-text-utils';
+import { isEmptyDocument } from 'datocms-structured-text-utils';
 import { FC } from 'react';
 import { BlockWrapper } from '../block-wrapper';
 import { StructuredTextRenderer } from '../dato-structured-text';
@@ -19,9 +19,9 @@ export const TextThreeColBlock: FC<Props> = ({
     disableMarginBottom={disableMarginBottom}
   >
     <Grid cols={3}>
-      {!isEmptyDocument(contentLeft) && <StructuredTextRenderer data={contentLeft as StructuredTextType} />}
-      {!isEmptyDocument(contentMiddle) && <StructuredTextRenderer data={contentMiddle as StructuredTextType} />}
-      {!isEmptyDocument(contentRight) && <StructuredTextRenderer data={contentRight as StructuredTextType} />}
+      {!isEmptyDocument(contentLeft) && <StructuredTextRenderer data={contentLeft} />}
+      {!isEmptyDocument(contentMiddle) && <StructuredTextRenderer data={contentMiddle} />}
+      {!isEmptyDocument(contentRight) && <StructuredTextRenderer data={contentRight} />}
     </Grid>
   </BlockWrapper>
 );

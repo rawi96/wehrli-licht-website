@@ -6,8 +6,7 @@ const plainTextFromStructured = (value: unknown): string => {
     return '';
   }
 
-  const doc =
-    'document' in value && (value as { document?: unknown }).document ? (value as { document: unknown }).document : value;
+  const doc = 'document' in value && (value as { document?: unknown }).document ? value.document : value;
 
   const parts: string[] = [];
 

@@ -58,7 +58,7 @@ export const ShopContextProvider = ({ children }: { children: ReactNode }): Reac
 
   // Hydrate cart from localStorage after mount (SSR-safe).
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect -- intentional client hydration
+    // eslint-disable-next-line @eslint-react/set-state-in-effect -- intentional client hydration
     setShoppingCart(loadCartFromStorage());
     setIsHydrated(true);
   }, []);

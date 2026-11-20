@@ -92,7 +92,7 @@ export const StructuredTextRenderer: FC<Props> = ({ data }) => (
           if (!linkRecord.isExternalUrl && linkRecord.link?.slug) {
             internalLink = generatePathForRecord({
               slug: linkRecord.link?.slug,
-              type: linkRecord.link.__typename as LinkableRecords,
+              type: linkRecord.link.__typename,
               parent: linkRecord.link.__typename === 'PageRecord' ? linkRecord.link.parent : undefined,
             });
           }

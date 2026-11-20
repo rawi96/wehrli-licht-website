@@ -2,13 +2,7 @@ import { HomeStageBlock } from '@/components/blocks/home-stage';
 import { ContentBlocks } from '@/components/content-blocks';
 import { ContentWrapper } from '@/components/layout/content-wrapper';
 import { Footer } from '@/components/layout/footer';
-import {
-  HeaderFooterDocument,
-  HeaderFooterRecord,
-  HomeStageBlockFragment,
-  PageDocument,
-  PageModelContentField,
-} from '@/graphql/generated';
+import { HeaderFooterDocument, HeaderFooterRecord, PageDocument } from '@/graphql/generated';
 import { queryDatoCMS } from '@/utils/query-dato-cms';
 import { draftMode } from 'next/headers';
 import { notFound } from 'next/navigation';
@@ -49,9 +43,9 @@ export default async function HomePage() {
   return (
     <>
       <main>
-        {homeStageBlock && <HomeStageBlock key={homeStageBlock.id} block={homeStageBlock as HomeStageBlockFragment} />}
+        {homeStageBlock && <HomeStageBlock key={homeStageBlock.id} block={homeStageBlock} />}
         <ContentWrapper>
-          <ContentBlocks blocks={pageBlocks as PageModelContentField[]} />
+          <ContentBlocks blocks={pageBlocks} />
         </ContentWrapper>
       </main>
       <Footer headerFooter={headerFooter as HeaderFooterRecord} />

@@ -20,6 +20,7 @@ const config: CodegenConfig = {
     'graphql/generated.ts': {
       config: {
         strictScalars: true,
+        nonOptionalTypename: true,
         scalars: {
           BooleanType: 'boolean',
           CustomData: 'Record<string, unknown>',

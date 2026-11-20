@@ -1,5 +1,5 @@
 import { TextBlockFragment } from '@/graphql/generated';
-import { StructuredText as StructuredTextType, isEmptyDocument } from 'datocms-structured-text-utils';
+import { isEmptyDocument } from 'datocms-structured-text-utils';
 import { FC } from 'react';
 import { BlockWrapper } from '../block-wrapper';
 import { StructuredTextRenderer } from '../dato-structured-text';
@@ -15,6 +15,6 @@ export const TextBlock: FC<Props> = ({ block: { content, anchorId, disableMargin
     disableMarginTop={disableMarginTop}
     disableMarginBottom={disableMarginBottom}
   >
-    {!isEmptyDocument(content) && <StructuredTextRenderer data={content as StructuredTextType} />}
+    {!isEmptyDocument(content) && <StructuredTextRenderer data={content} />}
   </BlockWrapper>
 );

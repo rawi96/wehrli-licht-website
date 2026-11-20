@@ -1,11 +1,10 @@
+/** Internal type. DO NOT USE DIRECTLY. */
+type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+/** Internal type. DO NOT USE DIRECTLY. */
+export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
-export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: { input: string; output: string; }
@@ -26,7 +25,7 @@ export type Scalars = {
 
 /** Block of type 📦 Alle Kategorien (all_categories_block) */
 export type AllCategoriesBlockRecord = RecordInterface & {
-  __typename?: 'AllCategoriesBlockRecord';
+  __typename: 'AllCategoriesBlockRecord';
   _createdAt: Scalars['DateTime']['output'];
   /** Editing URL */
   _editingUrl?: Maybe<Scalars['String']['output']>;
@@ -60,7 +59,7 @@ export type BooleanFilter = {
 
 /** Block of type 📅 Calendly (calendly) */
 export type CalendlyRecord = RecordInterface & {
-  __typename?: 'CalendlyRecord';
+  __typename: 'CalendlyRecord';
   _createdAt: Scalars['DateTime']['output'];
   /** Editing URL */
   _editingUrl?: Maybe<Scalars['String']['output']>;
@@ -86,7 +85,7 @@ export type CalendlyRecord_SeoMetaTagsArgs = {
 };
 
 export type CollectionMetadata = {
-  __typename?: 'CollectionMetadata';
+  __typename: 'CollectionMetadata';
   count: Scalars['IntType']['output'];
 };
 
@@ -106,7 +105,7 @@ export enum ColorBucketType {
 }
 
 export type ColorField = {
-  __typename?: 'ColorField';
+  __typename: 'ColorField';
   alpha: Scalars['IntType']['output'];
   blue: Scalars['IntType']['output'];
   cssRgb: Scalars['String']['output'];
@@ -115,9 +114,44 @@ export type ColorField = {
   red: Scalars['IntType']['output'];
 };
 
+/** Block of type ✉️ Kontaktformular (contact_form) */
+export type ContactFormRecord = RecordInterface & {
+  __typename: 'ContactFormRecord';
+  _createdAt: Scalars['DateTime']['output'];
+  /** Editing URL */
+  _editingUrl?: Maybe<Scalars['String']['output']>;
+  _firstPublishedAt: Scalars['DateTime']['output'];
+  _isValid: Scalars['BooleanType']['output'];
+  _modelApiKey: Scalars['String']['output'];
+  _publicationScheduledAt?: Maybe<Scalars['DateTime']['output']>;
+  _publishedAt: Scalars['DateTime']['output'];
+  /** Generates SEO and Social card meta tags to be used in your frontend */
+  _seoMetaTags: Array<Tag>;
+  _status: ItemStatus;
+  _unpublishingScheduledAt?: Maybe<Scalars['DateTime']['output']>;
+  _updatedAt: Scalars['DateTime']['output'];
+  disableMarginBottom: Scalars['BooleanType']['output'];
+  disableMarginTop: Scalars['BooleanType']['output'];
+  id: Scalars['ItemId']['output'];
+  intro?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+};
+
+
+/** Block of type ✉️ Kontaktformular (contact_form) */
+export type ContactFormRecord_SeoMetaTagsArgs = {
+  locale?: InputMaybe<SiteLocale>;
+};
+
+
+/** Block of type ✉️ Kontaktformular (contact_form) */
+export type ContactFormRecordIntroArgs = {
+  markdown?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
 /** Block of type ☎️ Kontakt (contact) */
 export type ContactRecord = RecordInterface & {
-  __typename?: 'ContactRecord';
+  __typename: 'ContactRecord';
   _createdAt: Scalars['DateTime']['output'];
   /** Editing URL */
   _editingUrl?: Maybe<Scalars['String']['output']>;
@@ -162,7 +196,7 @@ export type CreatedAtFilter = {
 
 /** Block of type 📁 Verzeichnis (directory) */
 export type DirectoryRecord = RecordInterface & {
-  __typename?: 'DirectoryRecord';
+  __typename: 'DirectoryRecord';
   _createdAt: Scalars['DateTime']['output'];
   /** Editing URL */
   _editingUrl?: Maybe<Scalars['String']['output']>;
@@ -251,7 +285,7 @@ export enum EmployeeModelOrderBy {
 
 /** Record of type 💁 Mitarbeiter/in (employee) */
 export type EmployeeRecord = RecordInterface & {
-  __typename?: 'EmployeeRecord';
+  __typename: 'EmployeeRecord';
   _createdAt: Scalars['DateTime']['output'];
   /** Editing URL */
   _editingUrl?: Maybe<Scalars['String']['output']>;
@@ -286,7 +320,7 @@ export type EmployeeRecord_SeoMetaTagsArgs = {
 
 /** Block of type ❓ FAQ Block (faq_block) */
 export type FaqBlockRecord = RecordInterface & {
-  __typename?: 'FaqBlockRecord';
+  __typename: 'FaqBlockRecord';
   _createdAt: Scalars['DateTime']['output'];
   /** Editing URL */
   _editingUrl?: Maybe<Scalars['String']['output']>;
@@ -368,7 +402,7 @@ export enum FaqModelOrderBy {
 
 /** Record of type ❓ FAQ (faq) */
 export type FaqRecord = RecordInterface & {
-  __typename?: 'FaqRecord';
+  __typename: 'FaqRecord';
   _createdAt: Scalars['DateTime']['output'];
   /** Editing URL */
   _editingUrl?: Maybe<Scalars['String']['output']>;
@@ -446,7 +480,7 @@ export enum FaqTopicModelOrderBy {
 
 /** Record of type 🏷️ FAQ-Thema (faq_topic) */
 export type FaqTopicRecord = RecordInterface & {
-  __typename?: 'FaqTopicRecord';
+  __typename: 'FaqTopicRecord';
   _createdAt: Scalars['DateTime']['output'];
   /** Editing URL */
   _editingUrl?: Maybe<Scalars['String']['output']>;
@@ -479,7 +513,7 @@ export enum FaviconType {
 }
 
 export type FileField = FileFieldInterface & {
-  __typename?: 'FileField';
+  __typename: 'FileField';
   _createdAt: Scalars['DateTime']['output'];
   /** The DatoCMS URL where you can edit this entity. To use this field, you need to set a X-Base-Editing-Url header in the request */
   _editingUrl?: Maybe<Scalars['String']['output']>;
@@ -669,7 +703,7 @@ export type FloatFilter = {
 
 /** Block of type 🔗 Footer-Link (footer_link) */
 export type FooterLinkRecord = RecordInterface & {
-  __typename?: 'FooterLinkRecord';
+  __typename: 'FooterLinkRecord';
   _createdAt: Scalars['DateTime']['output'];
   /** Editing URL */
   _editingUrl?: Maybe<Scalars['String']['output']>;
@@ -696,7 +730,7 @@ export type FooterLinkRecord_SeoMetaTagsArgs = {
 
 /** Block of type 📂 Footer-Navigation (footer_navigation_group) */
 export type FooterNavigationGroupRecord = RecordInterface & {
-  __typename?: 'FooterNavigationGroupRecord';
+  __typename: 'FooterNavigationGroupRecord';
   _createdAt: Scalars['DateTime']['output'];
   /** Editing URL */
   _editingUrl?: Maybe<Scalars['String']['output']>;
@@ -737,7 +771,7 @@ export type GalleryFilter = {
 
 /** Block of type 📷 Galerie mit Lightbox (gallery) */
 export type GalleryRecord = RecordInterface & {
-  __typename?: 'GalleryRecord';
+  __typename: 'GalleryRecord';
   _createdAt: Scalars['DateTime']['output'];
   /** Editing URL */
   _editingUrl?: Maybe<Scalars['String']['output']>;
@@ -765,7 +799,7 @@ export type GalleryRecord_SeoMetaTagsArgs = {
 };
 
 export type GlobalSeoField = {
-  __typename?: 'GlobalSeoField';
+  __typename: 'GlobalSeoField';
   facebookPageUrl?: Maybe<Scalars['String']['output']>;
   fallbackSeo?: Maybe<SeoField>;
   siteName?: Maybe<Scalars['String']['output']>;
@@ -777,7 +811,7 @@ export type HeaderFooterModelMenuField = DirectoryRecord | NavigationItemRecord;
 
 /** Record of type ⚙️ Header & Footer (header_footer) */
 export type HeaderFooterRecord = RecordInterface & {
-  __typename?: 'HeaderFooterRecord';
+  __typename: 'HeaderFooterRecord';
   _createdAt: Scalars['DateTime']['output'];
   /** Editing URL */
   _editingUrl?: Maybe<Scalars['String']['output']>;
@@ -831,7 +865,7 @@ export type HeaderFooterRecordOpeningHoursTextArgs = {
 
 /** Block of type 🃏 Highlight-Angebot-Karte (highlight_offer_item) */
 export type HighlightOfferItemRecord = RecordInterface & {
-  __typename?: 'HighlightOfferItemRecord';
+  __typename: 'HighlightOfferItemRecord';
   _createdAt: Scalars['DateTime']['output'];
   /** Editing URL */
   _editingUrl?: Maybe<Scalars['String']['output']>;
@@ -859,7 +893,7 @@ export type HighlightOfferItemRecord_SeoMetaTagsArgs = {
 
 /** Block of type 🎬 Highlight Angebote (highlight_offers_teaser) */
 export type HighlightOffersTeaserRecord = RecordInterface & {
-  __typename?: 'HighlightOffersTeaserRecord';
+  __typename: 'HighlightOffersTeaserRecord';
   _createdAt: Scalars['DateTime']['output'];
   /** Editing URL */
   _editingUrl?: Maybe<Scalars['String']['output']>;
@@ -896,7 +930,7 @@ export type HighlightOffersTeaserRecordSublineArgs = {
 
 /** Block of type 🃏 Highlight-Projekt-Karte (highlight_project_item) */
 export type HighlightProjectItemRecord = RecordInterface & {
-  __typename?: 'HighlightProjectItemRecord';
+  __typename: 'HighlightProjectItemRecord';
   _createdAt: Scalars['DateTime']['output'];
   /** Editing URL */
   _editingUrl?: Maybe<Scalars['String']['output']>;
@@ -932,7 +966,7 @@ export type HighlightProjectItemRecordDescriptionArgs = {
 
 /** Block of type 🎬 Highlight Projekte (highlight_projects_teaser) */
 export type HighlightProjectsTeaserRecord = RecordInterface & {
-  __typename?: 'HighlightProjectsTeaserRecord';
+  __typename: 'HighlightProjectsTeaserRecord';
   _createdAt: Scalars['DateTime']['output'];
   /** Editing URL */
   _editingUrl?: Maybe<Scalars['String']['output']>;
@@ -969,7 +1003,7 @@ export type HighlightProjectsTeaserRecordSublineArgs = {
 
 /** Block of type 🛒 Highlight Online Shop (highlight_shop_teaser) */
 export type HighlightShopTeaserRecord = RecordInterface & {
-  __typename?: 'HighlightShopTeaserRecord';
+  __typename: 'HighlightShopTeaserRecord';
   _createdAt: Scalars['DateTime']['output'];
   /** Editing URL */
   _editingUrl?: Maybe<Scalars['String']['output']>;
@@ -1010,7 +1044,7 @@ export type HighlightShopTeaserRecordSublineArgs = {
 
 /** Block of type 🏠 Startseiten-Bühne (home_stage) */
 export type HomeStageRecord = RecordInterface & {
-  __typename?: 'HomeStageRecord';
+  __typename: 'HomeStageRecord';
   _createdAt: Scalars['DateTime']['output'];
   /** Editing URL */
   _editingUrl?: Maybe<Scalars['String']['output']>;
@@ -1040,7 +1074,7 @@ export type HomeStageRecord_SeoMetaTagsArgs = {
 
 /** Block of type 🪟 Iframe (iframe) */
 export type IframeRecord = RecordInterface & {
-  __typename?: 'IframeRecord';
+  __typename: 'IframeRecord';
   _createdAt: Scalars['DateTime']['output'];
   /** Editing URL */
   _editingUrl?: Maybe<Scalars['String']['output']>;
@@ -1067,7 +1101,7 @@ export type IframeRecord_SeoMetaTagsArgs = {
 };
 
 export type ImageFileField = FileFieldInterface & {
-  __typename?: 'ImageFileField';
+  __typename: 'ImageFileField';
   _createdAt: Scalars['DateTime']['output'];
   /** The DatoCMS URL where you can edit this entity. To use this field, you need to set a X-Base-Editing-Url header in the request */
   _editingUrl?: Maybe<Scalars['String']['output']>;
@@ -1147,7 +1181,7 @@ export type ImageFileFieldUrlArgs = {
 
 /** Block of type 📷 Bild (image) */
 export type ImageRecord = RecordInterface & {
-  __typename?: 'ImageRecord';
+  __typename: 'ImageRecord';
   _createdAt: Scalars['DateTime']['output'];
   /** Editing URL */
   _editingUrl?: Maybe<Scalars['String']['output']>;
@@ -3026,7 +3060,7 @@ export type LinkFilter = {
 
 /** Block of type 🔗 Link (link) */
 export type LinkRecord = RecordInterface & {
-  __typename?: 'LinkRecord';
+  __typename: 'LinkRecord';
   _createdAt: Scalars['DateTime']['output'];
   /** Editing URL */
   _editingUrl?: Maybe<Scalars['String']['output']>;
@@ -3071,7 +3105,7 @@ export type LinksFilter = {
 
 /** Block of type 🃏 Logo-Raster (logo_grid) */
 export type LogoGridRecord = RecordInterface & {
-  __typename?: 'LogoGridRecord';
+  __typename: 'LogoGridRecord';
   _createdAt: Scalars['DateTime']['output'];
   /** Editing URL */
   _editingUrl?: Maybe<Scalars['String']['output']>;
@@ -3097,15 +3131,32 @@ export type LogoGridRecord_SeoMetaTagsArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
+export enum MuxThumbnailFitMode {
+  Crop = 'crop',
+  Pad = 'pad',
+  Preserve = 'preserve',
+  Smartcrop = 'smartcrop',
+  Stretch = 'stretch'
+}
+
 export enum MuxThumbnailFormatType {
   Gif = 'gif',
   Jpg = 'jpg',
   Png = 'png'
 }
 
+export enum MuxThumbnailRotation {
+  /** Rotate 90° clockwise */
+  Rotate_90 = 'ROTATE_90',
+  /** Rotate 180° clockwise */
+  Rotate_180 = 'ROTATE_180',
+  /** Rotate 270° clockwise */
+  Rotate_270 = 'ROTATE_270'
+}
+
 /** Block of type 🔗 Navigationspunkt (navigation_item) */
 export type NavigationItemRecord = RecordInterface & {
-  __typename?: 'NavigationItemRecord';
+  __typename: 'NavigationItemRecord';
   _createdAt: Scalars['DateTime']['output'];
   /** Editing URL */
   _editingUrl?: Maybe<Scalars['String']['output']>;
@@ -3138,7 +3189,7 @@ export type OrientationFilter = {
   neq?: InputMaybe<UploadOrientation>;
 };
 
-export type PageModelContentField = AllCategoriesBlockRecord | CalendlyRecord | ContactRecord | FaqBlockRecord | GalleryRecord | HighlightOffersTeaserRecord | HighlightProjectsTeaserRecord | HighlightShopTeaserRecord | HomeStageRecord | IframeRecord | ImageRecord | LogoGridRecord | QuoteRecord | TeamRecord | TeaserGridRecord | TeaserRowRecord | TextImageRecord | TextRecord | TextThreeColumnRecord | TextTwoColumnRecord;
+export type PageModelContentField = AllCategoriesBlockRecord | CalendlyRecord | ContactFormRecord | ContactRecord | FaqBlockRecord | GalleryRecord | HighlightOffersTeaserRecord | HighlightProjectsTeaserRecord | HighlightShopTeaserRecord | HomeStageRecord | IframeRecord | ImageRecord | LogoGridRecord | QuoteRecord | TeamRecord | TeaserGridRecord | TeaserRowRecord | TextImageRecord | TextRecord | TextThreeColumnRecord | TextTwoColumnRecord;
 
 export type PageModelFilter = {
   AND?: InputMaybe<Array<InputMaybe<PageModelFilter>>>;
@@ -3197,7 +3248,7 @@ export enum PageModelOrderBy {
 
 /** Record of type 📄 Seite (page) */
 export type PageRecord = RecordInterface & {
-  __typename?: 'PageRecord';
+  __typename: 'PageRecord';
   _createdAt: Scalars['DateTime']['output'];
   /** Editing URL */
   _editingUrl?: Maybe<Scalars['String']['output']>;
@@ -3264,7 +3315,7 @@ export type PositionFilter = {
 
 /** Block of type 📋 Produktspezifikation (product_spec) */
 export type ProductSpecRecord = RecordInterface & {
-  __typename?: 'ProductSpecRecord';
+  __typename: 'ProductSpecRecord';
   _createdAt: Scalars['DateTime']['output'];
   /** Editing URL */
   _editingUrl?: Maybe<Scalars['String']['output']>;
@@ -3292,7 +3343,7 @@ export type ProductSpecRecord_SeoMetaTagsArgs = {
 
 /** Block of type 📦 Produktvariante (product_variant) */
 export type ProductVariantRecord = RecordInterface & {
-  __typename?: 'ProductVariantRecord';
+  __typename: 'ProductVariantRecord';
   _createdAt: Scalars['DateTime']['output'];
   /** Editing URL */
   _editingUrl?: Maybe<Scalars['String']['output']>;
@@ -3337,7 +3388,7 @@ export type PublishedAtFilter = {
 
 /** The query root for this schema */
 export type Query = {
-  __typename?: 'Query';
+  __typename: 'Query';
   /** Returns meta information regarding a record collection */
   _allEmployeesMeta: CollectionMetadata;
   /** Returns meta information regarding a record collection */
@@ -3346,6 +3397,8 @@ export type Query = {
   _allFaqsMeta: CollectionMetadata;
   /** Returns meta information regarding a record collection */
   _allPagesMeta: CollectionMetadata;
+  /** Returns meta information regarding a record collection */
+  _allSchemaMigrationsMeta: CollectionMetadata;
   /** Returns meta information regarding a record collection */
   _allShopCategoriesMeta: CollectionMetadata;
   /** Returns meta information regarding a record collection */
@@ -3365,6 +3418,8 @@ export type Query = {
   /** Returns a collection of records */
   allPages: Array<PageRecord>;
   /** Returns a collection of records */
+  allSchemaMigrations: Array<SchemaMigrationRecord>;
+  /** Returns a collection of records */
   allShopCategories: Array<ShopCategoryRecord>;
   /** Returns a collection of records */
   allShopProducts: Array<ShopProductRecord>;
@@ -3382,6 +3437,8 @@ export type Query = {
   headerFooter?: Maybe<HeaderFooterRecord>;
   /** Returns a specific record */
   page?: Maybe<PageRecord>;
+  /** Returns a specific record */
+  schemaMigration?: Maybe<SchemaMigrationRecord>;
   /** Returns a specific record */
   shopCategory?: Maybe<ShopCategoryRecord>;
   /** Returns the single instance record */
@@ -3419,6 +3476,13 @@ export type Query_AllFaqsMetaArgs = {
 /** The query root for this schema */
 export type Query_AllPagesMetaArgs = {
   filter?: InputMaybe<PageModelFilter>;
+  locale?: InputMaybe<SiteLocale>;
+};
+
+
+/** The query root for this schema */
+export type Query_AllSchemaMigrationsMetaArgs = {
+  filter?: InputMaybe<SchemaMigrationModelFilter>;
   locale?: InputMaybe<SiteLocale>;
 };
 
@@ -3498,6 +3562,17 @@ export type QueryAllPagesArgs = {
   first?: InputMaybe<Scalars['IntType']['input']>;
   locale?: InputMaybe<SiteLocale>;
   orderBy?: InputMaybe<Array<InputMaybe<PageModelOrderBy>>>;
+  skip?: InputMaybe<Scalars['IntType']['input']>;
+};
+
+
+/** The query root for this schema */
+export type QueryAllSchemaMigrationsArgs = {
+  fallbackLocales?: InputMaybe<Array<SiteLocale>>;
+  filter?: InputMaybe<SchemaMigrationModelFilter>;
+  first?: InputMaybe<Scalars['IntType']['input']>;
+  locale?: InputMaybe<SiteLocale>;
+  orderBy?: InputMaybe<Array<InputMaybe<SchemaMigrationModelOrderBy>>>;
   skip?: InputMaybe<Scalars['IntType']['input']>;
 };
 
@@ -3590,6 +3665,15 @@ export type QueryPageArgs = {
 
 
 /** The query root for this schema */
+export type QuerySchemaMigrationArgs = {
+  fallbackLocales?: InputMaybe<Array<SiteLocale>>;
+  filter?: InputMaybe<SchemaMigrationModelFilter>;
+  locale?: InputMaybe<SiteLocale>;
+  orderBy?: InputMaybe<Array<InputMaybe<SchemaMigrationModelOrderBy>>>;
+};
+
+
+/** The query root for this schema */
 export type QueryShopCategoryArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   filter?: InputMaybe<ShopCategoryModelFilter>;
@@ -3633,7 +3717,7 @@ export type QueryUploadArgs = {
 
 /** Block of type 📝 Zitat (quote) */
 export type QuoteRecord = RecordInterface & {
-  __typename?: 'QuoteRecord';
+  __typename: 'QuoteRecord';
   _createdAt: Scalars['DateTime']['output'];
   /** Editing URL */
   _editingUrl?: Maybe<Scalars['String']['output']>;
@@ -3701,7 +3785,7 @@ export enum ResolutionType {
 }
 
 export type ResponsiveImage = {
-  __typename?: 'ResponsiveImage';
+  __typename: 'ResponsiveImage';
   alt?: Maybe<Scalars['String']['output']>;
   aspectRatio: Scalars['FloatType']['output'];
   base64?: Maybe<Scalars['String']['output']>;
@@ -3715,8 +3799,72 @@ export type ResponsiveImage = {
   width: Scalars['IntType']['output'];
 };
 
+export type SchemaMigrationModelFilter = {
+  AND?: InputMaybe<Array<InputMaybe<SchemaMigrationModelFilter>>>;
+  OR?: InputMaybe<Array<InputMaybe<SchemaMigrationModelFilter>>>;
+  _createdAt?: InputMaybe<CreatedAtFilter>;
+  _firstPublishedAt?: InputMaybe<PublishedAtFilter>;
+  _isValid?: InputMaybe<BooleanFilter>;
+  _publicationScheduledAt?: InputMaybe<PublishedAtFilter>;
+  _publishedAt?: InputMaybe<PublishedAtFilter>;
+  _status?: InputMaybe<StatusFilter>;
+  _unpublishingScheduledAt?: InputMaybe<PublishedAtFilter>;
+  _updatedAt?: InputMaybe<UpdatedAtFilter>;
+  id?: InputMaybe<ItemIdFilter>;
+  name?: InputMaybe<StringFilter>;
+};
+
+export enum SchemaMigrationModelOrderBy {
+  CreatedAtAsc = '_createdAt_ASC',
+  CreatedAtDesc = '_createdAt_DESC',
+  FirstPublishedAtAsc = '_firstPublishedAt_ASC',
+  FirstPublishedAtDesc = '_firstPublishedAt_DESC',
+  IsValidAsc = '_isValid_ASC',
+  IsValidDesc = '_isValid_DESC',
+  PublicationScheduledAtAsc = '_publicationScheduledAt_ASC',
+  PublicationScheduledAtDesc = '_publicationScheduledAt_DESC',
+  PublishedAtAsc = '_publishedAt_ASC',
+  PublishedAtDesc = '_publishedAt_DESC',
+  StatusAsc = '_status_ASC',
+  StatusDesc = '_status_DESC',
+  UnpublishingScheduledAtAsc = '_unpublishingScheduledAt_ASC',
+  UnpublishingScheduledAtDesc = '_unpublishingScheduledAt_DESC',
+  UpdatedAtAsc = '_updatedAt_ASC',
+  UpdatedAtDesc = '_updatedAt_DESC',
+  IdAsc = 'id_ASC',
+  IdDesc = 'id_DESC',
+  NameAsc = 'name_ASC',
+  NameDesc = 'name_DESC'
+}
+
+/** Record of type Schema migration (schema_migration) */
+export type SchemaMigrationRecord = RecordInterface & {
+  __typename: 'SchemaMigrationRecord';
+  _createdAt: Scalars['DateTime']['output'];
+  /** Editing URL */
+  _editingUrl?: Maybe<Scalars['String']['output']>;
+  _firstPublishedAt: Scalars['DateTime']['output'];
+  _isValid: Scalars['BooleanType']['output'];
+  _modelApiKey: Scalars['String']['output'];
+  _publicationScheduledAt?: Maybe<Scalars['DateTime']['output']>;
+  _publishedAt: Scalars['DateTime']['output'];
+  /** Generates SEO and Social card meta tags to be used in your frontend */
+  _seoMetaTags: Array<Tag>;
+  _status: ItemStatus;
+  _unpublishingScheduledAt?: Maybe<Scalars['DateTime']['output']>;
+  _updatedAt: Scalars['DateTime']['output'];
+  id: Scalars['ItemId']['output'];
+  name: Scalars['String']['output'];
+};
+
+
+/** Record of type Schema migration (schema_migration) */
+export type SchemaMigrationRecord_SeoMetaTagsArgs = {
+  locale?: InputMaybe<SiteLocale>;
+};
+
 export type SeoField = {
-  __typename?: 'SeoField';
+  __typename: 'SeoField';
   description?: Maybe<Scalars['String']['output']>;
   image?: Maybe<FileField>;
   noIndex?: Maybe<Scalars['BooleanType']['output']>;
@@ -3783,7 +3931,7 @@ export enum ShopCategoryModelOrderBy {
 
 /** Record of type 🏷️ Shop-Kategorie (shop_category) */
 export type ShopCategoryRecord = RecordInterface & {
-  __typename?: 'ShopCategoryRecord';
+  __typename: 'ShopCategoryRecord';
   _createdAt: Scalars['DateTime']['output'];
   /** Editing URL */
   _editingUrl?: Maybe<Scalars['String']['output']>;
@@ -3828,7 +3976,7 @@ export type ShopCategoryRecordSeoDescriptionArgs = {
 
 /** Block of type Shop Kategorien (shop_category_section) */
 export type ShopCategorySectionRecord = RecordInterface & {
-  __typename?: 'ShopCategorySectionRecord';
+  __typename: 'ShopCategorySectionRecord';
   _createdAt: Scalars['DateTime']['output'];
   /** Editing URL */
   _editingUrl?: Maybe<Scalars['String']['output']>;
@@ -3865,7 +4013,7 @@ export type ShopPageModelSectionsField = ShopCategorySectionRecord | ShopService
 
 /** Record of type Shop-Startseite (shop_page) */
 export type ShopPageRecord = RecordInterface & {
-  __typename?: 'ShopPageRecord';
+  __typename: 'ShopPageRecord';
   _createdAt: Scalars['DateTime']['output'];
   /** Editing URL */
   _editingUrl?: Maybe<Scalars['String']['output']>;
@@ -3891,7 +4039,7 @@ export type ShopPageRecord_SeoMetaTagsArgs = {
 };
 
 export type ShopProductModelDescriptionField = {
-  __typename?: 'ShopProductModelDescriptionField';
+  __typename: 'ShopProductModelDescriptionField';
   blocks: Array<Scalars['String']['output']>;
   inlineBlocks: Array<Scalars['String']['output']>;
   links: Array<Scalars['String']['output']>;
@@ -4078,7 +4226,7 @@ export enum ShopProductModelOrderBy {
 
 /** Record of type 🛒 Shop-Produkt (shop_product) */
 export type ShopProductRecord = RecordInterface & {
-  __typename?: 'ShopProductRecord';
+  __typename: 'ShopProductRecord';
   _createdAt: Scalars['DateTime']['output'];
   /** Editing URL */
   _editingUrl?: Maybe<Scalars['String']['output']>;
@@ -4161,7 +4309,7 @@ export type ShopProductRecordSeoDescriptionArgs = {
 
 /** Block of type Shop Service-Karte (shop_service_card) */
 export type ShopServiceCardRecord = RecordInterface & {
-  __typename?: 'ShopServiceCardRecord';
+  __typename: 'ShopServiceCardRecord';
   _createdAt: Scalars['DateTime']['output'];
   /** Editing URL */
   _editingUrl?: Maybe<Scalars['String']['output']>;
@@ -4195,7 +4343,7 @@ export type ShopServiceCardRecordDescriptionArgs = {
 };
 
 export type ShopServiceSectionModelDescriptionField = {
-  __typename?: 'ShopServiceSectionModelDescriptionField';
+  __typename: 'ShopServiceSectionModelDescriptionField';
   blocks: Array<LinkRecord>;
   inlineBlocks: Array<Scalars['String']['output']>;
   links: Array<PageRecord>;
@@ -4204,7 +4352,7 @@ export type ShopServiceSectionModelDescriptionField = {
 
 /** Block of type Shop Services (shop_service_section) */
 export type ShopServiceSectionRecord = RecordInterface & {
-  __typename?: 'ShopServiceSectionRecord';
+  __typename: 'ShopServiceSectionRecord';
   _createdAt: Scalars['DateTime']['output'];
   /** Editing URL */
   _editingUrl?: Maybe<Scalars['String']['output']>;
@@ -4232,7 +4380,7 @@ export type ShopServiceSectionRecord_SeoMetaTagsArgs = {
 };
 
 export type ShopSfFeaturedModelDescriptionField = {
-  __typename?: 'ShopSfFeaturedModelDescriptionField';
+  __typename: 'ShopSfFeaturedModelDescriptionField';
   blocks: Array<LinkRecord>;
   inlineBlocks: Array<Scalars['String']['output']>;
   links: Array<PageRecord>;
@@ -4241,7 +4389,7 @@ export type ShopSfFeaturedModelDescriptionField = {
 
 /** Block of type Shop Bestseller (shop_sf_featured) */
 export type ShopSfFeaturedRecord = RecordInterface & {
-  __typename?: 'ShopSfFeaturedRecord';
+  __typename: 'ShopSfFeaturedRecord';
   _createdAt: Scalars['DateTime']['output'];
   /** Editing URL */
   _editingUrl?: Maybe<Scalars['String']['output']>;
@@ -4268,7 +4416,7 @@ export type ShopSfFeaturedRecord_SeoMetaTagsArgs = {
 };
 
 export type ShopStorefrontHeroModelIntroField = {
-  __typename?: 'ShopStorefrontHeroModelIntroField';
+  __typename: 'ShopStorefrontHeroModelIntroField';
   blocks: Array<LinkRecord>;
   inlineBlocks: Array<Scalars['String']['output']>;
   links: Array<PageRecord>;
@@ -4277,7 +4425,7 @@ export type ShopStorefrontHeroModelIntroField = {
 
 /** Block of type Shop Hero (shop_storefront_hero) */
 export type ShopStorefrontHeroRecord = RecordInterface & {
-  __typename?: 'ShopStorefrontHeroRecord';
+  __typename: 'ShopStorefrontHeroRecord';
   _createdAt: Scalars['DateTime']['output'];
   /** Editing URL */
   _editingUrl?: Maybe<Scalars['String']['output']>;
@@ -4307,7 +4455,7 @@ export type ShopStorefrontHeroRecord_SeoMetaTagsArgs = {
 };
 
 export type Site = {
-  __typename?: 'Site';
+  __typename: 'Site';
   favicon?: Maybe<FileField>;
   faviconMetaTags: Array<Tag>;
   globalSeo?: Maybe<GlobalSeoField>;
@@ -4398,7 +4546,7 @@ export type StructuredTextFilter = {
 };
 
 export type Tag = {
-  __typename?: 'Tag';
+  __typename: 'Tag';
   attributes?: Maybe<Scalars['MetaTagAttributes']['output']>;
   content?: Maybe<Scalars['String']['output']>;
   tag: Scalars['String']['output'];
@@ -4406,7 +4554,7 @@ export type Tag = {
 
 /** Block of type 👪 Team (team) */
 export type TeamRecord = RecordInterface & {
-  __typename?: 'TeamRecord';
+  __typename: 'TeamRecord';
   _createdAt: Scalars['DateTime']['output'];
   /** Editing URL */
   _editingUrl?: Maybe<Scalars['String']['output']>;
@@ -4434,7 +4582,7 @@ export type TeamRecord_SeoMetaTagsArgs = {
 
 /** Block of type 🎫 Teaser-Raster (teaser_grid) */
 export type TeaserGridRecord = RecordInterface & {
-  __typename?: 'TeaserGridRecord';
+  __typename: 'TeaserGridRecord';
   _createdAt: Scalars['DateTime']['output'];
   /** Editing URL */
   _editingUrl?: Maybe<Scalars['String']['output']>;
@@ -4462,7 +4610,7 @@ export type TeaserGridRecord_SeoMetaTagsArgs = {
 
 /** Block of type 🎫 Teaser-Zeile (teaser_row) */
 export type TeaserRowRecord = RecordInterface & {
-  __typename?: 'TeaserRowRecord';
+  __typename: 'TeaserRowRecord';
   _createdAt: Scalars['DateTime']['output'];
   /** Editing URL */
   _editingUrl?: Maybe<Scalars['String']['output']>;
@@ -4539,7 +4687,7 @@ export enum TestimonialModelOrderBy {
 
 /** Record of type 📝 Kundenstimme (testimonial) */
 export type TestimonialRecord = RecordInterface & {
-  __typename?: 'TestimonialRecord';
+  __typename: 'TestimonialRecord';
   _createdAt: Scalars['DateTime']['output'];
   /** Editing URL */
   _editingUrl?: Maybe<Scalars['String']['output']>;
@@ -4589,7 +4737,7 @@ export type TextFilter = {
 };
 
 export type TextImageModelContentField = {
-  __typename?: 'TextImageModelContentField';
+  __typename: 'TextImageModelContentField';
   blocks: Array<Scalars['String']['output']>;
   inlineBlocks: Array<Scalars['String']['output']>;
   links: Array<PageRecord>;
@@ -4598,7 +4746,7 @@ export type TextImageModelContentField = {
 
 /** Block of type 📝 Text & Bild (text_image) */
 export type TextImageRecord = RecordInterface & {
-  __typename?: 'TextImageRecord';
+  __typename: 'TextImageRecord';
   _createdAt: Scalars['DateTime']['output'];
   /** Editing URL */
   _editingUrl?: Maybe<Scalars['String']['output']>;
@@ -4628,7 +4776,7 @@ export type TextImageRecord_SeoMetaTagsArgs = {
 };
 
 export type TextModelContentField = {
-  __typename?: 'TextModelContentField';
+  __typename: 'TextModelContentField';
   blocks: Array<LinkRecord>;
   inlineBlocks: Array<Scalars['String']['output']>;
   links: Array<PageRecord>;
@@ -4637,7 +4785,7 @@ export type TextModelContentField = {
 
 /** Block of type 📝 Text (text) */
 export type TextRecord = RecordInterface & {
-  __typename?: 'TextRecord';
+  __typename: 'TextRecord';
   _createdAt: Scalars['DateTime']['output'];
   /** Editing URL */
   _editingUrl?: Maybe<Scalars['String']['output']>;
@@ -4665,7 +4813,7 @@ export type TextRecord_SeoMetaTagsArgs = {
 };
 
 export type TextThreeColumnModelContentLeftField = {
-  __typename?: 'TextThreeColumnModelContentLeftField';
+  __typename: 'TextThreeColumnModelContentLeftField';
   blocks: Array<Scalars['String']['output']>;
   inlineBlocks: Array<Scalars['String']['output']>;
   links: Array<PageRecord>;
@@ -4673,7 +4821,7 @@ export type TextThreeColumnModelContentLeftField = {
 };
 
 export type TextThreeColumnModelContentMiddleField = {
-  __typename?: 'TextThreeColumnModelContentMiddleField';
+  __typename: 'TextThreeColumnModelContentMiddleField';
   blocks: Array<Scalars['String']['output']>;
   inlineBlocks: Array<Scalars['String']['output']>;
   links: Array<PageRecord>;
@@ -4681,7 +4829,7 @@ export type TextThreeColumnModelContentMiddleField = {
 };
 
 export type TextThreeColumnModelContentRightField = {
-  __typename?: 'TextThreeColumnModelContentRightField';
+  __typename: 'TextThreeColumnModelContentRightField';
   blocks: Array<Scalars['String']['output']>;
   inlineBlocks: Array<Scalars['String']['output']>;
   links: Array<PageRecord>;
@@ -4690,7 +4838,7 @@ export type TextThreeColumnModelContentRightField = {
 
 /** Block of type 📝 Text (3 Spalten) (text_three_column) */
 export type TextThreeColumnRecord = RecordInterface & {
-  __typename?: 'TextThreeColumnRecord';
+  __typename: 'TextThreeColumnRecord';
   _createdAt: Scalars['DateTime']['output'];
   /** Editing URL */
   _editingUrl?: Maybe<Scalars['String']['output']>;
@@ -4720,7 +4868,7 @@ export type TextThreeColumnRecord_SeoMetaTagsArgs = {
 };
 
 export type TextTwoColumnModelContentLeftField = {
-  __typename?: 'TextTwoColumnModelContentLeftField';
+  __typename: 'TextTwoColumnModelContentLeftField';
   blocks: Array<Scalars['String']['output']>;
   inlineBlocks: Array<Scalars['String']['output']>;
   links: Array<PageRecord>;
@@ -4728,7 +4876,7 @@ export type TextTwoColumnModelContentLeftField = {
 };
 
 export type TextTwoColumnModelContentRightField = {
-  __typename?: 'TextTwoColumnModelContentRightField';
+  __typename: 'TextTwoColumnModelContentRightField';
   blocks: Array<Scalars['String']['output']>;
   inlineBlocks: Array<Scalars['String']['output']>;
   links: Array<PageRecord>;
@@ -4737,7 +4885,7 @@ export type TextTwoColumnModelContentRightField = {
 
 /** Block of type 📝 Text (2 Spalten) (text_two_column) */
 export type TextTwoColumnRecord = RecordInterface & {
-  __typename?: 'TextTwoColumnRecord';
+  __typename: 'TextTwoColumnRecord';
   _createdAt: Scalars['DateTime']['output'];
   /** Editing URL */
   _editingUrl?: Maybe<Scalars['String']['output']>;
@@ -5101,7 +5249,7 @@ export type UploadUpdatedAtFilter = {
 };
 
 export type UploadVideoField = {
-  __typename?: 'UploadVideoField';
+  __typename: 'UploadVideoField';
   alt?: Maybe<Scalars['String']['output']>;
   blurUpThumb?: Maybe<Scalars['String']['output']>;
   blurhash?: Maybe<Scalars['String']['output']>;
@@ -5111,6 +5259,8 @@ export type UploadVideoField = {
   mp4Url?: Maybe<Scalars['String']['output']>;
   muxAssetId: Scalars['String']['output'];
   muxPlaybackId: Scalars['String']['output'];
+  /** Default poster frame, in seconds into the video. Resolves to the record-level field override when present, otherwise the upload-level default. `null` means Mux's default (middle of the video). */
+  posterTime?: Maybe<Scalars['Float']['output']>;
   streamingUrl: Scalars['String']['output'];
   thumbhash?: Maybe<Scalars['String']['output']>;
   thumbnailUrl: Scalars['String']['output'];
@@ -5140,7 +5290,14 @@ export type UploadVideoFieldMp4UrlArgs = {
 
 
 export type UploadVideoFieldThumbnailUrlArgs = {
+  fitMode?: InputMaybe<MuxThumbnailFitMode>;
+  flipH?: InputMaybe<Scalars['Boolean']['input']>;
+  flipV?: InputMaybe<Scalars['Boolean']['input']>;
   format?: InputMaybe<MuxThumbnailFormatType>;
+  height?: InputMaybe<Scalars['Int']['input']>;
+  rotate?: InputMaybe<MuxThumbnailRotation>;
+  time?: InputMaybe<Scalars['Float']['input']>;
+  width?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
@@ -5167,7 +5324,7 @@ export type UploadWidthFilter = {
 
 /** Block of type 🔹 Varianten-Auswahl (variant_selection) */
 export type VariantSelectionRecord = RecordInterface & {
-  __typename?: 'VariantSelectionRecord';
+  __typename: 'VariantSelectionRecord';
   _createdAt: Scalars['DateTime']['output'];
   /** Editing URL */
   _editingUrl?: Maybe<Scalars['String']['output']>;
@@ -5199,7 +5356,7 @@ export enum VideoMp4Res {
 }
 
 export type FocalPoint = {
-  __typename?: 'focalPoint';
+  __typename: 'focalPoint';
   x: Scalars['FloatType']['output'];
   y: Scalars['FloatType']['output'];
 };
@@ -5207,218 +5364,219 @@ export type FocalPoint = {
 export type AllRoutesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AllRoutesQuery = { __typename?: 'Query', allPages: Array<{ __typename?: 'PageRecord', id: string, slug: string, lastModified: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, lastModified: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, lastModified: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, lastModified: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, lastModified: string, seometatags?: { __typename?: 'SeoField', noIndex?: boolean | null } | null } | null, seometatags?: { __typename?: 'SeoField', noIndex?: boolean | null } | null } | null, seometatags?: { __typename?: 'SeoField', noIndex?: boolean | null } | null } | null, seometatags?: { __typename?: 'SeoField', noIndex?: boolean | null } | null } | null, seometatags?: { __typename?: 'SeoField', noIndex?: boolean | null } | null }> };
+export type AllRoutesQuery = { __typename: 'Query', allPages: Array<{ __typename: 'PageRecord', id: string, slug: string, lastModified: string, parent: { __typename: 'PageRecord', id: string, slug: string, lastModified: string, parent: { __typename: 'PageRecord', id: string, slug: string, lastModified: string, parent: { __typename: 'PageRecord', id: string, slug: string, lastModified: string, parent: { __typename: 'PageRecord', id: string, slug: string, lastModified: string, seometatags: { __typename: 'SeoField', noIndex: boolean | null } | null } | null, seometatags: { __typename: 'SeoField', noIndex: boolean | null } | null } | null, seometatags: { __typename: 'SeoField', noIndex: boolean | null } | null } | null, seometatags: { __typename: 'SeoField', noIndex: boolean | null } | null } | null, seometatags: { __typename: 'SeoField', noIndex: boolean | null } | null }> };
 
-export type PageDetailsFragment = { __typename?: 'PageRecord', id: string, slug: string, lastModified: string, seometatags?: { __typename?: 'SeoField', noIndex?: boolean | null } | null };
+export type PageDetailsFragment = { __typename: 'PageRecord', id: string, slug: string, lastModified: string, seometatags: { __typename: 'SeoField', noIndex: boolean | null } | null };
 
 export type AllFaqsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AllFaqsQuery = { __typename?: 'Query', allFaqs: Array<{ __typename?: 'FaqRecord', id: string, question: string, slug: string, answer: string, sortOrder?: number | null, topic: { __typename?: 'FaqTopicRecord', id: string, title: string, slug: string, sortOrder?: number | null } }> };
+export type AllFaqsQuery = { __typename: 'Query', allFaqs: Array<{ __typename: 'FaqRecord', id: string, question: string, slug: string, answer: string, sortOrder: number | null, topic: { __typename: 'FaqTopicRecord', id: string, title: string, slug: string, sortOrder: number | null } }> };
 
 export type FaqPageMetaQueryVariables = Exact<{
-  slug: Scalars['String']['input'];
+  slug: string;
 }>;
 
 
-export type FaqPageMetaQuery = { __typename?: 'Query', page?: { __typename?: 'PageRecord', title: string, teaserEyebrow?: string | null, teaserDescription?: string | null, seo: Array<{ __typename?: 'Tag', attributes?: Record<string, string> | null, content?: string | null, tag: string }> } | null, site: { __typename?: 'Site', favicon: Array<{ __typename?: 'Tag', attributes?: Record<string, string> | null, content?: string | null, tag: string }> } };
+export type FaqPageMetaQuery = { __typename: 'Query', page: { __typename: 'PageRecord', title: string, teaserEyebrow: string | null, teaserDescription: string | null, seo: Array<{ __typename: 'Tag', attributes: Record<string, string> | null, content: string | null, tag: string }> } | null, site: { __typename: 'Site', favicon: Array<{ __typename: 'Tag', attributes: Record<string, string> | null, content: string | null, tag: string }> } };
 
-export type CalendlyBlockFragment = { __typename?: 'CalendlyRecord', id: string, disableMarginTop: boolean, disableMarginBottom: boolean };
+export type CalendlyBlockFragment = { __typename: 'CalendlyRecord', id: string, disableMarginTop: boolean, disableMarginBottom: boolean };
 
-export type ContactBlockFragment = { __typename?: 'ContactRecord', id: string, text: string, employee: { __typename?: 'EmployeeRecord', firstname: string, phone?: string | null, email?: string | null, appointmentText?: string | null, appointmentAnchorLink?: string | null, appointmentLink?: { __typename?: 'PageRecord', slug: string } | null, image: { __typename?: 'ImageFileField', responsiveImage: { __typename?: 'ResponsiveImage', src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } } } };
+export type ContactBlockFragment = { __typename: 'ContactRecord', id: string, text: string, employee: { __typename: 'EmployeeRecord', firstname: string, phone: string | null, email: string | null, appointmentText: string | null, appointmentAnchorLink: string | null, appointmentLink: { __typename: 'PageRecord', slug: string } | null, image: { __typename: 'ImageFileField', responsiveImage: { __typename: 'ResponsiveImage', src: string, width: number, height: number, alt: string | null, title: string | null, base64: string | null, sizes: string } } } };
 
-export type GalleryBlockFragment = { __typename?: 'GalleryRecord', id: string, disableMarginTop: boolean, disableMarginBottom: boolean, showImageTitles: boolean, gallery: Array<{ __typename?: 'ImageFileField', id: string, title?: string | null, smallSize: { __typename?: 'ResponsiveImage', src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null, sizes: string }, largeSize: { __typename?: 'ResponsiveImage', src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } }> };
+export type GalleryBlockFragment = { __typename: 'GalleryRecord', id: string, disableMarginTop: boolean, disableMarginBottom: boolean, showImageTitles: boolean, gallery: Array<{ __typename: 'ImageFileField', id: string, title: string | null, smallSize: { __typename: 'ResponsiveImage', src: string, width: number, height: number, alt: string | null, title: string | null, base64: string | null, sizes: string }, largeSize: { __typename: 'ResponsiveImage', src: string, width: number, height: number, alt: string | null, title: string | null, base64: string | null, sizes: string } }> };
 
-export type HighlightItemLinkFragment = { __typename?: 'LinkRecord', id: string, label: string, newTab: boolean, externalUrl?: string | null, isExternalUrl: boolean, anchorLink?: string | null, link?: { __typename: 'PageRecord', id: string, slug: string, teaserImage?: { __typename?: 'ImageFileField', alt?: string | null, title?: string | null, responsiveImage: { __typename?: 'ResponsiveImage', src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } } | null, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null };
+export type HighlightItemLinkFragment = { __typename: 'LinkRecord', id: string, label: string, newTab: boolean, externalUrl: string | null, isExternalUrl: boolean, anchorLink: string | null, link: { __typename: 'PageRecord', id: string, slug: string, teaserImage: { __typename: 'ImageFileField', alt: string | null, title: string | null, responsiveImage: { __typename: 'ResponsiveImage', src: string, width: number, height: number, alt: string | null, title: string | null, base64: string | null, sizes: string } } | null, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null };
 
-export type HighlightOfferItemFragment = { __typename?: 'HighlightOfferItemRecord', id: string, title: string, eyebrow: string, offerLink?: { __typename?: 'LinkRecord', id: string, label: string, newTab: boolean, externalUrl?: string | null, isExternalUrl: boolean, anchorLink?: string | null, link?: { __typename: 'PageRecord', id: string, slug: string, teaserImage?: { __typename?: 'ImageFileField', alt?: string | null, title?: string | null, responsiveImage: { __typename?: 'ResponsiveImage', src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } } | null, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null } | null };
+export type HighlightOfferItemFragment = { __typename: 'HighlightOfferItemRecord', id: string, title: string, eyebrow: string, offerLink: { __typename: 'LinkRecord', id: string, label: string, newTab: boolean, externalUrl: string | null, isExternalUrl: boolean, anchorLink: string | null, link: { __typename: 'PageRecord', id: string, slug: string, teaserImage: { __typename: 'ImageFileField', alt: string | null, title: string | null, responsiveImage: { __typename: 'ResponsiveImage', src: string, width: number, height: number, alt: string | null, title: string | null, base64: string | null, sizes: string } } | null, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null } | null };
 
-export type HighlightOffersTeaserFragment = { __typename?: 'HighlightOffersTeaserRecord', id: string, disableMarginTop: boolean, disableMarginBottom: boolean, title: string, subline: string, footerCta?: { __typename?: 'LinkRecord', id: string, label: string, newTab: boolean, externalUrl?: string | null, isExternalUrl: boolean, anchorLink?: string | null, link?: { __typename: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null } | null, offers: Array<{ __typename?: 'HighlightOfferItemRecord', id: string, title: string, eyebrow: string, offerLink?: { __typename?: 'LinkRecord', id: string, label: string, newTab: boolean, externalUrl?: string | null, isExternalUrl: boolean, anchorLink?: string | null, link?: { __typename: 'PageRecord', id: string, slug: string, teaserImage?: { __typename?: 'ImageFileField', alt?: string | null, title?: string | null, responsiveImage: { __typename?: 'ResponsiveImage', src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } } | null, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null } | null }> };
+export type HighlightOffersTeaserFragment = { __typename: 'HighlightOffersTeaserRecord', id: string, disableMarginTop: boolean, disableMarginBottom: boolean, title: string, subline: string, footerCta: { __typename: 'LinkRecord', id: string, label: string, newTab: boolean, externalUrl: string | null, isExternalUrl: boolean, anchorLink: string | null, link: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null } | null, offers: Array<{ __typename: 'HighlightOfferItemRecord', id: string, title: string, eyebrow: string, offerLink: { __typename: 'LinkRecord', id: string, label: string, newTab: boolean, externalUrl: string | null, isExternalUrl: boolean, anchorLink: string | null, link: { __typename: 'PageRecord', id: string, slug: string, teaserImage: { __typename: 'ImageFileField', alt: string | null, title: string | null, responsiveImage: { __typename: 'ResponsiveImage', src: string, width: number, height: number, alt: string | null, title: string | null, base64: string | null, sizes: string } } | null, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null } | null }> };
 
-export type HighlightPageTeaserImageFragment = { __typename?: 'ImageFileField', alt?: string | null, title?: string | null, responsiveImage: { __typename?: 'ResponsiveImage', src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } };
+export type HighlightPageTeaserImageFragment = { __typename: 'ImageFileField', alt: string | null, title: string | null, responsiveImage: { __typename: 'ResponsiveImage', src: string, width: number, height: number, alt: string | null, title: string | null, base64: string | null, sizes: string } };
 
-export type HighlightProjectItemFragment = { __typename?: 'HighlightProjectItemRecord', id: string, offer: string, title: string, company: string, description: string, projectLink?: { __typename?: 'LinkRecord', id: string, label: string, newTab: boolean, externalUrl?: string | null, isExternalUrl: boolean, anchorLink?: string | null, link?: { __typename: 'PageRecord', id: string, slug: string, teaserImage?: { __typename?: 'ImageFileField', alt?: string | null, title?: string | null, responsiveImage: { __typename?: 'ResponsiveImage', src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } } | null, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null } | null };
+export type HighlightProjectItemFragment = { __typename: 'HighlightProjectItemRecord', id: string, offer: string, title: string, company: string, description: string, projectLink: { __typename: 'LinkRecord', id: string, label: string, newTab: boolean, externalUrl: string | null, isExternalUrl: boolean, anchorLink: string | null, link: { __typename: 'PageRecord', id: string, slug: string, teaserImage: { __typename: 'ImageFileField', alt: string | null, title: string | null, responsiveImage: { __typename: 'ResponsiveImage', src: string, width: number, height: number, alt: string | null, title: string | null, base64: string | null, sizes: string } } | null, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null } | null };
 
-export type HighlightProjectsTeaserFragment = { __typename?: 'HighlightProjectsTeaserRecord', id: string, disableMarginTop: boolean, disableMarginBottom: boolean, title: string, subline: string, primaryCta?: { __typename?: 'LinkRecord', id: string, label: string, newTab: boolean, externalUrl?: string | null, isExternalUrl: boolean, anchorLink?: string | null, link?: { __typename: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null } | null, projects: Array<{ __typename?: 'HighlightProjectItemRecord', id: string, offer: string, title: string, company: string, description: string, projectLink?: { __typename?: 'LinkRecord', id: string, label: string, newTab: boolean, externalUrl?: string | null, isExternalUrl: boolean, anchorLink?: string | null, link?: { __typename: 'PageRecord', id: string, slug: string, teaserImage?: { __typename?: 'ImageFileField', alt?: string | null, title?: string | null, responsiveImage: { __typename?: 'ResponsiveImage', src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } } | null, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null } | null }> };
+export type HighlightProjectsTeaserFragment = { __typename: 'HighlightProjectsTeaserRecord', id: string, disableMarginTop: boolean, disableMarginBottom: boolean, title: string, subline: string, primaryCta: { __typename: 'LinkRecord', id: string, label: string, newTab: boolean, externalUrl: string | null, isExternalUrl: boolean, anchorLink: string | null, link: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null } | null, projects: Array<{ __typename: 'HighlightProjectItemRecord', id: string, offer: string, title: string, company: string, description: string, projectLink: { __typename: 'LinkRecord', id: string, label: string, newTab: boolean, externalUrl: string | null, isExternalUrl: boolean, anchorLink: string | null, link: { __typename: 'PageRecord', id: string, slug: string, teaserImage: { __typename: 'ImageFileField', alt: string | null, title: string | null, responsiveImage: { __typename: 'ResponsiveImage', src: string, width: number, height: number, alt: string | null, title: string | null, base64: string | null, sizes: string } } | null, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null } | null }> };
 
-export type HighlightShopTeaserFragment = { __typename?: 'HighlightShopTeaserRecord', id: string, disableMarginTop: boolean, disableMarginBottom: boolean, eyebrow: string, title: string, subline: string, popularCategoriesLabel?: string | null, moreCategoriesLabel?: string | null, primaryCta?: { __typename?: 'LinkRecord', id: string, label: string, newTab: boolean, externalUrl?: string | null, isExternalUrl: boolean, anchorLink?: string | null, link?: { __typename: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null } | null, secondaryCta?: { __typename?: 'LinkRecord', id: string, label: string, newTab: boolean, externalUrl?: string | null, isExternalUrl: boolean, anchorLink?: string | null, link?: { __typename: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null } | null, featuredCategories: Array<{ __typename?: 'ShopCategoryRecord', id: string, name: string, slug: string, showInShop: boolean, seoTitle?: string | null, seoDescription?: string | null, seoNoindex: boolean, _updatedAt: string, description?: string | null, image?: { __typename?: 'FileField', url: string, alt?: string | null, title?: string | null, responsiveImage?: { __typename?: 'ResponsiveImage', src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } | null } | null }> };
+export type HighlightShopTeaserFragment = { __typename: 'HighlightShopTeaserRecord', id: string, disableMarginTop: boolean, disableMarginBottom: boolean, eyebrow: string, title: string, subline: string, popularCategoriesLabel: string | null, moreCategoriesLabel: string | null, primaryCta: { __typename: 'LinkRecord', id: string, label: string, newTab: boolean, externalUrl: string | null, isExternalUrl: boolean, anchorLink: string | null, link: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null } | null, secondaryCta: { __typename: 'LinkRecord', id: string, label: string, newTab: boolean, externalUrl: string | null, isExternalUrl: boolean, anchorLink: string | null, link: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null } | null, featuredCategories: Array<{ __typename: 'ShopCategoryRecord', id: string, name: string, slug: string, showInShop: boolean, seoTitle: string | null, seoDescription: string | null, seoNoindex: boolean, _updatedAt: string, description: string | null, image: { __typename: 'FileField', url: string, alt: string | null, title: string | null, responsiveImage: { __typename: 'ResponsiveImage', src: string, width: number, height: number, alt: string | null, title: string | null, base64: string | null, sizes: string } | null } | null }> };
 
-export type HomeStageBlockFragment = { __typename?: 'HomeStageRecord', id: string, title: string, intro: string, image?: { __typename?: 'ImageFileField', responsiveImage: { __typename?: 'ResponsiveImage', src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } } | null, slideshowImages: Array<{ __typename?: 'FileField', id: string, responsiveImage?: { __typename?: 'ResponsiveImage', src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } | null }>, callToActions: Array<{ __typename?: 'LinkRecord', id: string, label: string, newTab: boolean, externalUrl?: string | null, isExternalUrl: boolean, anchorLink?: string | null, link?: { __typename: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null }> };
+export type HomeStageBlockFragment = { __typename: 'HomeStageRecord', id: string, title: string, intro: string, image: { __typename: 'ImageFileField', responsiveImage: { __typename: 'ResponsiveImage', src: string, width: number, height: number, alt: string | null, title: string | null, base64: string | null, sizes: string } } | null, slideshowImages: Array<{ __typename: 'FileField', id: string, responsiveImage: { __typename: 'ResponsiveImage', src: string, width: number, height: number, alt: string | null, title: string | null, base64: string | null, sizes: string } | null }>, callToActions: Array<{ __typename: 'LinkRecord', id: string, label: string, newTab: boolean, externalUrl: string | null, isExternalUrl: boolean, anchorLink: string | null, link: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null }> };
 
-export type IframeBlockFragment = { __typename?: 'IframeRecord', id: string, src: string, disableMarginTop: boolean, disableMarginBottom: boolean };
+export type IframeBlockFragment = { __typename: 'IframeRecord', id: string, src: string, disableMarginTop: boolean, disableMarginBottom: boolean };
 
-export type ImageBlockFragment = { __typename?: 'ImageRecord', id: string, disableMarginTop: boolean, disableMarginBottom: boolean, priority: boolean, images: Array<{ __typename?: 'ImageFileField', id: string, title?: string | null, url: string, responsiveImage: { __typename?: 'ResponsiveImage', src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } }> };
+export type ImageBlockFragment = { __typename: 'ImageRecord', id: string, disableMarginTop: boolean, disableMarginBottom: boolean, priority: boolean, images: Array<{ __typename: 'ImageFileField', id: string, title: string | null, url: string, responsiveImage: { __typename: 'ResponsiveImage', src: string, width: number, height: number, alt: string | null, title: string | null, base64: string | null, sizes: string } }> };
 
-export type LinkBlockFragment = { __typename?: 'LinkRecord', id: string, label: string, newTab: boolean, externalUrl?: string | null, isExternalUrl: boolean, anchorLink?: string | null, link?: { __typename: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null };
+export type LinkBlockFragment = { __typename: 'LinkRecord', id: string, label: string, newTab: boolean, externalUrl: string | null, isExternalUrl: boolean, anchorLink: string | null, link: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null };
 
-export type LogoGridBlockFragment = { __typename?: 'LogoGridRecord', id: string, disableMarginTop: boolean, disableMarginBottom: boolean, logos: Array<{ __typename?: 'ImageFileField', id: string, url: string, width: number, height: number, alt?: string | null, title?: string | null }> };
+export type LogoGridBlockFragment = { __typename: 'LogoGridRecord', id: string, disableMarginTop: boolean, disableMarginBottom: boolean, logos: Array<{ __typename: 'ImageFileField', id: string, url: string, width: number, height: number, alt: string | null, title: string | null }> };
 
-export type QuoteBlockFragment = { __typename?: 'QuoteRecord', id: string, disableMarginTop: boolean, disableMarginBottom: boolean, testimonials: Array<{ __typename?: 'TestimonialRecord', text: string, authorFunction: string, authorName: string, companyName: string, companyUrl: string, authorImage: { __typename?: 'ImageFileField', responsiveImage: { __typename?: 'ResponsiveImage', src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } } }> };
+export type QuoteBlockFragment = { __typename: 'QuoteRecord', id: string, disableMarginTop: boolean, disableMarginBottom: boolean, testimonials: Array<{ __typename: 'TestimonialRecord', text: string, authorFunction: string, authorName: string, companyName: string, companyUrl: string, authorImage: { __typename: 'ImageFileField', responsiveImage: { __typename: 'ResponsiveImage', src: string, width: number, height: number, alt: string | null, title: string | null, base64: string | null, sizes: string } } }> };
 
-export type AllCategoriesBlockFragment = { __typename?: 'AllCategoriesBlockRecord', id: string, layout?: string | null, disableMarginBottom: boolean, disableMarginTop: boolean };
+export type AllCategoriesBlockFragment = { __typename: 'AllCategoriesBlockRecord', id: string, layout: string | null, disableMarginBottom: boolean, disableMarginTop: boolean };
 
-export type ShopCategorySectionFragment = { __typename?: 'ShopCategorySectionRecord', id: string, title: string, sectionId?: string | null, body: string, actionLink: { __typename?: 'LinkRecord', id: string, label: string, newTab: boolean, externalUrl?: string | null, isExternalUrl: boolean, anchorLink?: string | null, link?: { __typename: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null } };
+export type ShopCategorySectionFragment = { __typename: 'ShopCategorySectionRecord', id: string, title: string, sectionId: string | null, body: string, actionLink: { __typename: 'LinkRecord', id: string, label: string, newTab: boolean, externalUrl: string | null, isExternalUrl: boolean, anchorLink: string | null, link: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null } };
 
-export type ShopFeaturedSectionFragment = { __typename?: 'ShopSfFeaturedRecord', id: string, title: string, intro: { __typename?: 'ShopSfFeaturedModelDescriptionField', value: unknown, links: Array<{ __typename: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', slug: string } | null }>, blocks: Array<{ __typename?: 'LinkRecord', _modelApiKey: string, id: string, label: string, newTab: boolean, externalUrl?: string | null, isExternalUrl: boolean, anchorLink?: string | null, link?: { __typename: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null }> }, actionLink: { __typename?: 'LinkRecord', id: string, label: string, newTab: boolean, externalUrl?: string | null, isExternalUrl: boolean, anchorLink?: string | null, link?: { __typename: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null } };
+export type ShopFeaturedSectionFragment = { __typename: 'ShopSfFeaturedRecord', id: string, title: string, intro: { __typename: 'ShopSfFeaturedModelDescriptionField', value: unknown, links: Array<{ __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', slug: string } | null }>, blocks: Array<{ __typename: 'LinkRecord', _modelApiKey: string, id: string, label: string, newTab: boolean, externalUrl: string | null, isExternalUrl: boolean, anchorLink: string | null, link: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null }> }, actionLink: { __typename: 'LinkRecord', id: string, label: string, newTab: boolean, externalUrl: string | null, isExternalUrl: boolean, anchorLink: string | null, link: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null } };
 
-export type ShopLinkFragment = { __typename?: 'LinkRecord', id: string, label: string, newTab: boolean, externalUrl?: string | null, isExternalUrl: boolean, anchorLink?: string | null, link?: { __typename: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null };
+export type ShopLinkFragment = { __typename: 'LinkRecord', id: string, label: string, newTab: boolean, externalUrl: string | null, isExternalUrl: boolean, anchorLink: string | null, link: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null };
 
-export type ShopServiceCardFragment = { __typename?: 'ShopServiceCardRecord', id: string, title: string, description: string, icon: string, link?: { __typename?: 'LinkRecord', id: string, label: string, newTab: boolean, externalUrl?: string | null, isExternalUrl: boolean, anchorLink?: string | null, link?: { __typename: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null } | null };
+export type ShopServiceCardFragment = { __typename: 'ShopServiceCardRecord', id: string, title: string, description: string, icon: string, link: { __typename: 'LinkRecord', id: string, label: string, newTab: boolean, externalUrl: string | null, isExternalUrl: boolean, anchorLink: string | null, link: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null } | null };
 
-export type ShopServiceSectionFragment = { __typename?: 'ShopServiceSectionRecord', id: string, title: string, intro: { __typename?: 'ShopServiceSectionModelDescriptionField', value: unknown, links: Array<{ __typename: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', slug: string } | null }>, blocks: Array<{ __typename?: 'LinkRecord', _modelApiKey: string, id: string, label: string, newTab: boolean, externalUrl?: string | null, isExternalUrl: boolean, anchorLink?: string | null, link?: { __typename: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null }> }, offersLink: { __typename?: 'LinkRecord', id: string, label: string, newTab: boolean, externalUrl?: string | null, isExternalUrl: boolean, anchorLink?: string | null, link?: { __typename: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null }, items: Array<{ __typename?: 'ShopServiceCardRecord', id: string, title: string, description: string, icon: string, link?: { __typename?: 'LinkRecord', id: string, label: string, newTab: boolean, externalUrl?: string | null, isExternalUrl: boolean, anchorLink?: string | null, link?: { __typename: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null } | null }> };
+export type ShopServiceSectionFragment = { __typename: 'ShopServiceSectionRecord', id: string, title: string, intro: { __typename: 'ShopServiceSectionModelDescriptionField', value: unknown, links: Array<{ __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', slug: string } | null }>, blocks: Array<{ __typename: 'LinkRecord', _modelApiKey: string, id: string, label: string, newTab: boolean, externalUrl: string | null, isExternalUrl: boolean, anchorLink: string | null, link: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null }> }, offersLink: { __typename: 'LinkRecord', id: string, label: string, newTab: boolean, externalUrl: string | null, isExternalUrl: boolean, anchorLink: string | null, link: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null }, items: Array<{ __typename: 'ShopServiceCardRecord', id: string, title: string, description: string, icon: string, link: { __typename: 'LinkRecord', id: string, label: string, newTab: boolean, externalUrl: string | null, isExternalUrl: boolean, anchorLink: string | null, link: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null } | null }> };
 
-export type ShopStorefrontHeroFragment = { __typename?: 'ShopStorefrontHeroRecord', id: string, eyebrow: string, title: string, intro: { __typename?: 'ShopStorefrontHeroModelIntroField', value: unknown, links: Array<{ __typename: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', slug: string } | null }>, blocks: Array<{ __typename?: 'LinkRecord', _modelApiKey: string, id: string, label: string, newTab: boolean, externalUrl?: string | null, isExternalUrl: boolean, anchorLink?: string | null, link?: { __typename: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null }> }, primaryCta: { __typename?: 'LinkRecord', id: string, label: string, newTab: boolean, externalUrl?: string | null, isExternalUrl: boolean, anchorLink?: string | null, link?: { __typename: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null }, secondaryCta: { __typename?: 'LinkRecord', id: string, label: string, newTab: boolean, externalUrl?: string | null, isExternalUrl: boolean, anchorLink?: string | null, link?: { __typename: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null }, heroCategories: Array<{ __typename?: 'ShopCategoryRecord', id: string, name: string, slug: string, showInShop: boolean, seoTitle?: string | null, seoDescription?: string | null, seoNoindex: boolean, _updatedAt: string, description?: string | null, image?: { __typename?: 'FileField', url: string, alt?: string | null, title?: string | null, responsiveImage?: { __typename?: 'ResponsiveImage', src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } | null } | null }> };
+export type ShopStorefrontHeroFragment = { __typename: 'ShopStorefrontHeroRecord', id: string, eyebrow: string, title: string, intro: { __typename: 'ShopStorefrontHeroModelIntroField', value: unknown, links: Array<{ __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', slug: string } | null }>, blocks: Array<{ __typename: 'LinkRecord', _modelApiKey: string, id: string, label: string, newTab: boolean, externalUrl: string | null, isExternalUrl: boolean, anchorLink: string | null, link: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null }> }, primaryCta: { __typename: 'LinkRecord', id: string, label: string, newTab: boolean, externalUrl: string | null, isExternalUrl: boolean, anchorLink: string | null, link: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null }, secondaryCta: { __typename: 'LinkRecord', id: string, label: string, newTab: boolean, externalUrl: string | null, isExternalUrl: boolean, anchorLink: string | null, link: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null }, heroCategories: Array<{ __typename: 'ShopCategoryRecord', id: string, name: string, slug: string, showInShop: boolean, seoTitle: string | null, seoDescription: string | null, seoNoindex: boolean, _updatedAt: string, description: string | null, image: { __typename: 'FileField', url: string, alt: string | null, title: string | null, responsiveImage: { __typename: 'ResponsiveImage', src: string, width: number, height: number, alt: string | null, title: string | null, base64: string | null, sizes: string } | null } | null }> };
 
-export type ShopStructuredTextFieldFragment = { __typename?: 'ShopStorefrontHeroModelIntroField', value: unknown, links: Array<{ __typename: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', slug: string } | null }>, blocks: Array<{ __typename?: 'LinkRecord', _modelApiKey: string, id: string, label: string, newTab: boolean, externalUrl?: string | null, isExternalUrl: boolean, anchorLink?: string | null, link?: { __typename: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null }> };
+export type ShopStructuredTextFieldFragment = { __typename: 'ShopStorefrontHeroModelIntroField', value: unknown, links: Array<{ __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', slug: string } | null }>, blocks: Array<{ __typename: 'LinkRecord', _modelApiKey: string, id: string, label: string, newTab: boolean, externalUrl: string | null, isExternalUrl: boolean, anchorLink: string | null, link: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null }> };
 
-export type ShopFeaturedDescriptionFieldFragment = { __typename?: 'ShopSfFeaturedModelDescriptionField', value: unknown, links: Array<{ __typename: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', slug: string } | null }>, blocks: Array<{ __typename?: 'LinkRecord', _modelApiKey: string, id: string, label: string, newTab: boolean, externalUrl?: string | null, isExternalUrl: boolean, anchorLink?: string | null, link?: { __typename: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null }> };
+export type ShopFeaturedDescriptionFieldFragment = { __typename: 'ShopSfFeaturedModelDescriptionField', value: unknown, links: Array<{ __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', slug: string } | null }>, blocks: Array<{ __typename: 'LinkRecord', _modelApiKey: string, id: string, label: string, newTab: boolean, externalUrl: string | null, isExternalUrl: boolean, anchorLink: string | null, link: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null }> };
 
-export type ShopServiceDescriptionFieldFragment = { __typename?: 'ShopServiceSectionModelDescriptionField', value: unknown, links: Array<{ __typename: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', slug: string } | null }>, blocks: Array<{ __typename?: 'LinkRecord', _modelApiKey: string, id: string, label: string, newTab: boolean, externalUrl?: string | null, isExternalUrl: boolean, anchorLink?: string | null, link?: { __typename: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null }> };
+export type ShopServiceDescriptionFieldFragment = { __typename: 'ShopServiceSectionModelDescriptionField', value: unknown, links: Array<{ __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', slug: string } | null }>, blocks: Array<{ __typename: 'LinkRecord', _modelApiKey: string, id: string, label: string, newTab: boolean, externalUrl: string | null, isExternalUrl: boolean, anchorLink: string | null, link: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null }> };
 
-export type TeamBlockFragment = { __typename?: 'TeamRecord', id: string, disableMarginTop: boolean, disableMarginBottom: boolean, employees: Array<{ __typename?: 'EmployeeRecord', firstname: string, lastname: string, function: string, bio: string, image: { __typename?: 'ImageFileField', responsiveImage: { __typename?: 'ResponsiveImage', src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } } }> };
+export type TeamBlockFragment = { __typename: 'TeamRecord', id: string, disableMarginTop: boolean, disableMarginBottom: boolean, employees: Array<{ __typename: 'EmployeeRecord', firstname: string, lastname: string, function: string, bio: string, image: { __typename: 'ImageFileField', responsiveImage: { __typename: 'ResponsiveImage', src: string, width: number, height: number, alt: string | null, title: string | null, base64: string | null, sizes: string } } }> };
 
-export type TeaserGridBlockFragment = { __typename?: 'TeaserGridRecord', id: string, disableMarginTop: boolean, disableMarginBottom: boolean, teasers: Array<{ __typename: 'PageRecord', id: string, teaserDescription?: string | null, teaserEyebrow?: string | null, teaserTitle?: string | null, teaserLinkText?: string | null, slug: string, teaserImage?: { __typename?: 'ImageFileField', responsiveImage: { __typename?: 'ResponsiveImage', src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } } | null, parent?: { __typename?: 'PageRecord', slug: string } | null }> };
+export type TeaserGridBlockFragment = { __typename: 'TeaserGridRecord', id: string, disableMarginTop: boolean, disableMarginBottom: boolean, teasers: Array<{ __typename: 'PageRecord', id: string, teaserDescription: string | null, teaserEyebrow: string | null, teaserTitle: string | null, teaserLinkText: string | null, slug: string, teaserImage: { __typename: 'ImageFileField', responsiveImage: { __typename: 'ResponsiveImage', src: string, width: number, height: number, alt: string | null, title: string | null, base64: string | null, sizes: string } } | null, parent: { __typename: 'PageRecord', slug: string } | null }> };
 
-export type TeaserRowBlockFragment = { __typename?: 'TeaserRowRecord', id: string, disableMarginTop: boolean, disableMarginBottom: boolean, teasers: Array<{ __typename: 'PageRecord', id: string, teaserTitle?: string | null, teaserEyebrow?: string | null, teaserLinkText?: string | null, slug: string, teaserImage?: { __typename?: 'ImageFileField', responsiveImage: { __typename?: 'ResponsiveImage', src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } } | null, parent?: { __typename?: 'PageRecord', slug: string } | null }> };
+export type TeaserRowBlockFragment = { __typename: 'TeaserRowRecord', id: string, disableMarginTop: boolean, disableMarginBottom: boolean, teasers: Array<{ __typename: 'PageRecord', id: string, teaserTitle: string | null, teaserEyebrow: string | null, teaserLinkText: string | null, slug: string, teaserImage: { __typename: 'ImageFileField', responsiveImage: { __typename: 'ResponsiveImage', src: string, width: number, height: number, alt: string | null, title: string | null, base64: string | null, sizes: string } } | null, parent: { __typename: 'PageRecord', slug: string } | null }> };
 
-export type TextImageBlockFragment = { __typename?: 'TextImageRecord', id: string, layout?: string | null, anchorId?: string | null, disableMarginTop: boolean, disableMarginBottom: boolean, content?: { __typename?: 'TextImageModelContentField', value: unknown, links: Array<{ __typename: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', slug: string } | null }> } | null, image?: { __typename?: 'ImageFileField', responsiveImage: { __typename?: 'ResponsiveImage', src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } } | null };
+export type TextImageBlockFragment = { __typename: 'TextImageRecord', id: string, layout: string | null, anchorId: string | null, disableMarginTop: boolean, disableMarginBottom: boolean, content: { __typename: 'TextImageModelContentField', value: unknown, links: Array<{ __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', slug: string } | null }> } | null, image: { __typename: 'ImageFileField', responsiveImage: { __typename: 'ResponsiveImage', src: string, width: number, height: number, alt: string | null, title: string | null, base64: string | null, sizes: string } } | null };
 
-export type TextThreeColsBlockFragment = { __typename?: 'TextThreeColumnRecord', id: string, anchorId?: string | null, disableMarginTop: boolean, disableMarginBottom: boolean, contentLeft?: { __typename?: 'TextThreeColumnModelContentLeftField', value: unknown, links: Array<{ __typename: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', slug: string } | null }> } | null, contentMiddle?: { __typename?: 'TextThreeColumnModelContentMiddleField', value: unknown, links: Array<{ __typename: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', slug: string } | null }> } | null, contentRight?: { __typename?: 'TextThreeColumnModelContentRightField', value: unknown, links: Array<{ __typename: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', slug: string } | null }> } | null };
+export type TextThreeColsBlockFragment = { __typename: 'TextThreeColumnRecord', id: string, anchorId: string | null, disableMarginTop: boolean, disableMarginBottom: boolean, contentLeft: { __typename: 'TextThreeColumnModelContentLeftField', value: unknown, links: Array<{ __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', slug: string } | null }> } | null, contentMiddle: { __typename: 'TextThreeColumnModelContentMiddleField', value: unknown, links: Array<{ __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', slug: string } | null }> } | null, contentRight: { __typename: 'TextThreeColumnModelContentRightField', value: unknown, links: Array<{ __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', slug: string } | null }> } | null };
 
-export type TextTwoColsBlockFragment = { __typename?: 'TextTwoColumnRecord', id: string, anchorId?: string | null, disableMarginTop: boolean, disableMarginBottom: boolean, contentLeft?: { __typename?: 'TextTwoColumnModelContentLeftField', value: unknown, links: Array<{ __typename: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', slug: string } | null }> } | null, contentRight?: { __typename?: 'TextTwoColumnModelContentRightField', value: unknown, links: Array<{ __typename: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', slug: string } | null }> } | null };
+export type TextTwoColsBlockFragment = { __typename: 'TextTwoColumnRecord', id: string, anchorId: string | null, disableMarginTop: boolean, disableMarginBottom: boolean, contentLeft: { __typename: 'TextTwoColumnModelContentLeftField', value: unknown, links: Array<{ __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', slug: string } | null }> } | null, contentRight: { __typename: 'TextTwoColumnModelContentRightField', value: unknown, links: Array<{ __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', slug: string } | null }> } | null };
 
-export type TextBlockFragment = { __typename?: 'TextRecord', id: string, anchorId?: string | null, disableMarginTop: boolean, disableMarginBottom: boolean, content?: { __typename?: 'TextModelContentField', value: unknown, blocks: Array<{ __typename?: 'LinkRecord', _modelApiKey: string, id: string, label: string, newTab: boolean, externalUrl?: string | null, isExternalUrl: boolean, anchorLink?: string | null, link?: { __typename: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null }>, links: Array<{ __typename: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', slug: string } | null }> } | null };
+export type TextBlockFragment = { __typename: 'TextRecord', id: string, anchorId: string | null, disableMarginTop: boolean, disableMarginBottom: boolean, content: { __typename: 'TextModelContentField', value: unknown, blocks: Array<{ __typename: 'LinkRecord', _modelApiKey: string, id: string, label: string, newTab: boolean, externalUrl: string | null, isExternalUrl: boolean, anchorLink: string | null, link: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null }>, links: Array<{ __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', slug: string } | null }> } | null };
 
-export type PageRecordLinkFragment = { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string } | null } | null } | null } | null };
+export type PageRecordLinkFragment = { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string } | null } | null } | null } | null };
 
-export type ResponsiveImageFragmentFragment = { __typename?: 'ResponsiveImage', src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null, sizes: string };
+export type ResponsiveImageFragmentFragment = { __typename: 'ResponsiveImage', src: string, width: number, height: number, alt: string | null, title: string | null, base64: string | null, sizes: string };
 
-export type ShopCategoryFragment = { __typename?: 'ShopCategoryRecord', id: string, name: string, slug: string, showInShop: boolean, seoTitle?: string | null, seoDescription?: string | null, seoNoindex: boolean, _updatedAt: string, description?: string | null, image?: { __typename?: 'FileField', url: string, alt?: string | null, title?: string | null, responsiveImage?: { __typename?: 'ResponsiveImage', src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } | null } | null };
+export type ShopCategoryFragment = { __typename: 'ShopCategoryRecord', id: string, name: string, slug: string, showInShop: boolean, seoTitle: string | null, seoDescription: string | null, seoNoindex: boolean, _updatedAt: string, description: string | null, image: { __typename: 'FileField', url: string, alt: string | null, title: string | null, responsiveImage: { __typename: 'ResponsiveImage', src: string, width: number, height: number, alt: string | null, title: string | null, base64: string | null, sizes: string } | null } | null };
 
-export type ShopFileImageFragment = { __typename?: 'FileField', url: string, alt?: string | null, title?: string | null, responsiveImage?: { __typename?: 'ResponsiveImage', src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } | null };
+export type ShopFileImageFragment = { __typename: 'FileField', url: string, alt: string | null, title: string | null, responsiveImage: { __typename: 'ResponsiveImage', src: string, width: number, height: number, alt: string | null, title: string | null, base64: string | null, sizes: string } | null };
 
-export type ShopGoogleShoppingProductFragment = { __typename?: 'ShopProductRecord', id: string, name: string, slug: string, seoTitle?: string | null, seoDescription?: string | null, seoNoindex: boolean, price?: number | null, shippingCost?: number | null, dimmable: boolean, power?: string | null, brightness?: string | null, lightColor?: string | null, deliveryTime?: string | null, description?: { __typename?: 'ShopProductModelDescriptionField', value: unknown } | null, images: Array<{ __typename?: 'FileField', url: string, alt?: string | null, title?: string | null, responsiveImage?: { __typename?: 'ResponsiveImage', src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } | null }>, variants: Array<{ __typename?: 'ProductVariantRecord', price: number, selections: Array<{ __typename?: 'VariantSelectionRecord', option: string, value: string }> }>, categories: Array<{ __typename?: 'ShopCategoryRecord', id: string, name: string, slug: string }> };
+export type ShopGoogleShoppingProductFragment = { __typename: 'ShopProductRecord', id: string, name: string, slug: string, seoTitle: string | null, seoDescription: string | null, seoNoindex: boolean, price: number | null, shippingCost: number | null, dimmable: boolean, power: string | null, brightness: string | null, lightColor: string | null, deliveryTime: string | null, description: { __typename: 'ShopProductModelDescriptionField', value: unknown } | null, images: Array<{ __typename: 'FileField', url: string, alt: string | null, title: string | null, responsiveImage: { __typename: 'ResponsiveImage', src: string, width: number, height: number, alt: string | null, title: string | null, base64: string | null, sizes: string } | null }>, variants: Array<{ __typename: 'ProductVariantRecord', price: number, selections: Array<{ __typename: 'VariantSelectionRecord', option: string, value: string }> }>, categories: Array<{ __typename: 'ShopCategoryRecord', id: string, name: string, slug: string }> };
 
-export type ShopProductDetailFragment = { __typename?: 'ShopProductRecord', id: string, name: string, slug: string, seoTitle?: string | null, seoDescription?: string | null, seoNoindex: boolean, _updatedAt: string, price?: number | null, deliveryTime?: string | null, shippingCost?: number | null, dimmable: boolean, heightAdjustable: boolean, batteryOperated: boolean, swivelable: boolean, switchIntegrated: boolean, power?: string | null, brightness?: string | null, lightColor?: string | null, lightDistribution?: string | null, protectionFactor?: string | null, protectionClass?: string | null, input?: string | null, output?: string | null, chargerIncluded?: string | null, size?: string | null, height?: string | null, overallHeight?: string | null, length?: string | null, width?: string | null, depth?: string | null, diameter?: string | null, dimensions?: string | null, reach?: string | null, colors?: string | null, metalColors?: string | null, fabricColors?: string | null, glass?: string | null, crystal?: string | null, shade?: string | null, cover?: string | null, lowerCover?: string | null, basePlate?: string | null, head?: string | null, profile?: string | null, material?: string | null, mounting?: string | null, showroomNote?: string | null, description?: { __typename?: 'ShopProductModelDescriptionField', value: unknown } | null, images: Array<{ __typename?: 'FileField', url: string, alt?: string | null, title?: string | null, responsiveImage?: { __typename?: 'ResponsiveImage', src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } | null }>, variants: Array<{ __typename?: 'ProductVariantRecord', price: number, selections: Array<{ __typename?: 'VariantSelectionRecord', option: string, value: string }> }>, categories: Array<{ __typename?: 'ShopCategoryRecord', id: string, slug: string, name: string }> };
+export type ShopProductDetailFragment = { __typename: 'ShopProductRecord', id: string, name: string, slug: string, seoTitle: string | null, seoDescription: string | null, seoNoindex: boolean, _updatedAt: string, price: number | null, deliveryTime: string | null, shippingCost: number | null, dimmable: boolean, heightAdjustable: boolean, batteryOperated: boolean, swivelable: boolean, switchIntegrated: boolean, power: string | null, brightness: string | null, lightColor: string | null, lightDistribution: string | null, protectionFactor: string | null, protectionClass: string | null, input: string | null, output: string | null, chargerIncluded: string | null, size: string | null, height: string | null, overallHeight: string | null, length: string | null, width: string | null, depth: string | null, diameter: string | null, dimensions: string | null, reach: string | null, colors: string | null, metalColors: string | null, fabricColors: string | null, glass: string | null, crystal: string | null, shade: string | null, cover: string | null, lowerCover: string | null, basePlate: string | null, head: string | null, profile: string | null, material: string | null, mounting: string | null, showroomNote: string | null, description: { __typename: 'ShopProductModelDescriptionField', value: unknown } | null, images: Array<{ __typename: 'FileField', url: string, alt: string | null, title: string | null, responsiveImage: { __typename: 'ResponsiveImage', src: string, width: number, height: number, alt: string | null, title: string | null, base64: string | null, sizes: string } | null }>, variants: Array<{ __typename: 'ProductVariantRecord', price: number, selections: Array<{ __typename: 'VariantSelectionRecord', option: string, value: string }> }>, categories: Array<{ __typename: 'ShopCategoryRecord', id: string, slug: string, name: string }> };
 
-export type ShopProductListItemFragment = { __typename?: 'ShopProductRecord', id: string, name: string, slug: string, featured: boolean, featuredSort?: number | null, price?: number | null, images: Array<{ __typename?: 'FileField', url: string, alt?: string | null, title?: string | null, responsiveImage?: { __typename?: 'ResponsiveImage', src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } | null }>, variants: Array<{ __typename?: 'ProductVariantRecord', price: number }> };
+export type ShopProductListItemFragment = { __typename: 'ShopProductRecord', id: string, name: string, slug: string, featured: boolean, featuredSort: number | null, price: number | null, images: Array<{ __typename: 'FileField', url: string, alt: string | null, title: string | null, responsiveImage: { __typename: 'ResponsiveImage', src: string, width: number, height: number, alt: string | null, title: string | null, base64: string | null, sizes: string } | null }>, variants: Array<{ __typename: 'ProductVariantRecord', price: number }> };
 
 export type HeaderFooterQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type HeaderFooterQuery = { __typename?: 'Query', headerFooter?: { __typename?: 'HeaderFooterRecord', facebookUrl?: string | null, instagramUrl?: string | null, linkedinUrl?: string | null, companyName: string, street: string, zip: string, place: string, phone: string, email: string, mapsLink: string, holidayTitle: string, holidayText?: string | null, holidayDisable: boolean, openingHoursTitle: string, openingHoursText: string, menu: Array<
-      | { __typename?: 'DirectoryRecord', label: string, slug: string, navigationItems: Array<{ __typename?: 'NavigationItemRecord', label: string, id: string, link?: { __typename?: 'PageRecord', slug: string } | null }> }
-      | { __typename?: 'NavigationItemRecord', label: string, link?: { __typename?: 'PageRecord', slug: string } | null }
-    >, footerNavigation: Array<{ __typename?: 'FooterNavigationGroupRecord', title: string, links: Array<{ __typename?: 'FooterLinkRecord', label: string, href: string }> }> } | null };
+export type HeaderFooterQuery = { __typename: 'Query', headerFooter: { __typename: 'HeaderFooterRecord', facebookUrl: string | null, instagramUrl: string | null, linkedinUrl: string | null, companyName: string, street: string, zip: string, place: string, phone: string, email: string, mapsLink: string, holidayTitle: string, holidayText: string | null, holidayDisable: boolean, openingHoursTitle: string, openingHoursText: string, menu: Array<
+      | { __typename: 'DirectoryRecord', label: string, slug: string, navigationItems: Array<{ __typename: 'NavigationItemRecord', label: string, id: string, link: { __typename: 'PageRecord', slug: string } | null }> }
+      | { __typename: 'NavigationItemRecord', label: string, link: { __typename: 'PageRecord', slug: string } | null }
+    >, footerNavigation: Array<{ __typename: 'FooterNavigationGroupRecord', title: string, links: Array<{ __typename: 'FooterLinkRecord', label: string, href: string }> }> } | null };
 
 export type PageQueryVariables = Exact<{
-  slug: Scalars['String']['input'];
+  slug: string;
 }>;
 
 
-export type PageQuery = { __typename?: 'Query', page?: { __typename?: 'PageRecord', id: string, slug: string, title: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, title: string } | null, content: Array<
-      | { __typename: 'AllCategoriesBlockRecord', id: string, layout?: string | null, disableMarginBottom: boolean, disableMarginTop: boolean }
+export type PageQuery = { __typename: 'Query', page: { __typename: 'PageRecord', id: string, slug: string, title: string, parent: { __typename: 'PageRecord', id: string, slug: string, title: string } | null, content: Array<
+      | { __typename: 'AllCategoriesBlockRecord', id: string, layout: string | null, disableMarginBottom: boolean, disableMarginTop: boolean }
       | { __typename: 'CalendlyRecord', id: string, disableMarginTop: boolean, disableMarginBottom: boolean }
-      | { __typename: 'ContactRecord', id: string, text: string, employee: { __typename?: 'EmployeeRecord', firstname: string, phone?: string | null, email?: string | null, appointmentText?: string | null, appointmentAnchorLink?: string | null, appointmentLink?: { __typename?: 'PageRecord', slug: string } | null, image: { __typename?: 'ImageFileField', responsiveImage: { __typename?: 'ResponsiveImage', src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } } } }
+      | { __typename: 'ContactFormRecord' }
+      | { __typename: 'ContactRecord', id: string, text: string, employee: { __typename: 'EmployeeRecord', firstname: string, phone: string | null, email: string | null, appointmentText: string | null, appointmentAnchorLink: string | null, appointmentLink: { __typename: 'PageRecord', slug: string } | null, image: { __typename: 'ImageFileField', responsiveImage: { __typename: 'ResponsiveImage', src: string, width: number, height: number, alt: string | null, title: string | null, base64: string | null, sizes: string } } } }
       | { __typename: 'FaqBlockRecord' }
-      | { __typename: 'GalleryRecord', id: string, disableMarginTop: boolean, disableMarginBottom: boolean, showImageTitles: boolean, gallery: Array<{ __typename?: 'ImageFileField', id: string, title?: string | null, smallSize: { __typename?: 'ResponsiveImage', src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null, sizes: string }, largeSize: { __typename?: 'ResponsiveImage', src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } }> }
-      | { __typename: 'HighlightOffersTeaserRecord', id: string, disableMarginTop: boolean, disableMarginBottom: boolean, title: string, subline: string, footerCta?: { __typename?: 'LinkRecord', id: string, label: string, newTab: boolean, externalUrl?: string | null, isExternalUrl: boolean, anchorLink?: string | null, link?: { __typename: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null } | null, offers: Array<{ __typename?: 'HighlightOfferItemRecord', id: string, title: string, eyebrow: string, offerLink?: { __typename?: 'LinkRecord', id: string, label: string, newTab: boolean, externalUrl?: string | null, isExternalUrl: boolean, anchorLink?: string | null, link?: { __typename: 'PageRecord', id: string, slug: string, teaserImage?: { __typename?: 'ImageFileField', alt?: string | null, title?: string | null, responsiveImage: { __typename?: 'ResponsiveImage', src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } } | null, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null } | null }> }
-      | { __typename: 'HighlightProjectsTeaserRecord', id: string, disableMarginTop: boolean, disableMarginBottom: boolean, title: string, subline: string, primaryCta?: { __typename?: 'LinkRecord', id: string, label: string, newTab: boolean, externalUrl?: string | null, isExternalUrl: boolean, anchorLink?: string | null, link?: { __typename: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null } | null, projects: Array<{ __typename?: 'HighlightProjectItemRecord', id: string, offer: string, title: string, company: string, description: string, projectLink?: { __typename?: 'LinkRecord', id: string, label: string, newTab: boolean, externalUrl?: string | null, isExternalUrl: boolean, anchorLink?: string | null, link?: { __typename: 'PageRecord', id: string, slug: string, teaserImage?: { __typename?: 'ImageFileField', alt?: string | null, title?: string | null, responsiveImage: { __typename?: 'ResponsiveImage', src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } } | null, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null } | null }> }
-      | { __typename: 'HighlightShopTeaserRecord', id: string, disableMarginTop: boolean, disableMarginBottom: boolean, eyebrow: string, title: string, subline: string, popularCategoriesLabel?: string | null, moreCategoriesLabel?: string | null, primaryCta?: { __typename?: 'LinkRecord', id: string, label: string, newTab: boolean, externalUrl?: string | null, isExternalUrl: boolean, anchorLink?: string | null, link?: { __typename: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null } | null, secondaryCta?: { __typename?: 'LinkRecord', id: string, label: string, newTab: boolean, externalUrl?: string | null, isExternalUrl: boolean, anchorLink?: string | null, link?: { __typename: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null } | null, featuredCategories: Array<{ __typename?: 'ShopCategoryRecord', id: string, name: string, slug: string, showInShop: boolean, seoTitle?: string | null, seoDescription?: string | null, seoNoindex: boolean, _updatedAt: string, description?: string | null, image?: { __typename?: 'FileField', url: string, alt?: string | null, title?: string | null, responsiveImage?: { __typename?: 'ResponsiveImage', src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } | null } | null }> }
-      | { __typename: 'HomeStageRecord', id: string, title: string, intro: string, image?: { __typename?: 'ImageFileField', responsiveImage: { __typename?: 'ResponsiveImage', src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } } | null, slideshowImages: Array<{ __typename?: 'FileField', id: string, responsiveImage?: { __typename?: 'ResponsiveImage', src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } | null }>, callToActions: Array<{ __typename?: 'LinkRecord', id: string, label: string, newTab: boolean, externalUrl?: string | null, isExternalUrl: boolean, anchorLink?: string | null, link?: { __typename: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null }> }
+      | { __typename: 'GalleryRecord', id: string, disableMarginTop: boolean, disableMarginBottom: boolean, showImageTitles: boolean, gallery: Array<{ __typename: 'ImageFileField', id: string, title: string | null, smallSize: { __typename: 'ResponsiveImage', src: string, width: number, height: number, alt: string | null, title: string | null, base64: string | null, sizes: string }, largeSize: { __typename: 'ResponsiveImage', src: string, width: number, height: number, alt: string | null, title: string | null, base64: string | null, sizes: string } }> }
+      | { __typename: 'HighlightOffersTeaserRecord', id: string, disableMarginTop: boolean, disableMarginBottom: boolean, title: string, subline: string, footerCta: { __typename: 'LinkRecord', id: string, label: string, newTab: boolean, externalUrl: string | null, isExternalUrl: boolean, anchorLink: string | null, link: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null } | null, offers: Array<{ __typename: 'HighlightOfferItemRecord', id: string, title: string, eyebrow: string, offerLink: { __typename: 'LinkRecord', id: string, label: string, newTab: boolean, externalUrl: string | null, isExternalUrl: boolean, anchorLink: string | null, link: { __typename: 'PageRecord', id: string, slug: string, teaserImage: { __typename: 'ImageFileField', alt: string | null, title: string | null, responsiveImage: { __typename: 'ResponsiveImage', src: string, width: number, height: number, alt: string | null, title: string | null, base64: string | null, sizes: string } } | null, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null } | null }> }
+      | { __typename: 'HighlightProjectsTeaserRecord', id: string, disableMarginTop: boolean, disableMarginBottom: boolean, title: string, subline: string, primaryCta: { __typename: 'LinkRecord', id: string, label: string, newTab: boolean, externalUrl: string | null, isExternalUrl: boolean, anchorLink: string | null, link: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null } | null, projects: Array<{ __typename: 'HighlightProjectItemRecord', id: string, offer: string, title: string, company: string, description: string, projectLink: { __typename: 'LinkRecord', id: string, label: string, newTab: boolean, externalUrl: string | null, isExternalUrl: boolean, anchorLink: string | null, link: { __typename: 'PageRecord', id: string, slug: string, teaserImage: { __typename: 'ImageFileField', alt: string | null, title: string | null, responsiveImage: { __typename: 'ResponsiveImage', src: string, width: number, height: number, alt: string | null, title: string | null, base64: string | null, sizes: string } } | null, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null } | null }> }
+      | { __typename: 'HighlightShopTeaserRecord', id: string, disableMarginTop: boolean, disableMarginBottom: boolean, eyebrow: string, title: string, subline: string, popularCategoriesLabel: string | null, moreCategoriesLabel: string | null, primaryCta: { __typename: 'LinkRecord', id: string, label: string, newTab: boolean, externalUrl: string | null, isExternalUrl: boolean, anchorLink: string | null, link: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null } | null, secondaryCta: { __typename: 'LinkRecord', id: string, label: string, newTab: boolean, externalUrl: string | null, isExternalUrl: boolean, anchorLink: string | null, link: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null } | null, featuredCategories: Array<{ __typename: 'ShopCategoryRecord', id: string, name: string, slug: string, showInShop: boolean, seoTitle: string | null, seoDescription: string | null, seoNoindex: boolean, _updatedAt: string, description: string | null, image: { __typename: 'FileField', url: string, alt: string | null, title: string | null, responsiveImage: { __typename: 'ResponsiveImage', src: string, width: number, height: number, alt: string | null, title: string | null, base64: string | null, sizes: string } | null } | null }> }
+      | { __typename: 'HomeStageRecord', id: string, title: string, intro: string, image: { __typename: 'ImageFileField', responsiveImage: { __typename: 'ResponsiveImage', src: string, width: number, height: number, alt: string | null, title: string | null, base64: string | null, sizes: string } } | null, slideshowImages: Array<{ __typename: 'FileField', id: string, responsiveImage: { __typename: 'ResponsiveImage', src: string, width: number, height: number, alt: string | null, title: string | null, base64: string | null, sizes: string } | null }>, callToActions: Array<{ __typename: 'LinkRecord', id: string, label: string, newTab: boolean, externalUrl: string | null, isExternalUrl: boolean, anchorLink: string | null, link: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null }> }
       | { __typename: 'IframeRecord', id: string, src: string, disableMarginTop: boolean, disableMarginBottom: boolean }
-      | { __typename: 'ImageRecord', id: string, disableMarginTop: boolean, disableMarginBottom: boolean, priority: boolean, images: Array<{ __typename?: 'ImageFileField', id: string, title?: string | null, url: string, responsiveImage: { __typename?: 'ResponsiveImage', src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } }> }
-      | { __typename: 'LogoGridRecord', id: string, disableMarginTop: boolean, disableMarginBottom: boolean, logos: Array<{ __typename?: 'ImageFileField', id: string, url: string, width: number, height: number, alt?: string | null, title?: string | null }> }
-      | { __typename: 'QuoteRecord', id: string, disableMarginTop: boolean, disableMarginBottom: boolean, testimonials: Array<{ __typename?: 'TestimonialRecord', text: string, authorFunction: string, authorName: string, companyName: string, companyUrl: string, authorImage: { __typename?: 'ImageFileField', responsiveImage: { __typename?: 'ResponsiveImage', src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } } }> }
-      | { __typename: 'TeamRecord', id: string, disableMarginTop: boolean, disableMarginBottom: boolean, employees: Array<{ __typename?: 'EmployeeRecord', firstname: string, lastname: string, function: string, bio: string, image: { __typename?: 'ImageFileField', responsiveImage: { __typename?: 'ResponsiveImage', src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } } }> }
-      | { __typename: 'TeaserGridRecord', id: string, disableMarginTop: boolean, disableMarginBottom: boolean, teasers: Array<{ __typename: 'PageRecord', id: string, teaserDescription?: string | null, teaserEyebrow?: string | null, teaserTitle?: string | null, teaserLinkText?: string | null, slug: string, teaserImage?: { __typename?: 'ImageFileField', responsiveImage: { __typename?: 'ResponsiveImage', src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } } | null, parent?: { __typename?: 'PageRecord', slug: string } | null }> }
-      | { __typename: 'TeaserRowRecord', id: string, disableMarginTop: boolean, disableMarginBottom: boolean, teasers: Array<{ __typename: 'PageRecord', id: string, teaserTitle?: string | null, teaserEyebrow?: string | null, teaserLinkText?: string | null, slug: string, teaserImage?: { __typename?: 'ImageFileField', responsiveImage: { __typename?: 'ResponsiveImage', src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } } | null, parent?: { __typename?: 'PageRecord', slug: string } | null }> }
-      | { __typename: 'TextImageRecord', id: string, layout?: string | null, anchorId?: string | null, disableMarginTop: boolean, disableMarginBottom: boolean, content?: { __typename?: 'TextImageModelContentField', value: unknown, links: Array<{ __typename: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', slug: string } | null }> } | null, image?: { __typename?: 'ImageFileField', responsiveImage: { __typename?: 'ResponsiveImage', src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } } | null }
-      | { __typename: 'TextRecord', id: string, anchorId?: string | null, disableMarginTop: boolean, disableMarginBottom: boolean, content?: { __typename?: 'TextModelContentField', value: unknown, blocks: Array<{ __typename?: 'LinkRecord', _modelApiKey: string, id: string, label: string, newTab: boolean, externalUrl?: string | null, isExternalUrl: boolean, anchorLink?: string | null, link?: { __typename: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null }>, links: Array<{ __typename: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', slug: string } | null }> } | null }
-      | { __typename: 'TextThreeColumnRecord', id: string, anchorId?: string | null, disableMarginTop: boolean, disableMarginBottom: boolean, contentLeft?: { __typename?: 'TextThreeColumnModelContentLeftField', value: unknown, links: Array<{ __typename: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', slug: string } | null }> } | null, contentMiddle?: { __typename?: 'TextThreeColumnModelContentMiddleField', value: unknown, links: Array<{ __typename: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', slug: string } | null }> } | null, contentRight?: { __typename?: 'TextThreeColumnModelContentRightField', value: unknown, links: Array<{ __typename: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', slug: string } | null }> } | null }
-      | { __typename: 'TextTwoColumnRecord', id: string, anchorId?: string | null, disableMarginTop: boolean, disableMarginBottom: boolean, contentLeft?: { __typename?: 'TextTwoColumnModelContentLeftField', value: unknown, links: Array<{ __typename: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', slug: string } | null }> } | null, contentRight?: { __typename?: 'TextTwoColumnModelContentRightField', value: unknown, links: Array<{ __typename: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', slug: string } | null }> } | null }
-    >, seo: Array<{ __typename?: 'Tag', attributes?: Record<string, string> | null, content?: string | null, tag: string }> } | null, site: { __typename?: 'Site', favicon: Array<{ __typename?: 'Tag', attributes?: Record<string, string> | null, content?: string | null, tag: string }> } };
+      | { __typename: 'ImageRecord', id: string, disableMarginTop: boolean, disableMarginBottom: boolean, priority: boolean, images: Array<{ __typename: 'ImageFileField', id: string, title: string | null, url: string, responsiveImage: { __typename: 'ResponsiveImage', src: string, width: number, height: number, alt: string | null, title: string | null, base64: string | null, sizes: string } }> }
+      | { __typename: 'LogoGridRecord', id: string, disableMarginTop: boolean, disableMarginBottom: boolean, logos: Array<{ __typename: 'ImageFileField', id: string, url: string, width: number, height: number, alt: string | null, title: string | null }> }
+      | { __typename: 'QuoteRecord', id: string, disableMarginTop: boolean, disableMarginBottom: boolean, testimonials: Array<{ __typename: 'TestimonialRecord', text: string, authorFunction: string, authorName: string, companyName: string, companyUrl: string, authorImage: { __typename: 'ImageFileField', responsiveImage: { __typename: 'ResponsiveImage', src: string, width: number, height: number, alt: string | null, title: string | null, base64: string | null, sizes: string } } }> }
+      | { __typename: 'TeamRecord', id: string, disableMarginTop: boolean, disableMarginBottom: boolean, employees: Array<{ __typename: 'EmployeeRecord', firstname: string, lastname: string, function: string, bio: string, image: { __typename: 'ImageFileField', responsiveImage: { __typename: 'ResponsiveImage', src: string, width: number, height: number, alt: string | null, title: string | null, base64: string | null, sizes: string } } }> }
+      | { __typename: 'TeaserGridRecord', id: string, disableMarginTop: boolean, disableMarginBottom: boolean, teasers: Array<{ __typename: 'PageRecord', id: string, teaserDescription: string | null, teaserEyebrow: string | null, teaserTitle: string | null, teaserLinkText: string | null, slug: string, teaserImage: { __typename: 'ImageFileField', responsiveImage: { __typename: 'ResponsiveImage', src: string, width: number, height: number, alt: string | null, title: string | null, base64: string | null, sizes: string } } | null, parent: { __typename: 'PageRecord', slug: string } | null }> }
+      | { __typename: 'TeaserRowRecord', id: string, disableMarginTop: boolean, disableMarginBottom: boolean, teasers: Array<{ __typename: 'PageRecord', id: string, teaserTitle: string | null, teaserEyebrow: string | null, teaserLinkText: string | null, slug: string, teaserImage: { __typename: 'ImageFileField', responsiveImage: { __typename: 'ResponsiveImage', src: string, width: number, height: number, alt: string | null, title: string | null, base64: string | null, sizes: string } } | null, parent: { __typename: 'PageRecord', slug: string } | null }> }
+      | { __typename: 'TextImageRecord', id: string, layout: string | null, anchorId: string | null, disableMarginTop: boolean, disableMarginBottom: boolean, content: { __typename: 'TextImageModelContentField', value: unknown, links: Array<{ __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', slug: string } | null }> } | null, image: { __typename: 'ImageFileField', responsiveImage: { __typename: 'ResponsiveImage', src: string, width: number, height: number, alt: string | null, title: string | null, base64: string | null, sizes: string } } | null }
+      | { __typename: 'TextRecord', id: string, anchorId: string | null, disableMarginTop: boolean, disableMarginBottom: boolean, content: { __typename: 'TextModelContentField', value: unknown, blocks: Array<{ __typename: 'LinkRecord', _modelApiKey: string, id: string, label: string, newTab: boolean, externalUrl: string | null, isExternalUrl: boolean, anchorLink: string | null, link: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null }>, links: Array<{ __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', slug: string } | null }> } | null }
+      | { __typename: 'TextThreeColumnRecord', id: string, anchorId: string | null, disableMarginTop: boolean, disableMarginBottom: boolean, contentLeft: { __typename: 'TextThreeColumnModelContentLeftField', value: unknown, links: Array<{ __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', slug: string } | null }> } | null, contentMiddle: { __typename: 'TextThreeColumnModelContentMiddleField', value: unknown, links: Array<{ __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', slug: string } | null }> } | null, contentRight: { __typename: 'TextThreeColumnModelContentRightField', value: unknown, links: Array<{ __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', slug: string } | null }> } | null }
+      | { __typename: 'TextTwoColumnRecord', id: string, anchorId: string | null, disableMarginTop: boolean, disableMarginBottom: boolean, contentLeft: { __typename: 'TextTwoColumnModelContentLeftField', value: unknown, links: Array<{ __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', slug: string } | null }> } | null, contentRight: { __typename: 'TextTwoColumnModelContentRightField', value: unknown, links: Array<{ __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', slug: string } | null }> } | null }
+    >, seo: Array<{ __typename: 'Tag', attributes: Record<string, string> | null, content: string | null, tag: string }> } | null, site: { __typename: 'Site', favicon: Array<{ __typename: 'Tag', attributes: Record<string, string> | null, content: string | null, tag: string }> } };
 
 export type AllShopCategoriesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AllShopCategoriesQuery = { __typename?: 'Query', allShopCategories: Array<{ __typename?: 'ShopCategoryRecord', id: string, name: string, slug: string, showInShop: boolean, seoTitle?: string | null, seoDescription?: string | null, seoNoindex: boolean, _updatedAt: string, description?: string | null, image?: { __typename?: 'FileField', url: string, alt?: string | null, title?: string | null, responsiveImage?: { __typename?: 'ResponsiveImage', src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } | null } | null }> };
+export type AllShopCategoriesQuery = { __typename: 'Query', allShopCategories: Array<{ __typename: 'ShopCategoryRecord', id: string, name: string, slug: string, showInShop: boolean, seoTitle: string | null, seoDescription: string | null, seoNoindex: boolean, _updatedAt: string, description: string | null, image: { __typename: 'FileField', url: string, alt: string | null, title: string | null, responsiveImage: { __typename: 'ResponsiveImage', src: string, width: number, height: number, alt: string | null, title: string | null, base64: string | null, sizes: string } | null } | null }> };
 
 export type AllShopCategorySlugsQueryVariables = Exact<{
-  skip?: InputMaybe<Scalars['IntType']['input']>;
+  skip?: number | null | undefined;
 }>;
 
 
-export type AllShopCategorySlugsQuery = { __typename?: 'Query', meta: { __typename?: 'CollectionMetadata', count: number }, allShopCategories: Array<{ __typename?: 'ShopCategoryRecord', slug: string }> };
+export type AllShopCategorySlugsQuery = { __typename: 'Query', meta: { __typename: 'CollectionMetadata', count: number }, allShopCategories: Array<{ __typename: 'ShopCategoryRecord', slug: string }> };
 
 export type AllShopProductSlugsQueryVariables = Exact<{
-  skip?: InputMaybe<Scalars['IntType']['input']>;
+  skip?: number | null | undefined;
 }>;
 
 
-export type AllShopProductSlugsQuery = { __typename?: 'Query', meta: { __typename?: 'CollectionMetadata', count: number }, allShopProducts: Array<{ __typename?: 'ShopProductRecord', slug: string }> };
+export type AllShopProductSlugsQuery = { __typename: 'Query', meta: { __typename: 'CollectionMetadata', count: number }, allShopProducts: Array<{ __typename: 'ShopProductRecord', slug: string }> };
 
 export type ShopAllProductsQueryVariables = Exact<{
-  skip?: InputMaybe<Scalars['IntType']['input']>;
+  skip?: number | null | undefined;
 }>;
 
 
-export type ShopAllProductsQuery = { __typename?: 'Query', meta: { __typename?: 'CollectionMetadata', count: number }, allShopProducts: Array<{ __typename?: 'ShopProductRecord', id: string, name: string, slug: string, featured: boolean, featuredSort?: number | null, price?: number | null, images: Array<{ __typename?: 'FileField', url: string, alt?: string | null, title?: string | null, responsiveImage?: { __typename?: 'ResponsiveImage', src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } | null }>, variants: Array<{ __typename?: 'ProductVariantRecord', price: number }> }> };
+export type ShopAllProductsQuery = { __typename: 'Query', meta: { __typename: 'CollectionMetadata', count: number }, allShopProducts: Array<{ __typename: 'ShopProductRecord', id: string, name: string, slug: string, featured: boolean, featuredSort: number | null, price: number | null, images: Array<{ __typename: 'FileField', url: string, alt: string | null, title: string | null, responsiveImage: { __typename: 'ResponsiveImage', src: string, width: number, height: number, alt: string | null, title: string | null, base64: string | null, sizes: string } | null }>, variants: Array<{ __typename: 'ProductVariantRecord', price: number }> }> };
 
 export type ShopCategoryBySlugQueryVariables = Exact<{
-  slug: Scalars['String']['input'];
+  slug: string;
 }>;
 
 
-export type ShopCategoryBySlugQuery = { __typename?: 'Query', shopCategory?: { __typename?: 'ShopCategoryRecord', id: string, name: string, slug: string, showInShop: boolean, seoTitle?: string | null, seoDescription?: string | null, seoNoindex: boolean, _updatedAt: string, description?: string | null, image?: { __typename?: 'FileField', url: string, alt?: string | null, title?: string | null, responsiveImage?: { __typename?: 'ResponsiveImage', src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } | null } | null } | null };
+export type ShopCategoryBySlugQuery = { __typename: 'Query', shopCategory: { __typename: 'ShopCategoryRecord', id: string, name: string, slug: string, showInShop: boolean, seoTitle: string | null, seoDescription: string | null, seoNoindex: boolean, _updatedAt: string, description: string | null, image: { __typename: 'FileField', url: string, alt: string | null, title: string | null, responsiveImage: { __typename: 'ResponsiveImage', src: string, width: number, height: number, alt: string | null, title: string | null, base64: string | null, sizes: string } | null } | null } | null };
 
 export type ShopFeaturedProductsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ShopFeaturedProductsQuery = { __typename?: 'Query', allShopProducts: Array<{ __typename?: 'ShopProductRecord', id: string, name: string, slug: string, featured: boolean, featuredSort?: number | null, price?: number | null, images: Array<{ __typename?: 'FileField', url: string, alt?: string | null, title?: string | null, responsiveImage?: { __typename?: 'ResponsiveImage', src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } | null }>, variants: Array<{ __typename?: 'ProductVariantRecord', price: number }> }> };
+export type ShopFeaturedProductsQuery = { __typename: 'Query', allShopProducts: Array<{ __typename: 'ShopProductRecord', id: string, name: string, slug: string, featured: boolean, featuredSort: number | null, price: number | null, images: Array<{ __typename: 'FileField', url: string, alt: string | null, title: string | null, responsiveImage: { __typename: 'ResponsiveImage', src: string, width: number, height: number, alt: string | null, title: string | null, base64: string | null, sizes: string } | null }>, variants: Array<{ __typename: 'ProductVariantRecord', price: number }> }> };
 
 export type GoogleShoppingFeedProductsQueryVariables = Exact<{
-  skip?: InputMaybe<Scalars['IntType']['input']>;
+  skip?: number | null | undefined;
 }>;
 
 
-export type GoogleShoppingFeedProductsQuery = { __typename?: 'Query', meta: { __typename?: 'CollectionMetadata', count: number }, allShopProducts: Array<{ __typename?: 'ShopProductRecord', id: string, name: string, slug: string, seoTitle?: string | null, seoDescription?: string | null, seoNoindex: boolean, price?: number | null, shippingCost?: number | null, dimmable: boolean, power?: string | null, brightness?: string | null, lightColor?: string | null, deliveryTime?: string | null, description?: { __typename?: 'ShopProductModelDescriptionField', value: unknown } | null, images: Array<{ __typename?: 'FileField', url: string, alt?: string | null, title?: string | null, responsiveImage?: { __typename?: 'ResponsiveImage', src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } | null }>, variants: Array<{ __typename?: 'ProductVariantRecord', price: number, selections: Array<{ __typename?: 'VariantSelectionRecord', option: string, value: string }> }>, categories: Array<{ __typename?: 'ShopCategoryRecord', id: string, name: string, slug: string }> }> };
+export type GoogleShoppingFeedProductsQuery = { __typename: 'Query', meta: { __typename: 'CollectionMetadata', count: number }, allShopProducts: Array<{ __typename: 'ShopProductRecord', id: string, name: string, slug: string, seoTitle: string | null, seoDescription: string | null, seoNoindex: boolean, price: number | null, shippingCost: number | null, dimmable: boolean, power: string | null, brightness: string | null, lightColor: string | null, deliveryTime: string | null, description: { __typename: 'ShopProductModelDescriptionField', value: unknown } | null, images: Array<{ __typename: 'FileField', url: string, alt: string | null, title: string | null, responsiveImage: { __typename: 'ResponsiveImage', src: string, width: number, height: number, alt: string | null, title: string | null, base64: string | null, sizes: string } | null }>, variants: Array<{ __typename: 'ProductVariantRecord', price: number, selections: Array<{ __typename: 'VariantSelectionRecord', option: string, value: string }> }>, categories: Array<{ __typename: 'ShopCategoryRecord', id: string, name: string, slug: string }> }> };
 
 export type ShopProductBySlugQueryVariables = Exact<{
-  slug: Scalars['String']['input'];
+  slug: string;
 }>;
 
 
-export type ShopProductBySlugQuery = { __typename?: 'Query', shopProduct?: { __typename?: 'ShopProductRecord', id: string, name: string, slug: string, seoTitle?: string | null, seoDescription?: string | null, seoNoindex: boolean, _updatedAt: string, price?: number | null, deliveryTime?: string | null, shippingCost?: number | null, dimmable: boolean, heightAdjustable: boolean, batteryOperated: boolean, swivelable: boolean, switchIntegrated: boolean, power?: string | null, brightness?: string | null, lightColor?: string | null, lightDistribution?: string | null, protectionFactor?: string | null, protectionClass?: string | null, input?: string | null, output?: string | null, chargerIncluded?: string | null, size?: string | null, height?: string | null, overallHeight?: string | null, length?: string | null, width?: string | null, depth?: string | null, diameter?: string | null, dimensions?: string | null, reach?: string | null, colors?: string | null, metalColors?: string | null, fabricColors?: string | null, glass?: string | null, crystal?: string | null, shade?: string | null, cover?: string | null, lowerCover?: string | null, basePlate?: string | null, head?: string | null, profile?: string | null, material?: string | null, mounting?: string | null, showroomNote?: string | null, description?: { __typename?: 'ShopProductModelDescriptionField', value: unknown } | null, images: Array<{ __typename?: 'FileField', url: string, alt?: string | null, title?: string | null, responsiveImage?: { __typename?: 'ResponsiveImage', src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } | null }>, variants: Array<{ __typename?: 'ProductVariantRecord', price: number, selections: Array<{ __typename?: 'VariantSelectionRecord', option: string, value: string }> }>, categories: Array<{ __typename?: 'ShopCategoryRecord', id: string, slug: string, name: string }> } | null };
+export type ShopProductBySlugQuery = { __typename: 'Query', shopProduct: { __typename: 'ShopProductRecord', id: string, name: string, slug: string, seoTitle: string | null, seoDescription: string | null, seoNoindex: boolean, _updatedAt: string, price: number | null, deliveryTime: string | null, shippingCost: number | null, dimmable: boolean, heightAdjustable: boolean, batteryOperated: boolean, swivelable: boolean, switchIntegrated: boolean, power: string | null, brightness: string | null, lightColor: string | null, lightDistribution: string | null, protectionFactor: string | null, protectionClass: string | null, input: string | null, output: string | null, chargerIncluded: string | null, size: string | null, height: string | null, overallHeight: string | null, length: string | null, width: string | null, depth: string | null, diameter: string | null, dimensions: string | null, reach: string | null, colors: string | null, metalColors: string | null, fabricColors: string | null, glass: string | null, crystal: string | null, shade: string | null, cover: string | null, lowerCover: string | null, basePlate: string | null, head: string | null, profile: string | null, material: string | null, mounting: string | null, showroomNote: string | null, description: { __typename: 'ShopProductModelDescriptionField', value: unknown } | null, images: Array<{ __typename: 'FileField', url: string, alt: string | null, title: string | null, responsiveImage: { __typename: 'ResponsiveImage', src: string, width: number, height: number, alt: string | null, title: string | null, base64: string | null, sizes: string } | null }>, variants: Array<{ __typename: 'ProductVariantRecord', price: number, selections: Array<{ __typename: 'VariantSelectionRecord', option: string, value: string }> }>, categories: Array<{ __typename: 'ShopCategoryRecord', id: string, slug: string, name: string }> } | null };
 
 export type ShopProductsByCategoryQueryVariables = Exact<{
-  categoryId: Scalars['ItemId']['input'];
+  categoryId: string;
 }>;
 
 
-export type ShopProductsByCategoryQuery = { __typename?: 'Query', allShopProducts: Array<{ __typename?: 'ShopProductRecord', id: string, name: string, slug: string, featured: boolean, featuredSort?: number | null, price?: number | null, images: Array<{ __typename?: 'FileField', url: string, alt?: string | null, title?: string | null, responsiveImage?: { __typename?: 'ResponsiveImage', src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } | null }>, variants: Array<{ __typename?: 'ProductVariantRecord', price: number }> }> };
+export type ShopProductsByCategoryQuery = { __typename: 'Query', allShopProducts: Array<{ __typename: 'ShopProductRecord', id: string, name: string, slug: string, featured: boolean, featuredSort: number | null, price: number | null, images: Array<{ __typename: 'FileField', url: string, alt: string | null, title: string | null, responsiveImage: { __typename: 'ResponsiveImage', src: string, width: number, height: number, alt: string | null, title: string | null, base64: string | null, sizes: string } | null }>, variants: Array<{ __typename: 'ProductVariantRecord', price: number }> }> };
 
 export type ShopProductsForCheckoutQueryVariables = Exact<{
-  ids: Array<Scalars['ItemId']['input']> | Scalars['ItemId']['input'];
+  ids: Array<string> | string;
 }>;
 
 
-export type ShopProductsForCheckoutQuery = { __typename?: 'Query', allShopProducts: Array<{ __typename?: 'ShopProductRecord', id: string, name: string, slug: string, price?: number | null, deliveryTime?: string | null, shippingCost?: number | null, images: Array<{ __typename?: 'FileField', url: string }>, variants: Array<{ __typename?: 'ProductVariantRecord', price: number, selections: Array<{ __typename?: 'VariantSelectionRecord', option: string, value: string }> }> }> };
+export type ShopProductsForCheckoutQuery = { __typename: 'Query', allShopProducts: Array<{ __typename: 'ShopProductRecord', id: string, name: string, slug: string, price: number | null, deliveryTime: string | null, shippingCost: number | null, images: Array<{ __typename: 'FileField', url: string }>, variants: Array<{ __typename: 'ProductVariantRecord', price: number, selections: Array<{ __typename: 'VariantSelectionRecord', option: string, value: string }> }> }> };
 
 export type ShopPageQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ShopPageQuery = { __typename?: 'Query', site: { __typename?: 'Site', favicon: Array<{ __typename?: 'Tag', attributes?: Record<string, string> | null, content?: string | null, tag: string }> }, shopPage?: { __typename?: 'ShopPageRecord', seo: Array<{ __typename?: 'Tag', attributes?: Record<string, string> | null, content?: string | null, tag: string }>, sections: Array<
-      | { __typename: 'ShopCategorySectionRecord', id: string, title: string, sectionId?: string | null, body: string, actionLink: { __typename?: 'LinkRecord', id: string, label: string, newTab: boolean, externalUrl?: string | null, isExternalUrl: boolean, anchorLink?: string | null, link?: { __typename: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null } }
-      | { __typename: 'ShopServiceSectionRecord', id: string, title: string, intro: { __typename?: 'ShopServiceSectionModelDescriptionField', value: unknown, links: Array<{ __typename: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', slug: string } | null }>, blocks: Array<{ __typename?: 'LinkRecord', _modelApiKey: string, id: string, label: string, newTab: boolean, externalUrl?: string | null, isExternalUrl: boolean, anchorLink?: string | null, link?: { __typename: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null }> }, offersLink: { __typename?: 'LinkRecord', id: string, label: string, newTab: boolean, externalUrl?: string | null, isExternalUrl: boolean, anchorLink?: string | null, link?: { __typename: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null }, items: Array<{ __typename?: 'ShopServiceCardRecord', id: string, title: string, description: string, icon: string, link?: { __typename?: 'LinkRecord', id: string, label: string, newTab: boolean, externalUrl?: string | null, isExternalUrl: boolean, anchorLink?: string | null, link?: { __typename: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null } | null }> }
-      | { __typename: 'ShopSfFeaturedRecord', id: string, title: string, intro: { __typename?: 'ShopSfFeaturedModelDescriptionField', value: unknown, links: Array<{ __typename: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', slug: string } | null }>, blocks: Array<{ __typename?: 'LinkRecord', _modelApiKey: string, id: string, label: string, newTab: boolean, externalUrl?: string | null, isExternalUrl: boolean, anchorLink?: string | null, link?: { __typename: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null }> }, actionLink: { __typename?: 'LinkRecord', id: string, label: string, newTab: boolean, externalUrl?: string | null, isExternalUrl: boolean, anchorLink?: string | null, link?: { __typename: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null } }
-      | { __typename: 'ShopStorefrontHeroRecord', id: string, eyebrow: string, title: string, intro: { __typename?: 'ShopStorefrontHeroModelIntroField', value: unknown, links: Array<{ __typename: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', slug: string } | null }>, blocks: Array<{ __typename?: 'LinkRecord', _modelApiKey: string, id: string, label: string, newTab: boolean, externalUrl?: string | null, isExternalUrl: boolean, anchorLink?: string | null, link?: { __typename: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null }> }, primaryCta: { __typename?: 'LinkRecord', id: string, label: string, newTab: boolean, externalUrl?: string | null, isExternalUrl: boolean, anchorLink?: string | null, link?: { __typename: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null }, secondaryCta: { __typename?: 'LinkRecord', id: string, label: string, newTab: boolean, externalUrl?: string | null, isExternalUrl: boolean, anchorLink?: string | null, link?: { __typename: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string, parent?: { __typename?: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null }, heroCategories: Array<{ __typename?: 'ShopCategoryRecord', id: string, name: string, slug: string, showInShop: boolean, seoTitle?: string | null, seoDescription?: string | null, seoNoindex: boolean, _updatedAt: string, description?: string | null, image?: { __typename?: 'FileField', url: string, alt?: string | null, title?: string | null, responsiveImage?: { __typename?: 'ResponsiveImage', src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null, sizes: string } | null } | null }> }
+export type ShopPageQuery = { __typename: 'Query', site: { __typename: 'Site', favicon: Array<{ __typename: 'Tag', attributes: Record<string, string> | null, content: string | null, tag: string }> }, shopPage: { __typename: 'ShopPageRecord', seo: Array<{ __typename: 'Tag', attributes: Record<string, string> | null, content: string | null, tag: string }>, sections: Array<
+      | { __typename: 'ShopCategorySectionRecord', id: string, title: string, sectionId: string | null, body: string, actionLink: { __typename: 'LinkRecord', id: string, label: string, newTab: boolean, externalUrl: string | null, isExternalUrl: boolean, anchorLink: string | null, link: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null } }
+      | { __typename: 'ShopServiceSectionRecord', id: string, title: string, intro: { __typename: 'ShopServiceSectionModelDescriptionField', value: unknown, links: Array<{ __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', slug: string } | null }>, blocks: Array<{ __typename: 'LinkRecord', _modelApiKey: string, id: string, label: string, newTab: boolean, externalUrl: string | null, isExternalUrl: boolean, anchorLink: string | null, link: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null }> }, offersLink: { __typename: 'LinkRecord', id: string, label: string, newTab: boolean, externalUrl: string | null, isExternalUrl: boolean, anchorLink: string | null, link: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null }, items: Array<{ __typename: 'ShopServiceCardRecord', id: string, title: string, description: string, icon: string, link: { __typename: 'LinkRecord', id: string, label: string, newTab: boolean, externalUrl: string | null, isExternalUrl: boolean, anchorLink: string | null, link: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null } | null }> }
+      | { __typename: 'ShopSfFeaturedRecord', id: string, title: string, intro: { __typename: 'ShopSfFeaturedModelDescriptionField', value: unknown, links: Array<{ __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', slug: string } | null }>, blocks: Array<{ __typename: 'LinkRecord', _modelApiKey: string, id: string, label: string, newTab: boolean, externalUrl: string | null, isExternalUrl: boolean, anchorLink: string | null, link: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null }> }, actionLink: { __typename: 'LinkRecord', id: string, label: string, newTab: boolean, externalUrl: string | null, isExternalUrl: boolean, anchorLink: string | null, link: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null } }
+      | { __typename: 'ShopStorefrontHeroRecord', id: string, eyebrow: string, title: string, intro: { __typename: 'ShopStorefrontHeroModelIntroField', value: unknown, links: Array<{ __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', slug: string } | null }>, blocks: Array<{ __typename: 'LinkRecord', _modelApiKey: string, id: string, label: string, newTab: boolean, externalUrl: string | null, isExternalUrl: boolean, anchorLink: string | null, link: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null }> }, primaryCta: { __typename: 'LinkRecord', id: string, label: string, newTab: boolean, externalUrl: string | null, isExternalUrl: boolean, anchorLink: string | null, link: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null }, secondaryCta: { __typename: 'LinkRecord', id: string, label: string, newTab: boolean, externalUrl: string | null, isExternalUrl: boolean, anchorLink: string | null, link: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string, parent: { __typename: 'PageRecord', id: string, slug: string } | null } | null } | null } | null } | null }, heroCategories: Array<{ __typename: 'ShopCategoryRecord', id: string, name: string, slug: string, showInShop: boolean, seoTitle: string | null, seoDescription: string | null, seoNoindex: boolean, _updatedAt: string, description: string | null, image: { __typename: 'FileField', url: string, alt: string | null, title: string | null, responsiveImage: { __typename: 'ResponsiveImage', src: string, width: number, height: number, alt: string | null, title: string | null, base64: string | null, sizes: string } | null } | null }> }
     > } | null };
 
 export type ShopSitemapRoutesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ShopSitemapRoutesQuery = { __typename?: 'Query', meta: { __typename?: 'CollectionMetadata', count: number }, allShopProducts: Array<{ __typename?: 'ShopProductRecord', slug: string, _updatedAt: string, seoNoindex: boolean }>, allShopCategories: Array<{ __typename?: 'ShopCategoryRecord', slug: string, _updatedAt: string, seoNoindex: boolean }> };
+export type ShopSitemapRoutesQuery = { __typename: 'Query', meta: { __typename: 'CollectionMetadata', count: number }, allShopProducts: Array<{ __typename: 'ShopProductRecord', slug: string, _updatedAt: string, seoNoindex: boolean }>, allShopCategories: Array<{ __typename: 'ShopCategoryRecord', slug: string, _updatedAt: string, seoNoindex: boolean }> };
 
 export const PageDetailsFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"pageDetails"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"PageRecord"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","alias":{"kind":"Name","value":"lastModified"},"name":{"kind":"Name","value":"_updatedAt"}},{"kind":"Field","name":{"kind":"Name","value":"seometatags"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"noIndex"}}]}}]}}]} as unknown as DocumentNode<PageDetailsFragment, unknown>;
 export const CalendlyBlockFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"calendlyBlock"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"CalendlyRecord"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"disableMarginTop"}},{"kind":"Field","name":{"kind":"Name","value":"disableMarginBottom"}}]}}]} as unknown as DocumentNode<CalendlyBlockFragment, unknown>;
