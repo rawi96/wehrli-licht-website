@@ -1,2 +1,19 @@
-// Components of the blocks group: one export line per component folder.
-export {};
+export * from './calendly/calendly-block';
+export * from './contact/contact-block';
+export * from './contact-form/contact-form-block';
+export * from './gallery/gallery-block';
+export * from './highlight-offers-teaser/highlight-offers-teaser-block';
+export * from './highlight-projects-teaser/highlight-projects-teaser-block';
+export * from './highlight-shop-teaser/highlight-shop-teaser-block';
+export * from './home-stage/home-stage-block';
+export * from './iframe/iframe-block';
+export * from './image/image-block';
+export * from './logo-grid/logo-grid-block';
+export * from './quote/quote-block';
+export * from './team/team-block';
+export * from './teaser-grid/teaser-grid-block';
+export * from './teaser-row/teaser-row-block';
+export * from './text/text-block';
+export * from './text-image/text-image-block';
+export * from './text-three-columns/text-three-columns-block';
+export * from './text-two-columns/text-two-columns-block';

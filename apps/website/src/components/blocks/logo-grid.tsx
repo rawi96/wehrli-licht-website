@@ -1,29 +1,23 @@
-import { Section } from '@wehrli/design-system';
 import { LogoGridBlockFragment } from '@/graphql/generated';
+import { LogoGridBlock as LogoGridBlockView } from '@wehrli/design-system';
 import { FC } from 'react';
-import Link from 'next/link';
 
 type Props = {
   block: LogoGridBlockFragment;
 };
 
 export const LogoGridBlock: FC<Props> = ({ block: { logos, disableMarginBottom, disableMarginTop } }) => (
-  <Section marginBottom={!disableMarginBottom} marginTop={!disableMarginTop}>
-    <div className="grid grid-cols-3 gap-8 rounded-lg p-10 sm:gap-12 md:grid-cols-4 md:gap-16 xl:grid-cols-6">
-      {logos?.map((logo) => (
-        <Link key={logo.id} href={logo.title ?? '#'} target="_blank" rel="noopener noreferrer" className="block">
-          {/* there is no advantage in using next/image here, because the logos are SVGs */}
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={logo.url}
-            width={logo.width ?? undefined}
-            height={logo.height ?? undefined}
-            alt={logo.alt ?? 'Partner Logo'}
-            loading="lazy"
-            className="w-full"
-          />
-        </Link>
-      ))}
-    </div>
-  </Section>
+  <LogoGridBlockView
+    marginTop={!disableMarginTop}
+    marginBottom={!disableMarginBottom}
+    // The partner's website is kept in the logo's title.
+    logos={(logos ?? []).map(({ id, url, width, height, alt, title }) => ({
+      id,
+      src: url,
+      width,
+      height,
+      alt: alt ?? 'Partner Logo',
+      href: title ?? '#',
+    }))}
+  />
 );

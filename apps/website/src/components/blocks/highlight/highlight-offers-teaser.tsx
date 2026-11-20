@@ -1,8 +1,8 @@
-import { CmsLinkButton } from '@/components/cms/cms-link-button';
 import { HighlightOffersTeaserFragment } from '@/graphql/generated';
+import { getCmsLinkHref, toCmsLink } from '@/utils/cms-link';
+import { highlightLinkedImage } from '@/utils/highlight-teaser';
+import { HighlightOffersTeaserBlock as HighlightOffersTeaserBlockView } from '@wehrli/design-system';
 import { FC } from 'react';
-import { HighlightOfferCard } from './highlight-offer-card';
-import { HighlightTeaserSection } from './highlight-teaser-section';
 
 type Props = {
   block: HighlightOffersTeaserFragment;
@@ -10,43 +10,19 @@ type Props = {
   aboveFold?: boolean;
 };
 
-export const HighlightOffersTeaserBlock: FC<Props> = ({ block, aboveFold = false }) => {
-  const { title, subline, footerCta, offers, disableMarginTop, disableMarginBottom } = block;
-
-  if (offers.length === 0 || !footerCta) {
-    return null;
-  }
-
-  const [featuredOffers, moreOffers] = [offers.slice(0, 2), offers.slice(2)];
-
-  return (
-    <HighlightTeaserSection
-      blockId={block.id}
-      title={title}
-      subline={subline}
-      bordered
-      disableMarginTop={disableMarginTop}
-      disableMarginBottom={disableMarginBottom}
-      footer={<CmsLinkButton link={footerCta} variant="primary" fullWidth />}
-    >
-      <div className="flex flex-col gap-4 sm:gap-5">
-        <ul className="grid list-none grid-cols-1 gap-4 p-0 sm:grid-cols-2 sm:gap-4">
-          {featuredOffers.map((offer, index) => (
-            <li key={offer.id}>
-              <HighlightOfferCard offer={offer} featured priority={aboveFold && index === 0} />
-            </li>
-          ))}
-        </ul>
-        {moreOffers.length > 0 && (
-          <ul className="grid list-none grid-cols-2 gap-2.5 p-0 min-[400px]:gap-3 sm:gap-3 lg:grid-cols-4 lg:gap-4">
-            {moreOffers.map((offer) => (
-              <li key={offer.id}>
-                <HighlightOfferCard offer={offer} />
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
-    </HighlightTeaserSection>
-  );
-};
+export const HighlightOffersTeaserBlock: FC<Props> = ({ block, aboveFold = false }) => (
+  <HighlightOffersTeaserBlockView
+    id={block.id}
+    title={block.title}
+    subline={block.subline}
+    cta={block.footerCta && toCmsLink(block.footerCta)}
+    priority={aboveFold}
+    offers={block.offers.map((offer) => ({
+      id: offer.id,
+      eyebrow: offer.eyebrow,
+      title: offer.title,
+      href: offer.offerLink && getCmsLinkHref(offer.offerLink),
+      image: highlightLinkedImage(offer.offerLink, offer.title),
+    }))}
+  />
+);

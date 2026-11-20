@@ -1,19 +1,7 @@
 import { ShopCategoryFragment } from '@/graphql/generated';
+import { toImage } from '@/utils/image';
 import { ShopCategory } from '@/utils/shop';
-
-/**
- * Rendered image widths of the highlight teasers. Content is capped at 1280px (max-w-7xl) from
- * 1400px viewports and is 11/12 of the viewport below, so every entry has a px cap; plain vw
- * values made wide screens download images up to 5x larger than displayed.
- */
-export const HIGHLIGHT_IMAGE_SIZES = {
-  projectFeatured: '(min-width: 1400px) 750px, (min-width: 1024px) 58vw, 92vw',
-  projectCompact: '(min-width: 1400px) 410px, (min-width: 1024px) 30vw, (min-width: 640px) 46vw, 92vw',
-  offerFeatured: '(min-width: 1400px) 640px, (min-width: 640px) 46vw, 92vw',
-  offerCompact: '(min-width: 1400px) 310px, (min-width: 1024px) 23vw, 46vw',
-  shopTileLarge: '(min-width: 1400px) 420px, (min-width: 1024px) 32vw, 92vw',
-  shopTileSmall: '(min-width: 1400px) 300px, (min-width: 1024px) 22vw, 46vw',
-} as const;
+import type { ImageData } from '@wehrli/design-system';
 
 const DEFAULT_SHOP_CATEGORY_SLUGS = ['pendelleuchte', 'deckenleuchte', 'stehleuchte'] as const;
 
@@ -45,22 +33,7 @@ export const highlightImageAlt = (alt: string | null | undefined, fallback: stri
   return trimmed && trimmed.length > 0 ? trimmed : fallback;
 };
 
-type HighlightTeaserImage =
-  | {
-      alt?: string | null;
-      title?: string | null;
-      responsiveImage?: {
-        src: string;
-        width: number;
-        height: number;
-        alt?: string | null;
-        title?: string | null;
-        base64?: string | null;
-        sizes: string;
-      } | null;
-    }
-  | null
-  | undefined;
+type HighlightTeaserImage = NonNullable<Parameters<typeof toImage>[0]> | null;
 
 type HighlightItemLink =
   | {
@@ -71,5 +44,9 @@ type HighlightItemLink =
   | null
   | undefined;
 
-export const getHighlightLinkedTeaserImage = (link: HighlightItemLink): HighlightTeaserImage =>
-  link?.link?.teaserImage ?? null;
+/** Teaser image of the page a highlight item links to, with `fallbackAlt` when the image has no alt text. */
+export const highlightLinkedImage = (link: HighlightItemLink, fallbackAlt: string): ImageData | undefined => {
+  const teaserImage = link?.link?.teaserImage;
+
+  return teaserImage ? toImage({ ...teaserImage, alt: highlightImageAlt(teaserImage.alt, fallbackAlt) }) : undefined;
+};

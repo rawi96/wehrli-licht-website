@@ -1,10 +1,7 @@
-import { Section } from '@wehrli/design-system';
 import { GalleryBlockFragment } from '@/graphql/generated';
-import { classNames } from '@/utils/css';
-import NextLink from 'next/link';
-import { FC, Suspense } from 'react';
-import { SRCImage as DatoSRCImage } from 'react-datocms';
-import { LightboxGate } from '@/components/lightbox-gate';
+import { toImage } from '@/utils/image';
+import { GalleryBlock as GalleryBlockView, GalleryItem } from '@wehrli/design-system';
+import { FC } from 'react';
 
 type Props = {
   block: GalleryBlockFragment;
@@ -15,57 +12,25 @@ type Props = {
 export const GalleryBlock: FC<Props> = ({
   block: { gallery, disableMarginBottom, disableMarginTop, showImageTitles },
   aboveFold = false,
-}) => {
-  // The LCP candidate is the first gallery entry that actually renders an image.
-  const firstRenderedId = gallery.find(({ smallSize }) => smallSize)?.id;
-  const slides = gallery.map(({ id, largeSize }) => ({
-    key: id,
-    src: largeSize.src,
-    width: largeSize.width,
-    height: largeSize.height,
-  }));
+}) => (
+  <GalleryBlockView
+    marginTop={!disableMarginTop}
+    marginBottom={!disableMarginBottom}
+    showTitles={showImageTitles}
+    priority={aboveFold}
+    items={gallery.flatMap(({ id, smallSize, largeSize }): GalleryItem[] => {
+      const image = toImage({ responsiveImage: smallSize });
 
-  return (
-    <Section marginBottom={!disableMarginBottom} marginTop={!disableMarginTop}>
-      <Suspense fallback={null}>
-        <LightboxGate slides={slides} />
-      </Suspense>
-      <div className="space-y-1 md:flex md:flex-wrap md:gap-1 md:space-y-0">
-        {gallery.map(({ id, smallSize }) => {
-          if (!smallSize) {
-            return null;
-          }
+      if (!image) {
+        return [];
+      }
 
-          const [smallTitle, mainTitle] = (smallSize.title ?? '').split('-').map((part) => part.trim());
+      // Image titles are written as «eyebrow - title».
+      const [eyebrow, title] = (smallSize?.title ?? '').split('-').map((part) => part.trim());
 
-          return (
-            <NextLink
-              key={id}
-              href={`?image=${id}`}
-              scroll={false}
-              className="group relative block grow overflow-hidden text-center md:h-[339px]"
-              style={{ flexBasis: (smallSize.width / smallSize.height) * 339 }}
-            >
-              {showImageTitles && (
-                <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-base font-bold text-white transition-opacity duration-300 group-hover:opacity-100">
-                  {smallTitle && <span className="text-sm">{smallTitle}</span>}
-                  {mainTitle && <span className="text-lg">{mainTitle}</span>}
-                </div>
-              )}
-
-              <DatoSRCImage
-                data={smallSize}
-                priority={aboveFold && id === firstRenderedId}
-                imgStyle={{ objectFit: 'cover', maxWidth: '100%', maxHeight: '100%' }}
-                imgClassName={classNames(
-                  'transition-transform duration-300 group-hover:scale-110',
-                  showImageTitles && 'brightness-75',
-                )}
-              />
-            </NextLink>
-          );
-        })}
-      </div>
-    </Section>
-  );
-};
+      return [
+        { id, image, large: { src: largeSize.src, width: largeSize.width, height: largeSize.height }, eyebrow, title },
+      ];
+    })}
+  />
+);

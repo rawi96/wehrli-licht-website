@@ -1,5 +1,5 @@
-import { Section } from '@wehrli/design-system';
 import { IframeBlockFragment } from '@/graphql/generated';
+import { IframeBlock as IframeBlockView } from '@wehrli/design-system';
 import { FC } from 'react';
 
 type Props = {
@@ -7,7 +7,5 @@ type Props = {
 };
 
 export const IframeBlock: FC<Props> = ({ block: { src, disableMarginBottom, disableMarginTop } }) => (
-  <Section marginBottom={!disableMarginBottom} marginTop={!disableMarginTop}>
-    <iframe title="Google Maps" className="mb-20" src={src} width="100%" height="500" allowFullScreen loading="lazy" />
-  </Section>
+  <IframeBlockView src={src} marginTop={!disableMarginTop} marginBottom={!disableMarginBottom} />
 );
