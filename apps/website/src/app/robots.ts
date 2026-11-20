@@ -1,14 +1,13 @@
-import { getAllDatoRoutes } from '@/utils/get-dato-routes';
+import { catalog, content } from '@/integrations';
 import { getShopSitemapRoutes } from '@/domain/shop/sitemap';
-import { catalog } from '@/integrations';
-import { getSiteUrl } from '@/utils/site-url';
+import { getSiteUrl } from '@/lib/site-url';
 import { MetadataRoute } from 'next';
 
 export default async function robots(): Promise<MetadataRoute.Robots> {
-  const datoRoutes = await getAllDatoRoutes({ includeDrafts: false });
+  const contentRoutes = await content.listRoutes();
   const shopRoutes = getShopSitemapRoutes(await catalog.listSitemapEntries());
 
-  const routes = [...datoRoutes, ...shopRoutes];
+  const routes = [...contentRoutes, ...shopRoutes];
 
   return {
     rules: {

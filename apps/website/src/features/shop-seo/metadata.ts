@@ -1,9 +1,9 @@
-import { SITE_NAME } from '@/constants/site';
+import { SITE_NAME } from '@/lib/site';
 import type { Category } from '@/domain/shop/category';
 import { imageUrl } from '@/domain/shop/image';
 import type { Product } from '@/domain/shop/product';
 import { buildCategoryDescription, buildCategoryTitle, buildProductDescription, buildProductTitle } from '@/domain/shop/seo';
-import { getSiteUrl } from '@/utils/site-url';
+import { getSiteUrl } from '@/lib/site-url';
 import type { Metadata } from 'next';
 
 type BaseMetadataInput = {

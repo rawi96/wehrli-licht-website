@@ -1,7 +1,7 @@
 import 'server-only';
 import { getContactRecipients } from '@/features/mail/recipients';
 import { botProtection, mailer } from '@/integrations';
-import { getSiteUrl } from '@/utils/site-url';
+import { getSiteUrl } from '@/lib/site-url';
 import { buildContactRequestEmail } from './email';
 import { ContactFieldErrors, ContactFormValues, HONEYPOT_FIELD, MIN_FILL_TIME_MS, validateContactForm } from './schema';
 

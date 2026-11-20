@@ -1,4 +1,4 @@
-import { getSiteUrl } from '@/utils/site-url';
+import { getSiteUrl } from '@/lib/site-url';
 
 /** Brand colours and links of the shop's and contact form's e-mails. */
 export const EMAIL_BRAND = {

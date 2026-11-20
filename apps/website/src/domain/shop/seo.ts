@@ -1,7 +1,7 @@
-import { MAX_SEO_TITLE_LENGTH, SITE_BRAND } from '@/constants/site';
+import { MAX_SEO_TITLE_LENGTH, SITE_BRAND } from '@/lib/site';
 import type { Category } from '@/domain/shop/category';
 import type { Product } from '@/domain/shop/product';
-import { stripHtml, truncateText } from '@/utils/text';
+import { stripHtml, truncateText } from '@/lib/text';
 
 // Titles and descriptions of shop pages for search engines and feeds.
 

@@ -1,38 +1,38 @@
 import { JsonLd } from '@/components/seo/json-ld';
-import { getCompanyProfile } from '@/utils/company-profile';
-import { toLines } from '@/utils/text';
-import { getHeaderFooter } from '@/utils/get-header-footer';
-import { getSiteUrl } from '@/utils/site-url';
-import { SITE_NAME } from '@/constants/site';
+import { SITE_NAME } from '@/lib/site';
+import { content } from '@/integrations';
+import { getSiteUrl } from '@/lib/site-url';
 
 /**
  * Site-wide structured data: the business (local SEO, knowledge panel, AI answers) and the
- * website. Everything comes from DatoCMS: contact data from «Header & Footer», business facts
- * from «Firmenprofil (SEO & KI)». Empty CMS fields are simply omitted.
+ * website. Everything comes from the CMS: contact data from the site layout, business facts from
+ * the company profile. Empty CMS fields are simply omitted.
  */
 export const SiteJsonLd = async () => {
-  // Structured data must never take a page down: skip what DatoCMS cannot deliver. The company
+  // Structured data must never take a page down: skip what the CMS cannot deliver. The company
   // profile is optional, so its failure only drops the business facts, not the contact data.
   const logError = (error: unknown) => {
-    console.error('[site-json-ld] DatoCMS unavailable', error);
+    console.error('[site-json-ld] CMS unavailable', error);
 
     return null;
   };
-  const [headerFooter, profile] = await Promise.all([
-    getHeaderFooter().catch(logError),
-    getCompanyProfile().catch(logError),
+  const [layout, profile] = await Promise.all([
+    content.getSiteLayout().catch(logError),
+    content.getCompanyProfile().catch(logError),
   ]);
-  if (!headerFooter) {
+  if (!layout) {
     return null;
   }
 
+  const { contact, socialProfiles } = layout;
+
   const url = getSiteUrl();
   const businessId = `${url}/#business`;
-  const sameAs = [headerFooter.instagramUrl, headerFooter.facebookUrl, headerFooter.linkedinUrl].filter(
+  const sameAs = [socialProfiles.instagram, socialProfiles.facebook, socialProfiles.linkedin].filter(
     (link): link is string => Boolean(link),
   );
-  const areaServed = toLines(profile?.areaServed);
-  const expertise = toLines(profile?.expertise);
+  const areaServed = profile?.areaServed ?? [];
+  const expertise = profile?.expertise ?? [];
 
   return (
     <JsonLd
@@ -42,19 +42,19 @@ export const SiteJsonLd = async () => {
           {
             '@type': 'LightingStore',
             '@id': businessId,
-            name: headerFooter.companyName ?? SITE_NAME,
+            name: contact.companyName ?? SITE_NAME,
             url,
             logo: `${url}/wehrli-licht-logo.svg`,
             image: `${url}/wehrli-licht-logo.svg`,
             ...(profile?.description && { description: profile.description }),
             ...(profile?.foundingYear && { foundingDate: String(profile.foundingYear) }),
-            ...(headerFooter.phone && { telephone: headerFooter.phone }),
-            ...(headerFooter.email && { email: headerFooter.email }),
+            ...(contact.phone && { telephone: contact.phone }),
+            ...(contact.email && { email: contact.email }),
             address: {
               '@type': 'PostalAddress',
-              ...(headerFooter.street && { streetAddress: headerFooter.street }),
-              ...(headerFooter.zip && { postalCode: headerFooter.zip }),
-              ...(headerFooter.place && { addressLocality: headerFooter.place }),
+              ...(contact.street && { streetAddress: contact.street }),
+              ...(contact.zip && { postalCode: contact.zip }),
+              ...(contact.place && { addressLocality: contact.place }),
               ...(profile?.addressRegion && { addressRegion: profile.addressRegion }),
               addressCountry: 'CH',
             },
@@ -65,7 +65,7 @@ export const SiteJsonLd = async () => {
                 longitude: profile.location.longitude,
               },
             }),
-            ...(headerFooter.mapsLink && { hasMap: headerFooter.mapsLink }),
+            ...(contact.mapsHref && { hasMap: contact.mapsHref }),
             ...(areaServed.length > 0 && { areaServed: areaServed.map((name) => ({ '@type': 'Place', name })) }),
             ...(expertise.length > 0 && { knowsAbout: expertise }),
             ...(sameAs.length > 0 && { sameAs }),
@@ -74,7 +74,7 @@ export const SiteJsonLd = async () => {
             '@type': 'WebSite',
             '@id': `${url}/#website`,
             url,
-            name: headerFooter.companyName ?? SITE_NAME,
+            name: contact.companyName ?? SITE_NAME,
             inLanguage: 'de-CH',
             publisher: { '@id': businessId },
           },

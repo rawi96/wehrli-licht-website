@@ -1,9 +1,9 @@
-import { SITE_NAME } from '@/constants/site';
+import { SITE_NAME } from '@/lib/site';
 import type { Category } from '@/domain/shop/category';
 import { imageUrl } from '@/domain/shop/image';
 import type { Product, ProductSummary } from '@/domain/shop/product';
 import { buildCategoryDescription, buildProductDescription, getProductOfferPrice, primaryCategory } from '@/domain/shop/seo';
-import { getSiteUrl } from '@/utils/site-url';
+import { getSiteUrl } from '@/lib/site-url';
 
 // Structured data (schema.org JSON-LD) of the shop's pages.
 

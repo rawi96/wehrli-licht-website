@@ -3,7 +3,7 @@ import { imageUrl } from '@/domain/shop/image';
 import type { Product, ProductVariant, VariantSelection } from '@/domain/shop/product';
 import { buildProductDescription, buildProductTitle, primaryCategory } from '@/domain/shop/seo';
 import type { GoogleShoppingFeedItem } from './types';
-import { slugifyToken, truncateText } from '@/utils/text';
+import { slugifyToken, truncateText } from '@/lib/text';
 
 const MAX_TITLE = 150;
 const MAX_DESCRIPTION = 5000;

@@ -1,6 +1,6 @@
 import { EMAIL_BRAND } from '@/features/mail/brand';
 import { emailLayout } from '@/features/mail/layout';
-import { escapeHtml } from '@/utils/text';
+import { escapeHtml } from '@/lib/text';
 import { ContactFormValues } from './schema';
 
 const { primary: brandColor } = EMAIL_BRAND;

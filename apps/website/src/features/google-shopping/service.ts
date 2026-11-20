@@ -1,6 +1,6 @@
 import 'server-only';
 import { catalog } from '@/integrations';
-import { getSiteUrl } from '@/utils/site-url';
+import { getSiteUrl } from '@/lib/site-url';
 import { productToFeedItems } from './feed-items';
 import { buildGoogleShoppingFeedXml } from './feed-xml';
 

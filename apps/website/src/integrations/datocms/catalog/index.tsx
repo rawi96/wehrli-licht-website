@@ -1,8 +1,8 @@
 import 'server-only';
-import { StructuredTextRenderer } from '@/components/dato-structured-text';
+import { StructuredTextRenderer } from '@/integrations/datocms/blocks/structured-text';
 import { ShopProductsForCheckoutDocument } from '@/graphql/generated';
 import type { Catalog } from '@/ports/catalog';
-import { queryDatoCMS } from '@/utils/query-dato-cms';
+import { queryDatoCMS } from '@/integrations/datocms/client';
 import { draftMode } from 'next/headers';
 import { toNextMetadata } from 'react-datocms/seo';
 import { ShopSections } from '../blocks/shop/shop-sections';

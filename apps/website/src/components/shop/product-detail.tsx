@@ -14,7 +14,7 @@ import {
   SelectedOptions,
 } from '@/domain/shop/variants';
 import { analytics } from '@/integrations/client';
-import { CONTACT_FORM_ANCHOR, PRODUCT_PREFILL_PARAM } from '@/features/contact/schema';
+import { CONTACT_FORM_ANCHOR, PRODUCT_PREFILL_PARAM } from '@/domain/contact/links';
 import { ProductDetail as ProductDetailView, VariationSelector } from '@wehrli/design-system';
 import { ReactNode, useEffect, useMemo, useState } from 'react';
 

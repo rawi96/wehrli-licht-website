@@ -1,7 +1,7 @@
 import { toShopCategoryCardData } from '@/components/shop/cards';
 import type { Category } from '@/domain/shop/category';
 import { ShopCategorySectionFragment } from '@/graphql/generated';
-import { toLink } from '@/utils/cms-link';
+import { toLink } from '@/integrations/datocms/links';
 import { ShopCategorySection } from '@wehrli/design-system';
 import { FC } from 'react';
 import { shopSectionHeadingId } from './sections';

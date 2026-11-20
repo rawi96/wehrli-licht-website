@@ -8,7 +8,7 @@ import { computeCheckoutTotals, VerifiedCheckoutQuote } from '@/domain/checkout/
 import { catalog, payments } from '@/integrations';
 import type { PaymentWebhookEvent } from '@/ports/payment-provider';
 import { mapProductsToCommerceMeta, ProductCommerceMeta, summarizeDeliveryTimes } from '@/domain/shop/commerce';
-import { getSiteUrl } from '@/utils/site-url';
+import { getSiteUrl } from '@/lib/site-url';
 import { randomUUID } from 'crypto';
 import {
   isCheckoutEmailDelivered,

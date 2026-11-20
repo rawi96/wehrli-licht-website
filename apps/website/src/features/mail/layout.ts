@@ -1,5 +1,5 @@
 import { EMAIL_BRAND, getEmailLogoUrl, getEmailSiteUrl } from './brand';
-import { escapeHtml } from '@/utils/text';
+import { escapeHtml } from '@/lib/text';
 
 const { primary: brandColor } = EMAIL_BRAND;
 

@@ -16,7 +16,7 @@ import {
   ShopProductsByCategoryDocument,
   ShopSitemapRoutesDocument,
 } from '@/graphql/generated';
-import { queryDatoCMS } from '@/utils/query-dato-cms';
+import { queryDatoCMS } from '@/integrations/datocms/client';
 import { cache } from 'react';
 
 // The shop's DatoCMS queries, cached per request. They return DatoCMS records; the catalog maps them onto the domain.

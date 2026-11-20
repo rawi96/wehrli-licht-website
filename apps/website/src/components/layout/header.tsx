@@ -1,7 +1,6 @@
 'use client';
 
-import { DirectoryRecord, HeaderFooterRecord, NavigationItemRecord } from '@/graphql/generated';
-import { splitHeaderMenu } from '@/utils/navigation';
+import type { MenuItem, MenuLink } from '@/domain/content/site-layout';
 import { Header as HeaderLayout, HeaderNavigationItem } from '@wehrli/design-system';
 import { usePathname } from 'next/navigation';
 import { FC } from 'react';
@@ -9,41 +8,30 @@ import { ShopCartButton } from '../shop/shop-cart-button';
 import { ShopMobileNav } from '../shop/shop-mobile-nav';
 
 type Props = {
-  headerFooter: HeaderFooterRecord;
+  navigation: MenuItem[];
+  /** Shown as a button next to the navigation. */
+  contactLink: MenuLink | null;
   variant?: 'overlay' | 'solid';
 };
 
-const toNavigationItem = (
-  item: NavigationItemRecord | DirectoryRecord,
-  isActive: (path: string) => boolean,
-): HeaderNavigationItem =>
-  'navigationItems' in item
-    ? {
-        label: item.label,
-        active: isActive(`/${item.slug}`),
-        children: item.navigationItems.map((child) => ({
-          label: child.label,
-          href: child.link?.slug ? `/${item.slug}/${child.link.slug}` : '/',
-        })),
-      }
-    : { label: item.label, href: `/${item.link?.slug}`, active: isActive(`/${item.link?.slug}`) };
+const toNavigationItem = (item: MenuItem, isActive: (path: string) => boolean): HeaderNavigationItem =>
+  item.children
+    ? { label: item.label, active: isActive(item.href), children: item.children }
+    : { label: item.label, href: item.href, active: isActive(item.href) };
 
-export const Header: FC<Props> = ({ headerFooter: { menu }, variant = 'solid' }) => {
-  const { primary, contact } = splitHeaderMenu(menu);
+export const Header: FC<Props> = ({ navigation, contactLink, variant = 'solid' }) => {
   const pathname = usePathname();
 
   const isActive = (path: string) => pathname?.startsWith(path) ?? false;
 
-  const navigation: HeaderNavigationItem[] = [
-    ...primary.map((item) => toNavigationItem(item, isActive)),
-    { label: 'Shop', href: '/shop', active: isActive('/shop') },
-  ];
-
   return (
     <HeaderLayout
       variant={variant}
-      navigation={navigation}
-      contact={contact?.link?.slug ? { label: contact.label, href: `/${contact.link.slug}` } : null}
+      navigation={[
+        ...navigation.map((item) => toNavigationItem(item, isActive)),
+        { label: 'Shop', href: '/shop', active: isActive('/shop') },
+      ]}
+      contact={contactLink}
       cartButton={<ShopCartButton />}
       renderMobileMenuExtra={(closeMobileMenu) => <ShopMobileNav onLinkClick={closeMobileMenu} />}
     />

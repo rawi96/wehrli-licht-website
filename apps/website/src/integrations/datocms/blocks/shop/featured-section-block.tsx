@@ -1,8 +1,8 @@
-import { StructuredTextRenderer } from '@/components/dato-structured-text';
+import { StructuredTextRenderer } from '@/integrations/datocms/blocks/structured-text';
 import { toProductCardData } from '@/components/shop/cards';
 import type { ProductSummary } from '@/domain/shop/product';
 import { ShopFeaturedSectionFragment } from '@/graphql/generated';
-import { toLink } from '@/utils/cms-link';
+import { toLink } from '@/integrations/datocms/links';
 import { ShopFeaturedSection } from '@wehrli/design-system';
 import { FC } from 'react';
 import { toStructuredTextValue } from '../../catalog/structured-text';

@@ -1,6 +1,6 @@
 import type { GoogleShoppingFeedItem } from './types';
-import { getSiteUrl } from '@/utils/site-url';
-import { escapeXml } from '@/utils/text';
+import { getSiteUrl } from '@/lib/site-url';
+import { escapeXml } from '@/lib/text';
 
 const GOOGLE_PRODUCT_CATEGORY = '594';
 const BRAND = 'Wehrli Licht';

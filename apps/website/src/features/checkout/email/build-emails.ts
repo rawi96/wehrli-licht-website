@@ -3,7 +3,7 @@ import { CheckoutOrder, formatOrderReference } from '@/domain/checkout/order';
 import { PREPAYMENT_BANK_DETAILS } from '@/domain/checkout/prepayment-bank-details';
 import { EMAIL_BRAND } from '@/features/mail/brand';
 import { emailLayout } from '@/features/mail/layout';
-import { escapeHtml } from '@/utils/text';
+import { escapeHtml } from '@/lib/text';
 import { renderLineItems, renderOrderDetails } from './sections';
 
 const { surface: brandSurface, primary: brandColor } = EMAIL_BRAND;

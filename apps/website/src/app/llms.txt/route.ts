@@ -1,20 +1,15 @@
-import { DEDICATED_ROUTES, isDedicatedRoute } from '@/constants/dedicated-routes';
-import { SITE_NAME } from '@/constants/site';
+import { SITE_NAME } from '@/lib/site';
 import { SHOP_HOME_PATH, getShopCategoryPath } from '@/domain/shop/paths';
-import { LlmsPagesDocument } from '@/graphql/generated';
-import { getCompanyProfile } from '@/utils/company-profile';
-import { catalog } from '@/integrations';
-import { getHeaderFooter } from '@/utils/get-header-footer';
-import { getPublicPagePath } from '@/utils/pathnames';
-import { queryDatoCMS } from '@/utils/query-dato-cms';
-import { getSiteUrl } from '@/utils/site-url';
+import { DEDICATED_ROUTES, isDedicatedRoute } from '@/domain/content/dedicated-routes';
+import { catalog, content } from '@/integrations';
+import { getSiteUrl } from '@/lib/site-url';
 
 /**
  * llms.txt (https://llmstxt.org): a compact Markdown overview of the business and its pages for
- * AI assistants. Fully generated from DatoCMS: texts from «Firmenprofil (SEO & KI)», sections from
- * the page tree (every parent page with child pages becomes a section).
+ * AI assistants. Fully generated from the CMS: texts from the company profile, sections from the
+ * page tree (every parent page with child pages becomes a section).
  */
-// Same interval as the content pages; the DatoCMS webhook also revalidates it on changes.
+// Same interval as the content pages; the CMS webhook also revalidates it on changes.
 export const revalidate = 3600;
 
 type LinkItem = { title: string; url: string; description?: string };
@@ -29,23 +24,22 @@ const section = (title: string, items: LinkItem[]) =>
 
 export const GET = async (): Promise<Response> => {
   const siteUrl = getSiteUrl();
-  const [{ allPages }, categories, headerFooter, profile] = await Promise.all([
-    queryDatoCMS({ document: LlmsPagesDocument }),
+  const [allPages, categories, { contact: company }, profile] = await Promise.all([
+    content.listPages(),
     catalog.listCategories(),
-    getHeaderFooter(),
-    getCompanyProfile(),
+    content.getSiteLayout(),
+    content.getCompanyProfile(),
   ]);
 
   const pages = allPages
-    .map((page) => ({ page, path: getPublicPagePath(page) }))
     // the home page is the site itself, dedicated routes (shop, FAQ) are listed separately below
-    .filter(({ page, path }) => !page.seometatags?.noIndex && !isDedicatedRoute(path))
-    .map(({ page, path }) => ({
+    .filter((page) => !page.noIndex && !isDedicatedRoute(page.path))
+    .map((page) => ({
       parent: page.parent,
       item: {
         title: clean(page.title),
-        description: page.seometatags?.description ? clean(page.seometatags.description) : undefined,
-        url: `${siteUrl}${path}`,
+        description: page.description ? clean(page.description) : undefined,
+        url: `${siteUrl}${page.path}`,
       },
     }));
 
@@ -65,15 +59,13 @@ export const GET = async (): Promise<Response> => {
   const topLevelPages = pages.filter(({ parent }) => !parent).map(({ item }) => item);
 
   const contact = [
-    headerFooter.street &&
-      headerFooter.zip &&
-      `${headerFooter.street}, ${headerFooter.zip} ${headerFooter.place ?? ''}`.trim(),
-    headerFooter.phone && `Telefon ${headerFooter.phone}`,
-    headerFooter.email && `E-Mail ${headerFooter.email}`,
+    company.street && company.zip && `${company.street}, ${company.zip} ${company.place ?? ''}`.trim(),
+    company.phone && `Telefon ${company.phone}`,
+    company.email && `E-Mail ${company.email}`,
   ].filter(Boolean);
 
   const body = [
-    `# ${headerFooter.companyName ?? SITE_NAME}`,
+    `# ${company.companyName ?? SITE_NAME}`,
     profile?.description ? `> ${clean(profile.description)}` : '',
     profile?.llmsIntro?.trim() ?? '',
     contact.length > 0 ? `Kontakt: ${contact.join(' · ')}.` : '',

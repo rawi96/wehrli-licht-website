@@ -4,7 +4,7 @@ import { formatShippingAddress } from '@/domain/checkout/shipping-address';
 import { EMAIL_BRAND } from '@/features/mail/brand';
 import { formatShippingCostLabel } from '@/domain/shop/commerce';
 import { formatPriceToCHF } from '@/domain/shop/price';
-import { escapeHtml } from '@/utils/text';
+import { escapeHtml } from '@/lib/text';
 
 const { primary: brandColor } = EMAIL_BRAND;
 

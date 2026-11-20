@@ -1,12 +1,7 @@
 'use client';
 
-import {
-  ContactFieldErrors,
-  ContactFormValues,
-  HONEYPOT_FIELD,
-  PRODUCT_PREFILL_PARAM,
-  validateContactForm,
-} from '@/features/contact/schema';
+import { ContactFieldErrors, ContactFormValues, HONEYPOT_FIELD, validateContactForm } from '@/features/contact/schema';
+import { PRODUCT_PREFILL_PARAM } from '@/domain/contact/links';
 import { analytics } from '@/integrations/client';
 import { ContactForm as ContactFormView, ContactFormStatus } from '@wehrli/design-system';
 import { FC, useEffect, useRef, useState } from 'react';
