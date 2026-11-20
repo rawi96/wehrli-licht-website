@@ -35,7 +35,8 @@ export const ImageComponent: FC<ImageProps> = ({
     return null;
   }
 
-  const alt = [image?.alt, altFromTitle ? image?.title : null].map((text) => text?.trim()).find(Boolean) ?? '';
+  const alt =
+    [image?.alt, responsiveImage.alt, altFromTitle ? image?.title : null].map((text) => text?.trim()).find(Boolean) ?? '';
 
   // DatoCMS images are already optimized by Dato's CDN, so priority images are served from
   // there too instead of being re-optimized (and counted) by Vercel's next/image optimizer.

@@ -3,6 +3,7 @@ import { FC } from 'react';
 import { BlockWrapper } from '../block-wrapper';
 import { Card } from '../card';
 import { Grid } from '../grid';
+import { gridImageSizes } from '@/utils/image-sizes';
 
 type Props = {
   block: TeaserGridBlockFragment;
@@ -19,6 +20,7 @@ export const TeaserGridBlock: FC<Props> = ({ block: { teasers, disableMarginBott
           link={`${teaser.parent?.slug ? `/${teaser.parent?.slug}` : ''}/${teaser.slug}`}
           linkLabel={teaser.teaserLinkText}
           image={teaser.teaserImage?.responsiveImage}
+          imageSizes={gridImageSizes(teasers.length)}
           eyebrow={teaser.teaserEyebrow}
         />
       ))}

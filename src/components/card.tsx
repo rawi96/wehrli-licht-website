@@ -12,9 +12,11 @@ type Props = {
   linkLabel?: string | null;
   linkTitle?: string;
   image?: ResponsiveImageType;
+  /** Rendered image width, see utils/image-sizes. */
+  imageSizes: string;
 };
 
-export const Card: FC<Props> = ({ title, description, link, linkLabel, linkTitle, image, eyebrow }) => (
+export const Card: FC<Props> = ({ title, description, link, linkLabel, linkTitle, image, imageSizes, eyebrow }) => (
   <NextLink
     href={link ?? '#'}
     title={linkTitle ?? title}
@@ -28,6 +30,7 @@ export const Card: FC<Props> = ({ title, description, link, linkLabel, linkTitle
       {image && (
         <ImageComponent
           image={{ responsiveImage: image }}
+          sizes={imageSizes}
           imgClassName="transition-transform duration-300 group-hover:scale-110"
         />
       )}

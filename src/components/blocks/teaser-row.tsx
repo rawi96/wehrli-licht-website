@@ -24,6 +24,7 @@ export const TeaserRowBlock: FC<Props> = ({ block: { teasers, disableMarginBotto
                 {teaser.teaserImage && (
                   <ImageComponent
                     image={{ responsiveImage: teaser.teaserImage.responsiveImage }}
+                    sizes="256px"
                     imgClassName="absolute h-full w-full object-cover transition-transform duration-300 group-hover:scale-110 brightness-75"
                   />
                 )}

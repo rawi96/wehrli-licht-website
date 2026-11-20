@@ -25,7 +25,7 @@ export type ContentBlock = NonNullable<PageQuery['page']>['content'][number];
 type Props = {
   blocks: ContentBlock[];
   /**
-   * Image-led blocks (images, galleries, team, highlight teasers) among the first N blocks are treated as
+   * Image-led blocks (images, text/image, galleries, team, highlight teasers) among the first N blocks are treated as
    * above the fold and load their lead images eagerly (LCP).
    * Pass 0 when something else (e.g. the home stage) is rendered above the content.
    */
@@ -45,7 +45,7 @@ export const ContentBlocks: FC<Props> = ({ blocks, eagerBlockCount = 2 }) => (
         case 'TextThreeColumnRecord':
           return <TextThreeColBlock key={block.id} block={block} />;
         case 'TextImageRecord':
-          return <TextImageBlock key={block.id} block={block} />;
+          return <TextImageBlock key={block.id} block={block} aboveFold={aboveFold} />;
         case 'ImageRecord':
           return <ImageBlock key={block.id} block={block} aboveFold={aboveFold} />;
         case 'TeamRecord':
