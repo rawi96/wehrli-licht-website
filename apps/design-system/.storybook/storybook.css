@@ -1,0 +1,3 @@
+/* Storybook loads the design system styles plus the stories as Tailwind sources (the website leaves them out). */
+@import '../src/styles.css';
+@source '../src';

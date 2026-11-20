@@ -1,0 +1,49 @@
+/* Motion tokens: `animate-*` utilities with their keyframes. Turned off for prefers-reduced-motion in styles.css. */
+@theme static {
+  --animate-ken-burns: ken-burns 16s ease-out forwards; /* slow zoom of the home stage image */
+  --animate-hero-reveal: hero-reveal 0.9s var(--ease-reveal) forwards; /* hero text fades in from below */
+  --animate-scroll-hint: scroll-hint 2s ease-in-out infinite; /* bouncing "scroll down" hint */
+  --animate-light-beam: light-beam 4s ease-in-out infinite; /* pulsing light cone */
+
+  @keyframes ken-burns {
+    0% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(1.18);
+    }
+  }
+
+  @keyframes hero-reveal {
+    0% {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes scroll-hint {
+    0%,
+    100% {
+      opacity: 0.4;
+      transform: translateY(0);
+    }
+    50% {
+      opacity: 1;
+      transform: translateY(6px);
+    }
+  }
+
+  @keyframes light-beam {
+    0%,
+    100% {
+      opacity: 0.3;
+    }
+    50% {
+      opacity: 0.6;
+    }
+  }
+}

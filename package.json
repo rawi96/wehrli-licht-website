@@ -1,60 +1,23 @@
 {
   "name": "wehrli-licht",
-  "version": "0.0.1",
   "private": true,
+  "packageManager": "pnpm@10.10.0",
   "engines": {
     "node": "24.x"
   },
   "scripts": {
-    "predev": "npm run generate",
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "check:unused": "knip",
-    "type-check": "tsc --noEmit",
-    "lint": "eslint src --ext .js,.jsx,.ts,.tsx && npm run type-check && npm run check:unused",
-    "lint:fix": "eslint src --ext .js,.jsx,.ts,.tsx --fix",
-    "generate": "graphql-codegen",
-    "dato:migrate": "datocms migrations:run --source=main --destination=migration-sandbox",
-    "dato:migrate:primary": "datocms migrations:run --source=main --in-place --allow-primary"
-  },
-  "dependencies": {
-    "@headlessui/react": "^2.2.10",
-    "@heroicons/react": "^2.2.0",
-    "@tailwindcss/forms": "^0.5.11",
-    "@tailwindcss/typography": "^0.5.20",
-    "@types/react": "^19.3.0",
-    "@types/react-dom": "^19.3.0",
-    "botid": "^1.5.13",
-    "canvas-confetti": "^1.9.4",
-    "next": "^16.4.6",
-    "react": "^19.3.1",
-    "react-datocms": "^8.1.2",
-    "react-dom": "^19.3.1",
-    "resend": "^6.39.0",
-    "stripe": "^22.6.2",
-    "yet-another-react-lightbox": "^3.33.1"
+    "dev": "turbo dev --filter=@wehrli/website",
+    "build": "turbo build",
+    "lint": "turbo lint",
+    "website:dev": "turbo dev --filter=@wehrli/website",
+    "website:build": "turbo build --filter=@wehrli/website",
+    "design-system:dev": "pnpm --filter @wehrli/design-system storybook",
+    "design-system:build": "turbo build --filter=@wehrli/design-system"
   },
   "devDependencies": {
-    "@datocms/cli": "^4.0.29",
-    "@graphql-codegen/cli": "^8.0.0",
-    "@graphql-codegen/typed-document-node": "^8.0.0",
-    "@graphql-codegen/typescript": "^7.0.1",
-    "@graphql-codegen/typescript-operations": "^7.0.1",
-    "@graphql-typed-document-node/core": "^3.2.0",
-    "@next/eslint-plugin-next": "^16.4.6",
-    "@smartive/eslint-config": "^10.0.0",
-    "@smartive/prettier-config": "3.1.2",
-    "@tailwindcss/postcss": "^4.3.5",
-    "@types/canvas-confetti": "^1.9.0",
-    "@types/node": "^24.19.2",
-    "autoprefixer": "^10.6.2",
-    "eslint": "^10.15.0",
-    "knip": "^6.46.1",
-    "postcss": "^8.5.33",
     "prettier": "^3.10.1",
     "prettier-plugin-tailwindcss": "^0.8.1",
-    "tailwindcss": "^4.3.5",
-    "typescript": "~6.0.0"
+    "@smartive/prettier-config": "3.1.2",
+    "turbo": "^2.11.10"
   }
 }

@@ -1,0 +1,42 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Introduction" />
+
+# Wehrli Licht Design System
+
+Tokens, components and CMS blocks of [wehrli-licht.ch](https://www.wehrli-licht.ch), built with React, Tailwind CSS 4 and Next.js.
+
+## Principles
+
+- **Tokens first.** Colors, type, radii, shadows, breakpoints and motion are defined once in `src/fundamentals/tokens.css`. Tailwind's defaults are turned off: what is not a token does not exist, and lint says so.
+- **Presentational.** Components render what they get through props. DatoCMS queries, GraphQL types, the cart state and tracking stay in the website, which maps its data onto these props.
+- **Any content.** Editors change content in DatoCMS at any time. Components work for any number of items, any text length and missing optional fields, never only for today's content.
+- **Small and self-contained.** Each component lives in its own folder with its story. Blocks are composed of smaller components.
+
+## Use it
+
+The website loads the styles once and imports components:
+
+```css
+@import '@wehrli/design-system/styles.css';
+```
+
+```tsx
+import { Button } from '@wehrli/design-system';
+
+<Button href="/kontakt">Kontakt</Button>;
+```
+
+## Groups
+
+| Group        | For                                                                      |
+| ------------ | ------------------------------------------------------------------------ |
+| Fundamentals | Tokens: colors, typography, spacing, radii, shadows, breakpoints, motion |
+| Typography   | Headings, rich text and its nodes                                        |
+| Actions      | Buttons and links                                                        |
+| Forms        | Inputs, selects, checkboxes and the contact form                         |
+| Navigation   | Header navigation, breadcrumbs, footer navigation                        |
+| Content      | Cards, teasers, gallery, lightbox, cookie banner, FAQ                    |
+| Layout       | Container, grid, header, footer, page shells                             |
+| Blocks       | One component per DatoCMS block type, with sample content                |
+| Shop         | Product cards, product detail, cart, checkout                            |
