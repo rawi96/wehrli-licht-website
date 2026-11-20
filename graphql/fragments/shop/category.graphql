@@ -9,6 +9,6 @@ fragment shopCategory on ShopCategoryRecord {
   _updatedAt
   description
   image {
-    ...shopFileImage
+    ...shopPriorityFileImage
   }
 }

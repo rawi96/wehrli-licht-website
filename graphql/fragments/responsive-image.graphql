@@ -1,10 +1,16 @@
 fragment responsiveImageFragment on ResponsiveImage {
   src
-  srcSet
   width
   height
   alt
   title
   base64
   sizes
+}
+
+# Images that can be the LCP element: srcSet is needed to preload them with the same candidates the
+# <source> uses. Kept out of the base fragment because it adds ~1 KB per image to the page payload.
+fragment priorityResponsiveImageFragment on ResponsiveImage {
+  ...responsiveImageFragment
+  srcSet
 }

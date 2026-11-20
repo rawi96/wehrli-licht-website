@@ -7,7 +7,7 @@ fragment imageBlock on ImageRecord {
     id
     title
     responsiveImage(imgixParams: { w: 900, q: 55, auto: format }) {
-      ...responsiveImageFragment
+      ...priorityResponsiveImageFragment
     }
     url
   }

@@ -19,7 +19,7 @@ fragment textImageBlock on TextImageRecord {
   }
   image {
     responsiveImage(imgixParams: { w: 672 }) {
-      ...responsiveImageFragment
+      ...priorityResponsiveImageFragment
     }
   }
 }

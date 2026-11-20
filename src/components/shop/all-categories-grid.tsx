@@ -1,6 +1,5 @@
 import { BlockWrapper } from '@/components/block-wrapper';
 import { ImageComponent } from '@/components/image';
-import { CONTENT_IMAGE_SIZES } from '@/utils/image-sizes';
 import { ShopHorizontalScroll, ShopHorizontalScrollItem } from '@/components/shop/shop-horizontal-scroll';
 import { getShopCategoryPath } from '@/constants/shop-paths';
 import { ShopCategory } from '@/utils/shop';
@@ -37,6 +36,9 @@ type Props = {
 
 const gridColsClass = (count: number) =>
   count > 2 ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3' : `grid-cols-${count} sm:grid-cols-${count === 1 ? '1' : '2'}`;
+
+/** gridColsClass: 2 columns from sm (640px), 3 from lg. */
+const CATEGORY_GRID_SIZES = '(min-width: 1400px) 410px, (min-width: 1024px) 30vw, (min-width: 640px) 46vw, 92vw';
 
 const SCROLL_CARD_WIDTH = 'w-64';
 const SCROLL_CARD_IMAGE_HEIGHT = 'h-52';
@@ -89,7 +91,7 @@ const CategoryCard = ({ item, compact }: { item: CategoryGridItem; compact?: boo
         <div className="relative h-80 w-full overflow-hidden rounded bg-white shadow sm:h-64">
           {item.image?.responsiveImage && (
             <ImageComponent
-              sizes={CONTENT_IMAGE_SIZES.thirds}
+              sizes={CATEGORY_GRID_SIZES}
               image={item.image}
               imgClassName="h-full w-full transform object-cover object-center transition-transform duration-300 group-hover:scale-105"
             />
