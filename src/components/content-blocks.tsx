@@ -35,6 +35,8 @@ type Props = {
 export const ContentBlocks: FC<Props> = ({ blocks, eagerBlockCount = 2 }) => (
   <>
     {blocks.map((block, index) => {
+      const aboveFold = index < eagerBlockCount;
+
       switch (block.__typename) {
         case 'TextRecord':
           return <TextBlock key={block.id} block={block} />;
@@ -45,9 +47,9 @@ export const ContentBlocks: FC<Props> = ({ blocks, eagerBlockCount = 2 }) => (
         case 'TextImageRecord':
           return <TextImageBlock key={block.id} block={block} />;
         case 'ImageRecord':
-          return <ImageBlock key={block.id} block={block} aboveFold={index < eagerBlockCount} />;
+          return <ImageBlock key={block.id} block={block} aboveFold={aboveFold} />;
         case 'TeamRecord':
-          return <TeamBlock key={block.id} block={block} aboveFold={index < eagerBlockCount} />;
+          return <TeamBlock key={block.id} block={block} aboveFold={aboveFold} />;
         case 'IframeRecord':
           return <IframeBlock key={block.id} block={block} />;
         case 'QuoteRecord':
@@ -69,11 +71,11 @@ export const ContentBlocks: FC<Props> = ({ blocks, eagerBlockCount = 2 }) => (
         case 'ContactFormRecord':
           return <ContactFormBlock key={block.id} block={block} />;
         case 'HighlightProjectsTeaserRecord':
-          return <HighlightProjectsTeaserBlock key={block.id} block={block} aboveFold={index < eagerBlockCount} />;
+          return <HighlightProjectsTeaserBlock key={block.id} block={block} aboveFold={aboveFold} />;
         case 'HighlightOffersTeaserRecord':
-          return <HighlightOffersTeaserBlock key={block.id} block={block} aboveFold={index < eagerBlockCount} />;
+          return <HighlightOffersTeaserBlock key={block.id} block={block} aboveFold={aboveFold} />;
         case 'HighlightShopTeaserRecord':
-          return <HighlightShopTeaserBlock key={block.id} block={block} aboveFold={index < eagerBlockCount} />;
+          return <HighlightShopTeaserBlock key={block.id} block={block} aboveFold={aboveFold} />;
         default:
           return null;
       }

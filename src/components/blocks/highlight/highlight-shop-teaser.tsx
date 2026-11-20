@@ -111,7 +111,8 @@ export const HighlightShopTeaserBlock = async ({ block, aboveFold = false }: Pro
                 <ul className="hidden h-[min(26rem,48vw)] list-none grid-cols-12 grid-rows-6 gap-3 p-0 lg:grid">
                   {primary && (
                     <li className="col-span-7 row-span-6">
-                      <HighlightShopCategoryTile category={primary} className="size-full" priority={aboveFold} />
+                      {/* Desktop copy of the primary tile: hidden on mobile, so no priority (would double-load). */}
+                      <HighlightShopCategoryTile category={primary} className="size-full" />
                     </li>
                   )}
                   {secondary && (
