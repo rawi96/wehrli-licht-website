@@ -1,5 +1,6 @@
 fragment responsiveImageFragment on ResponsiveImage {
   src
+  srcSet
   width
   height
   alt

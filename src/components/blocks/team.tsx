@@ -1,9 +1,9 @@
 import { TeamBlockFragment } from '@/graphql/generated';
 import { classNames } from '@/utils/css';
 import { FC } from 'react';
-import { SRCImage as DatoSRCImage } from 'react-datocms';
 import { BlockWrapper } from '../block-wrapper';
 import { Grid } from '../grid';
+import { ImageComponent } from '../image';
 
 type Props = {
   block: TeamBlockFragment;
@@ -21,11 +21,10 @@ export const TeamBlock: FC<Props> = ({ block: { employees, disableMarginBottom, 
         <div className={classNames('bg-white-100 flex flex-col overflow-hidden rounded')} key={firstname + lastname}>
           <div className="w-full">
             {image?.responsiveImage && (
-              <DatoSRCImage
-                data={{ ...image.responsiveImage }}
+              <ImageComponent
+                image={{ responsiveImage: image.responsiveImage, title: `${firstname} ${lastname}` }}
                 sizes={PORTRAIT_SIZES}
                 priority={aboveFold && index === 0}
-                imgStyle={{ width: '100%', maxWidth: '100%' }}
               />
             )}
           </div>
