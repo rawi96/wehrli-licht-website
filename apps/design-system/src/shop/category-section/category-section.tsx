@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { ShopCategoryCard, ShopCategoryCardData } from '../category-card/category-card';
 import { ShopSectionHeader } from '../section-header/section-header';
-import { ShopLink } from '../text-link/text-link';
+import { LinkData } from '../../typography/text-link/text-link';
 
 type Props = {
   /** Anchor of the section (`#id`). */
@@ -9,7 +9,7 @@ type Props = {
   headingId: string;
   title: string;
   body?: string | null;
-  actionLink?: ShopLink | null;
+  actionLink?: LinkData | null;
   categories: ShopCategoryCardData[];
 };
 

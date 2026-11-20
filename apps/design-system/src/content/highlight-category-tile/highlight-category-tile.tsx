@@ -38,7 +38,7 @@ export const HighlightCategoryTile: FC<Props> = ({ name, href, image, size, labe
           image={image}
           priority={priority}
           sizes={size === 'large' ? HIGHLIGHT_IMAGE_SIZES.shopTileLarge : HIGHLIGHT_IMAGE_SIZES.shopTileSmall}
-          imgClassName="size-full object-cover transition-transform duration-500 group-hover:scale-105 motion-reduce:transition-none"
+          hoverZoom="calm"
         />
       ) : (
         <div className="bg-wehrli/30 flex size-full items-center justify-center">

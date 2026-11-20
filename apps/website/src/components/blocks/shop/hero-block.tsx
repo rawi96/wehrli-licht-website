@@ -4,7 +4,7 @@ import { ShopStorefrontHeroFragment } from '@/graphql/generated';
 import { toImage } from '@/utils/image';
 import { shopSectionHeadingId } from '@/utils/shop-page-sections';
 import { ShopCategory } from '@/utils/shop';
-import { toShopLink } from '@/utils/shop-link';
+import { toLink } from '@/utils/cms-link';
 import { toStructuredTextValue } from '@/utils/shop-structured-text';
 import { StorefrontHero } from '@wehrli/design-system';
 import { FC } from 'react';
@@ -24,8 +24,8 @@ export const ShopHeroBlock: FC<Props> = ({ block, fallbackCategories }) => {
       eyebrow={block.eyebrow}
       title={block.title}
       intro={intro && <StructuredTextRenderer data={intro} />}
-      primaryCta={toShopLink(block.primaryCta)}
-      secondaryCta={toShopLink(block.secondaryCta)}
+      primaryCta={toLink(block.primaryCta)}
+      secondaryCta={toLink(block.secondaryCta)}
       categories={categories.map((category) => ({
         id: category.id,
         name: category.name,

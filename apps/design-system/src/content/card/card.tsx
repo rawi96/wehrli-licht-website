@@ -37,7 +37,7 @@ export const Card: FC<Props> = ({
     target="_self"
   >
     <div className="relative overflow-hidden">
-      <Image image={image} sizes={imageSizes} imgClassName="transition-transform duration-300 group-hover:scale-110" />
+      <Image image={image} sizes={imageSizes} fit="fill" hoverZoom="strong" />
     </div>
     <div className="grid grid-rows-[auto,1fr,auto] p-5 text-sm font-normal md:p-6 lg:p-8 lg:text-sm">
       {eyebrow && <p>{eyebrow}</p>}

@@ -41,7 +41,7 @@ export const Testimonial: FC<Props> = ({
       <div className="mt-8 flex w-full items-center gap-4">
         {image && (
           <div className="size-16 shrink-0 md:size-20">
-            <Image image={image} sizes={image.sizes ?? undefined} imgClassName="rounded-full" />
+            <Image image={image} sizes={image.sizes ?? undefined} fit="fill" rounded="full" />
           </div>
         )}
         {authorName && (
@@ -67,7 +67,7 @@ export const Testimonial: FC<Props> = ({
     <div className="bg-wehrli relative grid w-full grid-flow-row place-items-center overflow-hidden rounded-lg p-8 text-center text-sm font-normal text-white lg:p-20 lg:text-sm">
       {image && (
         <div className="z-10 h-24 w-24 lg:h-32 lg:w-32">
-          <Image image={image} sizes={image.sizes ?? undefined} imgClassName="rounded-full" />
+          <Image image={image} sizes={image.sizes ?? undefined} fit="fill" rounded="full" />
         </div>
       )}
       <p className="z-10 mt-4 mb-4 overflow-hidden text-base font-bold whitespace-pre-line sm:overflow-visible lg:mb-8 lg:text-xl">

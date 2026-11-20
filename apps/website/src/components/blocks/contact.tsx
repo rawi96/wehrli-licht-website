@@ -1,5 +1,6 @@
 import { ContactBlockFragment } from '@/graphql/generated';
 import { toImage } from '@/utils/image';
+import { generatePathForRecord } from '@/utils/pathnames';
 import { ContactBlock as ContactBlockView } from '@wehrli/design-system';
 import { FC } from 'react';
 
@@ -19,7 +20,15 @@ export const ContactBlock: FC<Props> = ({ block: { text, employee } }) => {
       phone={phone}
       appointment={
         appointmentLink?.slug && appointmentText && appointmentAnchorLink
-          ? { label: appointmentText, href: '/' + appointmentLink.slug + appointmentAnchorLink }
+          ? {
+              label: appointmentText,
+              href:
+                generatePathForRecord({
+                  slug: appointmentLink.slug,
+                  type: 'PageRecord',
+                  parent: appointmentLink.parent,
+                }) + appointmentAnchorLink,
+            }
           : null
       }
     />

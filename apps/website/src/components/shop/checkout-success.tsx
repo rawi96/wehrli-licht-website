@@ -15,6 +15,8 @@ import { ComponentProps, useEffect } from 'react';
 
 type Props = {
   status: CheckoutSuccessStatus;
+  /** Contact page from DatoCMS (Header & Footer). */
+  contactHref: string;
 };
 
 const toViewStatus = (status: CheckoutSuccessStatus): ComponentProps<typeof CheckoutSuccessView>['status'] => {
@@ -48,7 +50,7 @@ const toViewStatus = (status: CheckoutSuccessStatus): ComponentProps<typeof Chec
   };
 };
 
-export const CheckoutSuccess = ({ status }: Props) => {
+export const CheckoutSuccess = ({ status, contactHref }: Props) => {
   const { clearCart } = useShopContext();
   const isComplete = status.kind === 'complete';
 
@@ -78,6 +80,6 @@ export const CheckoutSuccess = ({ status }: Props) => {
   }, [isComplete]);
 
   return (
-    <CheckoutSuccessView status={toViewStatus(status)} shopHref={SHOP_HOME_PATH} websiteHref="/" contactHref="/kontakt" />
+    <CheckoutSuccessView status={toViewStatus(status)} shopHref={SHOP_HOME_PATH} websiteHref="/" contactHref={contactHref} />
   );
 };

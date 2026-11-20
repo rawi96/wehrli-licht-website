@@ -20,6 +20,17 @@ type Story = StoryObj<typeof Image>;
 
 export const Cover: Story = {};
 
-export const Rounded: Story = { args: { imgClassName: 'rounded-lg object-cover' } };
+export const Rounded: Story = { args: { rounded: 'lg' } };
 
-export const Contain: Story = { args: { image: PLACEHOLDER_PORTRAIT, imgClassName: 'object-contain', placeholder: false } };
+export const Contain: Story = { args: { image: PLACEHOLDER_PORTRAIT, fit: 'contain', placeholder: false } };
+
+export const HoverZoom: Story = {
+  args: { hoverZoom: 'strong' },
+  decorators: [
+    (Story) => (
+      <a href="#" className="group block">
+        <Story />
+      </a>
+    ),
+  ],
+};

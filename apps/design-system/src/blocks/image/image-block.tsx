@@ -33,7 +33,7 @@ export const ImageBlock: FC<Props> = ({ images, priority, marginTop, marginBotto
 
     return (
       <Section marginBottom={marginBottom} marginTop={marginTop}>
-        <Image image={image} priority={priority} sizes={CONTENT_IMAGE_SIZES.full} imgClassName="rounded-lg object-cover" />
+        <Image image={image} priority={priority} sizes={CONTENT_IMAGE_SIZES.full} rounded="lg" />
         <Caption text={caption} />
       </Section>
     );
@@ -49,7 +49,7 @@ export const ImageBlock: FC<Props> = ({ images, priority, marginTop, marginBotto
               // Only the first image is the LCP candidate; the others must not compete with it.
               priority={priority && index === 0}
               sizes={sideBySideImageSizes(images.length)}
-              imgClassName="rounded-lg object-cover"
+              rounded="lg"
             />
             <Caption text={caption} />
           </div>

@@ -35,12 +35,7 @@ export const TextImageBlock: FC<Props> = ({
     >
       {image && (
         <div className="basis-2/5">
-          <Image
-            image={image}
-            priority={priority}
-            sizes={CONTENT_IMAGE_SIZES.twoFifths}
-            imgClassName="rounded-lg object-cover"
-          />
+          <Image image={image} priority={priority} sizes={CONTENT_IMAGE_SIZES.twoFifths} rounded="lg" />
         </div>
       )}
       {content ? <div className="basis-3/5">{content}</div> : null}

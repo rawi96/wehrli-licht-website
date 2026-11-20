@@ -1,5 +1,5 @@
 import { HighlightOffersTeaserFragment } from '@/graphql/generated';
-import { getCmsLinkHref, toCmsLink } from '@/utils/cms-link';
+import { getCmsLinkHref, toLink } from '@/utils/cms-link';
 import { highlightLinkedImage } from '@/utils/highlight-teaser';
 import { HighlightOffersTeaserBlock as HighlightOffersTeaserBlockView } from '@wehrli/design-system';
 import { FC } from 'react';
@@ -15,7 +15,7 @@ export const HighlightOffersTeaserBlock: FC<Props> = ({ block, aboveFold = false
     id={block.id}
     title={block.title}
     subline={block.subline}
-    cta={block.footerCta && toCmsLink(block.footerCta)}
+    cta={block.footerCta && toLink(block.footerCta)}
     priority={aboveFold}
     offers={block.offers.map((offer) => ({
       id: offer.id,

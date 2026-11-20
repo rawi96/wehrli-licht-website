@@ -24,12 +24,15 @@ type HeaderLabels = {
   home: string;
   openMenu: string;
   closeMenu: string;
+  /** Screen reader name of the main navigation. */
+  navigation: string;
 };
 
 const DEFAULT_LABELS: HeaderLabels = {
   home: 'Wehrli Licht GmbH',
   openMenu: 'Menu öffnen',
   closeMenu: 'Menu schliessen',
+  navigation: 'Hauptnavigation',
 };
 
 type Props = {
@@ -40,12 +43,10 @@ type Props = {
   /** `overlay`: transparent over a stage image; `solid`: brand background. */
   variant?: 'overlay' | 'solid';
   labels?: Partial<HeaderLabels>;
-  /** Cart button next to the menu button (mobile) and the contact link (desktop). Gets a callback that closes the mobile menu on mobile. */
-  renderCartButton?: (closeMobileMenu?: () => void) => ReactNode;
+  /** Cart button next to the menu button (mobile) and the contact link (desktop). */
+  cartButton?: ReactNode;
   /** Extra links at the end of the mobile menu, above the contact link, e.g. shop categories. Gets a callback that closes the mobile menu. */
   renderMobileMenuExtra?: (closeMobileMenu: () => void) => ReactNode;
-  /** Rendered after the navigation, e.g. the shopping cart drawer. */
-  children?: ReactNode;
 };
 
 const desktopNavItemClasses =
@@ -62,9 +63,8 @@ export const Header: FC<Props> = ({
   contact,
   variant = 'solid',
   labels: labelOverrides,
-  renderCartButton,
+  cartButton,
   renderMobileMenuExtra,
-  children,
 }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const labels = { ...DEFAULT_LABELS, ...labelOverrides };
@@ -73,23 +73,22 @@ export const Header: FC<Props> = ({
     setIsMobileMenuOpen(false);
   };
 
-  const renderItem = (item: HeaderNavigationItem, isMobile = false) =>
+  // Keyed by position and label: labels come from the CMS and need not be unique.
+  const renderItem = (item: HeaderNavigationItem, index: number, isMobile = false) =>
     item.children ? (
       isMobile ? (
-        <div key={item.label} className="relative font-bold">
+        <div key={`${index}-${item.label}`} className="relative font-bold">
           <NavigationAccordion label={item.label} items={item.children} onNavigate={closeMobileMenu} />
         </div>
       ) : (
-        <Flyout key={item.label} label={item.label} items={item.children} active={item.active} />
+        <Flyout key={`${index}-${item.label}`} label={item.label} items={item.children} active={item.active} />
       )
     ) : (
       <Link
-        key={item.label}
+        key={`${index}-${item.label}`}
         href={item.href ?? '/'}
         className={
-          isMobile
-            ? cn(mobileLinkClasses, item.active && 'border-white')
-            : cn(desktopNavItemClasses, item.active ? 'border-white' : 'border-transparent')
+          isMobile ? mobileLinkClasses : cn(desktopNavItemClasses, item.active ? 'border-white' : 'border-transparent')
         }
         onClick={closeMobileMenu}
       >
@@ -102,7 +101,7 @@ export const Header: FC<Props> = ({
       <div className="px-6 lg:px-8">
         <nav
           className="flex items-center justify-between lg:grid lg:grid-cols-[1fr_auto_1fr] lg:items-center"
-          aria-label="Global"
+          aria-label={labels.navigation}
         >
           <div className="flex items-center lg:justify-self-start">
             <Link href="/" className="-m-1.5 flex items-center p-1.5">
@@ -112,7 +111,7 @@ export const Header: FC<Props> = ({
           </div>
 
           <div className="flex items-center gap-x-3 lg:hidden">
-            {renderCartButton?.(closeMobileMenu)}
+            {cartButton}
             <button
               type="button"
               className="-m-2.5 inline-flex items-center justify-center rounded-lg p-2.5 text-gray-400"
@@ -124,7 +123,7 @@ export const Header: FC<Props> = ({
           </div>
 
           <div className="hidden items-center justify-center gap-x-10 lg:flex">
-            {navigation.map((item) => renderItem(item))}
+            {navigation.map((item, index) => renderItem(item, index))}
           </div>
 
           <div className="hidden items-center justify-end gap-x-5 lg:flex">
@@ -133,7 +132,7 @@ export const Header: FC<Props> = ({
                 {contact.label}
               </Link>
             )}
-            {renderCartButton?.()}
+            {cartButton}
           </div>
         </nav>
 
@@ -151,7 +150,7 @@ export const Header: FC<Props> = ({
             </div>
             <div className="mt-6 flow-root">
               <div className="space-y-2 py-6">
-                {navigation.map((item) => renderItem(item, true))}
+                {navigation.map((item, index) => renderItem(item, index, true))}
                 {renderMobileMenuExtra?.(closeMobileMenu)}
                 {contact && (
                   <div className="border-t border-white/20 pt-4">
@@ -164,7 +163,6 @@ export const Header: FC<Props> = ({
             </div>
           </DialogPanel>
         </Dialog>
-        {children}
       </div>
     </header>
   );

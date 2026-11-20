@@ -24,9 +24,6 @@ const cardLinkClass = cn(
   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-wehrli focus-visible:ring-offset-2',
 );
 
-const imgClassName =
-  'size-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03] motion-reduce:transition-none';
-
 /** A reference project: image, offer, title, company and description. The whole card is the link. */
 export const HighlightProjectCard: FC<Props> = ({
   variant,
@@ -73,7 +70,7 @@ export const HighlightProjectCard: FC<Props> = ({
       className={cn('group bg-white-100 flex h-full flex-col overflow-hidden rounded-lg no-underline', cardLinkClass)}
     >
       <div className="relative aspect-[4/3] overflow-hidden">
-        <Image image={image} sizes={HIGHLIGHT_IMAGE_SIZES.projectCompact} priority={priority} imgClassName={imgClassName} />
+        <Image image={image} sizes={HIGHLIGHT_IMAGE_SIZES.projectCompact} priority={priority} hoverZoom="slow-subtle" />
       </div>
       <div className="flex flex-1 flex-col p-5 sm:p-6">{content}</div>
     </NextLink>
@@ -87,7 +84,7 @@ export const HighlightProjectCard: FC<Props> = ({
       )}
     >
       <div className="relative aspect-[16/11] min-h-[11rem] overflow-hidden sm:min-h-[13rem] lg:col-span-7 lg:aspect-auto lg:min-h-full">
-        <Image image={image} sizes={HIGHLIGHT_IMAGE_SIZES.projectFeatured} priority={priority} imgClassName={imgClassName} />
+        <Image image={image} sizes={HIGHLIGHT_IMAGE_SIZES.projectFeatured} priority={priority} hoverZoom="slow-subtle" />
       </div>
       <div className="flex flex-col justify-center p-5 sm:p-6 lg:col-span-5 lg:p-8">{content}</div>
     </NextLink>

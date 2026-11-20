@@ -5,9 +5,9 @@ import { Heading } from '../../typography/heading/heading';
 type Props = {
   title?: string;
   text?: string;
-  homeHref?: string;
+  homeHref: string;
   homeLabel?: string;
-  contactHref?: string;
+  contactHref: string;
   contactLabel?: string;
 };
 
@@ -15,9 +15,9 @@ type Props = {
 export const NotFound: FC<Props> = ({
   title = 'Seite nicht gefunden',
   text = 'Die von Ihnen aufgerufene Seite konnte leider nicht gefunden werden.',
-  homeHref = '/',
+  homeHref,
   homeLabel = 'Zur Startseite',
-  contactHref = '/kontakt',
+  contactHref,
   contactLabel = 'Kontakt',
 }) => (
   <div className="mx-auto my-24 grid min-h-[50vh] w-11/12 items-center justify-center text-center md:my-36">

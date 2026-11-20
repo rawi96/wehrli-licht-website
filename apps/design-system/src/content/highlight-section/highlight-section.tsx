@@ -1,5 +1,6 @@
 import { FC, ReactNode } from 'react';
-import { Button } from '../../actions/button/button';
+import { LinkButton } from '../../actions/button/button';
+import type { LinkData } from '../../typography/text-link/text-link';
 import { cn } from '../../fundamentals/cn';
 import { Section } from '../../layout/section/section';
 import { Heading } from '../../typography/heading/heading';
@@ -17,12 +18,6 @@ export const HIGHLIGHT_IMAGE_SIZES = {
   shopTileLarge: '(min-width: 1400px) 420px, (min-width: 1024px) 32vw, 92vw',
   shopTileSmall: '(min-width: 1400px) 300px, (min-width: 1024px) 22vw, 46vw',
 } as const;
-
-export type HighlightLink = {
-  label: string;
-  href: string;
-  newTab?: boolean | null;
-};
 
 type BreakoutProps = {
   headingId: string;
@@ -58,7 +53,7 @@ type Props = {
   /** Hairline at the bottom, to separate it from a following band of the same color. */
   bordered?: boolean;
   /** Call to action below the content, full width on mobile. */
-  cta: HighlightLink;
+  cta: LinkData;
   children: ReactNode;
 };
 
@@ -78,9 +73,7 @@ export const HighlightSection: FC<Props> = ({ id, title, subline, bordered, cta,
       {children}
 
       <footer className="mt-10 flex w-full justify-center *:w-full *:max-w-[22rem] sm:mt-14 sm:*:w-auto sm:*:max-w-none md:mt-16">
-        <Button variant="primary" href={cta.href} showArrow={false} fullWidth newTab={!!cta.newTab}>
-          {cta.label}
-        </Button>
+        <LinkButton link={cta} variant="primary" fullWidth />
       </footer>
     </HighlightBreakout>
   );

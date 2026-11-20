@@ -3,7 +3,7 @@ import { ShopFeaturedSectionFragment } from '@/graphql/generated';
 import { shopSectionHeadingId } from '@/utils/shop-page-sections';
 import { ShopProductListItem } from '@/utils/shop';
 import { toProductCardData } from '@/utils/shop-cards';
-import { toShopLink } from '@/utils/shop-link';
+import { toLink } from '@/utils/cms-link';
 import { toStructuredTextValue } from '@/utils/shop-structured-text';
 import { ShopFeaturedSection } from '@wehrli/design-system';
 import { FC } from 'react';
@@ -21,7 +21,7 @@ export const ShopFeaturedSectionBlock: FC<Props> = ({ block, products }) => {
       headingId={shopSectionHeadingId('shop-featured', block.id)}
       title={block.title}
       intro={intro && <StructuredTextRenderer data={intro} />}
-      actionLink={toShopLink(block.actionLink)}
+      actionLink={toLink(block.actionLink)}
       products={products.map((product) => toProductCardData(product))}
     />
   );

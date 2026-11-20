@@ -1,3 +1,4 @@
+import { toLink } from '@/utils/cms-link';
 import { HeaderFooterDocument, HeaderFooterRecord, HomeStageBlockFragment } from '@/graphql/generated';
 import { queryDatoCMS } from '@/utils/query-dato-cms';
 import { HomeStageBlock as HomeStageBlockView, HomeStageSlide } from '@wehrli/design-system';
@@ -22,8 +23,6 @@ const buildSlides = (block: HomeStageBlockFragment): HomeStageSlide[] => [
   ),
 ];
 
-const ctaHref = (cta: HomeStageBlockFragment['callToActions'][number]) => (cta.link?.slug ?? '') + (cta.anchorLink ?? '');
-
 export const HomeStageBlock: FC<Props> = async ({ block }) => {
   const { isEnabled } = await draftMode();
   const { headerFooter } = await queryDatoCMS({
@@ -35,7 +34,7 @@ export const HomeStageBlock: FC<Props> = async ({ block }) => {
     <HomeStageBlockView
       title={block.title}
       intro={block.intro}
-      ctas={block.callToActions.slice(0, 2).map((cta) => ({ label: cta.label, href: ctaHref(cta) }))}
+      ctas={block.callToActions.slice(0, 2).map(toLink)}
       slides={buildSlides(block)}
       header={<Header headerFooter={headerFooter as HeaderFooterRecord} variant="overlay" />}
     />

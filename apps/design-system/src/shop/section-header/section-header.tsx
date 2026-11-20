@@ -1,6 +1,7 @@
 import { FC, ReactNode } from 'react';
 import { Heading } from '../../typography/heading/heading';
-import { ShopLink, ShopTextLink } from '../text-link/text-link';
+import { LinkData } from '../../typography/text-link/text-link';
+import { ShopTextLink } from '../text-link/text-link';
 
 type Props = {
   headingId: string;
@@ -8,7 +9,7 @@ type Props = {
   /** Text below the heading: plain text or rich text. */
   description: ReactNode;
   /** Link at the right of the heading (below it on mobile). */
-  action?: ShopLink | null;
+  action?: LinkData | null;
   /** White heading and link on dark surfaces. */
   inverted?: boolean;
 };

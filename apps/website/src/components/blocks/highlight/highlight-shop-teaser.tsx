@@ -1,6 +1,6 @@
 import { getShopCategoryPath } from '@/constants/shop-paths';
 import { HighlightShopTeaserFragment } from '@/graphql/generated';
-import { toCmsLink } from '@/utils/cms-link';
+import { toLink } from '@/utils/cms-link';
 import { highlightImageAlt, pickHighlightShopCategories } from '@/utils/highlight-teaser';
 import { toImage } from '@/utils/image';
 import { getAllCategories } from '@/utils/shop';
@@ -34,10 +34,10 @@ export const HighlightShopTeaserBlock = async ({ block, aboveFold = false }: Pro
       eyebrow={block.eyebrow}
       title={block.title}
       subline={block.subline}
-      primaryCta={toCmsLink(primaryCta)}
-      secondaryCta={toCmsLink(secondaryCta)}
-      popularCategoriesLabel={block.popularCategoriesLabel}
-      moreCategoriesLabel={block.moreCategoriesLabel}
+      primaryCta={toLink(primaryCta)}
+      secondaryCta={toLink(secondaryCta)}
+      popularCategoriesLabel={block.popularCategoriesLabel ?? 'Beliebte Kategorien'}
+      moreCategoriesLabel={block.moreCategoriesLabel ?? 'Weitere Kategorien'}
       priority={aboveFold}
       featuredCategories={featured.map((category) => ({
         id: category.id,

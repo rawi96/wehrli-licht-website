@@ -23,7 +23,7 @@ export const ContactBlock: FC<Props> = ({ text, image, email, phone, appointment
     <div className="grid grid-flow-row place-content-center items-center justify-items-center gap-6 px-4 text-center lg:grid-flow-col lg:gap-12 lg:px-14 lg:text-left">
       {image && (
         <div className="h-36 w-36 lg:h-52 lg:w-52">
-          <Image image={image} sizes={image.sizes ?? undefined} imgClassName="rounded-full" />
+          <Image image={image} sizes={image.sizes ?? undefined} fit="fill" rounded="full" />
         </div>
       )}
       <div>

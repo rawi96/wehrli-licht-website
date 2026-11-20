@@ -2,14 +2,14 @@ import { FC, ReactNode } from 'react';
 import { HorizontalScroll, HorizontalScrollItem } from '../horizontal-scroll/horizontal-scroll';
 import { ProductCard, ProductCardData } from '../product-card/product-card';
 import { ShopSectionHeader } from '../section-header/section-header';
-import { ShopLink } from '../text-link/text-link';
+import { LinkData } from '../../typography/text-link/text-link';
 
 type Props = {
   headingId: string;
   title: string;
   /** Rich text below the title, set in white. */
   intro?: ReactNode;
-  actionLink?: ShopLink | null;
+  actionLink?: LinkData | null;
   products: ProductCardData[];
 };
 

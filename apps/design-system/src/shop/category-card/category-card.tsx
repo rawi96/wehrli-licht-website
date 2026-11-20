@@ -25,7 +25,7 @@ export const ShopCategoryCard: FC<Props> = ({ name, href, descriptionHtml, image
         <Image
           image={image}
           sizes="(min-width: 1400px) 310px, (min-width: 1024px) 23vw, (min-width: 640px) 46vw, 92vw"
-          imgClassName="size-full object-cover transition-transform duration-300 group-hover:scale-105"
+          hoverZoom="quick"
         />
       )}
     </div>

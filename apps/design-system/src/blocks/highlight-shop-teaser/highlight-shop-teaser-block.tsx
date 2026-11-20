@@ -1,8 +1,9 @@
 import NextLink from 'next/link';
 import { FC } from 'react';
-import { Button } from '../../actions/button/button';
+import { LinkButton } from '../../actions/button/button';
 import { HighlightCategoryTile } from '../../content/highlight-category-tile/highlight-category-tile';
-import { HighlightBreakout, HighlightLink } from '../../content/highlight-section/highlight-section';
+import { HighlightBreakout } from '../../content/highlight-section/highlight-section';
+import { LinkData } from '../../typography/text-link/text-link';
 import { ImageData } from '../../content/image/image';
 import { Heading } from '../../typography/heading/heading';
 
@@ -18,15 +19,15 @@ type Props = {
   eyebrow?: string | null;
   title: string;
   subline?: string | null;
-  primaryCta: HighlightLink;
+  primaryCta: LinkData;
   /** Text button below the primary one; also linked beside the featured categories. */
-  secondaryCta: HighlightLink;
+  secondaryCta: LinkData;
   /** Up to three categories as image tiles: one large, two small. */
   featuredCategories: (Category & { image?: ImageData | null })[];
   /** Further categories as pills below. */
   moreCategories: Category[];
-  popularCategoriesLabel?: string | null;
-  moreCategoriesLabel?: string | null;
+  popularCategoriesLabel: string;
+  moreCategoriesLabel: string;
   /** Small label on each category tile. */
   categoryLabel?: string;
   /** Loads the image of the large tile with priority (LCP). */
@@ -50,7 +51,7 @@ export const HighlightShopTeaserBlock: FC<Props> = ({
 }) => {
   const [primary, secondary, tertiary] = featuredCategories;
   const headingId = `highlight-teaser-${id}`;
-  const categoriesNavLabel = moreCategoriesLabel ?? 'Weitere Kategorien';
+  const categoriesNavLabel = moreCategoriesLabel;
 
   return (
     <HighlightBreakout headingId={headingId} surface="brand">
@@ -62,12 +63,8 @@ export const HighlightShopTeaserBlock: FC<Props> = ({
           </Heading>
           <p className="max-w-md text-sm leading-relaxed text-pretty text-white/85 sm:text-base">{subline}</p>
           <div className="mt-6 flex w-full max-w-[22rem] flex-col gap-3 *:w-full sm:mt-8 lg:max-w-none lg:flex-row lg:flex-nowrap lg:items-center lg:gap-4 lg:*:w-auto">
-            <Button variant="primary-white" href={primaryCta.href} showArrow={false} fullWidth newTab={!!primaryCta.newTab}>
-              {primaryCta.label}
-            </Button>
-            <Button variant="secondary-white" href={secondaryCta.href} showArrow fullWidth newTab={!!secondaryCta.newTab}>
-              {secondaryCta.label}
-            </Button>
+            <LinkButton link={primaryCta} variant="primary-white" fullWidth />
+            <LinkButton link={secondaryCta} variant="secondary-white" fullWidth showArrow />
           </div>
         </div>
 
@@ -75,7 +72,7 @@ export const HighlightShopTeaserBlock: FC<Props> = ({
           <div className="min-w-0 lg:col-span-7">
             <div className="mb-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-3">
               <h3 className="text-xxs tracking-label font-bold text-white/60 uppercase sm:tracking-wide">
-                {popularCategoriesLabel ?? 'Beliebte Kategorien'}
+                {popularCategoriesLabel}
               </h3>
               <NextLink
                 href={secondaryCta.href}

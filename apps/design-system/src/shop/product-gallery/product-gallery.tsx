@@ -36,13 +36,7 @@ export const ProductGallery: FC<Props> = ({ images, label }) => (
               <>
                 <span className="sr-only">{label}</span>
                 <span className="absolute inset-0 overflow-hidden rounded-lg">
-                  {image && (
-                    <Image
-                      image={image}
-                      sizes={PRODUCT_THUMB_SIZES}
-                      imgClassName="h-full w-full object-cover object-center"
-                    />
-                  )}
+                  {image && <Image image={image} sizes={PRODUCT_THUMB_SIZES} />}
                 </span>
                 <span
                   className={cn(
@@ -63,7 +57,7 @@ export const ProductGallery: FC<Props> = ({ images, label }) => (
         <Tab.Panel key={id}>
           {image && (
             // The first product image is the LCP element on product pages.
-            <Image image={image} priority={index === 0} sizes={PRODUCT_IMAGE_SIZES} imgClassName="rounded-lg" />
+            <Image image={image} priority={index === 0} sizes={PRODUCT_IMAGE_SIZES} fit="fill" rounded="lg" />
           )}
         </Tab.Panel>
       ))}

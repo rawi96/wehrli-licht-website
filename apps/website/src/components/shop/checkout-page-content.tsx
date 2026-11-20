@@ -41,8 +41,6 @@ import {
 import { useRouter, useSearchParams } from 'next/navigation';
 import { FormEvent, useMemo, useState } from 'react';
 
-const CONTACT_PATH = '/kontakt';
-
 const CHECKOUT_STEPS = (Object.keys(CHECKOUT_STEP_TITLES) as CheckoutStep[]).map((id) => ({
   id,
   title: CHECKOUT_STEP_TITLES[id],
@@ -60,7 +58,12 @@ type CheckoutApiResponse = {
   code?: string;
 };
 
-export const CheckoutPageContent = () => {
+type Props = {
+  /** Contact page from DatoCMS (Header & Footer). */
+  contactHref: string;
+};
+
+export const CheckoutPageContent = ({ contactHref }: Props) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { shoppingCart, isHydrated, updateItemQuantity, removeItem } = useShopContext();
@@ -262,7 +265,7 @@ export const CheckoutPageContent = () => {
       }
       alert={
         orderFailure ? (
-          <CheckoutErrorAlert message={CHECKOUT_ERROR_ALERT_COPY.order_not_completed} contactHref={CONTACT_PATH} />
+          <CheckoutErrorAlert message={CHECKOUT_ERROR_ALERT_COPY.order_not_completed} contactHref={contactHref} />
         ) : null
       }
       steps={<CheckoutSteps steps={CHECKOUT_STEPS} currentStep={step} />}
@@ -299,7 +302,7 @@ export const CheckoutPageContent = () => {
             })
           }
           country={{ code: CHECKOUT_SHIPPING_COUNTRY, label: CHECKOUT_SHIPPING_COUNTRY_LABEL }}
-          contactHref={CONTACT_PATH}
+          contactHref={contactHref}
           comment={draft.comment}
           onCommentChange={draft.setComment}
           error={displayError}

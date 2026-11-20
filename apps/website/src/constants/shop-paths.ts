@@ -4,7 +4,6 @@ export const SHOP_OFFERS_PATH = '/angebot';
 export const LICHTBERATUNG_PATH = '/angebot/lichtberatung';
 export const LICHTPLANUNG_PATH = '/angebot/lichtplanung';
 export const LAMPENSCHIRME_PATH = '/angebot/lampenschirme';
-export const KONTAKT_TERMIN_PATH = '/kontakt#termin';
 
 export const getShopCategoryPath = (slug: string): string => `/shop/kategorien/${slug}`;
 

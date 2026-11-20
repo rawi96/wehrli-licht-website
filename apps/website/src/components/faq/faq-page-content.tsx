@@ -10,18 +10,18 @@ type Props = {
   title: string;
   intro?: string | null;
   groups: FaqTopicGroup[];
+  /** Contact page from DatoCMS (Header & Footer). */
+  contactHref: string;
 };
 
-const CONTACT_HREF = '/kontakt';
-
-const DefaultIntro = () => (
+const DefaultIntro: FC<{ contactHref: string }> = ({ contactHref }) => (
   <>
     Antworten zu unseren Leistungen, zum Atelier in Goldach und zum Online-Shop. Nutzen Sie die Suche – oder besuchen Sie
-    unsere <FaqLink href={CONTACT_HREF}>Kontaktseite</FaqLink>, wenn Ihre Frage nicht dabei ist.
+    unsere <FaqLink href={contactHref}>Kontaktseite</FaqLink>, wenn Ihre Frage nicht dabei ist.
   </>
 );
 
-export const FaqPageContent: FC<Props> = ({ title, intro, groups }) => {
+export const FaqPageContent: FC<Props> = ({ title, intro, groups, contactHref }) => {
   const [query, setQuery] = useState('');
   const totalCount = useMemo(() => countFaqsInGroups(groups), [groups]);
 
@@ -35,11 +35,11 @@ export const FaqPageContent: FC<Props> = ({ title, intro, groups }) => {
     <>
       <FaqIntro
         title={title}
-        intro={intro ?? <DefaultIntro />}
+        intro={intro ?? <DefaultIntro contactHref={contactHref} />}
         topics={topicNavGroups.map(({ topic }) => ({
           id: topic.id,
           label: topic.title,
-          href: `#faq-topic-${topic.slug}`,
+          slug: topic.slug,
         }))}
         search={
           <FaqSearch
@@ -53,7 +53,7 @@ export const FaqPageContent: FC<Props> = ({ title, intro, groups }) => {
 
       {hasQuery && filteredGroups.length === 0 ? (
         <FaqNoResults>
-          Versuchen Sie ein anderes Stichwort oder <FaqLink href={CONTACT_HREF}>kontaktieren Sie uns</FaqLink>.
+          Versuchen Sie ein anderes Stichwort oder <FaqLink href={contactHref}>kontaktieren Sie uns</FaqLink>.
         </FaqNoResults>
       ) : (
         <FaqTopics
@@ -68,7 +68,7 @@ export const FaqPageContent: FC<Props> = ({ title, intro, groups }) => {
       )}
 
       <FaqContactCta>
-        Ihre Frage ist nicht dabei? Auf unserer <FaqLink href={CONTACT_HREF}>Kontaktseite</FaqLink> finden Sie alle Wege, uns
+        Ihre Frage ist nicht dabei? Auf unserer <FaqLink href={contactHref}>Kontaktseite</FaqLink> finden Sie alle Wege, uns
         zu erreichen – per Telefon, E-Mail oder Termin im Atelier Goldach.
       </FaqContactCta>
     </>

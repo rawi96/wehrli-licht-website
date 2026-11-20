@@ -2,7 +2,7 @@ import { BuildingStorefrontIcon, CreditCardIcon, EyeIcon, SparklesIcon, TruckIco
 import Link from 'next/link';
 import { ComponentType, FC, ReactNode, SVGProps } from 'react';
 import { ShopSectionHeader } from '../section-header/section-header';
-import { ShopLink } from '../text-link/text-link';
+import { LinkData } from '../../typography/text-link/text-link';
 
 const SERVICE_ICONS: Record<string, ComponentType<SVGProps<SVGSVGElement>>> = {
   shipping: TruckIcon,
@@ -18,7 +18,7 @@ export type ShopServiceItem = {
   icon: string;
   title: string;
   description?: string | null;
-  link?: ShopLink | null;
+  link?: LinkData | null;
 };
 
 type Props = {
@@ -26,7 +26,7 @@ type Props = {
   title: string;
   /** Rich text below the title. */
   intro?: ReactNode;
-  actionLink?: ShopLink | null;
+  actionLink?: LinkData | null;
   items: ShopServiceItem[];
 };
 

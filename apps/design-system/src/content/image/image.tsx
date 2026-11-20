@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { preload } from 'react-dom';
 import { SRCImage } from 'react-datocms';
+import { cn } from '../../fundamentals/cn';
 
 /**
  * A responsive image: the shape DatoCMS returns for `responsiveImage`, with the alt text already resolved by the caller.
@@ -34,12 +35,50 @@ type Props = {
    * images (cut-out product photos), where it would show around the image.
    */
   placeholder?: boolean;
-  /** Classes of the `<img>`, `object-cover` by default. Set by design system components only. */
-  imgClassName?: string;
+  /** How the image fills its box: crop (`cover`, default), show all (`contain`) or stretch (`fill`). */
+  fit?: 'cover' | 'contain' | 'fill';
+  rounded?: 'lg' | 'full';
+  /** Space around a cut-out image (`fit="contain"`), e.g. product photos on a white card. */
+  inset?: boolean;
+  /** Zoom when the enclosing `group` (a card link) is hovered. */
+  hoverZoom?: keyof typeof HOVER_ZOOM;
+  /** Darkened, e.g. under a title set on the image. */
+  dimmed?: boolean;
+  /** Positioned over its (positioned) parent, e.g. a fixed-size tile. */
+  absolute?: boolean;
 };
 
+const FIT = { cover: 'object-cover', contain: 'object-contain', fill: '' } as const;
+
+const ROUNDED = { lg: 'rounded-lg', full: 'rounded-full' } as const;
+
+/** Hover zoom presets: duration and scale per card type. Turned off for reduced motion. */
+const HOVER_ZOOM = {
+  /** Shop tiles and product cards */
+  quick: 'transition-transform duration-300 group-hover:scale-105 motion-reduce:transition-none',
+  /** Large shop category tiles */
+  calm: 'transition-transform duration-500 group-hover:scale-105 motion-reduce:transition-none',
+  /** Teaser cards and gallery images */
+  strong: 'transition-transform duration-300 group-hover:scale-110 motion-reduce:transition-none',
+  /** Highlight offer cards */
+  slow: 'transition-transform duration-700 ease-out group-hover:scale-[1.04] motion-reduce:transition-none',
+  /** Highlight project cards */
+  'slow-subtle': 'transition-transform duration-700 ease-out group-hover:scale-[1.03] motion-reduce:transition-none',
+} as const;
+
 /** Fills its parent (width and height 100%); the parent decides size and aspect ratio. */
-export const Image: FC<Props> = ({ image, sizes = '100vw', priority, placeholder = true, imgClassName }) => {
+export const Image: FC<Props> = ({
+  image,
+  sizes = '100vw',
+  priority,
+  placeholder = true,
+  fit = 'cover',
+  rounded,
+  inset,
+  hoverZoom,
+  dimmed,
+  absolute,
+}) => {
   if (!image?.src) {
     return null;
   }
@@ -56,7 +95,14 @@ export const Image: FC<Props> = ({ image, sizes = '100vw', priority, placeholder
       sizes={sizes}
       priority={priority}
       usePlaceholder={placeholder}
-      imgClassName={imgClassName ?? 'object-cover'}
+      imgClassName={cn(
+        FIT[fit],
+        rounded && ROUNDED[rounded],
+        inset && 'p-3',
+        hoverZoom && HOVER_ZOOM[hoverZoom],
+        dimmed && 'brightness-75',
+        absolute && 'absolute',
+      )}
       imgStyle={{ width: '100%', maxWidth: '100%', height: '100%' }}
     />
   );

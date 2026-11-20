@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { HighlightProjectCard } from '../../content/highlight-project-card/highlight-project-card';
-import { HighlightLink, HighlightSection } from '../../content/highlight-section/highlight-section';
+import { HighlightSection } from '../../content/highlight-section/highlight-section';
+import { LinkData } from '../../typography/text-link/text-link';
 import { ImageData } from '../../content/image/image';
 
 type Project = {
@@ -19,7 +20,7 @@ type Props = {
   id: string;
   title: string;
   subline: string;
-  cta?: HighlightLink | null;
+  cta?: LinkData | null;
   /** The first project is the large featured card, the others form a grid of 1–3 columns. */
   projects: Project[];
   /** Loads the image of the featured project with priority (LCP). */

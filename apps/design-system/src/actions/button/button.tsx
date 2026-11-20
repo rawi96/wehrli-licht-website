@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { FC, MouseEvent, ReactNode } from 'react';
 import { cn } from '../../fundamentals/cn';
+import type { LinkData } from '../../typography/text-link/text-link';
 
 type Variant = 'primary' | 'primary-white' | 'secondary' | 'secondary-white';
 
@@ -95,4 +96,13 @@ const Spinner: FC = () => (
     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
   </svg>
+);
+
+type LinkButtonProps = Pick<Props, 'variant' | 'fullWidth' | 'showArrow'> & { link: LinkData };
+
+/** A Button for a CMS link (label, href, new tab). No arrow unless `showArrow`. */
+export const LinkButton: FC<LinkButtonProps> = ({ link, variant, fullWidth, showArrow = false }) => (
+  <Button variant={variant} href={link.href} newTab={!!link.newTab} fullWidth={fullWidth} showArrow={showArrow}>
+    {link.label}
+  </Button>
 );

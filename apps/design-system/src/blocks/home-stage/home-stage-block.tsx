@@ -1,17 +1,16 @@
 import { FC, ReactNode } from 'react';
-import { Button } from '../../actions/button/button';
+import { LinkButton } from '../../actions/button/button';
+import type { LinkData } from '../../typography/text-link/text-link';
 import { Heading } from '../../typography/heading/heading';
 import { HomeStageSlide, HomeStageSlideshow, HomeStageSlideshowLabels } from './home-stage-slideshow';
 
 export type { HomeStageSlide } from './home-stage-slideshow';
 
-type Cta = { label: string; href: string };
-
 type Props = {
   title: string;
   intro?: string | null;
   /** Up to two calls to action: the first is the primary button, the second a text button. */
-  ctas: Cta[];
+  ctas: LinkData[];
   /** Background images; with more than one they change every 7 seconds. */
   slides: HomeStageSlide[];
   /** The header, laid over the stage (transparent variant). */
@@ -70,16 +69,8 @@ export const HomeStageBlock: FC<Props> = ({ title, intro, ctas, slides, header, 
 
             <Reveal delay={300}>
               <div className="mt-10 flex flex-wrap items-center justify-center gap-4 sm:gap-x-6">
-                {primaryCta && (
-                  <Button variant="primary" href={primaryCta.href}>
-                    {primaryCta.label}
-                  </Button>
-                )}
-                {secondaryCta && (
-                  <Button variant="secondary-white" href={secondaryCta.href}>
-                    {secondaryCta.label}
-                  </Button>
-                )}
+                {primaryCta && <LinkButton link={primaryCta} variant="primary" showArrow />}
+                {secondaryCta && <LinkButton link={secondaryCta} variant="secondary-white" showArrow />}
               </div>
             </Reveal>
           </div>

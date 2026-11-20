@@ -1,6 +1,13 @@
 import NextLink from 'next/link';
 import { FC, ReactNode } from 'react';
 
+/** A link from the CMS: label, resolved href and whether it opens in a new tab. */
+export type LinkData = {
+  label: string;
+  href: string;
+  newTab?: boolean | null;
+};
+
 type TextLinkProps = {
   children: ReactNode;
   href: string;

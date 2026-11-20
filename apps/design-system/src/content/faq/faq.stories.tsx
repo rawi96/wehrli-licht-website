@@ -71,7 +71,7 @@ export const Page: Story = {
           </>
         }
         search={<Search />}
-        topics={TOPICS.map((topic) => ({ id: topic.id, label: topic.title, href: `#faq-topic-${topic.slug}` }))}
+        topics={TOPICS.map((topic) => ({ id: topic.id, label: topic.title, slug: topic.slug }))}
       />
       <FaqTopics topics={TOPICS} />
       <FaqContactCta>

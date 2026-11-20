@@ -3,7 +3,6 @@
 import { useShopContext } from '@/app/context/shop-context';
 import { StructuredTextRenderer } from '@/components/dato-structured-text';
 import { DEFAULT_SHIPPING_COST_CHF } from '@/constants/shop-commerce';
-import { KONTAKT_TERMIN_PATH } from '@/constants/shop-paths';
 import { trackEvent } from '@/lib/analytics/gtag';
 import { CONTACT_FORM_ANCHOR, PRODUCT_PREFILL_PARAM } from '@/lib/contact-form/schema';
 import { toImage } from '@/utils/image';
@@ -25,6 +24,8 @@ type Props = {
   product: ShopProduct;
   /** Contact page from DatoCMS («Header & Footer»); the question link is hidden if not set. */
   contactHref: string | null;
+  /** Booking of a showroom visit: the contact page's appointment section. */
+  viewingHref: string;
 };
 
 const toAnalyticsItem = (product: ShopProduct, variant: ProductVariant | null) => {
@@ -41,7 +42,7 @@ const toAnalyticsItem = (product: ShopProduct, variant: ProductVariant | null) =
 const productQuestionHref = (contactHref: string, product: ShopProduct) =>
   `${contactHref}?${new URLSearchParams({ [PRODUCT_PREFILL_PARAM]: product.name }).toString()}#${CONTACT_FORM_ANCHOR}`;
 
-export const ProductDetail = ({ product, contactHref }: Props) => {
+export const ProductDetail = ({ product, contactHref, viewingHref }: Props) => {
   const [pickedOptions, setPickedOptions] = useState<SelectedOptions>({});
   const [loading, setLoading] = useState(false);
   const { addToCart, setIsShowCart } = useShopContext();
@@ -114,7 +115,7 @@ export const ProductDetail = ({ product, contactHref }: Props) => {
       }
       onAddToCart={handleAddToCartClick}
       adding={loading}
-      viewingHref={KONTAKT_TERMIN_PATH}
+      viewingHref={viewingHref}
       onViewingClick={handleViewingClick}
       questionHref={contactHref ? productQuestionHref(contactHref, product) : null}
       description={description ? <StructuredTextRenderer data={description} /> : null}

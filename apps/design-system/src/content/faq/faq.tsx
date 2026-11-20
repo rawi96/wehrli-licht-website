@@ -20,11 +20,14 @@ export const FaqLink: FC<FaqLinkProps> = ({ href, children }) => (
   </Link>
 );
 
+/** Id of a topic's heading, the target of the topic links in FaqIntro. */
+const topicHeadingId = (slug: string) => `faq-topic-${slug}`;
+
 export type FaqTopicLink = {
   id: string;
   label: string;
-  /** In-page anchor of the topic section, e.g. `#faq-topic-lieferung`. */
-  href: string;
+  /** Slug of the topic, as in FaqTopic. */
+  slug: string;
 };
 
 type FaqIntroProps = {
@@ -55,7 +58,7 @@ export const FaqIntro: FC<FaqIntroProps> = ({ title, intro, search, topics, labe
           {topics.map((topic) => (
             <li key={topic.id}>
               <a
-                href={topic.href}
+                href={`#${topicHeadingId(topic.slug)}`}
                 className="bg-white-100 text-wehrli hover:bg-wehrli inline-block rounded-full px-4 py-2 text-sm font-bold transition-colors duration-150 hover:text-white"
               >
                 {topic.label}
@@ -135,7 +138,7 @@ type FaqTopicsProps = { topics: FaqTopic[] };
 export const FaqTopics: FC<FaqTopicsProps> = ({ topics }) => (
   <div className="space-y-10 lg:space-y-12">
     {topics.map((topic) => {
-      const headingId = `faq-topic-${topic.slug}`;
+      const headingId = topicHeadingId(topic.slug);
 
       return (
         <section key={topic.id} id={topic.slug} aria-labelledby={headingId} className={`scroll-mt-28 ${CARD_CLASS}`}>

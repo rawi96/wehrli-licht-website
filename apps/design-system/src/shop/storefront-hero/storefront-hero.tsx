@@ -1,10 +1,11 @@
 import Link from 'next/link';
 import { FC, ReactNode } from 'react';
-import { Button } from '../../actions/button/button';
+import { LinkButton } from '../../actions/button/button';
 import { Image, ImageData } from '../../content/image/image';
 import { cn } from '../../fundamentals/cn';
 import { Heading } from '../../typography/heading/heading';
-import { ShopLink, ShopTextLink } from '../text-link/text-link';
+import { LinkData } from '../../typography/text-link/text-link';
+import { ShopTextLink } from '../text-link/text-link';
 
 export type StorefrontHeroCategory = {
   id: string;
@@ -19,12 +20,12 @@ type Props = {
   title: string;
   /** Rich text below the title. */
   intro?: ReactNode;
-  primaryCta?: ShopLink | null;
-  secondaryCta?: ShopLink | null;
+  primaryCta?: LinkData | null;
+  secondaryCta?: LinkData | null;
   /** Up to three categories as image tiles; the first one is large and the LCP image. */
   categories: StorefrontHeroCategory[];
   /** Link above the tiles. */
-  allProductsLink: ShopLink;
+  allProductsLink: LinkData;
   labels?: {
     /** Above the tiles. */
     topCategories: string;
@@ -62,12 +63,7 @@ const CategoryTile: FC<{
   >
     <div className="absolute inset-0">
       {category.image ? (
-        <Image
-          image={category.image}
-          priority={priority}
-          sizes={TILE_STYLES[size].sizes}
-          imgClassName="size-full object-cover transition-transform duration-500 group-hover:scale-105"
-        />
+        <Image image={category.image} priority={priority} sizes={TILE_STYLES[size].sizes} hoverZoom="calm" />
       ) : (
         <div className="bg-wehrli/10 flex size-full items-center justify-center">
           <span className="text-wehrli px-4 text-center text-sm font-bold">{category.name}</span>
@@ -81,16 +77,6 @@ const CategoryTile: FC<{
       <p className="mt-0.5 text-sm font-bold text-white sm:text-base lg:text-lg">{category.name}</p>
     </div>
   </Link>
-);
-
-const CtaButton: FC<{ link: ShopLink; variant: 'primary' | 'secondary'; fullWidth?: boolean }> = ({
-  link,
-  variant,
-  fullWidth,
-}) => (
-  <Button variant={variant} href={link.href} showArrow={false} fullWidth={fullWidth} newTab={link.newTab ?? undefined}>
-    {link.label}
-  </Button>
 );
 
 /** Top of the shop's start page: eyebrow, title, intro and buttons, beside up to three category tiles. */
@@ -118,8 +104,8 @@ export const StorefrontHero: FC<Props> = ({
           {intro ? <div className="text-sm leading-relaxed text-gray-600 lg:text-base">{intro}</div> : null}
 
           <div className="mt-6 hidden flex-wrap gap-3 lg:mt-8 lg:flex">
-            {primaryCta && <CtaButton link={primaryCta} variant="primary" />}
-            {secondaryCta && <CtaButton link={secondaryCta} variant="secondary" />}
+            {primaryCta && <LinkButton link={primaryCta} variant="primary" />}
+            {secondaryCta && <LinkButton link={secondaryCta} variant="secondary" />}
           </div>
         </div>
 
@@ -141,8 +127,8 @@ export const StorefrontHero: FC<Props> = ({
         )}
 
         <div className="flex flex-col gap-3 lg:hidden">
-          {primaryCta && <CtaButton link={primaryCta} variant="primary" fullWidth />}
-          {secondaryCta && <CtaButton link={secondaryCta} variant="secondary" fullWidth />}
+          {primaryCta && <LinkButton link={primaryCta} variant="primary" fullWidth />}
+          {secondaryCta && <LinkButton link={secondaryCta} variant="secondary" fullWidth />}
         </div>
       </div>
     </section>

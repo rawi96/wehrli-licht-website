@@ -3,6 +3,7 @@ import { Footer } from '@/components/layout/footer';
 import { Header } from '@/components/layout/header';
 import { CheckoutPageContent } from '@/components/shop/checkout-page-content';
 import { HeaderFooterDocument, HeaderFooterRecord } from '@/graphql/generated';
+import { getContactPath } from '@/utils/cms-page-path';
 import { queryDatoCMS } from '@/utils/query-dato-cms';
 import { Metadata } from 'next';
 import { draftMode } from 'next/headers';
@@ -26,7 +27,7 @@ export default async function CheckoutPage() {
       <Header headerFooter={headerFooter as HeaderFooterRecord} />
       <Container>
         <Suspense fallback={<CheckoutLoading text="Kasse wird geladen…" />}>
-          <CheckoutPageContent />
+          <CheckoutPageContent contactHref={getContactPath(headerFooter as HeaderFooterRecord)} />
         </Suspense>
       </Container>
       <Footer headerFooter={headerFooter as HeaderFooterRecord} />

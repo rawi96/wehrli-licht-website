@@ -1,14 +1,9 @@
 import Link from 'next/link';
+import type { LinkData } from '../../typography/text-link/text-link';
 import { FC } from 'react';
 import { cn } from '../../fundamentals/cn';
 
-export type ShopLink = {
-  href: string;
-  label: string;
-  newTab?: boolean | null;
-};
-
-type Props = ShopLink & {
+type Props = LinkData & {
   /** White text on dark surfaces. */
   inverted?: boolean;
   /** Space above on mobile, where the link stacks below a section header's text (none from md). */

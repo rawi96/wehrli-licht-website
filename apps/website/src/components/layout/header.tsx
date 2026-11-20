@@ -43,14 +43,15 @@ export const Header: FC<Props> = ({ headerFooter: { menu }, variant = 'solid' })
   ];
 
   return (
-    <HeaderLayout
-      variant={variant}
-      navigation={navigation}
-      contact={contact && { label: contact.label, href: contact.link?.slug ? `/${contact.link.slug}` : '/kontakt' }}
-      renderCartButton={(closeMobileMenu) => <ShopCartButton onClick={closeMobileMenu} />}
-      renderMobileMenuExtra={(closeMobileMenu) => <ShopMobileNav onLinkClick={closeMobileMenu} />}
-    >
+    <>
+      <HeaderLayout
+        variant={variant}
+        navigation={navigation}
+        contact={contact?.link?.slug ? { label: contact.label, href: `/${contact.link.slug}` } : null}
+        cartButton={<ShopCartButton />}
+        renderMobileMenuExtra={(closeMobileMenu) => <ShopMobileNav onLinkClick={closeMobileMenu} />}
+      />
       <ShoppingCart open={isShowCart} setOpen={setIsShowCart} />
-    </HeaderLayout>
+    </>
   );
 };

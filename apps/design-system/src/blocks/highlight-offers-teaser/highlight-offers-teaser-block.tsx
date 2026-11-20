@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { HighlightOfferCard } from '../../content/highlight-offer-card/highlight-offer-card';
-import { HighlightLink, HighlightSection } from '../../content/highlight-section/highlight-section';
+import { HighlightSection } from '../../content/highlight-section/highlight-section';
+import { LinkData } from '../../typography/text-link/text-link';
 import { ImageData } from '../../content/image/image';
 
 type Offer = {
@@ -17,7 +18,7 @@ type Props = {
   id: string;
   title: string;
   subline: string;
-  cta?: HighlightLink | null;
+  cta?: LinkData | null;
   /** The first two offers are large cards, the others small cards (2 per row, 4 from lg). */
   offers: Offer[];
   /** Loads the image of the first offer with priority (LCP). */

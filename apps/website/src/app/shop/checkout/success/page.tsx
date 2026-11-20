@@ -4,6 +4,7 @@ import { Header } from '@/components/layout/header';
 import { CheckoutSuccess } from '@/components/shop/checkout-success';
 import { HeaderFooterDocument, HeaderFooterRecord } from '@/graphql/generated';
 import { resolveCheckoutSuccessStatus } from '@/lib/resolve-checkout-success-status';
+import { getContactPath } from '@/utils/cms-page-path';
 import { queryDatoCMS } from '@/utils/query-dato-cms';
 import { Metadata } from 'next';
 import { draftMode } from 'next/headers';
@@ -34,7 +35,7 @@ export default async function CheckoutSuccessPage({ searchParams }: Props) {
     <main>
       <Header headerFooter={headerFooter as HeaderFooterRecord} />
       <Container>
-        <CheckoutSuccess status={status} />
+        <CheckoutSuccess status={status} contactHref={getContactPath(headerFooter as HeaderFooterRecord)} />
       </Container>
       <Footer headerFooter={headerFooter as HeaderFooterRecord} />
     </main>

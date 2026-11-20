@@ -41,13 +41,7 @@ const RowCard: FC<{ item: ShopCategoryGridItem }> = ({ item }) => (
     className="group hover:ring-wehrli/30 flex h-full w-64 shrink-0 flex-col overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-gray-200 transition-shadow hover:shadow-md"
   >
     <div className="relative h-52 w-full shrink-0 overflow-hidden bg-gray-100">
-      {item.image && (
-        <Image
-          sizes="256px"
-          image={item.image}
-          imgClassName="h-full w-full object-cover object-center transition-transform duration-300 group-hover:scale-105"
-        />
-      )}
+      {item.image && <Image sizes="256px" image={item.image} hoverZoom="quick" />}
     </div>
     <div className="flex min-h-0 flex-1 flex-col p-4">
       {item.eyebrow ? (
@@ -78,13 +72,7 @@ const GridCard: FC<{ item: ShopCategoryGridItem }> = ({ item }) => (
   <Link href={item.href} className="group block">
     <div className="group relative cursor-pointer">
       <div className="relative h-80 w-full overflow-hidden rounded-lg bg-white shadow-sm sm:h-64">
-        {item.image && (
-          <Image
-            sizes={CATEGORY_GRID_SIZES}
-            image={item.image}
-            imgClassName="h-full w-full transform object-cover object-center transition-transform duration-300 group-hover:scale-105"
-          />
-        )}
+        {item.image && <Image sizes={CATEGORY_GRID_SIZES} image={item.image} hoverZoom="quick" />}
       </div>
       <h3 className="text-wehrli my-4 text-sm font-bold md:text-base lg:text-lg">{item.name}</h3>
       {item.descriptionHtml && <p className="mt-2 text-sm" dangerouslySetInnerHTML={{ __html: item.descriptionHtml }} />}

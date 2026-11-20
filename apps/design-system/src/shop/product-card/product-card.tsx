@@ -38,7 +38,9 @@ export const ProductCard: FC<Props> = ({ name, href, price, image, variant = 'ca
                 sizes="256px"
                 priority={priority}
                 placeholder={false}
-                imgClassName="object-contain object-center p-3 transition-transform duration-300 group-hover:scale-105"
+                fit="contain"
+                inset
+                hoverZoom="quick"
               />
             </div>
           ) : null}
@@ -66,7 +68,9 @@ export const ProductCard: FC<Props> = ({ name, href, price, image, variant = 'ca
               sizes={CATALOG_IMAGE_SIZES}
               priority={priority}
               placeholder={false}
-              imgClassName="object-contain object-center p-3 transition-transform duration-300 group-hover:scale-105"
+              fit="contain"
+              inset
+              hoverZoom="quick"
             />
           </div>
         </div>

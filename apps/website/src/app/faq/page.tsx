@@ -1,5 +1,6 @@
 import { Breadcrumbs } from '@/components/breadcrumbs';
 import { FaqPageContent } from '@/components/faq/faq-page-content';
+import { getContactPath } from '@/utils/cms-page-path';
 import { Container } from '@wehrli/design-system';
 import { Footer } from '@/components/layout/footer';
 import { Header } from '@/components/layout/header';
@@ -51,7 +52,12 @@ export default async function FaqPage() {
       <Header headerFooter={headerFooter as HeaderFooterRecord} />
       <Container>
         <Breadcrumbs customBreadcrumbs={[{ name: pageTitle, href: '/faq' }]} />
-        <FaqPageContent title={pageTitle} intro={page?.teaserDescription} groups={groups} />
+        <FaqPageContent
+          title={pageTitle}
+          intro={page?.teaserDescription}
+          groups={groups}
+          contactHref={getContactPath(headerFooter as HeaderFooterRecord)}
+        />
       </Container>
       <Footer headerFooter={headerFooter as HeaderFooterRecord} />
     </main>

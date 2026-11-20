@@ -1,6 +1,5 @@
 import NextLink from 'next/link';
 import { FC, Suspense } from 'react';
-import { cn } from '../../fundamentals/cn';
 import { Image, ImageData } from '../image/image';
 import { Lightbox, LightboxSlide } from '../lightbox/lightbox';
 
@@ -53,10 +52,8 @@ export const GalleryGrid: FC<Props> = ({ items, showTitles, priority }) => (
             image={image}
             sizes={image.sizes ?? undefined}
             priority={priority && index === 0}
-            imgClassName={cn(
-              'object-cover transition-transform duration-300 group-hover:scale-110',
-              showTitles && 'brightness-75',
-            )}
+            hoverZoom="strong"
+            dimmed={showTitles}
           />
         </NextLink>
       ))}

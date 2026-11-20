@@ -48,7 +48,7 @@ export const HighlightOfferCard: FC<Props> = ({
         image={image}
         priority={priority}
         sizes={featured ? HIGHLIGHT_IMAGE_SIZES.offerFeatured : HIGHLIGHT_IMAGE_SIZES.offerCompact}
-        imgClassName="size-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04] motion-reduce:transition-none"
+        hoverZoom="slow"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-gray-900/95 via-gray-900/40 to-gray-900/10" aria-hidden />
       <div className="absolute inset-0 rounded-lg ring-1 ring-gray-900/10 ring-inset" aria-hidden />

@@ -6,7 +6,7 @@ fragment contactBlock on ContactRecord {
     phone
     email
     appointmentLink {
-      slug
+      ...pageRecordLink
     }
     appointmentText
     appointmentAnchorLink
