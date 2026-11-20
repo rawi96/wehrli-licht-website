@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import { preload } from 'react-dom';
 import { SRCImage as DatoSRCImage, ResponsiveImageType } from 'react-datocms';
 
 type ImageProps = {
@@ -37,6 +38,17 @@ export const ImageComponent: FC<ImageProps> = ({
 
   const alt =
     [image?.alt, responsiveImage.alt, altFromTitle ? image?.title : null].map((text) => text?.trim()).find(Boolean) ?? '';
+
+  // Preload priority images in <head> (as next/image does) so the LCP download starts before the
+  // JavaScript bundles. Uses the same srcset/sizes as the rendered <source>, so it is a cache hit.
+  if (priority && responsiveImage.srcSet) {
+    preload(responsiveImage.src, {
+      as: 'image',
+      imageSrcSet: responsiveImage.srcSet,
+      imageSizes: sizes,
+      fetchPriority: 'high',
+    });
+  }
 
   // DatoCMS images are already optimized by Dato's CDN, so priority images are served from
   // there too instead of being re-optimized (and counted) by Vercel's next/image optimizer.
