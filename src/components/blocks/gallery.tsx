@@ -16,6 +16,8 @@ export const GalleryBlock: FC<Props> = ({
   block: { gallery, disableMarginBottom, disableMarginTop, showImageTitles },
   aboveFold = false,
 }) => {
+  // The LCP candidate is the first gallery entry that actually renders an image.
+  const firstRenderedId = gallery.find(({ smallSize }) => smallSize)?.id;
   const slides = gallery.map(({ id, largeSize }) => ({
     key: id,
     src: largeSize.src,
@@ -29,7 +31,7 @@ export const GalleryBlock: FC<Props> = ({
         <LightboxGate slides={slides} />
       </Suspense>
       <div className="space-y-1 md:flex md:flex-wrap md:gap-1 md:space-y-0">
-        {gallery.map(({ id, smallSize }, index) => {
+        {gallery.map(({ id, smallSize }) => {
           if (!smallSize) {
             return null;
           }
@@ -53,7 +55,7 @@ export const GalleryBlock: FC<Props> = ({
 
               <DatoSRCImage
                 data={smallSize}
-                priority={aboveFold && index === 0}
+                priority={aboveFold && id === firstRenderedId}
                 imgStyle={{ objectFit: 'cover', maxWidth: '100%', maxHeight: '100%' }}
                 imgClassName={classNames(
                   'transition-transform duration-300 group-hover:scale-110',
