@@ -46,29 +46,31 @@ export const ShopHeroBlock: FC<Props> = ({ block, fallbackCategories }) => {
               <ShopTextLink href={SHOP_ALL_PRODUCTS_PATH} label="Alle Leuchten" />
             </div>
 
-            <div className="grid grid-cols-2 gap-2 sm:gap-3 lg:hidden">
+            {/* One tile per category, laid out per breakpoint (no hidden duplicates): the LCP tile is
+                priority on every device and nothing is downloaded twice. */}
+            <div className="grid grid-cols-2 gap-2 sm:gap-3 lg:h-[min(28rem,52vw)] lg:grid-cols-12 lg:grid-rows-6">
               {primary && (
                 <CategoryTile
                   category={primary}
-                  className="col-span-2 aspect-[5/3] min-h-[10.5rem] sm:min-h-52"
-                  compact
+                  className="col-span-2 aspect-[5/3] min-h-[10.5rem] sm:min-h-52 lg:col-span-7 lg:row-span-6 lg:aspect-auto lg:min-h-0"
                   priority
-                  sizes="92vw"
+                  sizes="(min-width: 1024px) 440px, 92vw"
                 />
               )}
               {secondary && (
-                <CategoryTile category={secondary} className="aspect-[4/5] min-h-36 sm:min-h-40" compact sizes="46vw" />
+                <CategoryTile
+                  category={secondary}
+                  className="aspect-[4/5] min-h-36 sm:min-h-40 lg:col-span-5 lg:row-span-3 lg:aspect-auto lg:min-h-0"
+                  sizes="(min-width: 1024px) 320px, 46vw"
+                />
               )}
               {tertiary && (
-                <CategoryTile category={tertiary} className="aspect-[4/5] min-h-36 sm:min-h-40" compact sizes="46vw" />
+                <CategoryTile
+                  category={tertiary}
+                  className="aspect-[4/5] min-h-36 sm:min-h-40 lg:col-span-5 lg:row-span-3 lg:aspect-auto lg:min-h-0"
+                  sizes="(min-width: 1024px) 320px, 46vw"
+                />
               )}
-            </div>
-
-            <div className="hidden h-[min(28rem,52vw)] grid-cols-12 grid-rows-6 gap-3 lg:grid">
-              {/* Desktop copies (hidden below lg): no priority, the mobile copy above already is the LCP image. */}
-              {primary && <CategoryTile category={primary} className="col-span-7 row-span-6" sizes="440px" />}
-              {secondary && <CategoryTile category={secondary} className="col-span-5 row-span-3" sizes="320px" />}
-              {tertiary && <CategoryTile category={tertiary} className="col-span-5 row-span-3" sizes="320px" />}
             </div>
           </div>
         )}
@@ -85,13 +87,11 @@ export const ShopHeroBlock: FC<Props> = ({ block, fallbackCategories }) => {
 const CategoryTile = ({
   category,
   className,
-  compact,
   priority,
   sizes,
 }: {
   category: ShopCategory;
   className?: string;
-  compact?: boolean;
   priority?: boolean;
   sizes: string;
 }) => (
@@ -115,13 +115,10 @@ const CategoryTile = ({
       )}
     </div>
     <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent" aria-hidden="true" />
-    <div className={classNames('absolute inset-x-0 bottom-0', compact ? 'p-3' : 'p-4')}>
-      <p className={classNames('font-bold text-white/80 uppercase', compact ? 'text-[10px]' : 'text-xs')}>
-        Leuchten-Kategorie
-      </p>
-      <p className={classNames('mt-0.5 font-bold text-white', compact ? 'text-sm sm:text-base' : 'text-lg')}>
-        {category.name}
-      </p>
+    {/* Compact below lg, large tile layout from lg. */}
+    <div className="absolute inset-x-0 bottom-0 p-3 lg:p-4">
+      <p className="text-[10px] font-bold text-white/80 uppercase lg:text-xs">Leuchten-Kategorie</p>
+      <p className="mt-0.5 text-sm font-bold text-white sm:text-base lg:text-lg">{category.name}</p>
     </div>
   </Link>
 );

@@ -27,7 +27,7 @@ export const ShopProductCard: FC<Props> = ({ product, basePath, compact, priorit
           {image?.responsiveImage?.src ? (
             <div className="absolute inset-0">
               <ImageComponent
-                image={{ ...image, alt: image.alt ?? product.name }}
+                image={{ ...image, alt: image.alt?.trim() ? image.alt : product.name }}
                 sizes="256px"
                 priority={priority}
                 usePlaceholder={false}
@@ -55,7 +55,7 @@ export const ShopProductCard: FC<Props> = ({ product, basePath, compact, priorit
         <div className="relative w-full shrink-0 overflow-hidden bg-white" style={{ paddingTop: '100%' }}>
           <div className="absolute inset-0">
             <ImageComponent
-              image={{ ...image, alt: image.alt ?? product.name }}
+              image={{ ...image, alt: image.alt?.trim() ? image.alt : product.name }}
               sizes={CATALOG_IMAGE_SIZES}
               priority={priority}
               usePlaceholder={false}

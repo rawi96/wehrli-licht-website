@@ -77,52 +77,34 @@ export const HighlightShopTeaserBlock = async ({ block, aboveFold = false }: Pro
                   </Link>
                 </div>
 
-                <ul className="grid list-none grid-cols-2 gap-2.5 p-0 sm:gap-3 lg:hidden">
+                {/* One tile per category, laid out per breakpoint (no hidden duplicates). */}
+                <ul className="grid list-none grid-cols-2 gap-2.5 p-0 sm:gap-3 lg:h-[min(26rem,48vw)] lg:grid-cols-12 lg:grid-rows-6">
                   {primary && (
-                    <li className="col-span-2">
+                    <li className="col-span-2 lg:col-span-7 lg:row-span-6">
                       <HighlightShopCategoryTile
                         category={primary}
-                        className="aspect-[16/10] min-h-[11rem] sm:min-h-[12.5rem]"
-                        compact
+                        size="large"
+                        className="aspect-[16/10] min-h-[11rem] sm:min-h-[12.5rem] lg:aspect-auto lg:size-full lg:min-h-0"
                         priority={aboveFold}
                       />
                     </li>
                   )}
                   {secondary && (
-                    <li>
+                    <li className="lg:col-span-5 lg:row-span-3">
                       <HighlightShopCategoryTile
                         category={secondary}
-                        className="aspect-[3/4] min-h-[9.5rem] sm:min-h-[10.5rem]"
-                        compact
+                        size="small"
+                        className="aspect-[3/4] min-h-[9.5rem] sm:min-h-[10.5rem] lg:aspect-auto lg:size-full lg:min-h-0"
                       />
                     </li>
                   )}
                   {tertiary && (
-                    <li>
+                    <li className="lg:col-span-5 lg:row-span-3">
                       <HighlightShopCategoryTile
                         category={tertiary}
-                        className="aspect-[3/4] min-h-[9.5rem] sm:min-h-[10.5rem]"
-                        compact
+                        size="small"
+                        className="aspect-[3/4] min-h-[9.5rem] sm:min-h-[10.5rem] lg:aspect-auto lg:size-full lg:min-h-0"
                       />
-                    </li>
-                  )}
-                </ul>
-
-                <ul className="hidden h-[min(26rem,48vw)] list-none grid-cols-12 grid-rows-6 gap-3 p-0 lg:grid">
-                  {primary && (
-                    <li className="col-span-7 row-span-6">
-                      {/* Desktop copy of the primary tile: hidden on mobile, so no priority (would double-load). */}
-                      <HighlightShopCategoryTile category={primary} className="size-full" />
-                    </li>
-                  )}
-                  {secondary && (
-                    <li className="col-span-5 row-span-3">
-                      <HighlightShopCategoryTile category={secondary} className="size-full" />
-                    </li>
-                  )}
-                  {tertiary && (
-                    <li className="col-span-5 row-span-3">
-                      <HighlightShopCategoryTile category={tertiary} className="size-full" />
                     </li>
                   )}
                 </ul>

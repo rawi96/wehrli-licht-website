@@ -9,11 +9,13 @@ import { FC } from 'react';
 type Props = {
   category: ShopCategoryFragment;
   className?: string;
-  compact?: boolean;
+  /** Lead tile (full width on mobile, large on desktop) or one of the smaller tiles. */
+  size: 'large' | 'small';
   priority?: boolean;
 };
 
-export const HighlightShopCategoryTile: FC<Props> = ({ category, className, compact, priority }) => {
+/** Text is compact below lg and larger from lg, where the tiles get bigger. */
+export const HighlightShopCategoryTile: FC<Props> = ({ category, className, size, priority }) => {
   const imageAlt = highlightImageAlt(category.image?.alt, `${category.name} – Leuchten-Kategorie`);
 
   return (
@@ -31,7 +33,7 @@ export const HighlightShopCategoryTile: FC<Props> = ({ category, className, comp
           <ImageComponent
             image={{ ...category.image, alt: imageAlt }}
             priority={priority}
-            sizes={compact ? HIGHLIGHT_IMAGE_SIZES.shopTileSmall : HIGHLIGHT_IMAGE_SIZES.shopTileLarge}
+            sizes={size === 'large' ? HIGHLIGHT_IMAGE_SIZES.shopTileLarge : HIGHLIGHT_IMAGE_SIZES.shopTileSmall}
             imgClassName="size-full object-cover transition-transform duration-500 group-hover:scale-105 motion-reduce:transition-none"
           />
         ) : (
@@ -41,21 +43,11 @@ export const HighlightShopCategoryTile: FC<Props> = ({ category, className, comp
         )}
       </div>
       <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent" aria-hidden />
-      <div className={classNames('absolute inset-x-0 bottom-0', compact ? 'p-3' : 'p-4 sm:p-5')}>
-        <p
-          className={classNames(
-            'font-bold text-white/75 uppercase',
-            compact ? 'text-[10px] tracking-[0.12em]' : 'text-xs tracking-[0.16em]',
-          )}
-        >
+      <div className="absolute inset-x-0 bottom-0 p-3 lg:p-5">
+        <p className="text-[10px] font-bold tracking-[0.12em] text-white/75 uppercase lg:text-xs lg:tracking-[0.16em]">
           Kategorie
         </p>
-        <p
-          className={classNames(
-            'mt-0.5 font-bold break-words text-white',
-            compact ? 'text-sm leading-snug sm:text-base' : 'text-lg sm:text-xl',
-          )}
-        >
+        <p className="mt-0.5 text-sm leading-snug font-bold break-words text-white sm:text-base lg:text-xl lg:leading-normal">
           {category.name}
         </p>
       </div>
