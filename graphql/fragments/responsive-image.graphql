@@ -1,11 +1,16 @@
-fragment responsiveImageFragment on ResponsiveImage {
+# Image data without the blur placeholder (e.g. product lists, which render without one).
+fragment responsiveImageBaseFragment on ResponsiveImage {
   src
   width
   height
   alt
   title
-  base64
   sizes
+}
+
+fragment responsiveImageFragment on ResponsiveImage {
+  ...responsiveImageBaseFragment
+  base64
 }
 
 # Images that can be the LCP element: srcSet is needed to preload them with the same candidates the

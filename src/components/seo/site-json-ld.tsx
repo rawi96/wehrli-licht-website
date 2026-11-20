@@ -9,12 +9,17 @@ import { getSiteUrl } from '@/utils/site-url';
  * from «Firmenprofil (SEO & KI)». Empty CMS fields are simply omitted.
  */
 export const SiteJsonLd = async () => {
-  // Structured data must never take a page down: skip it if DatoCMS is unavailable.
-  const [headerFooter, profile] = await Promise.all([getHeaderFooter(), getCompanyProfile()]).catch((error: unknown) => {
+  // Structured data must never take a page down: skip what DatoCMS cannot deliver. The company
+  // profile is optional, so its failure only drops the business facts, not the contact data.
+  const logError = (error: unknown) => {
     console.error('[site-json-ld] DatoCMS unavailable', error);
 
-    return [null, null] as const;
-  });
+    return null;
+  };
+  const [headerFooter, profile] = await Promise.all([
+    getHeaderFooter().catch(logError),
+    getCompanyProfile().catch(logError),
+  ]);
   if (!headerFooter) {
     return null;
   }
