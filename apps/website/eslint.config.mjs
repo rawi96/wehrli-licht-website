@@ -6,8 +6,7 @@ export default [
     ignores: ['.next/**', 'node_modules/**', 'eslint.config.mjs', 'graphql/generated.ts'],
   },
   ...smartiveConfig('nextjs'),
-  // calendly-inline-widget: marker class of the Calendly embed script.
-  tailwindConfig('src/styles/globals.css', { ignore: ['^calendly-inline-widget$'] }),
+  tailwindConfig('src/styles/globals.css'),
   {
     rules: {
       '@smartive-eslint/forbid-component-props': 'off',
