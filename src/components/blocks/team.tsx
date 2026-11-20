@@ -7,16 +7,26 @@ import { Grid } from '../grid';
 
 type Props = {
   block: TeamBlockFragment;
+  /** Block is near the top of the page: load the first portraits eagerly (LCP). */
+  aboveFold?: boolean;
 };
 
-export const TeamBlock: FC<Props> = ({ block: { employees, disableMarginBottom, disableMarginTop } }) => (
+/** Grid: 1 column, 2 from md, 3 from lg (inside the max-w-7xl content). */
+const PORTRAIT_SIZES = '(min-width: 1400px) 400px, (min-width: 1024px) 30vw, (min-width: 768px) 46vw, 92vw';
+
+export const TeamBlock: FC<Props> = ({ block: { employees, disableMarginBottom, disableMarginTop }, aboveFold = false }) => (
   <BlockWrapper disableMarginBottom={disableMarginBottom} disableMarginTop={disableMarginTop}>
     <Grid cols={3}>
-      {employees.map(({ firstname, lastname, bio, image, function: emplFunction }) => (
+      {employees.map(({ firstname, lastname, bio, image, function: emplFunction }, index) => (
         <div className={classNames('bg-white-100 flex flex-col overflow-hidden rounded')} key={firstname + lastname}>
           <div className="w-full">
             {image?.responsiveImage && (
-              <DatoSRCImage data={{ ...image.responsiveImage }} imgStyle={{ width: '100%', maxWidth: '100%' }} />
+              <DatoSRCImage
+                data={{ ...image.responsiveImage }}
+                sizes={PORTRAIT_SIZES}
+                priority={aboveFold && index < 3}
+                imgStyle={{ width: '100%', maxWidth: '100%' }}
+              />
             )}
           </div>
           <div className="flex flex-1 flex-col p-8 text-sm font-normal lg:text-sm">

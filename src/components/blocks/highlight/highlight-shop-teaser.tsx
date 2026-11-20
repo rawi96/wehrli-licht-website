@@ -11,9 +11,11 @@ import { HighlightShopCategoryTile } from './highlight-shop-category-tile';
 
 type Props = {
   block: HighlightShopTeaserFragment;
+  /** Block is near the top of the page: load its lead image eagerly (LCP). */
+  aboveFold?: boolean;
 };
 
-export const HighlightShopTeaserBlock = async ({ block }: Props) => {
+export const HighlightShopTeaserBlock = async ({ block, aboveFold = false }: Props) => {
   const {
     eyebrow,
     title,
@@ -82,7 +84,7 @@ export const HighlightShopTeaserBlock = async ({ block }: Props) => {
                         category={primary}
                         className="aspect-[16/10] min-h-[11rem] sm:min-h-[12.5rem]"
                         compact
-                        priority
+                        priority={aboveFold}
                       />
                     </li>
                   )}
@@ -109,7 +111,7 @@ export const HighlightShopTeaserBlock = async ({ block }: Props) => {
                 <ul className="hidden h-[min(26rem,48vw)] list-none grid-cols-12 grid-rows-6 gap-3 p-0 lg:grid">
                   {primary && (
                     <li className="col-span-7 row-span-6">
-                      <HighlightShopCategoryTile category={primary} className="size-full" priority />
+                      <HighlightShopCategoryTile category={primary} className="size-full" priority={aboveFold} />
                     </li>
                   )}
                   {secondary && (

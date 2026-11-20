@@ -6,9 +6,11 @@ import { HighlightTeaserSection } from './highlight-teaser-section';
 
 type Props = {
   block: HighlightOffersTeaserFragment;
+  /** Block is near the top of the page: load its lead image eagerly (LCP). */
+  aboveFold?: boolean;
 };
 
-export const HighlightOffersTeaserBlock: FC<Props> = ({ block }) => {
+export const HighlightOffersTeaserBlock: FC<Props> = ({ block, aboveFold = false }) => {
   const { title, subline, footerCta, offers, disableMarginTop, disableMarginBottom } = block;
 
   if (offers.length === 0 || !footerCta) {
@@ -31,7 +33,7 @@ export const HighlightOffersTeaserBlock: FC<Props> = ({ block }) => {
         <ul className="grid list-none grid-cols-1 gap-4 p-0 sm:grid-cols-2 sm:gap-4">
           {featuredOffers.map((offer, index) => (
             <li key={offer.id}>
-              <HighlightOfferCard offer={offer} featured priority={index === 0} />
+              <HighlightOfferCard offer={offer} featured priority={aboveFold && index === 0} />
             </li>
           ))}
         </ul>

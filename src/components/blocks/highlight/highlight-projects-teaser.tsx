@@ -6,9 +6,11 @@ import { HighlightTeaserSection } from './highlight-teaser-section';
 
 type Props = {
   block: HighlightProjectsTeaserFragment;
+  /** Block is near the top of the page: load its lead image eagerly (LCP). */
+  aboveFold?: boolean;
 };
 
-export const HighlightProjectsTeaserBlock: FC<Props> = ({ block }) => {
+export const HighlightProjectsTeaserBlock: FC<Props> = ({ block, aboveFold = false }) => {
   const { title, subline, primaryCta, projects, disableMarginTop, disableMarginBottom } = block;
   const [featuredProject, ...gridProjects] = projects;
 
@@ -26,7 +28,7 @@ export const HighlightProjectsTeaserBlock: FC<Props> = ({ block }) => {
       footer={<CmsLinkButton link={primaryCta} type="primary" fullWidth />}
     >
       <div className="flex flex-col gap-6 sm:gap-8 lg:gap-10">
-        {featuredProject && <HighlightProjectFeaturedCard project={featuredProject} priority />}
+        {featuredProject && <HighlightProjectFeaturedCard project={featuredProject} priority={aboveFold} />}
         {gridProjects.length > 0 && (
           <ul className="grid list-none grid-cols-1 gap-5 p-0 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3 lg:gap-8">
             {gridProjects.map((project) => (
