@@ -36,8 +36,9 @@ export const Card: FC<Props> = ({
     className="group bg-white-100 grid w-full grid-rows-[auto_1fr_auto] overflow-hidden rounded-lg text-black transition-transform active:scale-[.99]"
     target="_self"
   >
-    <div className="relative overflow-hidden">
-      <Image image={image} sizes={imageSizes} fit="fill" hoverZoom="strong" />
+    {/* Fixed 23:12, the crop of teaser images (460 × 240): equal image heights in a row, whatever the source size. */}
+    <div className="relative aspect-[23/12] overflow-hidden">
+      <Image image={image} sizes={imageSizes} hoverZoom="strong" />
     </div>
     <div className="grid grid-rows-[auto_1fr_auto] p-5 text-sm font-normal md:p-6 lg:p-8 lg:text-sm">
       {/* Always three rows (eyebrow, text, link), so the link sits at the bottom of equal-height cards. */}
