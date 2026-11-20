@@ -7,7 +7,7 @@ import { Grid } from '../grid';
 
 type Props = {
   block: TeamBlockFragment;
-  /** Block is near the top of the page: load the first portraits eagerly (LCP). */
+  /** Block is near the top of the page: load the first portrait eagerly (LCP). */
   aboveFold?: boolean;
 };
 
@@ -24,7 +24,7 @@ export const TeamBlock: FC<Props> = ({ block: { employees, disableMarginBottom, 
               <DatoSRCImage
                 data={{ ...image.responsiveImage }}
                 sizes={PORTRAIT_SIZES}
-                priority={aboveFold && index < 3}
+                priority={aboveFold && index === 0}
                 imgStyle={{ width: '100%', maxWidth: '100%' }}
               />
             )}
