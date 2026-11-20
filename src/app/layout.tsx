@@ -3,7 +3,7 @@ import '@/styles/highlight-teaser.css';
 import { ContactClickTracking } from '@/components/analytics/contact-click-tracking';
 import { CookieBanner } from '@/components/analytics/cookie-banner';
 import { GoogleTag } from '@/components/analytics/google-tag';
-import { SITE_DESCRIPTION, SiteJsonLd } from '@/components/seo/site-json-ld';
+import { SiteJsonLd } from '@/components/seo/site-json-ld';
 import { isTrackingEnabled } from '@/lib/analytics/config';
 import { getSiteUrl } from '@/utils/site-url';
 import { classNames } from '@/utils/css';
@@ -20,7 +20,6 @@ export const metadata: Metadata = {
     default: 'Wehrli Licht GmbH',
     template: '%s | Wehrli Licht GmbH',
   },
-  description: SITE_DESCRIPTION,
   openGraph: {
     type: 'website',
     locale: 'de_CH',
