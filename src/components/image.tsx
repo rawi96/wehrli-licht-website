@@ -14,9 +14,21 @@ type ImageProps = {
   sizes?: string;
   /** Use the image title as alt text when alt is missing. Disable where the title is shown as a caption. */
   altFromTitle?: boolean;
+  /**
+   * Blurred placeholder behind the image while loading. It stays as background, so disable it for
+   * object-contain images (e.g. cut-out product photos), where it would show around the image.
+   */
+  usePlaceholder?: boolean;
 };
 
-export const ImageComponent: FC<ImageProps> = ({ image, priority, imgClassName, sizes = '100vw', altFromTitle = true }) => {
+export const ImageComponent: FC<ImageProps> = ({
+  image,
+  priority,
+  imgClassName,
+  sizes = '100vw',
+  altFromTitle = true,
+  usePlaceholder = true,
+}) => {
   const responsiveImage = image?.responsiveImage;
 
   if (!responsiveImage?.src) {
@@ -32,6 +44,7 @@ export const ImageComponent: FC<ImageProps> = ({ image, priority, imgClassName, 
       data={{ ...responsiveImage, alt }}
       sizes={sizes}
       priority={priority}
+      usePlaceholder={usePlaceholder}
       imgClassName={imgClassName ?? 'object-cover'}
       imgStyle={{ width: '100%', maxWidth: '100%', height: '100%' }}
     />

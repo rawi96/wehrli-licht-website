@@ -30,6 +30,7 @@ export const ShopProductCard: FC<Props> = ({ product, basePath, compact, priorit
                 image={{ ...image, alt: image.alt ?? product.name }}
                 sizes="256px"
                 priority={priority}
+                usePlaceholder={false}
                 imgClassName="object-contain object-center p-3 transition-transform duration-300 group-hover:scale-105"
               />
             </div>
@@ -57,6 +58,7 @@ export const ShopProductCard: FC<Props> = ({ product, basePath, compact, priorit
               image={{ ...image, alt: image.alt ?? product.name }}
               sizes={CATALOG_IMAGE_SIZES}
               priority={priority}
+              usePlaceholder={false}
               imgClassName="object-contain object-center p-3 transition-transform duration-300 group-hover:scale-105"
             />
           </div>
