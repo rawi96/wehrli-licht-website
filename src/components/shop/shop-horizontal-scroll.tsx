@@ -21,7 +21,7 @@ export const ShopHorizontalScroll: FC<Props> = ({ ariaLabel, children, className
     className={classNames(
       SCROLL_ROW_CLASS,
       mobileEdgeBleed
-        ? 'relative -ml-[calc((100vw-100%)/2)] w-[100vw] max-w-[100vw] pr-4 pl-[calc((100vw-100%)/2)] sm:static sm:ml-0 sm:w-auto sm:max-w-none sm:px-0 sm:pr-0'
+        ? 'relative -ml-[calc((100vw-100%)/2)] w-[100vw] max-w-[100vw] scroll-pl-[calc(100vw/24)] pr-4 pl-[calc((100vw-100%)/2)] sm:static sm:ml-0 sm:w-auto sm:max-w-none sm:scroll-pl-0 sm:px-0 sm:pr-0'
         : '-mx-1 px-1',
       className,
     )}

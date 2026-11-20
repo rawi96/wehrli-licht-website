@@ -22,6 +22,11 @@ type Props = {
   product: ShopProduct;
 };
 
+/** Two columns from lg (gallery = half of the max-w-7xl content), max-w-2xl below. */
+const PRODUCT_IMAGE_SIZES = '(min-width: 1400px) 620px, (min-width: 1024px) 46vw, (min-width: 768px) 672px, 92vw';
+/** Thumbnails: 4 per row from sm, 2 per row below. */
+const PRODUCT_THUMB_SIZES = '(min-width: 640px) 160px, 46vw';
+
 const toAnalyticsItem = (product: ShopProduct, variant: ProductVariant | null) => {
   const hasSelections = variant !== null && variant.selections.length > 0;
 
@@ -87,7 +92,11 @@ export const ProductDetail = ({ product }: Props) => {
                       <span className="sr-only">{product.name}</span>
                       <span className="absolute inset-0 overflow-hidden rounded">
                         {image.responsiveImage && (
-                          <ImageComponent image={image} imgClassName="h-full w-full object-cover object-center" />
+                          <ImageComponent
+                            image={image}
+                            sizes={PRODUCT_THUMB_SIZES}
+                            imgClassName="h-full w-full object-cover object-center"
+                          />
                         )}
                       </span>
                       <span
@@ -105,9 +114,12 @@ export const ProductDetail = ({ product }: Props) => {
           </div>
 
           <Tab.Panels>
-            {images.map((image) => (
+            {images.map((image, index) => (
               <Tab.Panel key={image.url}>
-                {image.responsiveImage && <ImageComponent image={image} imgClassName="rounded" />}
+                {image.responsiveImage && (
+                  // The first product image is the LCP element on product pages.
+                  <ImageComponent image={image} priority={index === 0} sizes={PRODUCT_IMAGE_SIZES} imgClassName="rounded" />
+                )}
               </Tab.Panel>
             ))}
           </Tab.Panels>

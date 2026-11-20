@@ -25,7 +25,8 @@ export type ContentBlock = NonNullable<PageQuery['page']>['content'][number];
 type Props = {
   blocks: ContentBlock[];
   /**
-   * Image blocks among the first N blocks are treated as above the fold and load eagerly (LCP).
+   * Image-led blocks (images, team, highlight teasers) among the first N blocks are treated as
+   * above the fold and load their lead images eagerly (LCP).
    * Pass 0 when something else (e.g. the home stage) is rendered above the content.
    */
   eagerBlockCount?: number;
@@ -46,7 +47,7 @@ export const ContentBlocks: FC<Props> = ({ blocks, eagerBlockCount = 2 }) => (
         case 'ImageRecord':
           return <ImageBlock key={block.id} block={block} aboveFold={index < eagerBlockCount} />;
         case 'TeamRecord':
-          return <TeamBlock key={block.id} block={block} />;
+          return <TeamBlock key={block.id} block={block} aboveFold={index < eagerBlockCount} />;
         case 'IframeRecord':
           return <IframeBlock key={block.id} block={block} />;
         case 'QuoteRecord':
@@ -68,11 +69,11 @@ export const ContentBlocks: FC<Props> = ({ blocks, eagerBlockCount = 2 }) => (
         case 'ContactFormRecord':
           return <ContactFormBlock key={block.id} block={block} />;
         case 'HighlightProjectsTeaserRecord':
-          return <HighlightProjectsTeaserBlock key={block.id} block={block} />;
+          return <HighlightProjectsTeaserBlock key={block.id} block={block} aboveFold={index < eagerBlockCount} />;
         case 'HighlightOffersTeaserRecord':
-          return <HighlightOffersTeaserBlock key={block.id} block={block} />;
+          return <HighlightOffersTeaserBlock key={block.id} block={block} aboveFold={index < eagerBlockCount} />;
         case 'HighlightShopTeaserRecord':
-          return <HighlightShopTeaserBlock key={block.id} block={block} />;
+          return <HighlightShopTeaserBlock key={block.id} block={block} aboveFold={index < eagerBlockCount} />;
         default:
           return null;
       }
