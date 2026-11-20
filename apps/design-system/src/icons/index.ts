@@ -1,2 +1,2 @@
-// Components of the icons group: one export line per component folder.
-export {};
+export * from './logo/logo';
+export * from './social-icon/social-icon';

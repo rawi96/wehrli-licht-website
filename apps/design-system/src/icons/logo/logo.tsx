@@ -1,16 +1,8 @@
-type LogoProps = {
-  className?: string;
-};
+import { FC } from 'react';
 
-export const Logo = ({ className }: LogoProps) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width={200}
-    height={50}
-    viewBox="0 0 755.90668 226.77333"
-    className={className}
-    aria-hidden="true"
-  >
+/** The Wehrli Licht word and picture mark, in white for the brand-colored header. Decorative: the link around it carries the name. */
+export const Logo: FC = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={200} height={50} viewBox="0 0 755.90668 226.77333" aria-hidden="true">
     <defs>
       <clipPath id="a" clipPathUnits="userSpaceOnUse">
         <path d="M30.707 15.309H1334.18V1681.07H30.707Z" />
