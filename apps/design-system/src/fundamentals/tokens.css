@@ -4,13 +4,13 @@
  * The theme is strict: Tailwind's default colors, fonts, font sizes, weights, radii, shadows and so on are reset with
  * `initial`, and only the tokens below exist. A class like `bg-red-500` or `text-2xl` generates nothing, and lint
  * reports it (see eslint-shared.mjs). When a design needs a value that has no token, add the token here and to its
- * Foundation story, do not use an arbitrary value.
+ * Fundamentals story, do not use an arbitrary value.
  *
  * Spacing and sizing keep Tailwind's 4px scale (`--spacing`), so `p-4` is 1rem and `h-120` is 30rem.
  */
 
-/* `static`: every token is emitted, also those no class uses yet, so the Foundation stories can show them all. */
-@theme static {
+/* Only tokens in use are emitted; Storybook imports this file with theme(static) to show all of them. */
+@theme {
   /* Colors ---------------------------------------------------------------------------------------------------- */
   --color-*: initial;
   --color-transparent: transparent;
@@ -83,6 +83,9 @@
   --text-xl--line-height: 125%;
   --text-xxl: 4rem; /* 64px: hero */
   --text-xxl--line-height: 5rem;
+  /* Without a line height of their own (they keep the inherited one): */
+  --text-xxxs: 0.625rem; /* 10px: badges, labels on small tiles */
+  --text-code: 0.9em; /* inline code, relative to the surrounding text */
 
   /* Line heights that override the one of the font size */
   --leading-*: initial;
@@ -97,6 +100,12 @@
   --tracking-tight: -0.025em;
   --tracking-wide: 0.025em;
   --tracking-widest: 0.1em;
+  --tracking-label-tight: 0.12em; /* small uppercase labels on tiles */
+  --tracking-label: 0.14em;
+  --tracking-label-wide: 0.16em;
+  --tracking-eyebrow: 0.18em; /* eyebrows above section titles */
+  --tracking-eyebrow-wide: 0.2em;
+  --tracking-eyebrow-wider: 0.22em;
 
   /* Radii ----------------------------------------------------------------------------------------------------- */
   --radius-*: initial;

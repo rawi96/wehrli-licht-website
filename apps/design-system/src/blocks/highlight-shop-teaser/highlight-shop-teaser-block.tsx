@@ -56,7 +56,7 @@ export const HighlightShopTeaserBlock: FC<Props> = ({
     <HighlightBreakout headingId={headingId} surface="brand">
       <div className="grid gap-8 sm:gap-10 lg:grid-cols-12 lg:items-center lg:gap-14">
         <div className="lg:col-span-5">
-          <p className="text-xxs font-bold tracking-[0.18em] text-white/70 uppercase sm:tracking-[0.2em]">{eyebrow}</p>
+          <p className="text-xxs tracking-eyebrow sm:tracking-eyebrow-wide font-bold text-white/70 uppercase">{eyebrow}</p>
           <Heading level="2" id={headingId} color="white">
             <span className="text-balance">{title}</span>
           </Heading>
@@ -74,7 +74,7 @@ export const HighlightShopTeaserBlock: FC<Props> = ({
         {featuredCategories.length > 0 && (
           <div className="min-w-0 lg:col-span-7">
             <div className="mb-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-3">
-              <h3 className="text-xxs font-bold tracking-[0.14em] text-white/60 uppercase sm:tracking-wide">
+              <h3 className="text-xxs tracking-label font-bold text-white/60 uppercase sm:tracking-wide">
                 {popularCategoriesLabel ?? 'Beliebte Kategorien'}
               </h3>
               <NextLink
@@ -109,7 +109,7 @@ export const HighlightShopTeaserBlock: FC<Props> = ({
 
       {moreCategories.length > 0 && (
         <nav aria-label={categoriesNavLabel} className="mt-10 border-t border-white/15 pt-8 sm:mt-12 md:mt-14">
-          <h3 className="text-xxs font-bold tracking-[0.14em] text-white/60 uppercase sm:tracking-wide">
+          <h3 className="text-xxs tracking-label font-bold text-white/60 uppercase sm:tracking-wide">
             {categoriesNavLabel}
           </h3>
           <ul className="mt-4 flex flex-wrap gap-2">

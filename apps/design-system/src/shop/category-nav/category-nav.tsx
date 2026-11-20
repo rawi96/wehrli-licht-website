@@ -53,7 +53,6 @@ const ActiveBar: FC<{ active: boolean }> = ({ active }) => (
 
 const Thumbnail: FC<{ src: string }> = ({ src }) => (
   <span className="relative size-9 shrink-0 overflow-hidden bg-gray-100 ring-1 ring-gray-200/80">
-    {/* eslint-disable-next-line @smartive-eslint/forbid-component-props -- next/image only takes classes */}
     <NextImage src={src} alt="" width={36} height={36} sizes="36px" loading="lazy" className="size-full object-cover" />
   </span>
 );

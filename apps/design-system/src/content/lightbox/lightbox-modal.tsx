@@ -27,7 +27,6 @@ export const LightboxModal: FC<Props> = ({ slides, search }) => {
       index={currentImage}
       render={{
         slide: ({ slide: { src, width, height } }) => (
-          // eslint-disable-next-line @smartive-eslint/forbid-component-props -- next/image only takes classes
           <NextImage src={src} width={width} height={height} alt="" className="max-h-[90vh] max-w-[90vw] object-contain" />
         ),
       }}

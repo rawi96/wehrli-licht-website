@@ -26,7 +26,7 @@ export const CartButton: FC<Props> = ({ quantity, onClick, labels = DEFAULT_LABE
     <span className="relative inline-flex shrink-0">
       <ShoppingBagIcon className="h-6 w-6" aria-hidden="true" />
       {quantity > 0 && (
-        <span className="text-wehrli absolute -top-1 -right-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-white px-0.5 text-[10px] leading-none font-bold tabular-nums">
+        <span className="text-wehrli text-xxxs absolute -top-1 -right-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-white px-0.5 leading-none font-bold tabular-nums">
           {quantity > 99 ? '99+' : quantity}
         </span>
       )}

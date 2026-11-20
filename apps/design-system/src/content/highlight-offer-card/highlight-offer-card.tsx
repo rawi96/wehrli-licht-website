@@ -57,8 +57,8 @@ export const HighlightOfferCard: FC<Props> = ({
           className={cn(
             'font-bold text-white/75 uppercase',
             featured
-              ? 'text-xxs tracking-[0.18em] sm:tracking-[0.2em]'
-              : 'sm:text-xxs text-[0.625rem] leading-tight tracking-[0.12em] sm:tracking-[0.16em] lg:tracking-[0.14em]',
+              ? 'text-xxs tracking-eyebrow sm:tracking-eyebrow-wide'
+              : 'sm:text-xxs text-xxxs tracking-label-tight sm:tracking-label-wide lg:tracking-label leading-tight',
           )}
         >
           {eyebrow}

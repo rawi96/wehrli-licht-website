@@ -48,7 +48,7 @@ export const HighlightCategoryTile: FC<Props> = ({ name, href, image, size, labe
     </div>
     <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent" aria-hidden />
     <div className="absolute inset-x-0 bottom-0 p-3 lg:p-5">
-      <p className="text-[10px] font-bold tracking-[0.12em] text-white/75 uppercase lg:text-xs lg:tracking-[0.16em]">
+      <p className="text-xxxs tracking-label-tight lg:tracking-label-wide font-bold text-white/75 uppercase lg:text-xs">
         {label}
       </p>
       <p className="mt-0.5 text-sm leading-snug font-bold break-words text-white sm:text-base lg:text-xl lg:leading-normal">

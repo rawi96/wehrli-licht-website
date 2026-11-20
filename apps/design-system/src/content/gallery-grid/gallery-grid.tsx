@@ -39,6 +39,7 @@ export const GalleryGrid: FC<Props> = ({ items, showTitles, priority }) => (
           href={`?image=${id}`}
           scroll={false}
           className="group relative block grow overflow-hidden text-center md:h-[339px]"
+          // eslint-disable-next-line @smartive-eslint/forbid-component-props -- width follows the image's aspect ratio
           style={{ flexBasis: (image.width / (image.height ?? image.width)) * 339 }}
         >
           {showTitles && (

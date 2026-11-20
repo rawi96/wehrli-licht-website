@@ -8,9 +8,11 @@
     "./styles.css": "./src/styles.css",
     "./eslint": "./eslint-shared.mjs"
   },
+  "sideEffects": [
+    "*.css"
+  ],
   "scripts": {
     "storybook": "storybook dev -p 6006",
-    "storybook:build": "storybook build -o storybook-static",
     "build": "storybook build -o storybook-static --quiet",
     "lint": "eslint . --max-warnings 0 && tsc --noEmit && knip",
     "knip": "knip"

@@ -9,7 +9,6 @@
     "dev": "turbo dev --filter=@wehrli/website",
     "build": "turbo build",
     "lint": "turbo lint",
-    "website:dev": "turbo dev --filter=@wehrli/website",
     "website:build": "turbo build --filter=@wehrli/website",
     "design-system:dev": "pnpm --filter @wehrli/design-system storybook",
     "design-system:build": "turbo build --filter=@wehrli/design-system"

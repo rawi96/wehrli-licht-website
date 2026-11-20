@@ -100,7 +100,6 @@ export const CartContent: FC<Props> = ({
                 <NextImage
                   src={item.imageUrl}
                   alt={item.name}
-                  // eslint-disable-next-line @smartive-eslint/forbid-component-props -- next/image only takes classes
                   className="h-24 w-24 flex-none rounded-lg border border-gray-200 sm:h-32 sm:w-32"
                   width={1000}
                   height={1000}

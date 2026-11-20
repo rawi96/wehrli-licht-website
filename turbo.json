@@ -1,11 +1,14 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "tasks": {
+    "transit": {
+      "dependsOn": ["^transit"]
+    },
     "build": {
-      "dependsOn": ["^build"],
-      "outputs": [".next/**", "!.next/cache/**", "!.next/dev/**", "storybook-static/**"]
+      "outputs": ["storybook-static/**"]
     },
     "@wehrli/website#build": {
+      "dependsOn": ["transit"],
       "outputs": [".next/**", "!.next/cache/**", "!.next/dev/**"],
       "env": [
         "NEXT_DATOCMS_*",
@@ -31,7 +34,7 @@
       "persistent": true
     },
     "lint": {
-      "outputs": []
+      "dependsOn": ["transit"]
     }
   }
 }

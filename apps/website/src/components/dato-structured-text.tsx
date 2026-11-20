@@ -109,7 +109,13 @@ export const StructuredTextRenderer: FC<Props> = ({ data }) => (
             return (
               <CtaLink
                 key={record.id}
-                href={record.isExternalUrl ? (record.externalUrl as string) : internalLink}
+                href={
+                  record.isExternalUrl
+                    ? typeof record.externalUrl === 'string' && record.externalUrl
+                      ? record.externalUrl
+                      : '#'
+                    : internalLink
+                }
                 newTab={!!record.newTab}
               >
                 {record.label as string}
@@ -131,6 +137,7 @@ export const StructuredTextRenderer: FC<Props> = ({ data }) => (
           }
           newTab={transformedMeta?.target === '_blank'}
           rel={typeof transformedMeta?.rel === 'string' ? transformedMeta.rel : undefined}
+          title={typeof transformedMeta?.title === 'string' ? transformedMeta.title : undefined}
         >
           {children}
         </TextLink>

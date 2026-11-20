@@ -77,7 +77,7 @@ const CategoryTile: FC<{
     <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent" aria-hidden="true" />
     {/* Compact below lg, large tile layout from lg. */}
     <div className="absolute inset-x-0 bottom-0 p-3 lg:p-4">
-      <p className="text-[10px] font-bold text-white/80 uppercase lg:text-xs">{label}</p>
+      <p className="text-xxxs font-bold text-white/80 uppercase lg:text-xs">{label}</p>
       <p className="mt-0.5 text-sm font-bold text-white sm:text-base lg:text-lg">{category.name}</p>
     </div>
   </Link>

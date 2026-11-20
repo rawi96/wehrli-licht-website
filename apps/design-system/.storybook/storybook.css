@@ -1,3 +1,5 @@
 /* Storybook loads the design system styles plus the stories as Tailwind sources (the website leaves them out). */
 @import '../src/styles.css';
+/* Emit every token, also those no component uses yet, so the Fundamentals stories can show them all. */
+@import '../src/fundamentals/tokens.css' theme(static);
 @source '../src';

@@ -53,7 +53,8 @@ export const Button: FC<Props> = ({
   fullWidth,
   showArrow = true,
 }) => {
-  const isDisabled = disabled ?? loading;
+  // A loading button is always disabled, so an action (e.g. placing an order) cannot run twice.
+  const isDisabled = !!disabled || !!loading;
   const className = buttonClasses(variant, fullWidth, isDisabled);
   const arrow = !isPrimary(variant) && showArrow && <ArrowIcon />;
 

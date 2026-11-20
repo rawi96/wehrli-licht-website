@@ -17,7 +17,7 @@ export const Emphasis: FC<PropsWithChildren> = ({ children }) => (
 export const Strong: FC<PropsWithChildren> = ({ children }) => <strong className="font-bold">{children}</strong>;
 
 export const InlineCode: FC<PropsWithChildren> = ({ children }) => (
-  <code className="rounded-sm p-1 text-[0.9em]">{children}</code>
+  <code className="text-code rounded-sm p-1">{children}</code>
 );
 
 export const UnorderedList: FC<PropsWithChildren> = ({ children }) => (

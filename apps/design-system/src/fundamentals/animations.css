@@ -1,5 +1,5 @@
 /* Motion tokens: `animate-*` utilities with their keyframes. Turned off for prefers-reduced-motion in styles.css. */
-@theme static {
+@theme {
   --animate-ken-burns: ken-burns 16s ease-out forwards; /* slow zoom of the home stage image */
   --animate-hero-reveal: hero-reveal 0.9s var(--ease-reveal) forwards; /* hero text fades in from below */
   --animate-scroll-hint: scroll-hint 2s ease-in-out infinite; /* bouncing "scroll down" hint */

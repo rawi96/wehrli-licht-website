@@ -9,6 +9,9 @@
 @source not './**/*.stories.tsx';
 @source not './docs';
 @source not './fundamentals';
+@source not './**/*.mocks.ts';
+@source not './**/*.mocks.tsx';
+@source not './blocks/block-decorator.tsx';
 
 /* Base styles for text inputs, selects, checkboxes and radios. */
 @plugin '@tailwindcss/forms';
@@ -66,15 +69,11 @@ html {
   }
 }
 
-@utility text-balance {
-  text-wrap: balance;
-}
-
 /* Legible white text on photos */
 @utility hero-text-shadow {
   text-shadow:
-    0 2px 24px rgb(8 15 28 / 0.65),
-    0 1px 4px rgb(8 15 28 / 0.5);
+    0 2px 24px --theme(--color-wehrli-700 / 65%),
+    0 1px 4px --theme(--color-wehrli-700 / 50%);
 }
 
 /* Cookie banner: hidden before first paint when a choice is already stored (set by the website's Google tag script). */

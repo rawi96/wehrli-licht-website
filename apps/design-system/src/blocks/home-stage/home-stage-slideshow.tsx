@@ -89,9 +89,11 @@ export const HomeStageSlideshow: FC<Props> = ({ slides, labels, intervalMs = 700
                 sizes="100vw"
                 placeholder={slide.blurDataURL ? 'blur' : undefined}
                 blurDataURL={slide.blurDataURL ?? undefined}
-                // eslint-disable-next-line @smartive-eslint/forbid-component-props -- next/image only takes classes
-                className={cn('object-cover motion-reduce:scale-100', isActive && 'animate-ken-burns')}
-                style={{ animationPlayState: isPaused ? 'paused' : 'running' }}
+                className={cn(
+                  'object-cover motion-reduce:scale-100',
+                  isActive && 'animate-ken-burns',
+                  isPaused && '[animation-play-state:paused]',
+                )}
               />
             </div>
           );

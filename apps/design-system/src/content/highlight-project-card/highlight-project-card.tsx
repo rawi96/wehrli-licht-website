@@ -43,7 +43,7 @@ export const HighlightProjectCard: FC<Props> = ({
 
   const content = (
     <>
-      <p className="text-wehrli-400 text-xxs font-bold tracking-[0.18em] uppercase sm:tracking-[0.22em]">{offer}</p>
+      <p className="text-wehrli-400 text-xxs tracking-eyebrow sm:tracking-eyebrow-wider font-bold uppercase">{offer}</p>
       <h3
         className={cn(
           'text-wehrli mt-2 leading-snug font-bold text-balance',

@@ -47,8 +47,8 @@ export const HomeStageBlock: FC<Props> = ({ title, intro, ctas, slides, header, 
         <HomeStageSlideshow slides={slides} labels={labels} />
 
         <div className="from-wehrli-700/75 via-wehrli-700/50 to-wehrli-700/90 pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b" />
-        <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_90%_70%_at_50%_45%,rgb(8_15_28/0.55),transparent_65%)]" />
-        <div className="animate-light-beam pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_80%_60%_at_50%_0%,rgb(101_142_211/0.2),transparent_70%)] motion-reduce:animate-none" />
+        <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_90%_70%_at_50%_45%,color-mix(in_srgb,var(--color-wehrli-700)_55%,transparent),transparent_65%)]" />
+        <div className="animate-light-beam pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_80%_60%_at_50%_0%,color-mix(in_srgb,var(--color-wehrli-100)_20%,transparent),transparent_70%)] motion-reduce:animate-none" />
 
         <div className="from-wehrli-700/85 via-wehrli-700/45 pointer-events-none absolute inset-x-0 top-0 z-0 h-40 bg-gradient-to-b to-transparent" />
 
