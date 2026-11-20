@@ -1,6 +1,6 @@
 'use client';
 
-import { trackEvent } from '@/lib/analytics/gtag';
+import { analytics } from '@/integrations/client';
 import { FC, useEffect } from 'react';
 
 /**
@@ -18,7 +18,7 @@ export const ContactClickTracking: FC = () => {
       const href = link.getAttribute('href') ?? '';
       const isPhone = href.startsWith('tel:');
 
-      trackEvent(isPhone ? 'telefon_klick' : 'email_klick', {
+      analytics.trackEvent(isPhone ? 'telefon_klick' : 'email_klick', {
         link_url: href,
         page_path: window.location.pathname,
       });

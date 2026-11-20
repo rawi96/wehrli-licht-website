@@ -1,15 +1,11 @@
-import { fetchCheckoutCommerceMeta } from '@/utils/cart-checkout';
+import { CommerceRequestBody } from '@/features/checkout/schemas';
+import { getCheckoutCommerce } from '@/features/checkout/service';
 import { NextRequest, NextResponse } from 'next/server';
 
 export const POST = async (req: NextRequest): Promise<NextResponse> => {
   try {
-    const body = (await req.json()) as { productIds?: string[] };
-
-    if (!body.productIds?.length) {
-      return NextResponse.json({ commerce: [] });
-    }
-
-    const commerce = await fetchCheckoutCommerceMeta(body.productIds);
+    const body = (await req.json()) as CommerceRequestBody;
+    const commerce = await getCheckoutCommerce(body.productIds ?? []);
 
     return NextResponse.json({ commerce });
   } catch (error) {

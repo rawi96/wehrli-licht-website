@@ -1,5 +1,5 @@
 import { DEFAULT_SHIPPING_COST_CHF } from '@/constants/shop-commerce';
-import { CheckoutShippingMethod } from '@/types/checkout';
+import { CheckoutShippingMethod } from '@/domain/checkout/order';
 import { formatPriceToCHF } from '@/utils/price';
 
 export type ProductCommerceMeta = {

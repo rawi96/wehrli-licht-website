@@ -1,7 +1,7 @@
 'use client';
 
 import { CalendlyBlockFragment } from '@/graphql/generated';
-import { trackEvent } from '@/lib/analytics/gtag';
+import { analytics } from '@/integrations/client';
 import { CalendlyBlock as CalendlyBlockView } from '@wehrli/design-system';
 import { FC, useEffect } from 'react';
 
@@ -14,7 +14,7 @@ export const CalendlyBlock: FC<Props> = ({ block: { url, disableMarginBottom, di
   useEffect(() => {
     const onMessage = (event: MessageEvent<{ event?: string }>) => {
       if (event.origin === 'https://calendly.com' && event.data.event === 'calendly.event_scheduled') {
-        trackEvent('termin_gebucht', { lead_source: 'calendly' });
+        analytics.trackEvent('termin_gebucht', { lead_source: 'calendly' });
       }
     };
 

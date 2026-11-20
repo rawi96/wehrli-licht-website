@@ -1,7 +1,7 @@
 import { content } from '@/integrations';
 import { SitePage } from '@/components/layout/site-page';
 import { CheckoutLoading, Container } from '@wehrli/design-system';
-import { CheckoutPageContent } from '@/components/shop/checkout-page-content';
+import { CheckoutPageContent } from '@/components/checkout/checkout-page-content';
 import { Metadata } from 'next';
 import { Suspense } from 'react';
 

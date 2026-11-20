@@ -2,7 +2,7 @@ import { CmsHtml } from '@/components/cms-html';
 import { CookieSettingsButton } from '@/components/analytics/cookie-banner';
 import { SITE_NAME } from '@/constants/site';
 import { HeaderFooterRecord } from '@/graphql/generated';
-import { isTrackingEnabled } from '@/lib/analytics/config';
+import { analytics } from '@/integrations/client';
 import { getCmsPagePath } from '@/utils/cms-page-path';
 import { mapFooterNavigationFromDato } from '@/utils/map-footer-navigation';
 import { FooterNotice, Footer as FooterLayout, SocialLink } from '@wehrli/design-system';
@@ -53,7 +53,7 @@ export const Footer: FC<Props> = ({ headerFooter }) => {
       copyrightHolder={headerFooter.companyName ?? SITE_NAME}
       year={new Date().getFullYear()}
       privacyHref={getCmsPagePath(headerFooter.privacyPage)}
-      legalExtra={isTrackingEnabled && <CookieSettingsButton />}
+      legalExtra={analytics.isEnabled && <CookieSettingsButton />}
       socialLinks={socialLinks}
     />
   );
