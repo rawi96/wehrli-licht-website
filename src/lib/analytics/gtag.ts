@@ -1,4 +1,4 @@
-import { CONSENT_STORAGE_KEY, ConsentChoice } from './config';
+import { CONSENT_STORAGE_KEY, ConsentChoice, getConsentState } from './config';
 
 type GtagParams = Record<string, unknown>;
 
@@ -18,8 +18,8 @@ const gtag = (...args: unknown[]) => {
 };
 
 /**
- * Sends a GA4 event. No-op when the Google tag is not loaded (local, previews)
- * or the visitor declined tracking.
+ * Sends a GA4 event. No-op when the Google tag is not configured (local, previews).
+ * Consent is applied by the Google tag itself (cookieless ping after «Ablehnen»).
  */
 export const trackEvent = (name: string, params: GtagParams = {}) => {
   gtag('event', name, params);
@@ -35,12 +35,7 @@ export const readConsentChoice = (): ConsentChoice | null => {
   }
 };
 
-/**
- * Consent model ("Variante 3", Swiss opt-out):
- * - no choice yet: statistics on, advertising off
- * - accepted: statistics and advertising on
- * - declined: everything off
- */
+/** Stores the banner choice and updates the Google tag consent, see getConsentState. */
 export const applyConsentChoice = (choice: ConsentChoice) => {
   document.documentElement.dataset.consent = choice;
 
@@ -50,15 +45,8 @@ export const applyConsentChoice = (choice: ConsentChoice) => {
     // Storage blocked: the choice still applies for this page view.
   }
 
-  const ads = choice === 'granted' ? 'granted' : 'denied';
-
-  gtag('consent', 'update', {
-    analytics_storage: choice,
-    ad_storage: ads,
-    ad_user_data: ads,
-    ad_personalization: ads,
-  });
-  gtag('set', 'ads_data_redaction', ads === 'denied');
+  gtag('consent', 'update', getConsentState(choice));
+  gtag('set', 'ads_data_redaction', choice !== 'granted');
 };
 
 /**

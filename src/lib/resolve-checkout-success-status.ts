@@ -1,12 +1,10 @@
 import { sendStripeCheckoutOrderEmails } from '@/actions/checkout-emails';
+import { STRIPE_SHIPPING_LINE_NAME } from '@/constants/checkout-labels';
 import { isCheckoutEmailDelivered } from '@/lib/send-checkout-order-emails';
 import { getStripe } from '@/lib/stripe';
 import { CheckoutPurchase, CheckoutSuccessStatus } from '@/types/checkout-success-status';
 import type Stripe from 'stripe';
 import { verifyCheckoutOrderToken } from '@/utils/checkout-order-token';
-
-/** Shipping is added as its own Stripe line item, see checkout-order-from-stripe. */
-const STRIPE_SHIPPING_LINE_NAME = 'Versand per Post';
 
 const purchaseFromStripeSession = (session: Stripe.Checkout.Session): CheckoutPurchase => ({
   transactionId: session.id,

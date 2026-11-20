@@ -1,5 +1,6 @@
 fragment teamBlock on TeamRecord {
   id
+  teamTitle: title
   disableMarginTop
   disableMarginBottom
   employees {

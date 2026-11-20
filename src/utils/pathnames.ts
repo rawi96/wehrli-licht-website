@@ -43,3 +43,12 @@ export const generatePathForRecord = ({
       return '';
   }
 };
+
+/** DatoCMS needs a slug for every page: the home page has «home» and is served at / (see next.config.js). */
+export const HOME_PAGE_SLUG = 'home';
+
+/** Public path of a DatoCMS page, with the home page at /. */
+export const getPublicPagePath = (page: { slug: string; parent?: PageRecord | null }): string =>
+  page.slug === HOME_PAGE_SLUG && !page.parent
+    ? '/'
+    : generatePathForRecord({ slug: page.slug, type: 'PageRecord', parent: page.parent });

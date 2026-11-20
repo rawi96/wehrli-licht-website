@@ -11,6 +11,7 @@ import { getAllProductSlugs, getProductBySlug } from '@/utils/shop';
 import { buildProductJsonLd, buildProductMetadata } from '@/utils/shop-seo';
 import { Metadata } from 'next';
 import { draftMode } from 'next/headers';
+import { getCmsPagePath } from '@/utils/cms-page-path';
 
 export const revalidate = 3600;
 
@@ -62,7 +63,7 @@ export default async function ShopProductPage({ params }: Props) {
           />
         </div>
         <ShopBrowseLayout>
-          <ProductDetail product={product} />
+          <ProductDetail product={product} contactHref={getCmsPagePath(headerFooter.contactPage)} />
         </ShopBrowseLayout>
       </ContentWrapper>
       <Footer headerFooter={headerFooter} />

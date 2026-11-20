@@ -1,4 +1,5 @@
 import { revalidatePath } from 'next/cache';
+import { HOME_PAGE_SLUG } from '@/utils/pathnames';
 
 type DatoEntity = {
   type?: string;
@@ -42,7 +43,7 @@ const revalidateShopIndexAndFeeds = (paths: string[]): void => {
 };
 
 const revalidatePage = (slug: string, paths: string[]): void => {
-  if (slug === 'home') {
+  if (slug === HOME_PAGE_SLUG) {
     revalidatePath('/');
     paths.push('/');
 
@@ -95,8 +96,9 @@ export const revalidateFromDatoWebhook = (payload: DatoWebhookPayload): string[]
 
       break;
     }
+    case 'header_footer':
     case 'company_profile': {
-      // Business facts are in the site-wide JSON-LD (root layout) and in llms.txt.
+      // Contact data, linked pages and business facts are used site-wide (layout, JSON-LD) and in llms.txt.
       revalidatePath('/', 'layout');
       revalidatePath('/llms.txt');
       paths.push('/ (layout)', '/llms.txt');
@@ -121,6 +123,10 @@ export const revalidateFromDatoWebhook = (payload: DatoWebhookPayload): string[]
       if (previousSlug && previousSlug !== slug) {
         revalidateCategorySlug(previousSlug, paths);
       }
+
+      // Category names are listed in llms.txt.
+      revalidatePath('/llms.txt');
+      paths.push('/llms.txt');
 
       break;
     }

@@ -9,11 +9,10 @@ import {
 } from '@/components/shop/checkout-styles';
 import { setEnhancedConversionEmail, trackEvent } from '@/lib/analytics/gtag';
 import {
-  CONTACT_TOPICS,
   ContactFieldErrors,
   ContactFormValues,
   HONEYPOT_FIELD,
-  isContactTopic,
+  PRODUCT_PREFILL_PARAM,
   validateContactForm,
 } from '@/lib/contact-form/schema';
 import Link from 'next/link';
@@ -21,18 +20,21 @@ import { FC, FormEvent, useEffect, useRef, useState } from 'react';
 
 type Status = 'idle' | 'sending' | 'sent' | 'error';
 
-const EMPTY_VALUES: ContactFormValues = { name: '', email: '', phone: '', topic: 'beratung', message: '' };
+const readProductPrefill = (): Partial<ContactFormValues> => {
+  const product = new URLSearchParams(window.location.search).get(PRODUCT_PREFILL_PARAM)?.slice(0, 200);
 
-/** Reads `?anliegen=leuchte&produkt=…` links, e.g. from the product page. */
-const readPrefill = (): Partial<ContactFormValues> => {
-  const params = new URLSearchParams(window.location.search);
-  const topic = params.get('anliegen');
-  const product = params.get('produkt')?.slice(0, 200);
+  return product ? { message: `Ich habe eine Frage zur Leuchte «${product}»:\n\n` } : {};
+};
 
-  return {
-    ...(isContactTopic(topic) && { topic }),
-    ...(product && { message: `Ich habe eine Frage zur Leuchte «${product}»:\n\n` }),
-  };
+type ApiResult = { ok?: boolean; error?: string; fieldErrors?: ContactFieldErrors };
+
+/** Server errors can be HTML (e.g. a proxy error page): never let parsing hide the real status. */
+const readApiResult = async (response: Response): Promise<ApiResult> => {
+  try {
+    return (await response.json()) as ApiResult;
+  } catch {
+    return {};
+  }
 };
 
 const FieldError: FC<{ id: string; message?: string }> = ({ id, message }) =>
@@ -42,22 +44,45 @@ const FieldError: FC<{ id: string; message?: string }> = ({ id, message }) =>
     </p>
   ) : null;
 
-export const ContactForm: FC<{ formId: string }> = ({ formId }) => {
-  const [values, setValues] = useState<ContactFormValues>(EMPTY_VALUES);
+type Props = {
+  formId: string;
+  /** Topics configured on the CMS block; the first is preselected. Without topics the field is hidden. */
+  topics: string[];
+  /** Privacy page from DatoCMS («Header & Footer»), link omitted if not set. */
+  privacyHref: string | null;
+};
+
+export const ContactForm: FC<Props> = ({ formId, topics, privacyHref }) => {
+  const [values, setValues] = useState<ContactFormValues>({
+    name: '',
+    email: '',
+    phone: '',
+    topic: topics[0] ?? '',
+    message: '',
+  });
   const [errors, setErrors] = useState<ContactFieldErrors>({});
   const [status, setStatus] = useState<Status>('idle');
   const [errorMessage, setErrorMessage] = useState<string>();
   const shownAtRef = useRef(0);
   const honeypotRef = useRef<HTMLInputElement>(null);
+  const successRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     shownAtRef.current = Date.now();
-    const prefill = readPrefill();
+    const prefill = readProductPrefill();
     if (Object.keys(prefill).length > 0) {
       // eslint-disable-next-line @eslint-react/set-state-in-effect -- URL params are only readable after mount
       setValues((current) => ({ ...current, ...prefill }));
     }
   }, []);
+
+  // The form (and the focused submit button) is replaced by the success message: move focus there
+  // so keyboard and screen reader users are not dropped back to the top of the page.
+  useEffect(() => {
+    if (status === 'sent') {
+      successRef.current?.focus();
+    }
+  }, [status]);
 
   const update = (field: keyof ContactFormValues, value: string) => {
     setValues((current) => ({ ...current, [field]: value }));
@@ -67,7 +92,7 @@ export const ContactForm: FC<{ formId: string }> = ({ formId }) => {
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const fieldErrors = validateContactForm(values);
+    const fieldErrors = validateContactForm(values, { topicRequired: topics.length > 0 });
     setErrors(fieldErrors);
     if (Object.keys(fieldErrors).length > 0) {
       return;
@@ -87,7 +112,7 @@ export const ContactForm: FC<{ formId: string }> = ({ formId }) => {
           pagePath: window.location.pathname,
         }),
       });
-      const result = (await response.json()) as { ok?: boolean; error?: string; fieldErrors?: ContactFieldErrors };
+      const result = await readApiResult(response);
 
       if (!response.ok || !result.ok) {
         setErrors(result.fieldErrors ?? {});
@@ -98,7 +123,7 @@ export const ContactForm: FC<{ formId: string }> = ({ formId }) => {
       }
 
       setEnhancedConversionEmail(values.email);
-      trackEvent('generate_lead', { lead_source: 'kontaktformular', anliegen: values.topic });
+      trackEvent('generate_lead', { lead_source: 'kontaktformular', ...(values.topic && { anliegen: values.topic }) });
       setStatus('sent');
     } catch {
       setErrorMessage('Die Anfrage konnte nicht gesendet werden. Bitte prüfen Sie Ihre Internetverbindung.');
@@ -108,7 +133,7 @@ export const ContactForm: FC<{ formId: string }> = ({ formId }) => {
 
   if (status === 'sent') {
     return (
-      <div role="status" className="bg-white-200 rounded p-6 ring-1 ring-gray-200">
+      <div ref={successRef} tabIndex={-1} role="status" className="bg-white-200 rounded p-6 ring-1 ring-gray-200">
         <p className="text-wehrli text-lg font-bold">Vielen Dank für Ihre Anfrage!</p>
         <p className="mt-2 text-sm lg:text-base">
           Wir haben Ihre Nachricht erhalten und melden uns so rasch wie möglich bei Ihnen.
@@ -169,19 +194,21 @@ export const ContactForm: FC<{ formId: string }> = ({ formId }) => {
           />
           <FieldError id={`${formId}-phone-error`} message={errors.phone} />
         </div>
-        <div>
-          <label htmlFor={`${formId}-topic`} className={checkoutLabelClass}>
-            Anliegen *
-          </label>
-          <select {...field('topic')} className={checkoutInputClass} onChange={(e) => update('topic', e.target.value)}>
-            {Object.entries(CONTACT_TOPICS).map(([value, label]) => (
-              <option key={value} value={value}>
-                {label}
-              </option>
-            ))}
-          </select>
-          <FieldError id={`${formId}-topic-error`} message={errors.topic} />
-        </div>
+        {topics.length > 0 && (
+          <div>
+            <label htmlFor={`${formId}-topic`} className={checkoutLabelClass}>
+              Anliegen *
+            </label>
+            <select {...field('topic')} className={checkoutInputClass} onChange={(e) => update('topic', e.target.value)}>
+              {topics.map((topic) => (
+                <option key={topic} value={topic}>
+                  {topic}
+                </option>
+              ))}
+            </select>
+            <FieldError id={`${formId}-topic-error`} message={errors.topic} />
+          </div>
+        )}
       </div>
 
       <div>
@@ -211,11 +238,17 @@ export const ContactForm: FC<{ formId: string }> = ({ formId }) => {
       )}
 
       <p className="text-xs text-gray-600">
-        Ihre Angaben verwenden wir nur zur Beantwortung Ihrer Anfrage. Mehr in unserer{' '}
-        <Link href="/datenschutz" className="underline">
-          Datenschutzerklärung
-        </Link>
-        .
+        Ihre Angaben verwenden wir nur zur Beantwortung Ihrer Anfrage.
+        {privacyHref && (
+          <>
+            {' '}
+            Mehr in unserer{' '}
+            <Link href={privacyHref} className="underline">
+              Datenschutzerklärung
+            </Link>
+            .
+          </>
+        )}
       </p>
 
       <Button type="primary" submit text="Anfrage senden" loading={status === 'sending'} />

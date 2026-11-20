@@ -16,7 +16,12 @@ type BannerState = 'initial' | 'closed' | 'reopened';
  * LCP element on mobile). Visitors who already chose are hidden by CSS before
  * first paint via `html[data-consent]`, set by the Google tag init script.
  */
-export const CookieBanner: FC = () => {
+type Props = {
+  /** Privacy page from DatoCMS («Header & Footer»), link omitted if not set. */
+  privacyHref: string | null;
+};
+
+export const CookieBanner: FC<Props> = ({ privacyHref }) => {
   const [state, setState] = useState<BannerState>('initial');
 
   useEffect(() => {
@@ -49,9 +54,11 @@ export const CookieBanner: FC = () => {
     >
       <p className="text-sm text-gray-700">
         Wir nutzen Google Analytics, um die Website zu verbessern, und mit Ihrer Zustimmung Google Ads für passende Werbung.{' '}
-        <Link href="/datenschutz" className="text-wehrli font-bold underline">
-          Datenschutz
-        </Link>
+        {privacyHref && (
+          <Link href={privacyHref} className="text-wehrli font-bold underline">
+            Datenschutz
+          </Link>
+        )}
       </p>
       <div className="mt-3 flex gap-2 sm:justify-end">
         <button

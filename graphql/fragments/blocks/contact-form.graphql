@@ -2,6 +2,7 @@ fragment contactFormBlock on ContactFormRecord {
   id
   formTitle: title
   formIntro: intro
+  topics
   disableMarginTop
   disableMarginBottom
 }

@@ -22,63 +22,80 @@ import { TextTwoColBlock } from './blocks/text-two-col';
 
 export type ContentBlock = NonNullable<PageQuery['page']>['content'][number];
 
+/** Blocks whose lead image can be the largest element of the first screen (LCP candidate). */
+const IMAGE_LED_BLOCKS: ReadonlySet<ContentBlock['__typename']> = new Set([
+  'ImageRecord',
+  'TextImageRecord',
+  'GalleryRecord',
+  'TeamRecord',
+  'HighlightProjectsTeaserRecord',
+  'HighlightOffersTeaserRecord',
+  'HighlightShopTeaserRecord',
+]);
+
 type Props = {
   blocks: ContentBlock[];
   /**
-   * Image-led blocks (images, text/image, galleries, team, highlight teasers) among the first N blocks are treated as
-   * above the fold and load their lead images eagerly (LCP).
+   * How many blocks from the top can be on the first screen. The first image-led block among them
+   * loads its lead image with priority (LCP); all other images stay lazy so they do not compete.
    * Pass 0 when something else (e.g. the home stage) is rendered above the content.
    */
   eagerBlockCount?: number;
 };
 
-export const ContentBlocks: FC<Props> = ({ blocks, eagerBlockCount = 2 }) => (
-  <>
-    {blocks.map((block, index) => {
-      const aboveFold = index < eagerBlockCount;
+export const ContentBlocks: FC<Props> = ({ blocks, eagerBlockCount = 2 }) => {
+  const lcpBlockIndex = blocks.findIndex(
+    (block, index) => index < eagerBlockCount && IMAGE_LED_BLOCKS.has(block.__typename),
+  );
 
-      switch (block.__typename) {
-        case 'TextRecord':
-          return <TextBlock key={block.id} block={block} />;
-        case 'TextTwoColumnRecord':
-          return <TextTwoColBlock key={block.id} block={block} />;
-        case 'TextThreeColumnRecord':
-          return <TextThreeColBlock key={block.id} block={block} />;
-        case 'TextImageRecord':
-          return <TextImageBlock key={block.id} block={block} aboveFold={aboveFold} />;
-        case 'ImageRecord':
-          return <ImageBlock key={block.id} block={block} aboveFold={aboveFold} />;
-        case 'TeamRecord':
-          return <TeamBlock key={block.id} block={block} aboveFold={aboveFold} />;
-        case 'IframeRecord':
-          return <IframeBlock key={block.id} block={block} />;
-        case 'QuoteRecord':
-          return <QuoteBlock key={block.id} block={block} />;
-        case 'GalleryRecord':
-          return <GalleryBlock key={block.id} block={block} aboveFold={aboveFold} />;
-        case 'LogoGridRecord':
-          return <LogoGridBlock key={block.id} block={block} />;
-        case 'TeaserGridRecord':
-          return <TeaserGridBlock key={block.id} block={block} />;
-        case 'TeaserRowRecord':
-          return <TeaserRowBlock key={block.id} block={block} />;
-        case 'AllCategoriesBlockRecord':
-          return <AllCategoriesBlock key={block.id} block={block} />;
-        case 'ContactRecord':
-          return <ContactBlock key={block.id} block={block} />;
-        case 'CalendlyRecord':
-          return <CalendlyBlock key={block.id} block={block} />;
-        case 'ContactFormRecord':
-          return <ContactFormBlock key={block.id} block={block} />;
-        case 'HighlightProjectsTeaserRecord':
-          return <HighlightProjectsTeaserBlock key={block.id} block={block} aboveFold={aboveFold} />;
-        case 'HighlightOffersTeaserRecord':
-          return <HighlightOffersTeaserBlock key={block.id} block={block} aboveFold={aboveFold} />;
-        case 'HighlightShopTeaserRecord':
-          return <HighlightShopTeaserBlock key={block.id} block={block} aboveFold={aboveFold} />;
-        default:
-          return null;
-      }
-    })}
-  </>
-);
+  return (
+    <>
+      {blocks.map((block, index) => {
+        const aboveFold = index === lcpBlockIndex;
+
+        switch (block.__typename) {
+          case 'TextRecord':
+            return <TextBlock key={block.id} block={block} />;
+          case 'TextTwoColumnRecord':
+            return <TextTwoColBlock key={block.id} block={block} />;
+          case 'TextThreeColumnRecord':
+            return <TextThreeColBlock key={block.id} block={block} />;
+          case 'TextImageRecord':
+            return <TextImageBlock key={block.id} block={block} aboveFold={aboveFold} />;
+          case 'ImageRecord':
+            return <ImageBlock key={block.id} block={block} aboveFold={aboveFold} />;
+          case 'TeamRecord':
+            return <TeamBlock key={block.id} block={block} aboveFold={aboveFold} />;
+          case 'IframeRecord':
+            return <IframeBlock key={block.id} block={block} />;
+          case 'QuoteRecord':
+            return <QuoteBlock key={block.id} block={block} />;
+          case 'GalleryRecord':
+            return <GalleryBlock key={block.id} block={block} aboveFold={aboveFold} />;
+          case 'LogoGridRecord':
+            return <LogoGridBlock key={block.id} block={block} />;
+          case 'TeaserGridRecord':
+            return <TeaserGridBlock key={block.id} block={block} />;
+          case 'TeaserRowRecord':
+            return <TeaserRowBlock key={block.id} block={block} />;
+          case 'AllCategoriesBlockRecord':
+            return <AllCategoriesBlock key={block.id} block={block} />;
+          case 'ContactRecord':
+            return <ContactBlock key={block.id} block={block} />;
+          case 'CalendlyRecord':
+            return <CalendlyBlock key={block.id} block={block} />;
+          case 'ContactFormRecord':
+            return <ContactFormBlock key={block.id} block={block} />;
+          case 'HighlightProjectsTeaserRecord':
+            return <HighlightProjectsTeaserBlock key={block.id} block={block} aboveFold={aboveFold} />;
+          case 'HighlightOffersTeaserRecord':
+            return <HighlightOffersTeaserBlock key={block.id} block={block} aboveFold={aboveFold} />;
+          case 'HighlightShopTeaserRecord':
+            return <HighlightShopTeaserBlock key={block.id} block={block} aboveFold={aboveFold} />;
+          default:
+            return null;
+        }
+      })}
+    </>
+  );
+};

@@ -12,6 +12,7 @@ import { notFound } from 'next/navigation';
 import { JsonLd } from '@/components/seo/json-ld';
 import { buildBlogPostingJsonLd } from '@/utils/article-json-ld';
 import { buildDatoPageMetadata } from '@/utils/dato-metadata';
+import { isDedicatedRoute } from '@/constants/dedicated-routes';
 
 type Params = {
   params: Promise<{
@@ -41,15 +42,13 @@ export async function generateMetadata({ params }: Params) {
   return buildDatoPageMetadata([...site.favicon, ...(page?.seo ?? [])], `/${slugs.join('/')}`);
 }
 
-const PATHS_WITH_DEDICATED_ROUTES = new Set(['/', '/shop', '/faq']);
-
 export async function generateStaticParams() {
   const routes = await getAllDatoRoutes({ pagesOnly: true, includeDrafts: false });
 
   // The param must be named like the route segment ([...slugs]), otherwise nothing is prerendered.
-  // The homepage and paths served by dedicated routes (app/shop, app/faq) are skipped.
+  // The homepage and paths served by dedicated Next.js routes are skipped.
   return routes
-    .filter(({ path }) => !PATHS_WITH_DEDICATED_ROUTES.has(path))
+    .filter(({ path }) => !isDedicatedRoute(path))
     .map(({ path }) => ({
       slugs: path.split('/').filter(Boolean),
     }));

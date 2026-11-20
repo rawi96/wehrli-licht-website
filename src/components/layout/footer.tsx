@@ -13,6 +13,8 @@ import {
   footerSocialLinkClassName,
   footerTextColorClassName,
 } from './footer-styles';
+import { SITE_NAME } from '@/constants/site';
+import { getCmsPagePath } from '@/utils/cms-page-path';
 
 type Props = {
   headerFooter: HeaderFooterRecord;
@@ -34,6 +36,7 @@ export const Footer: FC<Props> = ({ headerFooter }) => {
   const { companyName } = headerFooter;
   const year = new Date().getFullYear();
   const footerSections = mapFooterNavigationFromDato(headerFooter);
+  const privacyHref = getCmsPagePath(headerFooter.privacyPage);
   const socialLinks: SocialLink[] = SOCIAL_LINKS.flatMap(({ name, key, Icon }) => {
     const href = headerFooter[key];
 
@@ -62,11 +65,13 @@ export const Footer: FC<Props> = ({ headerFooter }) => {
         <div className="mt-6 flex flex-col gap-4 border-t border-white/10 pt-5 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-6">
             <p className={footerBodyTextClassName}>
-              &copy; {year} {companyName ?? 'Wehrli Licht GmbH'}. Alle Rechte vorbehalten.
+              &copy; {year} {companyName ?? SITE_NAME}. Alle Rechte vorbehalten.
             </p>
-            <Link href="/datenschutz" className={footerLinkClassName}>
-              Datenschutz
-            </Link>
+            {privacyHref && (
+              <Link href={privacyHref} className={footerLinkClassName}>
+                Datenschutz
+              </Link>
+            )}
             {isTrackingEnabled && <CookieSettingsButton className={`${footerLinkClassName} text-left`} />}
           </div>
 

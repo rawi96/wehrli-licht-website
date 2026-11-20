@@ -1,5 +1,6 @@
 fragment calendlyBlock on CalendlyRecord {
   id
+  url
   disableMarginTop
   disableMarginBottom
 }

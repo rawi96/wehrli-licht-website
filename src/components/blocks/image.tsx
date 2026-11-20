@@ -43,12 +43,13 @@ export const ImageBlock: FC<Props> = ({
     return (
       <BlockWrapper disableMarginBottom={disableMarginBottom} disableMarginTop={disableMarginTop}>
         <div className="grid gap-2 sm:auto-cols-[minmax(0,_1fr)] sm:grid-flow-col sm:gap-8 xl:gap-16">
-          {images.map((image) => (
+          {images.map((image, index) => (
             <div key={image.id}>
               <ImageComponent
                 key={image.id}
                 image={image}
-                priority={priority}
+                // Only the first image is the LCP candidate; the others must not compete with it.
+                priority={priority && index === 0}
                 sizes={sideBySideImageSizes(images.length)}
                 altFromTitle={false}
                 imgClassName="rounded object-cover"

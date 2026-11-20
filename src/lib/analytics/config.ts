@@ -14,3 +14,21 @@ export type ConsentChoice = 'granted' | 'denied';
 
 /** Fired on window to reopen the cookie banner (e.g. from the footer). */
 export const OPEN_CONSENT_BANNER_EVENT = 'wehrli:open-consent-banner';
+
+/**
+ * Consent model ("Variante 3", Swiss opt-out):
+ * - no choice yet: statistics on, advertising off
+ * - accepted: statistics and advertising on
+ * - declined: everything off (the Google tag only sends cookieless pings)
+ * Shared by the inline init script (consent default) and the banner (consent update).
+ */
+export const getConsentState = (choice: ConsentChoice | null) => {
+  const ads = choice === 'granted' ? 'granted' : 'denied';
+
+  return {
+    analytics_storage: choice === 'denied' ? 'denied' : 'granted',
+    ad_storage: ads,
+    ad_user_data: ads,
+    ad_personalization: ads,
+  } as const;
+};

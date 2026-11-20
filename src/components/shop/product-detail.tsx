@@ -15,11 +15,14 @@ import { trackEvent } from '@/lib/analytics/gtag';
 import { Tab } from '@headlessui/react';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { CONTACT_FORM_ANCHOR, PRODUCT_PREFILL_PARAM } from '@/lib/contact-form/schema';
 
 type ProductVariant = ShopProduct['variants'][number];
 
 type Props = {
   product: ShopProduct;
+  /** Contact page from DatoCMS («Header & Footer»); the question link is hidden if not set. */
+  contactHref: string | null;
 };
 
 /** Two columns from lg (gallery = half of the max-w-7xl content), max-w-2xl below. */
@@ -38,10 +41,10 @@ const toAnalyticsItem = (product: ShopProduct, variant: ProductVariant | null) =
   };
 };
 
-const productQuestionHref = (product: ShopProduct) =>
-  `/kontakt?${new URLSearchParams({ anliegen: 'leuchte', produkt: product.name }).toString()}#kontaktformular`;
+const productQuestionHref = (contactHref: string, product: ShopProduct) =>
+  `${contactHref}?${new URLSearchParams({ [PRODUCT_PREFILL_PARAM]: product.name }).toString()}#${CONTACT_FORM_ANCHOR}`;
 
-export const ProductDetail = ({ product }: Props) => {
+export const ProductDetail = ({ product, contactHref }: Props) => {
   const [activeVariant, setActiveVariant] = useState<ProductVariant | null>(null);
   const [loading, setLoading] = useState(false);
   const { addToCart, setIsShowCart } = useShopContext();
@@ -180,12 +183,14 @@ export const ProductDetail = ({ product }: Props) => {
             </div>
           </div>
 
-          <p className="-mt-4 mb-10 text-sm">
-            Fragen zu dieser Leuchte?{' '}
-            <Link href={productQuestionHref(product)} className="text-wehrli font-bold underline">
-              Schreiben Sie uns
-            </Link>
-          </p>
+          {contactHref && (
+            <p className="-mt-4 mb-10 text-sm">
+              Fragen zu dieser Leuchte?{' '}
+              <Link href={productQuestionHref(contactHref, product)} className="text-wehrli font-bold underline">
+                Schreiben Sie uns
+              </Link>
+            </p>
+          )}
         </div>
 
         {product.description?.value !== undefined &&

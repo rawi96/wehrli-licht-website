@@ -14,6 +14,9 @@ export const CHECKOUT_SHIPPING_LABELS: Record<CheckoutShippingMethod, string> = 
   post: 'Versand per Post',
 };
 
+/** Name of the Stripe line item that carries the shipping cost (told apart from products by it). */
+export const STRIPE_SHIPPING_LINE_NAME = CHECKOUT_SHIPPING_LABELS.post;
+
 export const CHECKOUT_PAYMENT_LABELS: Record<CheckoutPaymentMethod, { title: string; description: string }> = {
   prepayment: {
     title: 'Vorauskasse',

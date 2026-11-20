@@ -1,8 +1,7 @@
+import { STRIPE_SHIPPING_LINE_NAME } from '@/constants/checkout-labels';
 import { getStripe } from '@/lib/stripe';
 import { CheckoutOrderEmailData } from '@/types/checkout-order-email';
 import { CheckoutCustomer, CheckoutOrderItem, CheckoutShippingAddress, CheckoutShippingMethod } from '@/types/checkout';
-
-const SHIPPING_LINE_NAME = 'Versand per Post';
 
 const parseShippingMethod = (value: string | undefined): CheckoutShippingMethod => (value === 'post' ? 'post' : 'pickup');
 
@@ -70,7 +69,7 @@ export const loadCheckoutOrderEmailDataFromStripe = async (sessionId: string): P
     const quantity = line.quantity ?? 1;
     const lineTotalChf = (line.amount_total ?? 0) / 100;
 
-    if (name === SHIPPING_LINE_NAME) {
+    if (name === STRIPE_SHIPPING_LINE_NAME) {
       shippingCostChf = lineTotalChf;
 
       continue;

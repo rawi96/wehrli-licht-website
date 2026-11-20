@@ -1,11 +1,5 @@
 import { buildContactRequestEmail } from '@/lib/contact-form/email';
-import {
-  ContactFormValues,
-  HONEYPOT_FIELD,
-  MIN_FILL_TIME_MS,
-  isContactTopic,
-  validateContactForm,
-} from '@/lib/contact-form/schema';
+import { ContactFormValues, HONEYPOT_FIELD, MIN_FILL_TIME_MS, validateContactForm } from '@/lib/contact-form/schema';
 import { getShopNotificationEmails } from '@/lib/resend';
 import { getSiteUrl } from '@/utils/site-url';
 import { checkBotId } from 'botid/server';
@@ -43,12 +37,16 @@ export const POST = async (req: NextRequest): Promise<NextResponse> => {
     return silentlyAccept('botid');
   }
 
-  let body: ContactRequestBody;
+  let parsed: unknown;
   try {
-    body = (await req.json()) as ContactRequestBody;
+    parsed = await req.json();
   } catch {
+    parsed = null;
+  }
+  if (typeof parsed !== 'object' || parsed === null || Array.isArray(parsed)) {
     return NextResponse.json({ error: 'Ungültige Anfrage.' }, { status: 400 });
   }
+  const body = parsed as ContactRequestBody;
 
   if (asString(body[HONEYPOT_FIELD])) {
     return silentlyAccept('honeypot');
@@ -58,19 +56,15 @@ export const POST = async (req: NextRequest): Promise<NextResponse> => {
     return silentlyAccept('too-fast');
   }
 
-  const topic = asString(body.topic);
   const values: ContactFormValues = {
     name: asString(body.name),
     email: asString(body.email),
     phone: asString(body.phone),
-    topic: isContactTopic(topic) ? topic : 'anderes',
+    topic: asString(body.topic),
     message: asString(body.message),
   };
 
   const fieldErrors = validateContactForm(values);
-  if (!isContactTopic(topic)) {
-    fieldErrors.topic = 'Bitte wählen Sie ein Anliegen.';
-  }
   if (Object.keys(fieldErrors).length > 0) {
     return NextResponse.json({ error: 'Bitte prüfen Sie Ihre Angaben.', fieldErrors }, { status: 400 });
   }

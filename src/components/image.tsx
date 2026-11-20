@@ -10,7 +10,10 @@ type ImageProps = {
     alt?: string | null;
   } | null;
   imgClassName?: string;
-  /** Above-the-fold / LCP image: no lazy loading and fetchpriority="high". */
+  /**
+   * Above-the-fold / LCP image: no lazy loading, fetchpriority="high" and a <head> preload.
+   * The preload needs `srcSet`, so query these images with `priorityResponsiveImageFragment`.
+   */
   priority?: boolean;
   sizes?: string;
   /** Use the image title as alt text when alt is missing. Disable where the title is shown as a caption. */

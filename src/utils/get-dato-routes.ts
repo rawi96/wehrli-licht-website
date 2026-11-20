@@ -1,5 +1,5 @@
 import { AllRoutesDocument } from '@/graphql/generated';
-import { generatePathForRecord } from './pathnames';
+import { getPublicPagePath } from './pathnames';
 import { queryDatoCMS } from './query-dato-cms';
 
 type Route = {
@@ -19,18 +19,11 @@ export const getAllDatoRoutes = async ({ includeDrafts = true, pagesOnly = false
     includeDrafts,
   });
 
-  const pages =
-    data.allPages.map(({ slug, lastModified, seometatags, parent }) => ({
-      path: generatePathForRecord({ slug, type: 'PageRecord', parent }),
-      lastModified,
-      noIndex: seometatags?.noIndex ?? undefined,
-    })) || [];
-
-  // We replace the /home path with / because the homepage is redirected in next.config.js
-  const homeIndex = pages.findIndex(({ path }) => path === '/home');
-  if (homeIndex > -1) {
-    pages[homeIndex].path = '/';
-  }
+  const pages = data.allPages.map(({ slug, lastModified, seometatags, parent }) => ({
+    path: getPublicPagePath({ slug, parent }),
+    lastModified,
+    noIndex: seometatags?.noIndex ?? undefined,
+  }));
 
   if (pagesOnly) {
     return pages;

@@ -1,6 +1,7 @@
 import { getSiteUrl } from '@/utils/site-url';
 import type { Metadata } from 'next';
 import { toNextMetadata } from 'react-datocms/seo';
+import { SITE_NAME } from '@/constants/site';
 
 type DatoTags = Parameters<typeof toNextMetadata>[0];
 
@@ -18,6 +19,6 @@ export const buildDatoPageMetadata = (tags: DatoTags, path: string): Metadata =>
     ...metadata,
     title,
     alternates: { canonical: url },
-    openGraph: { ...metadata.openGraph, url, siteName: 'Wehrli Licht GmbH', locale: 'de_CH' },
+    openGraph: { ...metadata.openGraph, url, siteName: metadata.openGraph?.siteName ?? SITE_NAME, locale: 'de_CH' },
   };
 };
