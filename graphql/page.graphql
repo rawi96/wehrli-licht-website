@@ -3,6 +3,8 @@ query Page($slug: String!) {
     id
     slug
     title
+    _firstPublishedAt
+    _updatedAt
     parent {
       id
       slug

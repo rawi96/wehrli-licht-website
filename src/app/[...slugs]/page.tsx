@@ -9,7 +9,9 @@ import { queryDatoCMS } from '@/utils/query-dato-cms';
 import { validateRoutes } from '@/utils/validate-dato-routes';
 import { draftMode } from 'next/headers';
 import { notFound } from 'next/navigation';
-import { toNextMetadata } from 'react-datocms/seo';
+import { JsonLd } from '@/components/seo/json-ld';
+import { buildBlogPostingJsonLd } from '@/utils/article-json-ld';
+import { buildDatoPageMetadata } from '@/utils/dato-metadata';
 
 type Params = {
   params: Promise<{
@@ -36,16 +38,17 @@ export async function generateMetadata({ params }: Params) {
     includeDrafts: isEnabled,
   });
 
-  return toNextMetadata([...site.favicon, ...(page?.seo ?? [])]);
+  return buildDatoPageMetadata([...site.favicon, ...(page?.seo ?? [])], `/${slugs.join('/')}`);
 }
 
 export async function generateStaticParams() {
-  const routes = await getAllDatoRoutes({ pagesOnly: true });
+  const routes = await getAllDatoRoutes({ pagesOnly: true, includeDrafts: false });
 
+  // The param must be named like the route segment ([...slugs]), otherwise nothing is prerendered.
   return routes
     .filter(({ path }) => path !== '/') // We filter out the homepage
     .map(({ path }) => ({
-      slug: path.split('/').filter(Boolean),
+      slugs: path.split('/').filter(Boolean),
     }));
 }
 
@@ -82,6 +85,17 @@ export default async function ContentPage({ params }: Params) {
   return (
     <main>
       <Header headerFooter={headerFooter as HeaderFooterRecord} />
+      {page.parent?.slug === 'blog' && (
+        <JsonLd
+          data={buildBlogPostingJsonLd({
+            title: page.title,
+            path: `/${slugs.join('/')}`,
+            seo: page.seo,
+            publishedAt: page._firstPublishedAt,
+            updatedAt: page._updatedAt,
+          })}
+        />
+      )}
       <ContentWrapper>
         <Breadcrumbs page={page as unknown as PageRecord} />
         <ContentBlocks blocks={page.content} />
