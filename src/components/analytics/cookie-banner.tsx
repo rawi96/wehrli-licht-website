@@ -33,18 +33,15 @@ export const CookieBanner: FC = () => {
   return (
     <section
       aria-label="Cookie-Einstellungen"
-      className="fixed inset-x-4 bottom-4 z-50 mx-auto max-w-xl rounded bg-white p-5 shadow-lg ring-1 ring-gray-200 sm:left-6 sm:mx-0 sm:p-6"
+      className="fixed inset-x-4 bottom-4 z-50 mx-auto max-w-md rounded bg-white p-4 shadow-lg ring-1 ring-gray-200 sm:left-6 sm:mx-0"
     >
-      <p className="text-wehrli text-base font-bold">Cookies &amp; Datenschutz</p>
-      <p className="mt-2 text-sm text-gray-700">
-        Wir werten die Nutzung unserer Website mit Google Analytics statistisch aus, um sie laufend zu verbessern. Mit Ihrer
-        Zustimmung nutzen wir zusätzlich Cookies von Google Ads, um Ihnen passende Werbung zu zeigen. Mehr dazu in unserer{' '}
+      <p className="text-sm text-gray-700">
+        Wir nutzen Google Analytics, um die Website zu verbessern, und mit Ihrer Zustimmung Google Ads für passende Werbung.{' '}
         <Link href="/datenschutz" className="text-wehrli font-bold underline">
-          Datenschutzerklärung
+          Datenschutz
         </Link>
-        .
       </p>
-      <div className="mt-4 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+      <div className="mt-3 flex gap-2 sm:justify-end">
         <button
           type="button"
           onClick={() => choose('denied')}
