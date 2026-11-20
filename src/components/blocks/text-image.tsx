@@ -1,6 +1,6 @@
 import { TextImageBlockFragment } from '@/graphql/generated';
 import { classNames } from '@/utils/css';
-import { StructuredText as StructuredTextType, isEmptyDocument } from 'datocms-structured-text-utils';
+import { isEmptyDocument } from 'datocms-structured-text-utils';
 import NextImage from 'next/image';
 import { FC } from 'react';
 import { BlockWrapper } from '../block-wrapper';
@@ -42,7 +42,7 @@ export const TextImageBlock: FC<Props> = ({
       )}
       {!isEmptyDocument(content) && (
         <div className={classNames('basis-3/5')}>
-          <StructuredTextRenderer data={content as StructuredTextType} />
+          <StructuredTextRenderer data={content} />
         </div>
       )}
     </div>

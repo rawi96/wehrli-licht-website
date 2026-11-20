@@ -1,5 +1,5 @@
 import { LinkBlockFragment } from '@/graphql/generated';
-import { PageRecord, generatePathForRecord } from '@/utils/pathnames';
+import { generatePathForRecord } from '@/utils/pathnames';
 
 export const getShopLinkHref = (link: LinkBlockFragment): string => {
   if (link.isExternalUrl && link.externalUrl) {
@@ -10,7 +10,7 @@ export const getShopLinkHref = (link: LinkBlockFragment): string => {
     const base = generatePathForRecord({
       slug: link.link.slug,
       type: 'PageRecord',
-      parent: link.link.parent as PageRecord | null | undefined,
+      parent: link.link.parent,
     });
 
     return `${base}${link.anchorLink ?? ''}`;

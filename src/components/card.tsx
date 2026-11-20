@@ -22,7 +22,7 @@ export const Card: FC<Props> = ({ title, description, link, linkLabel, linkTitle
     className={classNames(
       'group bg-white-100 grid w-full grid-rows-[auto,1fr,auto] overflow-hidden rounded text-black transition-transform active:scale-[.99]',
     )}
-    target={'_self'}
+    target="_self"
   >
     <div className="relative overflow-hidden">
       {image && (

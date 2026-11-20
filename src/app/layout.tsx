@@ -1,7 +1,6 @@
 import '@/styles/globals.css';
 import '@/styles/highlight-teaser.css';
 import { classNames } from '@/utils/css';
-import PlausibleProvider from 'next-plausible';
 import type { Metadata } from 'next';
 import { draftMode } from 'next/headers';
 import { ReactNode } from 'react';
@@ -35,7 +34,6 @@ const RootLayout = async ({ children }: { children: ReactNode }) => {
       <head>
         <link rel="preconnect" href="https://www.datocms-assets.com" crossOrigin="" />
         <link rel="dns-prefetch" href="https://www.datocms-assets.com" />
-        <PlausibleProvider domain="wehrli-licht.ch" />
       </head>
       <body className={classNames(jost.className, 'bg-white-200 h-full antialiased')}>
         {isEnabled && <DraftModeBanner />}

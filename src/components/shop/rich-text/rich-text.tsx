@@ -11,6 +11,6 @@ export const RichText = ({ html }: Props) => (
       dangerouslySetInnerHTML={{
         __html: html,
       }}
-    ></div>
+    />
   </div>
 );

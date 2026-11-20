@@ -135,7 +135,7 @@ export const ProductDetail = ({ product }: Props) => {
 
         {product.description?.value !== undefined &&
           product.description?.value !== null &&
-          !isEmptyDocument(product.description.value as StructuredTextType) && (
+          !isEmptyDocument(product.description.value) && (
             <>
               <div className="mt-8 mb-2">
                 <p className="text-lg font-bold">Beschreibung</p>

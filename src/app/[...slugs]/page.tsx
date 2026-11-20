@@ -3,13 +3,7 @@ import { ContentBlocks } from '@/components/content-blocks';
 import { ContentWrapper } from '@/components/layout/content-wrapper';
 import { Footer } from '@/components/layout/footer';
 import { Header } from '@/components/layout/header';
-import {
-  HeaderFooterDocument,
-  HeaderFooterRecord,
-  PageDocument,
-  PageModelContentField,
-  PageRecord,
-} from '@/graphql/generated';
+import { HeaderFooterDocument, HeaderFooterRecord, PageDocument, PageRecord } from '@/graphql/generated';
 import { getAllDatoRoutes } from '@/utils/get-dato-routes';
 import { queryDatoCMS } from '@/utils/query-dato-cms';
 import { validateRoutes } from '@/utils/validate-dato-routes';
@@ -90,7 +84,7 @@ export default async function ContentPage({ params }: Params) {
       <Header headerFooter={headerFooter as HeaderFooterRecord} />
       <ContentWrapper>
         <Breadcrumbs page={page as unknown as PageRecord} />
-        <ContentBlocks blocks={page.content as PageModelContentField[]} />
+        <ContentBlocks blocks={page.content} />
       </ContentWrapper>
       <Footer headerFooter={headerFooter as HeaderFooterRecord} />
     </main>

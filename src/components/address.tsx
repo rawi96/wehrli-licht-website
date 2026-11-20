@@ -11,7 +11,7 @@ type AddressProps = {
 };
 
 export const Address = ({ companyName, street, zip, place, phone, email, mapsLink }: AddressProps) => (
-  <address className={`text-center text-sm not-italic`} itemScope itemType="https://schema.org/Organization">
+  <address className="text-center text-sm not-italic" itemScope itemType="https://schema.org/Organization">
     {mapsLink && (
       <span className="inline-block">
         <Link

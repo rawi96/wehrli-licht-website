@@ -7,11 +7,14 @@ import { getShopServiceIcon } from '@/utils/shop-service-icons';
 import { shopSectionHeadingId } from '@/utils/shop-page-sections';
 import { toStructuredTextValue } from '@/utils/shop-structured-text';
 import Link from 'next/link';
-import { FC } from 'react';
+import { FC, SVGProps, createElement } from 'react';
 
 type Props = {
   block: ShopServiceSectionFragment;
 };
+
+const ServiceIcon: FC<{ icon: string } & SVGProps<SVGSVGElement>> = ({ icon, ...props }) =>
+  createElement(getShopServiceIcon(icon), props);
 
 export const ShopServiceSectionBlock: FC<Props> = ({ block }) => {
   const headingId = shopSectionHeadingId('shop-service', block.id);
@@ -29,13 +32,11 @@ export const ShopServiceSectionBlock: FC<Props> = ({ block }) => {
 
         <ul className="mt-8 grid grid-cols-1 gap-4 sm:mt-10 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
           {block.items.map((item) => {
-            const Icon = getShopServiceIcon(item.icon);
-
             return (
               <li key={item.id}>
                 <article className="bg-white-200 flex h-full flex-col rounded p-6 shadow-sm ring-1 ring-gray-200">
                   <div className="bg-wehrli/10 text-wehrli flex size-11 shrink-0 items-center justify-center rounded">
-                    <Icon className="size-6" aria-hidden="true" />
+                    <ServiceIcon icon={item.icon} className="size-6" aria-hidden="true" />
                   </div>
                   <h3 className="text-wehrli mt-5 text-base font-bold">{item.title}</h3>
                   <p className="mt-2 flex-1 text-sm text-gray-600">{item.description}</p>

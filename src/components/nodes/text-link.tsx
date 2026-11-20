@@ -1,13 +1,6 @@
 'use client';
 
-import React, {
-  AnchorHTMLAttributes,
-  ButtonHTMLAttributes,
-  LinkHTMLAttributes,
-  MouseEvent,
-  ReactNode,
-  forwardRef,
-} from 'react';
+import React, { ButtonHTMLAttributes, LinkHTMLAttributes, MouseEvent, ReactNode, forwardRef } from 'react';
 
 type Base = {
   as?: 'a' | 'button';
@@ -50,21 +43,14 @@ export const TextLink = forwardRef<any, TextLinkProps>((props, ref) => {
     const rel = newTab ? 'noreferrer' : '';
 
     return (
-      <a
-        href={href}
-        ref={ref}
-        target={target}
-        rel={rel}
-        className={className}
-        {...(rest as AnchorHTMLAttributes<HTMLAnchorElement>)}
-      >
+      <a href={href} ref={ref} target={target} rel={rel} className={className} {...rest}>
         {children}
       </a>
     );
   }
 
   return (
-    <button ref={ref} className={className} {...(props as ButtonHTMLAttributes<HTMLButtonElement>)}>
+    <button ref={ref} className={className} {...props}>
       {children}
     </button>
   );

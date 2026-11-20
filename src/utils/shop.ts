@@ -94,16 +94,15 @@ export const getProductsByCategory = cache(async (categoryId: string): Promise<S
   return allShopProducts;
 });
 
-export const getAllShopProducts = cache(
-  async (): Promise<ShopProductListItem[]> =>
-    fetchAllPaginated(async (skip) => {
-      const { allShopProducts, meta } = await queryDatoCMS({
-        document: ShopAllProductsDocument,
-        variables: { skip },
-      });
+export const getAllShopProducts = cache(async (): Promise<ShopProductListItem[]> =>
+  fetchAllPaginated(async (skip) => {
+    const { allShopProducts, meta } = await queryDatoCMS({
+      document: ShopAllProductsDocument,
+      variables: { skip },
+    });
 
-      return { items: allShopProducts, total: meta.count };
-    }),
+    return { items: allShopProducts, total: meta.count };
+  }),
 );
 
 export const getProductBySlug = cache(async (slug: string): Promise<ShopProduct | null> => {
