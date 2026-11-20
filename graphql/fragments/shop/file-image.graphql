@@ -24,11 +24,6 @@ fragment shopListFileImage on FileField {
   alt
   title
   responsiveImage(imgixParams: { w: 1000, q: 75, auto: format }) {
-    src
-    width
-    height
-    alt
-    title
-    sizes
+    ...responsiveImageBaseFragment
   }
 }
