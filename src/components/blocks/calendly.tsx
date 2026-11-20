@@ -2,7 +2,7 @@
 
 import { CalendlyBlockFragment } from '@/graphql/generated';
 import { trackEvent } from '@/lib/analytics/gtag';
-import { FC, useEffect, useMemo, useRef } from 'react';
+import { FC, useEffect, useRef } from 'react';
 import { BlockWrapper } from '../block-wrapper';
 
 declare global {
@@ -15,9 +15,7 @@ type Props = {
   block: CalendlyBlockFragment;
 };
 
-export const CalendlyBlock: FC<Props> = ({ block: { disableMarginBottom, disableMarginTop } }) => {
-  const calendlyUrl = useMemo(() => 'https://calendly.com/wehrli-licht/60min?primary_color=214073', []);
-
+export const CalendlyBlock: FC<Props> = ({ block: { url: calendlyUrl, disableMarginBottom, disableMarginTop } }) => {
   // Calendly reports bookings from its iframe via postMessage.
   useEffect(() => {
     const onMessage = (event: MessageEvent<{ event?: string }>) => {
@@ -37,7 +35,7 @@ export const CalendlyBlock: FC<Props> = ({ block: { disableMarginBottom, disable
 
   useEffect(() => {
     const container = containerRef.current;
-    if (!container) {
+    if (!container || !calendlyUrl) {
       return;
     }
 
@@ -85,6 +83,11 @@ export const CalendlyBlock: FC<Props> = ({ block: { disableMarginBottom, disable
       script?.removeEventListener('load', initWidget);
     };
   }, [calendlyUrl]);
+
+  // The booking link is configured on the block in DatoCMS.
+  if (!calendlyUrl) {
+    return null;
+  }
 
   return (
     <BlockWrapper disableMarginTop={disableMarginTop} disableMarginBottom={disableMarginBottom}>

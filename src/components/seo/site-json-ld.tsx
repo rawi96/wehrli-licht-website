@@ -1,7 +1,9 @@
 import { JsonLd } from '@/components/seo/json-ld';
-import { getCompanyProfile, toLines } from '@/utils/company-profile';
+import { getCompanyProfile } from '@/utils/company-profile';
+import { toLines } from '@/utils/text';
 import { getHeaderFooter } from '@/utils/get-header-footer';
 import { getSiteUrl } from '@/utils/site-url';
+import { SITE_NAME } from '@/constants/site';
 
 /**
  * Site-wide structured data: the business (local SEO, knowledge panel, AI answers) and the
@@ -40,7 +42,7 @@ export const SiteJsonLd = async () => {
           {
             '@type': 'LightingStore',
             '@id': businessId,
-            name: headerFooter.companyName ?? 'Wehrli Licht GmbH',
+            name: headerFooter.companyName ?? SITE_NAME,
             url,
             logo: `${url}/wehrli-licht-logo.svg`,
             image: `${url}/wehrli-licht-logo.svg`,
@@ -72,7 +74,7 @@ export const SiteJsonLd = async () => {
             '@type': 'WebSite',
             '@id': `${url}/#website`,
             url,
-            name: headerFooter.companyName ?? 'Wehrli Licht GmbH',
+            name: headerFooter.companyName ?? SITE_NAME,
             inLanguage: 'de-CH',
             publisher: { '@id': businessId },
           },

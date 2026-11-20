@@ -7,8 +7,7 @@ import {
 import type { CategoryForSeo, ProductForSeo } from '@/utils/shop-seo/types';
 import { getSiteUrl } from '@/utils/site-url';
 import type { Metadata } from 'next';
-
-const SITE_NAME = 'Wehrli Licht GmbH';
+import { SITE_NAME } from '@/constants/site';
 
 const productOgImage = (product: ProductForSeo): string | undefined => {
   const image = product.images[0];

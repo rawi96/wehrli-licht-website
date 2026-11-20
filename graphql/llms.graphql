@@ -1,5 +1,5 @@
 query LlmsPages {
-  allPages(first: 100) {
+  allPages(first: 500) {
     id
     title
     slug
@@ -10,6 +10,17 @@ query LlmsPages {
     parent {
       id
       title
+      ...llmsParentPath
+    }
+  }
+}
+
+# Same depth as AllRoutes (sitemap), so nested pages get their full path.
+fragment llmsParentPath on PageRecord {
+  slug
+  parent {
+    slug
+    parent {
       slug
       parent {
         slug

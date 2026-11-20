@@ -4,6 +4,8 @@ import { FC } from 'react';
 import { BlockWrapper } from '../block-wrapper';
 import { Grid } from '../grid';
 import { ImageComponent } from '../image';
+import { CONTENT_IMAGE_SIZES } from '@/utils/image-sizes';
+import { Heading } from '../nodes';
 
 type Props = {
   block: TeamBlockFragment;
@@ -11,40 +13,45 @@ type Props = {
   aboveFold?: boolean;
 };
 
-/** Grid: 1 column, 2 from md, 3 from lg (inside the max-w-7xl content). */
-const PORTRAIT_SIZES = '(min-width: 1400px) 400px, (min-width: 1024px) 30vw, (min-width: 768px) 46vw, 92vw';
+export const TeamBlock: FC<Props> = ({
+  block: { teamTitle, employees, disableMarginBottom, disableMarginTop },
+  aboveFold = false,
+}) => {
+  // With a block title the names are its sub headings, otherwise they are the section headings.
+  const NameHeading = teamTitle ? 'h3' : 'h2';
 
-export const TeamBlock: FC<Props> = ({ block: { employees, disableMarginBottom, disableMarginTop }, aboveFold = false }) => (
-  <BlockWrapper disableMarginBottom={disableMarginBottom} disableMarginTop={disableMarginTop}>
-    <Grid cols={3}>
-      {employees.map(({ firstname, lastname, bio, image, function: emplFunction }, index) => (
-        <div className={classNames('bg-white-100 flex flex-col overflow-hidden rounded')} key={firstname + lastname}>
-          <div className="w-full">
-            {image?.responsiveImage && (
-              <ImageComponent
-                image={{ responsiveImage: image.responsiveImage, title: `${firstname} ${lastname}` }}
-                sizes={PORTRAIT_SIZES}
-                priority={aboveFold && index === 0}
-              />
-            )}
-          </div>
-          <div className="flex flex-1 flex-col p-8 text-sm font-normal lg:text-sm">
-            <p className="mb-6">{emplFunction}</p>
-            {/* h2: the team block usually follows the page h1 directly (no skipped heading level). */}
-            <h2 className="lg:text-l text-wehrli mb-4 text-base font-bold break-words md:text-lg">
-              {firstname} {lastname}
-            </h2>
-            <p>{bio}</p>
-            <div className="mt-6 flex flex-1 flex-row flex-wrap content-end gap-x-4 gap-y-2">
-              {/* {links.map(({ label, url }) => (
+  return (
+    <BlockWrapper disableMarginBottom={disableMarginBottom} disableMarginTop={disableMarginTop}>
+      {teamTitle && <Heading level="2">{teamTitle}</Heading>}
+      <Grid cols={3}>
+        {employees.map(({ firstname, lastname, bio, image, function: emplFunction }, index) => (
+          <div className={classNames('bg-white-100 flex flex-col overflow-hidden rounded')} key={firstname + lastname}>
+            <div className="w-full">
+              {image?.responsiveImage && (
+                <ImageComponent
+                  image={{ responsiveImage: image.responsiveImage, title: `${firstname} ${lastname}` }}
+                  sizes={CONTENT_IMAGE_SIZES.thirds}
+                  priority={aboveFold && index === 0}
+                />
+              )}
+            </div>
+            <div className="flex flex-1 flex-col p-8 text-sm font-normal lg:text-sm">
+              <p className="mb-6">{emplFunction}</p>
+              <NameHeading className="lg:text-l text-wehrli mb-4 text-base font-bold break-words md:text-lg">
+                {firstname} {lastname}
+              </NameHeading>
+              <p>{bio}</p>
+              <div className="mt-6 flex flex-1 flex-row flex-wrap content-end gap-x-4 gap-y-2">
+                {/* {links.map(({ label, url }) => (
                 <EmployeeContactLink key={url} href={url}>
                   {label}
                 </EmployeeContactLink>
               ))} */}
+              </div>
             </div>
           </div>
-        </div>
-      ))}
-    </Grid>
-  </BlockWrapper>
-);
+        ))}
+      </Grid>
+    </BlockWrapper>
+  );
+};

@@ -10,10 +10,3 @@ export const getCompanyProfile = cache(async (): Promise<CompanyProfile | null> 
 
   return companyProfile;
 });
-
-/** Multi-line CMS text field («one entry per line») to a list. */
-export const toLines = (text: string | null | undefined): string[] =>
-  (text ?? '')
-    .split('\n')
-    .map((line) => line.trim())
-    .filter(Boolean);

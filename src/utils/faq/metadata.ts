@@ -1,7 +1,7 @@
 import { getSiteUrl } from '@/utils/site-url';
 import type { Metadata } from 'next';
+import { SITE_NAME } from '@/constants/site';
 
-const SITE_NAME = 'Wehrli Licht GmbH';
 const FAQ_PATH = '/faq';
 
 const DEFAULT_TITLE = 'Häufig gestellte Fragen | Wehrli Licht';

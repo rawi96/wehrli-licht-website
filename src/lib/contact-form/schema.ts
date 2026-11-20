@@ -1,22 +1,17 @@
-export const CONTACT_TOPICS = {
-  lampenschirm: 'Lampenschirm',
-  beratung: 'Lichtberatung & Lichtplanung',
-  leuchte: 'Leuchte aus dem Shop',
-  anderes: 'Anderes',
-} as const;
-
-export type ContactTopic = keyof typeof CONTACT_TOPICS;
-
-export const isContactTopic = (value: unknown): value is ContactTopic =>
-  typeof value === 'string' && Object.hasOwn(CONTACT_TOPICS, value);
-
 export type ContactFormValues = {
   name: string;
   email: string;
   phone: string;
-  topic: ContactTopic;
+  /** One of the topics configured on the CMS block (free text, the list is editable). */
+  topic: string;
   message: string;
 };
+
+/** Anchor id of the contact form block, used by links that jump straight to the form. */
+export const CONTACT_FORM_ANCHOR = 'kontaktformular';
+
+/** Query parameter set by «Fragen zu dieser Leuchte?» on product pages to prefill the message. */
+export const PRODUCT_PREFILL_PARAM = 'produkt';
 
 /** Honeypot field name: hidden from humans, bots tend to fill it in. */
 export const HONEYPOT_FIELD = 'website';
@@ -32,7 +27,15 @@ const MAX_LINKS = 2;
 
 const countLinks = (text: string): number => (text.match(/https?:\/\/|www\./gi) ?? []).length;
 
-export const validateContactForm = (values: ContactFormValues): ContactFieldErrors => {
+type ValidationOptions = {
+  /** The block offers topics, so one must be chosen (only known on the client). */
+  topicRequired?: boolean;
+};
+
+export const validateContactForm = (
+  values: ContactFormValues,
+  { topicRequired = false }: ValidationOptions = {},
+): ContactFieldErrors => {
   const errors: ContactFieldErrors = {};
   const name = values.name.trim();
   const email = values.email.trim();
@@ -51,7 +54,8 @@ export const validateContactForm = (values: ContactFormValues): ContactFieldErro
     errors.phone = 'Bitte geben Sie eine gültige Telefonnummer an.';
   }
 
-  if (!isContactTopic(values.topic)) {
+  const topic = values.topic.trim();
+  if ((topicRequired && !topic) || topic.length > 100) {
     errors.topic = 'Bitte wählen Sie ein Anliegen.';
   }
 

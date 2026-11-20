@@ -1,5 +1,6 @@
 import type { CategoryForSeo, ProductForSeo } from '@/utils/shop-seo/types';
 import { stripHtml, truncateText } from '@/utils/text';
+import { MAX_SEO_TITLE_LENGTH, SITE_BRAND } from '@/constants/site';
 
 const plainTextFromStructured = (value: unknown): string => {
   if (!value || typeof value !== 'object') {
@@ -53,12 +54,14 @@ const productTechnicalSnippet = (product: ProductForSeo): string => {
   return parts.join(', ');
 };
 
-/** Brand appended to generated shop titles (CMS-provided SEO titles are used as-is). */
-const BRAND_SUFFIX = ' | Wehrli Licht';
+/** Brand appended to shop titles. */
+const BRAND_SUFFIX = ` | ${SITE_BRAND}`;
 
-/** Appends the brand to CMS titles that do not mention it yet, if it still fits in 60 chars. */
+/** Appends the brand to CMS titles that do not mention it yet, if it still fits. */
 const withBrand = (title: string): string =>
-  title.includes('Wehrli') || title.length + BRAND_SUFFIX.length > 60 ? title : `${title}${BRAND_SUFFIX}`;
+  title.includes(SITE_BRAND) || title.length + BRAND_SUFFIX.length > MAX_SEO_TITLE_LENGTH
+    ? title
+    : `${title}${BRAND_SUFFIX}`;
 
 export const buildProductTitle = (product: ProductForSeo): string => {
   if (product.seoTitle?.trim()) {
@@ -68,7 +71,7 @@ export const buildProductTitle = (product: ProductForSeo): string => {
   const category = primaryCategory(product);
   const categoryPart = category ? ` – ${category.name}` : '';
 
-  return `${truncateText(`${product.name}${categoryPart}`, 60 - BRAND_SUFFIX.length)}${BRAND_SUFFIX}`;
+  return `${truncateText(`${product.name}${categoryPart}`, MAX_SEO_TITLE_LENGTH - BRAND_SUFFIX.length)}${BRAND_SUFFIX}`;
 };
 
 export const buildProductDescription = (product: ProductForSeo): string => {
@@ -96,7 +99,7 @@ export const buildCategoryTitle = (category: CategoryForSeo): string => {
     return withBrand(category.seoTitle.trim());
   }
 
-  return `${truncateText(`${category.name} online kaufen`, 60 - BRAND_SUFFIX.length)}${BRAND_SUFFIX}`;
+  return `${truncateText(`${category.name} online kaufen`, MAX_SEO_TITLE_LENGTH - BRAND_SUFFIX.length)}${BRAND_SUFFIX}`;
 };
 
 export const buildCategoryDescription = (category: CategoryForSeo): string => {

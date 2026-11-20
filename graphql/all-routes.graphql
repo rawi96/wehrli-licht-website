@@ -1,5 +1,5 @@
 query AllRoutes {
-  allPages(first: 100) {
+  allPages(first: 500) {
     ...pageDetails
     parent {
       ...pageDetails

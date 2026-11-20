@@ -1,3 +1,4 @@
+import { STRIPE_SHIPPING_LINE_NAME } from '@/constants/checkout-labels';
 import { STRIPE_CHECKOUT_PAYMENT_METHODS } from '@/constants/stripe-payment-methods';
 import { getStripe } from '@/lib/stripe';
 import type { VerifiedCheckoutLineItem } from '@/utils/cart-checkout';
@@ -26,7 +27,7 @@ export const buildStripeLineItems = (
       price_data: {
         currency: 'chf',
         unit_amount: chfToStripeAmount(shippingCostChf),
-        product_data: { name: 'Versand per Post' },
+        product_data: { name: STRIPE_SHIPPING_LINE_NAME },
       },
     });
   }
