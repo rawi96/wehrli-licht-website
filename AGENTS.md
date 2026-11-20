@@ -22,3 +22,5 @@ From the repository root:
 - `pnpm lint`: ESLint, `tsc` and knip in both apps
 
 `pnpm --filter @wehrli/website generate` regenerates the GraphQL types from DatoCMS.
+
+Architecture decisions are in `docs/adr/`. The website's layers (domain, ports, integrations, features) are described in [ADR 0001](docs/adr/0001-website-architecture.md) and `apps/website/AGENTS.md`.

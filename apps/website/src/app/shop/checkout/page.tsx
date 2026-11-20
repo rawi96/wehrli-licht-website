@@ -1,12 +1,8 @@
+import { content } from '@/integrations';
+import { SitePage } from '@/components/layout/site-page';
 import { CheckoutLoading, Container } from '@wehrli/design-system';
-import { Footer } from '@/components/layout/footer';
-import { Header } from '@/components/layout/header';
 import { CheckoutPageContent } from '@/components/shop/checkout-page-content';
-import { HeaderFooterDocument, HeaderFooterRecord } from '@/graphql/generated';
-import { getContactPath } from '@/utils/cms-page-path';
-import { queryDatoCMS } from '@/utils/query-dato-cms';
 import { Metadata } from 'next';
-import { draftMode } from 'next/headers';
 import { Suspense } from 'react';
 
 export const metadata: Metadata = {
@@ -15,22 +11,13 @@ export const metadata: Metadata = {
 };
 
 export default async function CheckoutPage() {
-  const { isEnabled } = await draftMode();
-
-  const { headerFooter } = await queryDatoCMS({
-    document: HeaderFooterDocument,
-    includeDrafts: isEnabled,
-  });
-
   return (
-    <main>
-      <Header headerFooter={headerFooter as HeaderFooterRecord} />
+    <SitePage>
       <Container>
         <Suspense fallback={<CheckoutLoading text="Kasse wird geladen…" />}>
-          <CheckoutPageContent contactHref={getContactPath(headerFooter as HeaderFooterRecord)} />
+          <CheckoutPageContent contactHref={await content.getContactPath()} />
         </Suspense>
       </Container>
-      <Footer headerFooter={headerFooter as HeaderFooterRecord} />
-    </main>
+    </SitePage>
   );
 }

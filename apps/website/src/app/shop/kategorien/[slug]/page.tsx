@@ -1,17 +1,14 @@
+import { SitePage } from '@/components/layout/site-page';
 import { Breadcrumbs } from '@/components/breadcrumbs';
 import { CatalogHeader, Container } from '@wehrli/design-system';
 import { CmsHtml } from '@/components/cms-html';
-import { Footer } from '@/components/layout/footer';
-import { Header } from '@/components/layout/header';
 import NotFound from '@/components/not-found';
 import { ShopProductCatalog } from '@/components/shop/shop-product-catalog';
 import { ShopBrowseLayout } from '@/components/shop/shop-browse-layout';
-import { getHeaderFooter } from '@/utils/get-header-footer';
 import { getAllCategorySlugs, getCategoryBySlug, getProductsByCategory } from '@/utils/shop';
 import { JsonLd } from '@/components/seo/json-ld';
 import { buildCategoryJsonLd, buildCategoryMetadata } from '@/utils/shop-seo';
 import { Metadata } from 'next';
-import { draftMode } from 'next/headers';
 
 export const revalidate = 3600;
 
@@ -40,7 +37,6 @@ export const generateMetadata = async ({ params }: Props): Promise<Metadata> => 
 
 export default async function ShopCategoryPage({ params }: Props) {
   const { slug } = await params;
-  const { isEnabled } = await draftMode();
   const category = await getCategoryBySlug(slug);
 
   if (!category) {
@@ -49,12 +45,9 @@ export default async function ShopCategoryPage({ params }: Props) {
 
   const products = await getProductsByCategory(category.id);
 
-  const headerFooter = await getHeaderFooter(isEnabled);
-
   return (
-    <main>
+    <SitePage>
       <JsonLd data={buildCategoryJsonLd(category, products)} />
-      <Header headerFooter={headerFooter} />
       <Container>
         <Breadcrumbs
           spacing="tight"
@@ -77,7 +70,6 @@ export default async function ShopCategoryPage({ params }: Props) {
           )}
         </ShopBrowseLayout>
       </Container>
-      <Footer headerFooter={headerFooter} />
-    </main>
+    </SitePage>
   );
 }

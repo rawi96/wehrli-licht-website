@@ -1,17 +1,14 @@
+import { content } from '@/integrations';
+import { SitePage } from '@/components/layout/site-page';
 import { Breadcrumbs } from '@/components/breadcrumbs';
 import { Container } from '@wehrli/design-system';
-import { Footer } from '@/components/layout/footer';
-import { Header } from '@/components/layout/header';
 import NotFound from '@/components/not-found';
 import { ProductDetail } from '@/components/shop/product-detail';
 import { ShopBrowseLayout } from '@/components/shop/shop-browse-layout';
 import { JsonLd } from '@/components/seo/json-ld';
-import { getHeaderFooter } from '@/utils/get-header-footer';
 import { getAllProductSlugs, getProductBySlug } from '@/utils/shop';
 import { buildProductJsonLd, buildProductMetadata } from '@/utils/shop-seo';
 import { Metadata } from 'next';
-import { draftMode } from 'next/headers';
-import { getCmsPagePath, getContactPath } from '@/utils/cms-page-path';
 
 export const revalidate = 3600;
 
@@ -40,19 +37,17 @@ export const generateMetadata = async ({ params }: Props): Promise<Metadata> => 
 
 export default async function ShopProductPage({ params }: Props) {
   const { slug } = await params;
-  const { isEnabled } = await draftMode();
   const product = await getProductBySlug(slug);
 
   if (!product) {
     return <NotFound />;
   }
 
-  const headerFooter = await getHeaderFooter(isEnabled);
+  const contactPath = await content.getContactPath();
 
   return (
-    <main>
+    <SitePage>
       <JsonLd data={buildProductJsonLd(product)} />
-      <Header headerFooter={headerFooter} />
       <Container>
         <Breadcrumbs
           spacing="loose"
@@ -62,14 +57,9 @@ export default async function ShopProductPage({ params }: Props) {
           ]}
         />
         <ShopBrowseLayout>
-          <ProductDetail
-            product={product}
-            contactHref={getCmsPagePath(headerFooter.contactPage)}
-            viewingHref={`${getContactPath(headerFooter)}#termin`}
-          />
+          <ProductDetail product={product} contactHref={contactPath} viewingHref={`${contactPath}#termin`} />
         </ShopBrowseLayout>
       </Container>
-      <Footer headerFooter={headerFooter} />
-    </main>
+    </SitePage>
   );
 }

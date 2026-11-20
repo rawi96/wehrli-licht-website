@@ -1,13 +1,9 @@
+import { content } from '@/integrations';
+import { SitePage } from '@/components/layout/site-page';
 import { Container } from '@wehrli/design-system';
-import { Footer } from '@/components/layout/footer';
-import { Header } from '@/components/layout/header';
 import { CheckoutSuccess } from '@/components/shop/checkout-success';
-import { HeaderFooterDocument, HeaderFooterRecord } from '@/graphql/generated';
 import { resolveCheckoutSuccessStatus } from '@/lib/resolve-checkout-success-status';
-import { getContactPath } from '@/utils/cms-page-path';
-import { queryDatoCMS } from '@/utils/query-dato-cms';
 import { Metadata } from 'next';
-import { draftMode } from 'next/headers';
 
 export const metadata: Metadata = {
   title: 'Bestellung erfolgreich',
@@ -23,21 +19,13 @@ type Props = {
 
 export default async function CheckoutSuccessPage({ searchParams }: Props) {
   const { session_id: sessionId, order_token: orderToken } = await searchParams;
-  const { isEnabled } = await draftMode();
   const status = await resolveCheckoutSuccessStatus(sessionId, orderToken);
 
-  const { headerFooter } = await queryDatoCMS({
-    document: HeaderFooterDocument,
-    includeDrafts: isEnabled,
-  });
-
   return (
-    <main>
-      <Header headerFooter={headerFooter as HeaderFooterRecord} />
+    <SitePage>
       <Container>
-        <CheckoutSuccess status={status} contactHref={getContactPath(headerFooter as HeaderFooterRecord)} />
+        <CheckoutSuccess status={status} contactHref={await content.getContactPath()} />
       </Container>
-      <Footer headerFooter={headerFooter as HeaderFooterRecord} />
-    </main>
+    </SitePage>
   );
 }

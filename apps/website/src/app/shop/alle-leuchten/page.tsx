@@ -1,28 +1,23 @@
+import { SitePage } from '@/components/layout/site-page';
 import { Breadcrumbs } from '@/components/breadcrumbs';
 import { CatalogHeader, Container } from '@wehrli/design-system';
-import { Footer } from '@/components/layout/footer';
-import { Header } from '@/components/layout/header';
 import { ShopProductCatalog } from '@/components/shop/shop-product-catalog';
 import { ShopBrowseLayout } from '@/components/shop/shop-browse-layout';
 import { SHOP_ALL_PRODUCTS_PATH } from '@/constants/shop-paths';
-import { getHeaderFooter } from '@/utils/get-header-footer';
 import { getAllShopProducts } from '@/utils/shop';
 import { buildAllProductsJsonLd, shopAllProductsMetadata } from '@/utils/shop-seo';
 import { JsonLd } from '@/components/seo/json-ld';
-import { draftMode } from 'next/headers';
 
 export const revalidate = 3600;
 
 export const metadata = shopAllProductsMetadata;
 
 export default async function ShopAllProductsPage() {
-  const { isEnabled } = await draftMode();
-  const [products, headerFooter] = await Promise.all([getAllShopProducts(), getHeaderFooter(isEnabled)]);
+  const products = await getAllShopProducts();
 
   return (
-    <main>
+    <SitePage>
       <JsonLd data={buildAllProductsJsonLd(products)} />
-      <Header headerFooter={headerFooter} />
       <Container>
         <Breadcrumbs
           spacing="tight"
@@ -45,7 +40,6 @@ export default async function ShopAllProductsPage() {
           )}
         </ShopBrowseLayout>
       </Container>
-      <Footer headerFooter={headerFooter} />
-    </main>
+    </SitePage>
   );
 }

@@ -1,16 +1,13 @@
+import { content } from '@/integrations';
+import { SitePage } from '@/components/layout/site-page';
 import { Breadcrumbs } from '@/components/breadcrumbs';
 import { FaqPageContent } from '@/components/faq/faq-page-content';
-import { getContactPath } from '@/utils/cms-page-path';
 import { Container } from '@wehrli/design-system';
-import { Footer } from '@/components/layout/footer';
-import { Header } from '@/components/layout/header';
 import { JsonLd } from '@/components/seo/json-ld';
-import { HeaderFooterDocument, HeaderFooterRecord } from '@/graphql/generated';
 import { groupFaqsByTopic } from '@/utils/faq/group-by-topic';
 import { buildFaqPageJsonLd } from '@/utils/faq/json-ld';
 import { buildFaqPageMetadata } from '@/utils/faq/metadata';
 import { loadFaqPage } from '@/utils/faq/load-faq-page';
-import { queryDatoCMS } from '@/utils/query-dato-cms';
 import { draftMode } from 'next/headers';
 import { notFound } from 'next/navigation';
 import { toNextMetadata } from 'react-datocms/seo';
@@ -34,10 +31,7 @@ export async function generateMetadata() {
 export default async function FaqPage() {
   const { isEnabled } = await draftMode();
 
-  const [{ faqs, page }, { headerFooter }] = await Promise.all([
-    loadFaqPage(isEnabled),
-    queryDatoCMS({ document: HeaderFooterDocument, includeDrafts: isEnabled }),
-  ]);
+  const { faqs, page } = await loadFaqPage(isEnabled);
 
   if (faqs.length === 0) {
     notFound();
@@ -47,19 +41,17 @@ export default async function FaqPage() {
   const pageTitle = page?.title?.trim() ?? 'Häufig gestellte Fragen';
 
   return (
-    <main>
+    <SitePage>
       <JsonLd data={buildFaqPageJsonLd(faqs)} />
-      <Header headerFooter={headerFooter as HeaderFooterRecord} />
       <Container>
         <Breadcrumbs customBreadcrumbs={[{ name: pageTitle, href: '/faq' }]} />
         <FaqPageContent
           title={pageTitle}
           intro={page?.teaserDescription}
           groups={groups}
-          contactHref={getContactPath(headerFooter as HeaderFooterRecord)}
+          contactHref={await content.getContactPath()}
         />
       </Container>
-      <Footer headerFooter={headerFooter as HeaderFooterRecord} />
-    </main>
+    </SitePage>
   );
 }

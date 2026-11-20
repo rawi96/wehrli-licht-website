@@ -1,9 +1,6 @@
-import { Footer } from '@/components/layout/footer';
-import { Header } from '@/components/layout/header';
+import { SitePage } from '@/components/layout/site-page';
 import { JsonLd } from '@/components/seo/json-ld';
 import { ShopStorefront } from '@/components/shop/shop-storefront';
-import { HeaderFooterDocument, HeaderFooterRecord } from '@/graphql/generated';
-import { queryDatoCMS } from '@/utils/query-dato-cms';
 import { findShopServiceSection } from '@/utils/shop-page-sections';
 import { getAllCategories, getFeaturedShopProducts, getShopPage } from '@/utils/shop';
 import { buildShopIndexJsonLd, buildShopStorefrontFaqJsonLd, shopIndexMetadata } from '@/utils/shop-seo';
@@ -27,13 +24,9 @@ export async function generateMetadata() {
 export default async function ShopPage() {
   const { isEnabled } = await draftMode();
 
-  const [categories, featuredProducts, { headerFooter }, { shopPage }] = await Promise.all([
+  const [categories, featuredProducts, { shopPage }] = await Promise.all([
     getAllCategories(),
     getFeaturedShopProducts(),
-    queryDatoCMS({
-      document: HeaderFooterDocument,
-      includeDrafts: isEnabled,
-    }),
     getShopPage(isEnabled),
   ]);
 
@@ -45,12 +38,10 @@ export default async function ShopPage() {
   const faqJsonLd = serviceSection ? buildShopStorefrontFaqJsonLd(serviceSection.items) : null;
 
   return (
-    <main>
+    <SitePage>
       <JsonLd data={buildShopIndexJsonLd(categories, featuredProducts)} />
       {faqJsonLd && <JsonLd data={faqJsonLd} />}
-      <Header headerFooter={headerFooter as HeaderFooterRecord} />
       <ShopStorefront sections={shopPage.sections} categories={categories} featuredProducts={featuredProducts} />
-      <Footer headerFooter={headerFooter as HeaderFooterRecord} />
-    </main>
+    </SitePage>
   );
 }
