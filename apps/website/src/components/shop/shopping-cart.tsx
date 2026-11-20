@@ -8,14 +8,20 @@ import { formatPriceToCHF } from '@/utils/price';
 import { CartContent, CartDialog } from '@wehrli/design-system';
 import { useRouter } from 'next/navigation';
 
-type Props = {
-  open: boolean;
-  setOpen: (open: boolean) => void;
-};
-
-export const ShoppingCart = ({ open, setOpen }: Props) => {
+/**
+ * The cart dialog, rendered once in the root layout. Not per header: Next.js keeps the previous page hidden in the DOM,
+ * so a dialog per page would open twice (one over the other) after a client-side navigation.
+ */
+export const ShoppingCart = () => {
   const router = useRouter();
-  const { shoppingCart, updateItemQuantity, removeItem, isHydrated } = useShopContext();
+  const {
+    shoppingCart,
+    updateItemQuantity,
+    removeItem,
+    isHydrated,
+    isShowCart: open,
+    setIsShowCart: setOpen,
+  } = useShopContext();
 
   const handleGoToCheckout = () => {
     setOpen(false);

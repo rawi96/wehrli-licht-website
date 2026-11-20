@@ -1,6 +1,5 @@
 'use client';
 
-import { useShopContext } from '@/app/context/shop-context';
 import { DirectoryRecord, HeaderFooterRecord, NavigationItemRecord } from '@/graphql/generated';
 import { splitHeaderMenu } from '@/utils/navigation';
 import { Header as HeaderLayout, HeaderNavigationItem } from '@wehrli/design-system';
@@ -8,7 +7,6 @@ import { usePathname } from 'next/navigation';
 import { FC } from 'react';
 import { ShopCartButton } from '../shop/shop-cart-button';
 import { ShopMobileNav } from '../shop/shop-mobile-nav';
-import { ShoppingCart } from '../shop/shopping-cart';
 
 type Props = {
   headerFooter: HeaderFooterRecord;
@@ -32,7 +30,6 @@ const toNavigationItem = (
 
 export const Header: FC<Props> = ({ headerFooter: { menu }, variant = 'solid' }) => {
   const { primary, contact } = splitHeaderMenu(menu);
-  const { isShowCart, setIsShowCart } = useShopContext();
   const pathname = usePathname();
 
   const isActive = (path: string) => pathname?.startsWith(path) ?? false;
@@ -43,15 +40,12 @@ export const Header: FC<Props> = ({ headerFooter: { menu }, variant = 'solid' })
   ];
 
   return (
-    <>
-      <HeaderLayout
-        variant={variant}
-        navigation={navigation}
-        contact={contact?.link?.slug ? { label: contact.label, href: `/${contact.link.slug}` } : null}
-        cartButton={<ShopCartButton />}
-        renderMobileMenuExtra={(closeMobileMenu) => <ShopMobileNav onLinkClick={closeMobileMenu} />}
-      />
-      <ShoppingCart open={isShowCart} setOpen={setIsShowCart} />
-    </>
+    <HeaderLayout
+      variant={variant}
+      navigation={navigation}
+      contact={contact?.link?.slug ? { label: contact.label, href: `/${contact.link.slug}` } : null}
+      cartButton={<ShopCartButton />}
+      renderMobileMenuExtra={(closeMobileMenu) => <ShopMobileNav onLinkClick={closeMobileMenu} />}
+    />
   );
 };

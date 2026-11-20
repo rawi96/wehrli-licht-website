@@ -1,5 +1,4 @@
 import { FC } from 'react';
-import { preload } from 'react-dom';
 import { SRCImage } from 'react-datocms';
 import { cn } from '../../fundamentals/cn';
 
@@ -26,8 +25,9 @@ type Props = {
   /** Rendered width for the browser's choice from `srcSet`, e.g. `(min-width: 1024px) 50vw, 100vw`. */
   sizes?: string;
   /**
-   * Above-the-fold (LCP) image: no lazy loading, `fetchpriority="high"` and a `<link rel="preload">` in `<head>`.
-   * The preload needs `srcSet`.
+   * Above-the-fold (LCP) image: no lazy loading and `fetchpriority="high"`. No `<link rel="preload">`: the image is in
+   * the HTML anyway, and React would also emit the preload when Next.js prefetches a page that links here, so every
+   * page would download the LCP images of the pages it links to.
    */
   priority?: boolean;
   /**
@@ -81,12 +81,6 @@ export const Image: FC<Props> = ({
 }) => {
   if (!image?.src) {
     return null;
-  }
-
-  // Preload priority images in <head> (as next/image does) so the LCP download starts before the JavaScript bundles.
-  // Same srcset/sizes as the rendered <source>, so it is a cache hit.
-  if (priority && image.srcSet) {
-    preload(image.src, { as: 'image', imageSrcSet: image.srcSet, imageSizes: sizes, fetchPriority: 'high' });
   }
 
   return (

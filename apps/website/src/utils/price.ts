@@ -3,15 +3,20 @@ type ProductPrice = {
   variants: { price: number | null }[];
 };
 
+/**
+ * "CHF 1’370.00": Swiss format with a typographic apostrophe as thousands separator. Formatted by hand, not with
+ * `toLocaleString('de-CH')`: Node and browsers ship different locale data (Node uses ' and Chrome ’), so prices from
+ * 1000 would differ between server and client and break hydration.
+ */
 export const formatPriceToCHF = (price?: number) => {
   if (!price) {
     return '';
   }
 
-  return price.toLocaleString('de-CH', {
-    style: 'currency',
-    currency: 'CHF',
-  });
+  const [francs, rappen] = Math.abs(price).toFixed(2).split('.');
+  const grouped = francs.replace(/\B(?=(\d{3})+(?!\d))/g, '\u2019');
+
+  return `CHF\u00a0${price < 0 ? '-' : ''}${grouped}.${rappen}`;
 };
 
 export const getProductMinPriceChf = (product: ProductPrice): number | null => {

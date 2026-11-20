@@ -10,6 +10,7 @@ import { draftMode } from 'next/headers';
 import { ReactNode } from 'react';
 import { DraftModeBanner } from './api/draft/draft-mode-banner';
 import { ShopContextProvider } from './context/shop-context';
+import { ShoppingCart } from '@/components/shop/shopping-cart';
 import { jost } from './fonts';
 import { SITE_NAME } from '@/constants/site';
 import { getCmsPagePath } from '@/utils/cms-page-path';
@@ -48,7 +49,10 @@ const RootLayout = async ({ children }: { children: ReactNode }) => {
       <body className={cn(jost.className, 'bg-white-200 h-full antialiased')}>
         {isEnabled && <DraftModeBanner />}
         <SiteJsonLd />
-        <ShopContextProvider>{children}</ShopContextProvider>
+        <ShopContextProvider>
+          {children}
+          <ShoppingCart />
+        </ShopContextProvider>
         {isTrackingEnabled && (
           <>
             <CookieBanner privacyHref={privacyHref} />

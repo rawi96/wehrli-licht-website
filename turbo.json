@@ -35,6 +35,11 @@
     },
     "lint": {
       "dependsOn": ["transit"]
+    },
+    "e2e": {
+      "dependsOn": ["@wehrli/website#build"],
+      "cache": false,
+      "passThroughEnv": ["CI", "BASE_URL"]
     }
   }
 }

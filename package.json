@@ -11,7 +11,8 @@
     "lint": "turbo lint",
     "website:build": "turbo build --filter=@wehrli/website",
     "design-system:dev": "pnpm --filter @wehrli/design-system storybook",
-    "design-system:build": "turbo build --filter=@wehrli/design-system"
+    "design-system:build": "turbo build --filter=@wehrli/design-system",
+    "e2e": "turbo e2e"
   },
   "devDependencies": {
     "prettier": "^3.10.1",
