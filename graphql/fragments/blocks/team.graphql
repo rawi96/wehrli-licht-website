@@ -9,7 +9,7 @@ fragment teamBlock on TeamRecord {
     bio
     image {
       responsiveImage(imgixParams: { fit: crop, w: 400, h: 400, auto: format }) {
-        ...responsiveImageFragment
+        ...priorityResponsiveImageFragment
       }
     }
   }

@@ -6,3 +6,13 @@ fragment shopFileImage on FileField {
     ...responsiveImageFragment
   }
 }
+
+# Product detail and category tiles: can be the LCP image, see priorityResponsiveImageFragment.
+fragment shopPriorityFileImage on FileField {
+  url
+  alt
+  title
+  responsiveImage(imgixParams: { w: 1000, q: 75, auto: format }) {
+    ...priorityResponsiveImageFragment
+  }
+}

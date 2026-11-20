@@ -1,5 +1,8 @@
 import { ShopCategory, ShopProduct } from '@/utils/shop';
 
+/** SEO only needs an image URL; works for list, detail and feed image fragments alike. */
+type SeoImage = { url: string; responsiveImage?: { src: string } | null };
+
 export type ProductForSeo = Pick<
   ShopProduct,
   | 'name'
@@ -8,7 +11,6 @@ export type ProductForSeo = Pick<
   | 'seoDescription'
   | 'seoNoindex'
   | 'description'
-  | 'images'
   | 'categories'
   | 'price'
   | 'variants'
@@ -17,11 +19,11 @@ export type ProductForSeo = Pick<
   | 'lightColor'
   | 'deliveryTime'
   | 'dimmable'
->;
+> & { images: SeoImage[] };
 
 export type CategoryForSeo = Pick<
   ShopCategory,
   'name' | 'slug' | 'seoTitle' | 'seoDescription' | 'seoNoindex' | 'description' | 'image'
 >;
 
-export type ProductListItemForSeo = Pick<ShopProduct, 'name' | 'slug' | 'images'>;
+export type ProductListItemForSeo = Pick<ShopProduct, 'name' | 'slug'> & { images: SeoImage[] };
