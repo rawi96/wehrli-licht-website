@@ -16,3 +16,19 @@ fragment shopPriorityFileImage on FileField {
     ...priorityResponsiveImageFragment
   }
 }
+
+# Product lists: no blur placeholder (cards render without one), which keeps the list payload small
+# (the base64 placeholder of every product image was ~200 KB of HTML on /shop/alle-leuchten).
+fragment shopListFileImage on FileField {
+  url
+  alt
+  title
+  responsiveImage(imgixParams: { w: 1000, q: 75, auto: format }) {
+    src
+    width
+    height
+    alt
+    title
+    sizes
+  }
+}

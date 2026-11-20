@@ -6,7 +6,7 @@ fragment shopProductListItem on ShopProductRecord {
   featuredSort
   price
   images {
-    ...shopFileImage
+    ...shopListFileImage
   }
   variants {
     price
