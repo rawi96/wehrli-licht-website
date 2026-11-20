@@ -1,12 +1,10 @@
-import { Section, Heading } from '@wehrli/design-system';
-import { CmsLinkButton } from '@/components/cms/cms-link-button';
 import { getShopCategoryPath } from '@/constants/shop-paths';
 import { HighlightShopTeaserFragment } from '@/graphql/generated';
-import { getCmsLinkHref } from '@/utils/cms-link';
-import { pickHighlightShopCategories } from '@/utils/highlight-teaser';
+import { toCmsLink } from '@/utils/cms-link';
+import { highlightImageAlt, pickHighlightShopCategories } from '@/utils/highlight-teaser';
+import { toImage } from '@/utils/image';
 import { getAllCategories } from '@/utils/shop';
-import Link from 'next/link';
-import { HighlightShopCategoryTile } from './highlight-shop-category-tile';
+import { HighlightShopTeaserBlock as HighlightShopTeaserBlockView } from '@wehrli/design-system';
 
 type Props = {
   block: HighlightShopTeaserFragment;
@@ -15,16 +13,7 @@ type Props = {
 };
 
 export const HighlightShopTeaserBlock = async ({ block, aboveFold = false }: Props) => {
-  const {
-    eyebrow,
-    title,
-    subline,
-    primaryCta,
-    secondaryCta,
-    popularCategoriesLabel,
-    moreCategoriesLabel,
-    featuredCategories,
-  } = block;
+  const { primaryCta, secondaryCta, featuredCategories } = block;
 
   if (!primaryCta || !secondaryCta) {
     return null;
@@ -38,98 +27,32 @@ export const HighlightShopTeaserBlock = async ({ block, aboveFold = false }: Pro
   }
 
   const featuredIds = new Set(featured.map((category) => category.id));
-  const moreCategories = fallbackCategories.filter((category) => !featuredIds.has(category.id));
-  const [primary, secondary, tertiary] = featured;
-  const headingId = `highlight-teaser-${block.id}`;
-  const categoriesNavLabel = moreCategoriesLabel ?? 'Weitere Kategorien';
 
   return (
-    <Section marginTop={false} marginBottom={false}>
-      <section aria-labelledby={headingId} className="highlight-teaser-breakout bg-wehrli text-white">
-        <div className="highlight-teaser-container py-12 sm:py-16 md:py-24">
-          <div className="grid gap-8 sm:gap-10 lg:grid-cols-12 lg:items-center lg:gap-14">
-            <div className="lg:col-span-5">
-              <p className="text-xxs font-bold tracking-[0.18em] text-white/70 uppercase sm:tracking-[0.2em]">{eyebrow}</p>
-              <Heading level="2" id={headingId} color="white">
-                <span className="text-balance">{title}</span>
-              </Heading>
-              <p className="max-w-md text-sm leading-relaxed text-pretty text-white/85 sm:text-base">{subline}</p>
-              <div className="highlight-shop-ctas mt-6 sm:mt-8">
-                <CmsLinkButton link={primaryCta} variant="primary-white" fullWidth />
-                <CmsLinkButton link={secondaryCta} variant="secondary-white" showArrow fullWidth />
-              </div>
-            </div>
-
-            {featured.length > 0 && (
-              <div className="min-w-0 lg:col-span-7">
-                <div className="mb-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-3">
-                  <h3 className="text-xxs font-bold tracking-[0.14em] text-white/60 uppercase sm:tracking-wide">
-                    {popularCategoriesLabel ?? 'Beliebte Kategorien'}
-                  </h3>
-                  <Link
-                    href={getCmsLinkHref(secondaryCta)}
-                    className="focus-visible:ring-offset-wehrli text-sm font-bold text-white/90 underline-offset-4 hover:text-white hover:underline focus-visible:rounded-lg focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:outline-none"
-                  >
-                    {secondaryCta.label}
-                  </Link>
-                </div>
-
-                {/* One tile per category, laid out per breakpoint (no hidden duplicates). */}
-                <ul className="grid list-none grid-cols-2 gap-2.5 p-0 sm:gap-3 lg:h-[min(26rem,48vw)] lg:grid-cols-12 lg:grid-rows-6">
-                  {primary && (
-                    <li className="col-span-2 lg:col-span-7 lg:row-span-6">
-                      <HighlightShopCategoryTile
-                        category={primary}
-                        size="large"
-                        className="aspect-[16/10] min-h-[11rem] sm:min-h-[12.5rem] lg:aspect-auto lg:size-full lg:min-h-0"
-                        priority={aboveFold}
-                      />
-                    </li>
-                  )}
-                  {secondary && (
-                    <li className="lg:col-span-5 lg:row-span-3">
-                      <HighlightShopCategoryTile
-                        category={secondary}
-                        size="small"
-                        className="aspect-[3/4] min-h-[9.5rem] sm:min-h-[10.5rem] lg:aspect-auto lg:size-full lg:min-h-0"
-                      />
-                    </li>
-                  )}
-                  {tertiary && (
-                    <li className="lg:col-span-5 lg:row-span-3">
-                      <HighlightShopCategoryTile
-                        category={tertiary}
-                        size="small"
-                        className="aspect-[3/4] min-h-[9.5rem] sm:min-h-[10.5rem] lg:aspect-auto lg:size-full lg:min-h-0"
-                      />
-                    </li>
-                  )}
-                </ul>
-              </div>
-            )}
-          </div>
-
-          {moreCategories.length > 0 && (
-            <nav aria-label={categoriesNavLabel} className="mt-10 border-t border-white/15 pt-8 sm:mt-12 md:mt-14">
-              <h3 className="text-xxs font-bold tracking-[0.14em] text-white/60 uppercase sm:tracking-wide">
-                {categoriesNavLabel}
-              </h3>
-              <ul className="mt-4 flex flex-wrap gap-2">
-                {moreCategories.map((category) => (
-                  <li key={category.id}>
-                    <Link
-                      href={getShopCategoryPath(category.slug)}
-                      className="focus-visible:ring-offset-wehrli inline-flex min-h-10 items-center rounded-full border border-white/20 bg-white/5 px-3.5 py-2 text-sm font-bold text-white/90 transition-colors hover:border-white/40 hover:bg-white/10 hover:text-white focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:outline-none sm:px-4"
-                    >
-                      {category.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-          )}
-        </div>
-      </section>
-    </Section>
+    <HighlightShopTeaserBlockView
+      id={block.id}
+      eyebrow={block.eyebrow}
+      title={block.title}
+      subline={block.subline}
+      primaryCta={toCmsLink(primaryCta)}
+      secondaryCta={toCmsLink(secondaryCta)}
+      popularCategoriesLabel={block.popularCategoriesLabel}
+      moreCategoriesLabel={block.moreCategoriesLabel}
+      priority={aboveFold}
+      featuredCategories={featured.map((category) => ({
+        id: category.id,
+        name: category.name,
+        href: getShopCategoryPath(category.slug),
+        image: category.image?.responsiveImage
+          ? toImage({
+              ...category.image,
+              alt: highlightImageAlt(category.image.alt, `${category.name} – Leuchten-Kategorie`),
+            })
+          : undefined,
+      }))}
+      moreCategories={fallbackCategories
+        .filter((category) => !featuredIds.has(category.id))
+        .map((category) => ({ id: category.id, name: category.name, href: getShopCategoryPath(category.slug) }))}
+    />
   );
 };

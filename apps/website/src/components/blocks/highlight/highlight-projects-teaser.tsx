@@ -1,8 +1,8 @@
-import { CmsLinkButton } from '@/components/cms/cms-link-button';
 import { HighlightProjectsTeaserFragment } from '@/graphql/generated';
+import { getCmsLinkHref, toCmsLink } from '@/utils/cms-link';
+import { highlightLinkedImage } from '@/utils/highlight-teaser';
+import { HighlightProjectsTeaserBlock as HighlightProjectsTeaserBlockView } from '@wehrli/design-system';
 import { FC } from 'react';
-import { HighlightProjectCompactCard, HighlightProjectFeaturedCard } from './highlight-project-card';
-import { HighlightTeaserSection } from './highlight-teaser-section';
 
 type Props = {
   block: HighlightProjectsTeaserFragment;
@@ -10,35 +10,21 @@ type Props = {
   aboveFold?: boolean;
 };
 
-export const HighlightProjectsTeaserBlock: FC<Props> = ({ block, aboveFold = false }) => {
-  const { title, subline, primaryCta, projects, disableMarginTop, disableMarginBottom } = block;
-  const [featuredProject, ...gridProjects] = projects;
-
-  if (projects.length === 0 || !primaryCta) {
-    return null;
-  }
-
-  return (
-    <HighlightTeaserSection
-      blockId={block.id}
-      title={title}
-      subline={subline}
-      disableMarginTop={disableMarginTop}
-      disableMarginBottom={disableMarginBottom}
-      footer={<CmsLinkButton link={primaryCta} variant="primary" fullWidth />}
-    >
-      <div className="flex flex-col gap-6 sm:gap-8 lg:gap-10">
-        {featuredProject && <HighlightProjectFeaturedCard project={featuredProject} priority={aboveFold} />}
-        {gridProjects.length > 0 && (
-          <ul className="grid list-none grid-cols-1 gap-5 p-0 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3 lg:gap-8">
-            {gridProjects.map((project) => (
-              <li key={project.id}>
-                <HighlightProjectCompactCard project={project} />
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
-    </HighlightTeaserSection>
-  );
-};
+export const HighlightProjectsTeaserBlock: FC<Props> = ({ block, aboveFold = false }) => (
+  <HighlightProjectsTeaserBlockView
+    id={block.id}
+    title={block.title}
+    subline={block.subline}
+    cta={block.primaryCta && toCmsLink(block.primaryCta)}
+    priority={aboveFold}
+    projects={block.projects.map((project) => ({
+      id: project.id,
+      offer: project.offer,
+      title: project.title,
+      company: project.company,
+      description: project.description,
+      href: project.projectLink && getCmsLinkHref(project.projectLink),
+      image: highlightLinkedImage(project.projectLink, `${project.title} – ${project.company}`),
+    }))}
+  />
+);

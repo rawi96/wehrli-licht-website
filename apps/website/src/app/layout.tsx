@@ -1,5 +1,4 @@
 import '@/styles/globals.css';
-import '@/styles/highlight-teaser.css';
 import { ContactClickTracking } from '@/components/analytics/contact-click-tracking';
 import { CookieBanner } from '@/components/analytics/cookie-banner';
 import { GoogleTag } from '@/components/analytics/google-tag';

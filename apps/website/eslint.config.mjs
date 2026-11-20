@@ -7,8 +7,7 @@ export default [
   },
   ...smartiveConfig('nextjs'),
   // calendly-inline-widget: marker class of the Calendly embed script.
-  // highlight-*: from src/styles/highlight-teaser.css until the highlight blocks live in the design system.
-  tailwindConfig('src/styles/globals.css', { ignore: ['^calendly-inline-widget$', '^highlight-'] }),
+  tailwindConfig('src/styles/globals.css', { ignore: ['^calendly-inline-widget$'] }),
   {
     rules: {
       '@smartive-eslint/forbid-component-props': 'off',
