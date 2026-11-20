@@ -52,9 +52,10 @@ export const ShopProductCatalog: FC<Props> = ({ products, basePath = '/shop' }) 
 
       {visibleProducts.length > 0 ? (
         <ul className="grid grid-cols-1 gap-y-4 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-10 lg:grid-cols-3 lg:gap-x-8">
-          {visibleProducts.map((product) => (
+          {visibleProducts.map((product, index) => (
             <li key={product.id}>
-              <ShopProductCard product={product} basePath={basePath} />
+              {/* The first card is the LCP element on category pages. */}
+              <ShopProductCard product={product} basePath={basePath} priority={index === 0} />
             </li>
           ))}
         </ul>

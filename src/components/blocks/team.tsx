@@ -31,9 +31,10 @@ export const TeamBlock: FC<Props> = ({ block: { employees, disableMarginBottom, 
           </div>
           <div className="flex flex-1 flex-col p-8 text-sm font-normal lg:text-sm">
             <p className="mb-6">{emplFunction}</p>
-            <h3 className="lg:text-l text-wehrli mb-4 text-base font-bold break-words md:text-lg">
+            {/* h2: the team block usually follows the page h1 directly (no skipped heading level). */}
+            <h2 className="lg:text-l text-wehrli mb-4 text-base font-bold break-words md:text-lg">
               {firstname} {lastname}
-            </h3>
+            </h2>
             <p>{bio}</p>
             <div className="mt-6 flex flex-1 flex-row flex-wrap content-end gap-x-4 gap-y-2">
               {/* {links.map(({ label, url }) => (

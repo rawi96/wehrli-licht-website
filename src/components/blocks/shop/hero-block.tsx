@@ -53,16 +53,22 @@ export const ShopHeroBlock: FC<Props> = ({ block, fallbackCategories }) => {
                   className="col-span-2 aspect-[5/3] min-h-[10.5rem] sm:min-h-52"
                   compact
                   priority
+                  sizes="92vw"
                 />
               )}
-              {secondary && <CategoryTile category={secondary} className="aspect-[4/5] min-h-36 sm:min-h-40" compact />}
-              {tertiary && <CategoryTile category={tertiary} className="aspect-[4/5] min-h-36 sm:min-h-40" compact />}
+              {secondary && (
+                <CategoryTile category={secondary} className="aspect-[4/5] min-h-36 sm:min-h-40" compact sizes="46vw" />
+              )}
+              {tertiary && (
+                <CategoryTile category={tertiary} className="aspect-[4/5] min-h-36 sm:min-h-40" compact sizes="46vw" />
+              )}
             </div>
 
             <div className="hidden h-[min(28rem,52vw)] grid-cols-12 grid-rows-6 gap-3 lg:grid">
-              {primary && <CategoryTile category={primary} className="col-span-7 row-span-6" priority />}
-              {secondary && <CategoryTile category={secondary} className="col-span-5 row-span-3" />}
-              {tertiary && <CategoryTile category={tertiary} className="col-span-5 row-span-3" />}
+              {/* Desktop copies (hidden below lg): no priority, the mobile copy above already is the LCP image. */}
+              {primary && <CategoryTile category={primary} className="col-span-7 row-span-6" sizes="440px" />}
+              {secondary && <CategoryTile category={secondary} className="col-span-5 row-span-3" sizes="320px" />}
+              {tertiary && <CategoryTile category={tertiary} className="col-span-5 row-span-3" sizes="320px" />}
             </div>
           </div>
         )}
@@ -81,11 +87,13 @@ const CategoryTile = ({
   className,
   compact,
   priority,
+  sizes,
 }: {
   category: ShopCategory;
   className?: string;
   compact?: boolean;
   priority?: boolean;
+  sizes: string;
 }) => (
   <Link
     href={getShopCategoryPath(category.slug)}
@@ -97,6 +105,7 @@ const CategoryTile = ({
         <ImageComponent
           image={category.image}
           priority={priority}
+          sizes={sizes}
           imgClassName="size-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
       ) : (
