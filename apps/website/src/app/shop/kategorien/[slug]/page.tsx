@@ -1,5 +1,5 @@
 import { Breadcrumbs } from '@/components/breadcrumbs';
-import { Container, Heading } from '@wehrli/design-system';
+import { CatalogHeader, Container } from '@wehrli/design-system';
 import { Footer } from '@/components/layout/footer';
 import { Header } from '@/components/layout/header';
 import NotFound from '@/components/not-found';
@@ -64,19 +64,13 @@ export default async function ShopCategoryPage({ params }: Props) {
           />
         </div>
         <ShopBrowseLayout activeCategorySlug={slug}>
-          <header className="mb-8 max-w-3xl">
-            <Heading level="1">{category.name}</Heading>
-            {category.description && (
-              <p className="mt-4 text-sm lg:text-base" dangerouslySetInnerHTML={{ __html: category.description }} />
-            )}
-          </header>
+          <CatalogHeader title={category.name} descriptionHtml={category.description} />
           {products.length > 0 && (
-            <section aria-labelledby="category-products-heading">
-              <h2 id="category-products-heading" className="sr-only">
-                {products.length === 1 ? '1 Produkt' : `${products.length} Produkte`} in {category.name}
-              </h2>
-              <ShopProductCatalog products={products} />
-            </section>
+            <ShopProductCatalog
+              products={products}
+              headingId="category-products-heading"
+              heading={`${products.length === 1 ? '1 Produkt' : `${products.length} Produkte`} in ${category.name}`}
+            />
           )}
         </ShopBrowseLayout>
       </Container>

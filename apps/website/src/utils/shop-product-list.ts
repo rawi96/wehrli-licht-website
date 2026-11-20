@@ -79,6 +79,3 @@ export const getVisibleShopProducts = (
   query: string,
   sortKey: ShopProductSortKey,
 ): ShopProductListItem[] => sortByKey(filterByQuery(products, query), sortKey);
-
-export const getShopSortLabel = (sortKey: ShopProductSortKey): string =>
-  SHOP_PRODUCT_SORT_OPTIONS.find((option) => option.value === sortKey)?.label ?? 'Empfohlen';

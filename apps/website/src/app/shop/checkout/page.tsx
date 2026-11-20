@@ -1,4 +1,4 @@
-import { Container } from '@wehrli/design-system';
+import { CheckoutLoading, Container } from '@wehrli/design-system';
 import { Footer } from '@/components/layout/footer';
 import { Header } from '@/components/layout/header';
 import { CheckoutPageContent } from '@/components/shop/checkout-page-content';
@@ -25,7 +25,7 @@ export default async function CheckoutPage() {
     <main>
       <Header headerFooter={headerFooter as HeaderFooterRecord} />
       <Container>
-        <Suspense fallback={<p className="text-gray-600">Kasse wird geladen…</p>}>
+        <Suspense fallback={<CheckoutLoading text="Kasse wird geladen…" />}>
           <CheckoutPageContent />
         </Suspense>
       </Container>

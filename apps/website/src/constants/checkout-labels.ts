@@ -7,8 +7,6 @@ export const CHECKOUT_STEP_HEADINGS: Record<CheckoutStep, string> = {
   review: 'Bestellung prüfen',
 };
 
-export const CHECKOUT_SUCCESS_HEADING = 'Vielen Dank!';
-
 export const CHECKOUT_SHIPPING_LABELS: Record<CheckoutShippingMethod, string> = {
   pickup: 'Abholung in Goldach',
   post: 'Versand per Post',
@@ -30,4 +28,12 @@ export const CHECKOUT_PAYMENT_LABELS: Record<CheckoutPaymentMethod, { title: str
     title: 'Online bezahlen',
     description: 'Karte, TWINT, Apple Pay und weitere Methoden',
   },
+};
+
+/** Titles in the checkout's progress indicator, in step order. */
+export const CHECKOUT_STEP_TITLES: Record<CheckoutStep, string> = {
+  shipping: 'Versand',
+  details: 'Angaben',
+  payment: 'Zahlung',
+  review: 'Übersicht',
 };

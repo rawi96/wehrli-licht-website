@@ -1,30 +1,57 @@
 'use client';
 
 import { useShopContext } from '@/app/context/shop-context';
-import { Button } from '@wehrli/design-system';
-import { CheckoutErrorAlert } from '@/components/shop/checkout-error-alert';
-import { CheckoutCartSidebar } from '@/components/shop/checkout-cart-sidebar';
-import { CheckoutContactFields } from '@/components/shop/checkout-contact-fields';
-import { CheckoutPaymentStep } from '@/components/shop/checkout-payment-step';
-import { CheckoutReviewStep } from '@/components/shop/checkout-review-step';
-import { CheckoutShippingAddressForm } from '@/components/shop/checkout-shipping-address-form';
-import { CheckoutShippingStep } from '@/components/shop/checkout-shipping-step';
-import { CheckoutStepIndicator } from '@/components/shop/checkout-step-indicator';
 import { useCheckoutCommerce } from '@/components/shop/hooks/use-checkout-commerce';
 import { useCheckoutDraft } from '@/components/shop/hooks/use-checkout-draft';
 import { useCheckoutNavigation } from '@/components/shop/hooks/use-checkout-navigation';
 import { useCheckoutQuote } from '@/components/shop/hooks/use-checkout-quote';
-import { checkoutInlineErrorClass, checkoutLabelClass, checkoutTextareaClass } from '@/components/shop/checkout-styles';
-import { CHECKOUT_STEP_HEADINGS } from '@/constants/checkout-labels';
-import { CHECKOUT_API_ERROR_CODE } from '@/constants/checkout-errors';
-import { CheckoutStep } from '@/types/checkout';
+import { CHECKOUT_ERROR_ALERT_COPY, CHECKOUT_API_ERROR_CODE } from '@/constants/checkout-errors';
+import {
+  CHECKOUT_PAYMENT_LABELS,
+  CHECKOUT_SHIPPING_LABELS,
+  CHECKOUT_STEP_HEADINGS,
+  CHECKOUT_STEP_TITLES,
+} from '@/constants/checkout-labels';
+import { SHOP_HOME_PATH } from '@/constants/shop-paths';
+import { CheckoutPaymentMethod, CheckoutShippingMethod, CheckoutStep } from '@/types/checkout';
+import { toCartLine } from '@/utils/cart';
+import { computeCheckoutTotals } from '@/utils/cart-checkout';
 import { validateCheckoutCustomer } from '@/utils/checkout-customer';
-import { validateShippingAddress } from '@/utils/checkout-shipping-address';
+import {
+  CHECKOUT_SHIPPING_COUNTRY,
+  CHECKOUT_SHIPPING_COUNTRY_LABEL,
+  formatShippingAddress,
+  validateShippingAddress,
+} from '@/utils/checkout-shipping-address';
 import { buildCheckoutItemsFromCart } from '@/utils/build-checkout-payload';
 import { clearCheckoutDraft } from '@/utils/checkout-storage';
-import { resolveCartShippingCostChf } from '@/utils/product-commerce';
+import { formatPriceToCHF } from '@/utils/price';
+import { formatShippingCostLabel, resolveCartShippingCostChf, summarizeDeliveryTimes } from '@/utils/product-commerce';
+import {
+  CheckoutCartSummary,
+  CheckoutDetailsStep,
+  CheckoutErrorAlert,
+  CheckoutLayout,
+  CheckoutLoading,
+  CheckoutPaymentStep,
+  CheckoutReview,
+  CheckoutShippingStep,
+  CheckoutSteps,
+} from '@wehrli/design-system';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { FormEvent, useMemo, useState } from 'react';
+
+const CONTACT_PATH = '/kontakt';
+
+const CHECKOUT_STEPS = (Object.keys(CHECKOUT_STEP_TITLES) as CheckoutStep[]).map((id) => ({
+  id,
+  title: CHECKOUT_STEP_TITLES[id],
+}));
+
+const PAYMENT_OPTIONS = (Object.keys(CHECKOUT_PAYMENT_LABELS) as CheckoutPaymentMethod[]).map((method) => ({
+  value: method,
+  ...CHECKOUT_PAYMENT_LABELS[method],
+}));
 
 type CheckoutApiResponse = {
   type?: string;
@@ -36,7 +63,7 @@ type CheckoutApiResponse = {
 export const CheckoutPageContent = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { shoppingCart, isHydrated } = useShopContext();
+  const { shoppingCart, isHydrated, updateItemQuantity, removeItem } = useShopContext();
   const stepParam = searchParams.get('step');
 
   const draft = useCheckoutDraft();
@@ -71,13 +98,20 @@ export const CheckoutPageContent = () => {
         id: `${line.productId}-${index}`,
         name: line.name,
         quantity: line.quantity,
-        unitPriceChf: line.unitPriceChf,
+        total: formatPriceToCHF(line.unitPriceChf * line.quantity),
       })) ?? [],
     [verifiedQuote],
   );
 
   const reviewTotals = verifiedQuote?.totals ?? { subTotalChf: 0, shippingCostChf: 0, grandTotalChf: 0 };
   const displayError = error ?? quoteError;
+
+  const sidebarTotals = useMemo(
+    () => computeCheckoutTotals(cartLineItems, draft.shipping, productCommerce),
+    [cartLineItems, draft.shipping, productCommerce],
+  );
+
+  const deliveryTimeSummary = summarizeDeliveryTimes(cartLineItems, productCommerce);
 
   const postShippingCostChf = useMemo(
     () => resolveCartShippingCostChf('post', cartLineItems, productCommerce),
@@ -198,112 +232,120 @@ export const CheckoutPageContent = () => {
   };
 
   if (!isHydrated || !draft.draftLoaded) {
-    return (
-      <div>
-        <h1 className="font-bold">Kasse</h1>
-        <p className="mt-4 text-sm text-gray-500">Laden…</p>
-      </div>
-    );
+    return <CheckoutLoading title="Kasse" text="Laden…" />;
   }
 
   if (shoppingCart.items.length === 0) {
     return null;
   }
 
+  const showFullTotals = step !== 'shipping';
+  const submitLabel = draft.paymentMethod === 'online' ? 'Jetzt bezahlen' : 'Bestellung abschliessen';
+
   return (
-    <div className="mx-auto max-w-6xl">
-      <div className="grid gap-10 lg:grid-cols-5 lg:gap-12">
-        <aside className="order-1 lg:order-2 lg:col-span-2">
-          <CheckoutCartSidebar shipping={draft.shipping} step={step} productCommerce={productCommerce} />
-        </aside>
+    <CheckoutLayout
+      title={CHECKOUT_STEP_HEADINGS[step]}
+      sidebar={
+        <CheckoutCartSummary
+          items={shoppingCart.items.map(toCartLine)}
+          subtotal={formatPriceToCHF(sidebarTotals.subTotalChf)}
+          shippingCost={
+            draft.shipping === 'post' || showFullTotals
+              ? formatShippingCostLabel(draft.shipping, sidebarTotals.shippingCostChf)
+              : null
+          }
+          total={showFullTotals ? formatPriceToCHF(sidebarTotals.grandTotalChf) : null}
+          deliveryTime={deliveryTimeSummary}
+          onQuantityChange={updateItemQuantity}
+          onRemove={removeItem}
+        />
+      }
+      alert={
+        orderFailure ? (
+          <CheckoutErrorAlert message={CHECKOUT_ERROR_ALERT_COPY.order_not_completed} contactHref={CONTACT_PATH} />
+        ) : null
+      }
+      steps={<CheckoutSteps steps={CHECKOUT_STEPS} currentStep={step} />}
+    >
+      {step === 'shipping' && (
+        <CheckoutShippingStep
+          options={[
+            { value: 'pickup', title: CHECKOUT_SHIPPING_LABELS.pickup, description: 'Gratis während den Öffnungszeiten' },
+            {
+              value: 'post',
+              title: CHECKOUT_SHIPPING_LABELS.post,
+              description: `In die Schweiz · ${formatShippingCostLabel('post', postShippingCostChf)}`,
+            },
+          ]}
+          value={draft.shipping}
+          onChange={(shipping) => draft.setShipping(shipping as CheckoutShippingMethod)}
+          deliveryTime={deliveryTimeSummary}
+          backHref={SHOP_HOME_PATH}
+          onContinue={() => goToStep('details')}
+        />
+      )}
 
-        <div className="order-2 lg:order-1 lg:col-span-3">
-          <h1 className="mb-6 font-bold">{CHECKOUT_STEP_HEADINGS[step]}</h1>
+      {step === 'details' && (
+        <CheckoutDetailsStep
+          contact={draft.customer}
+          onContactChange={draft.setCustomer}
+          showAddress={draft.shipping === 'post'}
+          address={draft.shippingAddress}
+          onAddressChange={(address) =>
+            draft.setShippingAddress({
+              ...draft.shippingAddress,
+              ...address,
+              postalCode: address.postalCode.replace(/\D/g, '').slice(0, 4),
+            })
+          }
+          country={{ code: CHECKOUT_SHIPPING_COUNTRY, label: CHECKOUT_SHIPPING_COUNTRY_LABEL }}
+          contactHref={CONTACT_PATH}
+          comment={draft.comment}
+          onCommentChange={draft.setComment}
+          error={displayError}
+          onBack={() => goToStep('shipping')}
+          onSubmit={handleDetailsNext}
+        />
+      )}
 
-          {orderFailure && (
-            <div className="mb-6">
-              <CheckoutErrorAlert variant="order_not_completed" />
-            </div>
-          )}
+      {step === 'payment' && (
+        <CheckoutPaymentStep
+          options={PAYMENT_OPTIONS}
+          value={draft.paymentMethod}
+          onChange={(method) => draft.setPaymentMethod(method as CheckoutPaymentMethod)}
+          error={displayError}
+          onBack={() => goToStep('details')}
+          onContinue={() => goToStep('review')}
+        />
+      )}
 
-          <CheckoutStepIndicator currentStep={step} />
-
-          {step === 'shipping' && (
-            <CheckoutShippingStep
-              shipping={draft.shipping}
-              onShippingChange={draft.setShipping}
-              postShippingCostChf={postShippingCostChf}
-              lineItems={cartLineItems}
-              productCommerce={productCommerce}
-              onContinue={() => goToStep('details')}
-            />
-          )}
-
-          {step === 'details' && (
-            <form onSubmit={handleDetailsNext} className="space-y-6">
-              <CheckoutContactFields customer={draft.customer} onCustomerChange={draft.setCustomer} />
-
-              {draft.shipping === 'post' && (
-                <CheckoutShippingAddressForm address={draft.shippingAddress} onChange={draft.setShippingAddress} />
-              )}
-
-              <div>
-                <label htmlFor="checkout-comment" className={checkoutLabelClass}>
-                  Kommentar
-                </label>
-                <textarea
-                  id="checkout-comment"
-                  name="comment"
-                  rows={2}
-                  className={checkoutTextareaClass}
-                  value={draft.comment}
-                  onChange={(event) => draft.setComment(event.target.value)}
-                />
-              </div>
-
-              {displayError && <p className={checkoutInlineErrorClass}>{displayError}</p>}
-              <div className="flex justify-between gap-4">
-                <Button variant="secondary" showArrow={false} onClick={() => goToStep('shipping')}>
-                  Zurück
-                </Button>
-                <Button variant="primary" type="submit">
-                  Weiter
-                </Button>
-              </div>
-            </form>
-          )}
-
-          {step === 'payment' && (
-            <CheckoutPaymentStep
-              paymentMethod={draft.paymentMethod}
-              error={displayError}
-              onPaymentMethodChange={draft.setPaymentMethod}
-              onBack={() => goToStep('details')}
-              onContinue={() => goToStep('review')}
-            />
-          )}
-
-          {step === 'review' && (
-            <CheckoutReviewStep
-              customer={draft.customer}
-              shipping={draft.shipping}
-              shippingAddress={draft.shippingAddress}
-              paymentMethod={draft.paymentMethod}
-              comment={draft.comment}
-              cartLines={reviewCartLines}
-              subTotalChf={reviewTotals.subTotalChf}
-              shippingCostChf={reviewTotals.shippingCostChf}
-              grandTotalChf={reviewTotals.grandTotalChf}
-              deliveryTimeSummary={verifiedQuote?.deliveryTimeSummary}
-              error={orderFailure ? null : displayError}
-              isQuoteLoading={isQuoteLoading}
-              isSubmitting={isSubmitting}
-              onBack={() => goToStep('payment')}
-              onSubmit={handleSubmit}
-            />
-          )}
-        </div>
-      </div>
-    </div>
+      {step === 'review' && (
+        <CheckoutReview
+          intro={`Bitte prüfen Sie Ihre Angaben. Mit «${submitLabel}» wird die Bestellung verbindlich ausgelöst.`}
+          contact={{
+            name: `${draft.customer.firstName} ${draft.customer.lastName}`,
+            email: draft.customer.email,
+            phone: draft.customer.phone,
+          }}
+          shipping={{
+            method: CHECKOUT_SHIPPING_LABELS[draft.shipping],
+            address: draft.shipping === 'post' ? formatShippingAddress(draft.shippingAddress) : null,
+            deliveryTime: verifiedQuote?.deliveryTimeSummary,
+          }}
+          payment={CHECKOUT_PAYMENT_LABELS[draft.paymentMethod]}
+          comment={draft.comment.trim()}
+          lines={reviewCartLines}
+          subtotal={formatPriceToCHF(reviewTotals.subTotalChf)}
+          shippingCost={formatShippingCostLabel(draft.shipping, reviewTotals.shippingCostChf)}
+          total={formatPriceToCHF(reviewTotals.grandTotalChf)}
+          checking={isQuoteLoading}
+          error={orderFailure ? null : displayError}
+          submitting={isSubmitting}
+          submitLabel={submitLabel}
+          onBack={() => goToStep('payment')}
+          onSubmit={handleSubmit}
+        />
+      )}
+    </CheckoutLayout>
   );
 };

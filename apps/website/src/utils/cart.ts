@@ -1,4 +1,7 @@
+import { getShopProductPath } from '@/constants/shop-paths';
+import { formatPriceToCHF } from '@/utils/price';
 import { ShopProduct } from '@/utils/shop';
+import type { CartLine } from '@wehrli/design-system';
 
 export type CartSelection = {
   option: string;
@@ -156,3 +159,20 @@ export const removeCartItem = (cart: Cart, lineId: string): Cart => {
 
   return withComputedTotals(items);
 };
+
+/** The chosen variant of a cart line, e.g. "Farbe: Weiss, Grösse: M". */
+export const formatCartSelections = (selections: CartSelection[] | undefined): string | undefined =>
+  selections && selections.length > 0
+    ? selections.map((selection) => `${selection.option}: ${selection.value}`).join(', ')
+    : undefined;
+
+/** A cart line as the design system's CartLine. */
+export const toCartLine = (item: CartItem): CartLine => ({
+  id: item.id,
+  name: item.productName,
+  href: getShopProductPath(item.productSlug),
+  imageUrl: item.imageUrl,
+  selectionsLabel: formatCartSelections(item.selections),
+  price: formatPriceToCHF(item.price),
+  quantity: item.quantity,
+});
