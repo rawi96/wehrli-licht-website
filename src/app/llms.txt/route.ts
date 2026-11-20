@@ -29,11 +29,15 @@ export const GET = async (): Promise<Response> => {
     getHeaderFooter(),
   ]);
 
+  // Markdown-safe single line: no link-breaking brackets, no line breaks in list items.
+  const clean = (text: string) => text.replace(/[[\]]/g, '').replace(/\s+/g, ' ').trim();
+
   const pages = allPages
-    .filter((page) => !page.seometatags?.noIndex && page.slug !== 'home')
+    // home is the site itself, shop is listed in its own section below
+    .filter((page) => !page.seometatags?.noIndex && page.slug !== 'home' && page.slug !== 'shop')
     .map((page) => ({
-      title: page.title,
-      description: page.seometatags?.description?.trim(),
+      title: clean(page.title),
+      description: page.seometatags?.description ? clean(page.seometatags.description) : undefined,
       parentSlug: page.parent?.slug ?? null,
       url: `${siteUrl}${generatePathForRecord({ slug: page.slug, type: 'PageRecord', parent: page.parent as PageRecord | null })}`,
     }));
@@ -70,7 +74,7 @@ export const GET = async (): Promise<Response> => {
     `## Shop\n\n${[
       line({ title: 'Online-Shop', url: `${siteUrl}/shop` }),
       ...categories.map((category) =>
-        line({ title: category.name, url: `${siteUrl}${getShopCategoryPath(category.slug)}` }),
+        line({ title: clean(category.name), url: `${siteUrl}${getShopCategoryPath(category.slug)}` }),
       ),
     ].join('\n')}`,
     `## Weitere Seiten\n\n${[...otherPages.map(line), line({ title: 'Häufige Fragen (FAQ)', url: `${siteUrl}/faq` })].join('\n')}`,

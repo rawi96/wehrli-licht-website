@@ -24,9 +24,14 @@ export type ContentBlock = NonNullable<PageQuery['page']>['content'][number];
 
 type Props = {
   blocks: ContentBlock[];
+  /**
+   * Image blocks among the first N blocks are treated as above the fold and load eagerly (LCP).
+   * Pass 0 when something else (e.g. the home stage) is rendered above the content.
+   */
+  eagerBlockCount?: number;
 };
 
-export const ContentBlocks: FC<Props> = ({ blocks }) => (
+export const ContentBlocks: FC<Props> = ({ blocks, eagerBlockCount = 2 }) => (
   <>
     {blocks.map((block, index) => {
       switch (block.__typename) {
@@ -39,8 +44,7 @@ export const ContentBlocks: FC<Props> = ({ blocks }) => (
         case 'TextImageRecord':
           return <TextImageBlock key={block.id} block={block} />;
         case 'ImageRecord':
-          // Images in the first two blocks are usually above the fold: load them eagerly (LCP).
-          return <ImageBlock key={block.id} block={block} aboveFold={index < 2} />;
+          return <ImageBlock key={block.id} block={block} aboveFold={index < eagerBlockCount} />;
         case 'TeamRecord':
           return <TeamBlock key={block.id} block={block} />;
         case 'IframeRecord':

@@ -10,7 +10,16 @@ export const SITE_DESCRIPTION =
  * answers) and the website. Contact data comes from the DatoCMS footer.
  */
 export const SiteJsonLd = async () => {
-  const headerFooter = await getHeaderFooter();
+  // Structured data must never take a page down: skip it if DatoCMS is unavailable.
+  const headerFooter = await getHeaderFooter().catch((error: unknown) => {
+    console.error('[site-json-ld] header/footer unavailable', error);
+
+    return null;
+  });
+  if (!headerFooter) {
+    return null;
+  }
+
   const url = getSiteUrl();
   const businessId = `${url}/#business`;
   const sameAs = [headerFooter.instagramUrl, headerFooter.facebookUrl, headerFooter.linkedinUrl].filter(

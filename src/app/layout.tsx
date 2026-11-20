@@ -35,7 +35,8 @@ const RootLayout = async ({ children }: { children: ReactNode }) => {
   const { isEnabled } = await draftMode();
 
   return (
-    <html lang="de" className="scroll-smooth">
+    // data-consent is set on <html> by the Google tag init script before hydration.
+    <html lang="de" className="scroll-smooth" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://www.datocms-assets.com" crossOrigin="" />
         <link rel="dns-prefetch" href="https://www.datocms-assets.com" />

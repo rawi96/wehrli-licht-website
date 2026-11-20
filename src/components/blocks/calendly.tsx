@@ -5,6 +5,12 @@ import { trackEvent } from '@/lib/analytics/gtag';
 import { FC, useEffect, useMemo, useRef } from 'react';
 import { BlockWrapper } from '../block-wrapper';
 
+declare global {
+  interface Window {
+    Calendly?: { initInlineWidget: (options: { url: string; parentElement: HTMLElement }) => void };
+  }
+}
+
 type Props = {
   block: CalendlyBlockFragment;
 };
@@ -35,16 +41,32 @@ export const CalendlyBlock: FC<Props> = ({ block: { disableMarginBottom, disable
       return;
     }
 
+    // widget.js auto-initializes inline widgets only once, when it first runs. After a
+    // client-side navigation the script is already there, so initialize explicitly.
+    const initWidget = () => {
+      if (container.querySelector('iframe')) {
+        return;
+      }
+      window.Calendly?.initInlineWidget({ url: calendlyUrl, parentElement: container });
+    };
+
+    let script = document.querySelector<HTMLScriptElement>('script[data-calendly-widget="true"]');
+
     const load = () => {
-      if (document.querySelector('script[data-calendly-widget="true"]')) {
+      if (script && window.Calendly) {
+        initWidget();
+
         return;
       }
 
-      const script = document.createElement('script');
-      script.src = 'https://assets.calendly.com/assets/external/widget.js';
-      script.async = true;
-      script.dataset.calendlyWidget = 'true';
-      document.body.appendChild(script);
+      if (!script) {
+        script = document.createElement('script');
+        script.src = 'https://assets.calendly.com/assets/external/widget.js';
+        script.async = true;
+        script.dataset.calendlyWidget = 'true';
+        document.body.appendChild(script);
+      }
+      script.addEventListener('load', initWidget, { once: true });
     };
 
     const observer = new IntersectionObserver(
@@ -58,8 +80,11 @@ export const CalendlyBlock: FC<Props> = ({ block: { disableMarginBottom, disable
     );
     observer.observe(container);
 
-    return () => observer.disconnect();
-  }, []);
+    return () => {
+      observer.disconnect();
+      script?.removeEventListener('load', initWidget);
+    };
+  }, [calendlyUrl]);
 
   return (
     <BlockWrapper disableMarginTop={disableMarginTop} disableMarginBottom={disableMarginBottom}>

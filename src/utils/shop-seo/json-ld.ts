@@ -8,8 +8,6 @@ import type { CategoryForSeo, ProductForSeo, ProductListItemForSeo } from '@/uti
 import { getSiteUrl } from '@/utils/site-url';
 
 const SITE_NAME = 'Wehrli Licht GmbH';
-const DEFAULT_DESCRIPTION =
-  'Wehrli Licht GmbH – Lichtberatung, Lichtplanung und hochwertige Leuchten in Goldach. Massgefertigte Lampenschirme und individuelle Lichtlösungen.';
 
 const productOgImage = (product: Pick<ProductForSeo, 'images'>): string | undefined => {
   const image = product.images[0];
@@ -23,17 +21,12 @@ const categoryOgImage = (category: CategoryForSeo): string | undefined => {
   return image?.responsiveImage?.src ?? image?.url ?? undefined;
 };
 
-const shopOrganizationNode = () => ({
-  '@type': 'LightingStore',
-  name: SITE_NAME,
-  url: getSiteUrl(),
-  description: DEFAULT_DESCRIPTION,
-  address: {
-    '@type': 'PostalAddress',
-    addressLocality: 'Goldach',
-    addressCountry: 'CH',
-  },
-});
+/**
+ * The business is described once, site-wide (components/seo/site-json-ld.tsx).
+ * Shop structured data only references it, so search engines see a single entity.
+ */
+const businessRef = () => ({ '@id': `${getSiteUrl()}/#business` });
+const websiteRef = () => ({ '@id': `${getSiteUrl()}/#website` });
 
 export const buildProductJsonLd = (product: ProductForSeo): Record<string, unknown> => {
   const url = `${getSiteUrl()}/shop/produkte/${product.slug}`;
@@ -65,10 +58,7 @@ export const buildProductJsonLd = (product: ProductForSeo): Record<string, unkno
                 priceCurrency: 'CHF',
                 price: price.toFixed(2),
                 availability: 'https://schema.org/InStock',
-                seller: {
-                  '@type': 'Organization',
-                  name: SITE_NAME,
-                },
+                seller: businessRef(),
               },
             }
           : {}),
@@ -76,11 +66,6 @@ export const buildProductJsonLd = (product: ProductForSeo): Record<string, unkno
     ],
   };
 };
-
-export const buildShopOrganizationJsonLd = (): Record<string, unknown> => ({
-  '@context': 'https://schema.org',
-  ...shopOrganizationNode(),
-});
 
 export const buildCategoryJsonLd = (
   category: CategoryForSeo,
@@ -98,11 +83,7 @@ export const buildCategoryJsonLd = (
         description: buildCategoryDescription(category),
         url,
         ...(image ? { image: [image] } : {}),
-        isPartOf: {
-          '@type': 'WebSite',
-          name: SITE_NAME,
-          url: getSiteUrl(),
-        },
+        isPartOf: websiteRef(),
       },
       {
         '@type': 'ItemList',
@@ -143,11 +124,7 @@ export const buildAllProductsJsonLd = (products: ProductListItemForSeo[]): Recor
         name: 'Alle Leuchten',
         description,
         url,
-        isPartOf: {
-          '@type': 'WebSite',
-          name: SITE_NAME,
-          url: getSiteUrl(),
-        },
+        isPartOf: websiteRef(),
       },
       {
         '@type': 'ItemList',
@@ -208,17 +185,13 @@ export const buildShopIndexJsonLd = (
     'Leuchten online kaufen bei Wehrli Licht in Goldach: Pendelleuchten, Deckenleuchten, Wandleuchten und Tischleuchten. Massgefertigte Lampenschirme nach Mass, Lichtberatung und Lichtplanung in der Schweiz.';
 
   const graph: Record<string, unknown>[] = [
-    shopOrganizationNode(),
     {
       '@type': 'CollectionPage',
       name: 'Leuchten Shop | Lampenschirme nach Mass | Wehrli Licht',
       description: shopDescription,
       url,
-      isPartOf: {
-        '@type': 'WebSite',
-        name: SITE_NAME,
-        url: getSiteUrl(),
-      },
+      isPartOf: websiteRef(),
+      provider: businessRef(),
     },
     {
       '@type': 'ItemList',

@@ -45,7 +45,7 @@ export default async function HomePage() {
       <main>
         {homeStageBlock && <HomeStageBlock key={homeStageBlock.id} block={homeStageBlock} />}
         <ContentWrapper>
-          <ContentBlocks blocks={pageBlocks} />
+          <ContentBlocks blocks={pageBlocks} eagerBlockCount={0} />
         </ContentWrapper>
       </main>
       <Footer headerFooter={headerFooter as HeaderFooterRecord} />
