@@ -1,23 +1,14 @@
 import { HeaderFooterRecord } from '@/graphql/generated';
+import { FooterNavigationSection } from '@wehrli/design-system';
 
-export type FooterNavLink = {
-  name: string;
-  href: string;
-};
-
-export type FooterNavSection = {
-  title: string;
-  links: FooterNavLink[];
-};
-
-export const mapFooterNavigationFromDato = (headerFooter: HeaderFooterRecord): FooterNavSection[] =>
+export const mapFooterNavigationFromDato = (headerFooter: HeaderFooterRecord): FooterNavigationSection[] =>
   headerFooter.footerNavigation.flatMap((group) => {
     const links = group.links
       .map((link) => ({
-        name: link.label.trim(),
+        label: link.label.trim(),
         href: link.href.trim(),
       }))
-      .filter((link) => link.name && link.href);
+      .filter((link) => link.label && link.href);
 
     const title = group.title.trim();
     if (!title || links.length === 0) {

@@ -1,9 +1,7 @@
 import { JsonLd } from '@/components/seo/json-ld';
-import Link from 'next/link';
 import { PageRecord } from '@/graphql/generated';
-import { classNames } from '@/utils/css';
 import { getSiteUrl } from '@/utils/site-url';
-import { ChevronRightIcon } from '@heroicons/react/20/solid';
+import { Breadcrumbs as BreadcrumbsView } from '@wehrli/design-system';
 
 type BreadcrumbItem = {
   name: string;
@@ -31,30 +29,7 @@ export const Breadcrumbs = ({ page, customBreadcrumbs, homeText = 'Home' }: Prop
 
   return (
     <>
-      <nav aria-label="Breadcrumb" className="-mb-16 flex font-bold">
-        <ol role="list" className="flex flex-wrap items-center gap-x-4 gap-y-2">
-          {breadcrumbsWithHome.map((breadcrumb, index) => (
-            <li key={breadcrumb.href} className="flex items-center">
-              {index !== 0 && <ChevronRightIcon aria-hidden="true" className="text-wehrli h-4 w-4 shrink-0" />}
-              {index === breadcrumbsWithHome.length - 1 ? (
-                <span
-                  aria-current="page"
-                  className={classNames('border-wehrli text-wehrli ml-2 border-b-2 text-sm font-bold')}
-                >
-                  {breadcrumb.name}
-                </span>
-              ) : (
-                <Link
-                  href={breadcrumb.href}
-                  className={classNames('text-wehrli ml-2 border-b-2 border-transparent text-sm', 'hover:border-wehrli')}
-                >
-                  {breadcrumb.name}
-                </Link>
-              )}
-            </li>
-          ))}
-        </ol>
-      </nav>
+      <BreadcrumbsView items={breadcrumbsWithHome.map(({ name, href }) => ({ label: name, href }))} />
       <JsonLd data={richSnippet} />
     </>
   );
