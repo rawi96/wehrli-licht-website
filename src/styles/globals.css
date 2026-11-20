@@ -122,3 +122,8 @@ html {
     text-shadow: 0 2px 24px rgb(8 15 28 / 0.65), 0 1px 4px rgb(8 15 28 / 0.5);
   }
 }
+
+/* Cookie banner: hide before first paint when a choice is already stored (see google-tag.tsx). */
+html[data-consent] [data-cookie-banner]:not([data-open]) {
+  display: none;
+}

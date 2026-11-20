@@ -2,7 +2,7 @@
 
 import { CalendlyBlockFragment } from '@/graphql/generated';
 import { trackEvent } from '@/lib/analytics/gtag';
-import { FC, useEffect, useMemo } from 'react';
+import { FC, useEffect, useMemo, useRef } from 'react';
 import { BlockWrapper } from '../block-wrapper';
 
 type Props = {
@@ -25,22 +25,50 @@ export const CalendlyBlock: FC<Props> = ({ block: { disableMarginBottom, disable
     return () => window.removeEventListener('message', onMessage);
   }, []);
 
+  // Calendly is heavy (~1 MB, third-party cookies): only load it once the
+  // widget is about to scroll into view.
+  const containerRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
-    const existing = document.querySelector<HTMLScriptElement>('script[data-calendly-widget="true"]');
-    if (existing) {
+    const container = containerRef.current;
+    if (!container) {
       return;
     }
 
-    const script = document.createElement('script');
-    script.src = 'https://assets.calendly.com/assets/external/widget.js';
-    script.async = true;
-    script.dataset.calendlyWidget = 'true';
-    document.body.appendChild(script);
+    const load = () => {
+      if (document.querySelector('script[data-calendly-widget="true"]')) {
+        return;
+      }
+
+      const script = document.createElement('script');
+      script.src = 'https://assets.calendly.com/assets/external/widget.js';
+      script.async = true;
+      script.dataset.calendlyWidget = 'true';
+      document.body.appendChild(script);
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          observer.disconnect();
+          load();
+        }
+      },
+      { rootMargin: '600px 0px' },
+    );
+    observer.observe(container);
+
+    return () => observer.disconnect();
   }, []);
 
   return (
     <BlockWrapper disableMarginTop={disableMarginTop} disableMarginBottom={disableMarginBottom}>
-      <div className="calendly-inline-widget" data-url={calendlyUrl} style={{ minWidth: '320px', height: '700px' }} />
+      <div
+        ref={containerRef}
+        className="calendly-inline-widget"
+        data-url={calendlyUrl}
+        style={{ minWidth: '320px', height: '700px' }}
+      />
     </BlockWrapper>
   );
 };
