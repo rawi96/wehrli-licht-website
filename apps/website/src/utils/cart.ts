@@ -1,3 +1,4 @@
+import { MAX_LINE_QUANTITY } from '@/constants/shop-commerce';
 import { getShopProductPath } from '@/constants/shop-paths';
 import { formatPriceToCHF } from '@/utils/price';
 import { ShopProduct } from '@/utils/shop';
@@ -64,10 +65,12 @@ const computeTotals = (items: CartItem[]): Pick<Cart, 'item_quantity' | 'sub_tot
   };
 };
 
-export const withComputedTotals = (items: CartItem[]): Cart => ({
-  items,
-  ...computeTotals(items),
-});
+/** Cart with totals; line quantities are capped at MAX_LINE_QUANTITY (also for carts restored from storage). */
+export const withComputedTotals = (lines: CartItem[]): Cart => {
+  const items = lines.map((line) => (line.quantity > MAX_LINE_QUANTITY ? { ...line, quantity: MAX_LINE_QUANTITY } : line));
+
+  return { items, ...computeTotals(items) };
+};
 
 export const loadCartFromStorage = (): Cart => {
   if (typeof window === 'undefined') {

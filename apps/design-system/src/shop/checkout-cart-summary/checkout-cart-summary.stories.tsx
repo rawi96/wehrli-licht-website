@@ -12,6 +12,7 @@ const meta: Meta<typeof CheckoutCartSummary> = {
     total: 'CHF 1’415.00',
     deliveryTime: 'Je nach Produkt unterschiedlich',
     onQuantityChange: () => undefined,
+    maxQuantity: 10,
     onRemove: () => undefined,
   },
   decorators: [

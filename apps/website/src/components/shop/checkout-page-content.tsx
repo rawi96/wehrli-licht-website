@@ -1,5 +1,6 @@
 'use client';
 
+import { MAX_LINE_QUANTITY } from '@/constants/shop-commerce';
 import { useShopContext } from '@/app/context/shop-context';
 import { useCheckoutCommerce } from '@/components/shop/hooks/use-checkout-commerce';
 import { useCheckoutDraft } from '@/components/shop/hooks/use-checkout-draft';
@@ -13,7 +14,7 @@ import {
   CHECKOUT_STEP_TITLES,
 } from '@/constants/checkout-labels';
 import { SHOP_HOME_PATH } from '@/constants/shop-paths';
-import { CheckoutPaymentMethod, CheckoutShippingMethod, CheckoutStep } from '@/types/checkout';
+import { CheckoutPaymentMethod, CheckoutStep } from '@/types/checkout';
 import { toCartLine } from '@/utils/cart';
 import { computeCheckoutTotals } from '@/utils/cart-checkout';
 import { validateCheckoutCustomer } from '@/utils/checkout-customer';
@@ -251,6 +252,7 @@ export const CheckoutPageContent = ({ contactHref }: Props) => {
       sidebar={
         <CheckoutCartSummary
           items={shoppingCart.items.map(toCartLine)}
+          maxQuantity={MAX_LINE_QUANTITY}
           subtotal={formatPriceToCHF(sidebarTotals.subTotalChf)}
           shippingCost={
             draft.shipping === 'post' || showFullTotals
@@ -281,7 +283,7 @@ export const CheckoutPageContent = ({ contactHref }: Props) => {
             },
           ]}
           value={draft.shipping}
-          onChange={(shipping) => draft.setShipping(shipping as CheckoutShippingMethod)}
+          onChange={draft.setShipping}
           deliveryTime={deliveryTimeSummary}
           backHref={SHOP_HOME_PATH}
           onContinue={() => goToStep('details')}
@@ -315,7 +317,7 @@ export const CheckoutPageContent = ({ contactHref }: Props) => {
         <CheckoutPaymentStep
           options={PAYMENT_OPTIONS}
           value={draft.paymentMethod}
-          onChange={(method) => draft.setPaymentMethod(method as CheckoutPaymentMethod)}
+          onChange={draft.setPaymentMethod}
           error={displayError}
           onBack={() => goToStep('details')}
           onContinue={() => goToStep('review')}

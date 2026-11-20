@@ -1,3 +1,4 @@
+import { CmsHtml } from '@/components/cms-html';
 import { CookieSettingsButton } from '@/components/analytics/cookie-banner';
 import { SITE_NAME } from '@/constants/site';
 import { HeaderFooterRecord } from '@/graphql/generated';
@@ -24,8 +25,7 @@ const toNotice = (title?: string | null, html?: string | null): FooterNotice | n
   hasText(title) && hasText(html)
     ? {
         title,
-        // eslint-disable-next-line @eslint-react/dom-no-dangerously-set-innerhtml -- HTML text field maintained in DatoCMS
-        text: <div dangerouslySetInnerHTML={{ __html: html }} />,
+        text: <CmsHtml html={html} as="div" />,
       }
     : null;
 

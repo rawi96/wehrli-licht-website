@@ -36,14 +36,14 @@ export const MOCK_CATEGORIES = [
     id: 'c1',
     name: 'Pendelleuchten',
     href: '#',
-    descriptionHtml: 'Leuchten über dem Esstisch und in der Küche.',
+    description: 'Leuchten über dem Esstisch und in der Küche.',
     image: PLACEHOLDER_LANDSCAPE,
   },
   {
     id: 'c2',
     name: 'Stehleuchten',
     href: '#',
-    descriptionHtml: 'Licht zum Lesen und für gemütliche Ecken. <strong>Auch dimmbar.</strong>',
+    description: 'Licht zum Lesen und für gemütliche Ecken. Auch dimmbar.',
     image: PLACEHOLDER_PORTRAIT,
   },
   { id: 'c3', name: 'Wandleuchten', href: '#', image: PLACEHOLDER_LANDSCAPE },
@@ -51,7 +51,7 @@ export const MOCK_CATEGORIES = [
     id: 'c4',
     name: 'Tischleuchten mit einem langen Kategorienamen',
     href: '#',
-    descriptionHtml:
+    description:
       'Eine längere Beschreibung, die zeigt, wie der Text nach einigen Zeilen abgeschnitten wird, wenn er nicht mehr in die Karte passt.',
   },
 ];

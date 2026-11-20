@@ -26,6 +26,7 @@ const Example = () => {
           subtotal="CHF 1’370.00"
           total="CHF 1’370.00"
           onQuantityChange={() => undefined}
+          maxQuantity={10}
           onRemove={() => undefined}
           onGoToCheckout={() => setOpen(false)}
           shopHref="#"

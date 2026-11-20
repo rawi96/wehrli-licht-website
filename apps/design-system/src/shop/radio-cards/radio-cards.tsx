@@ -1,23 +1,21 @@
-import { FC } from 'react';
-
-export type RadioCardOption = {
-  value: string;
+export type RadioCardOption<T extends string = string> = {
+  value: T;
   title: string;
   description: string;
 };
 
-type Props = {
+type Props<T extends string> = {
   /** Name of the radio group. */
   name: string;
   /** Accessible name of the group (visually hidden legend). */
   legend: string;
-  options: RadioCardOption[];
-  value: string;
-  onChange: (value: string) => void;
+  options: RadioCardOption<T>[];
+  value: T;
+  onChange: (value: T) => void;
 };
 
 /** A choice between a few options as bordered cards with a radio, title and description (shipping, payment). */
-export const RadioCards: FC<Props> = ({ name, legend, options, value, onChange }) => (
+export const RadioCards = <T extends string>({ name, legend, options, value, onChange }: Props<T>) => (
   <fieldset className="space-y-3">
     <legend className="sr-only">{legend}</legend>
     {options.map((option) => (

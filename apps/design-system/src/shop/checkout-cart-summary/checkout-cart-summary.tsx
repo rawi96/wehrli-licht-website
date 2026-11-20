@@ -14,6 +14,8 @@ type Props = {
   total?: string | null;
   deliveryTime?: string | null;
   onQuantityChange: (lineId: string, quantity: number) => void;
+  /** Highest quantity per line offered in the quantity select. */
+  maxQuantity: number;
   onRemove: (lineId: string) => void;
   labels?: {
     heading: string;
@@ -44,6 +46,7 @@ export const CheckoutCartSummary: FC<Props> = ({
   total,
   deliveryTime,
   onQuantityChange,
+  maxQuantity,
   onRemove,
   labels = DEFAULT_LABELS,
 }) => (
@@ -70,6 +73,7 @@ export const CheckoutCartSummary: FC<Props> = ({
             <p className="mt-1">{item.price}</p>
             <div className="mt-2 flex items-center gap-3">
               <QuantitySelect
+                max={maxQuantity}
                 id={`checkout-qty-${item.id}`}
                 value={item.quantity}
                 onChange={(quantity) => onQuantityChange(item.id, quantity)}

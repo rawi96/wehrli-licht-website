@@ -13,7 +13,7 @@ type Story = StoryObj<typeof CatalogHeader>;
 export const Default: Story = {};
 
 export const WithHtmlDescription: Story = {
-  args: { title: 'Pendelleuchten', description: undefined, descriptionHtml: 'Licht über dem <strong>Esstisch</strong>.' },
+  args: { title: 'Pendelleuchten', description: 'Licht über dem Esstisch und in der Küche.' },
 };
 
 export const TitleOnly: Story = { args: { description: undefined } };

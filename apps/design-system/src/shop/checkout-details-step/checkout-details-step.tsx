@@ -196,14 +196,7 @@ export const CheckoutDetailsStep: FC<Props> = ({
               </Popover.Panel>
             </Popover>
           </div>
-          <input
-            id="checkout-shipping-country"
-            name="shippingCountry"
-            readOnly
-            aria-readonly="true"
-            className="focus:border-wehrli focus:ring-wehrli block w-full cursor-default rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-700 shadow-sm focus:ring-1 focus:outline-none"
-            value={country.label}
-          />
+          <TextInput id="checkout-shipping-country" name="shippingCountry" value={country.label} readOnly />
           <input type="hidden" name="shippingCountryCode" value={country.code} />
         </div>
       </div>

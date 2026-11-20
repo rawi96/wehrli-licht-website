@@ -1,3 +1,4 @@
+import { MAX_LINE_QUANTITY } from '@/constants/shop-commerce';
 import { ShopProductsForCheckoutDocument } from '@/graphql/generated';
 import { CheckoutShippingMethod } from '@/types/checkout';
 import { CartSelection } from '@/utils/cart';
@@ -34,7 +35,7 @@ export const verifyCheckoutCartItems = async (items: CheckoutCartItemPayload[]):
   const verifiedItems: VerifiedCheckoutLineItem[] = [];
 
   for (const item of items) {
-    if (!Number.isInteger(item.quantity) || item.quantity < 1 || item.quantity > 10) {
+    if (!Number.isInteger(item.quantity) || item.quantity < 1 || item.quantity > MAX_LINE_QUANTITY) {
       throw new Error('Ungültige Produktmenge.');
     }
 

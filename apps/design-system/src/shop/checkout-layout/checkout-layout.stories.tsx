@@ -16,6 +16,7 @@ const meta: Meta<typeof CheckoutLayout> = {
         items={MOCK_CART_LINES}
         subtotal="CHF 1’370.00"
         onQuantityChange={() => undefined}
+        maxQuantity={10}
         onRemove={() => undefined}
       />
     ),

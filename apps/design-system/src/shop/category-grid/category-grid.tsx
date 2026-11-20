@@ -1,4 +1,3 @@
-/* eslint-disable @eslint-react/dom-no-dangerously-set-innerhtml -- descriptions are HTML from the CMS */
 import Link from 'next/link';
 import { FC } from 'react';
 import { Image } from '../../content/image/image';
@@ -50,11 +49,8 @@ const RowCard: FC<{ item: ShopCategoryGridItem }> = ({ item }) => (
         <span className="block h-[1.125rem]" aria-hidden="true" />
       )}
       <h3 className="text-wehrli mt-1 line-clamp-2 min-h-[2.75rem] text-base font-bold">{item.name}</h3>
-      {item.descriptionHtml ? (
-        <p
-          className="mt-2 line-clamp-3 flex-1 text-sm text-gray-600"
-          dangerouslySetInnerHTML={{ __html: item.descriptionHtml }}
-        />
+      {item.description ? (
+        <div className="mt-2 line-clamp-3 flex-1 text-sm text-gray-600">{item.description}</div>
       ) : (
         <div className="flex-1" aria-hidden="true" />
       )}
@@ -75,7 +71,7 @@ const GridCard: FC<{ item: ShopCategoryGridItem }> = ({ item }) => (
         {item.image && <Image sizes={CATEGORY_GRID_SIZES} image={item.image} hoverZoom="quick" />}
       </div>
       <h3 className="text-wehrli my-4 text-sm font-bold md:text-base lg:text-lg">{item.name}</h3>
-      {item.descriptionHtml && <p className="mt-2 text-sm" dangerouslySetInnerHTML={{ __html: item.descriptionHtml }} />}
+      {item.description ? <div className="mt-2 text-sm">{item.description}</div> : null}
     </div>
   </Link>
 );

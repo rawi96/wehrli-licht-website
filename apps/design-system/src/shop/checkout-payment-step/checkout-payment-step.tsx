@@ -1,12 +1,11 @@
-import { FC } from 'react';
 import { FormError } from '../../forms/field/field';
 import { CheckoutActions } from '../checkout-actions/checkout-actions';
 import { RadioCardOption, RadioCards } from '../radio-cards/radio-cards';
 
-type Props = {
-  options: RadioCardOption[];
-  value: string;
-  onChange: (value: string) => void;
+type Props<T extends string> = {
+  options: RadioCardOption<T>[];
+  value: T;
+  onChange: (value: T) => void;
   error?: string | null;
   onBack: () => void;
   onContinue: () => void;
@@ -16,7 +15,7 @@ type Props = {
 const DEFAULT_LABELS = { legend: 'Zahlungsart', continue: 'Weiter zur Zusammenfassung' };
 
 /** Checkout step 3: the payment method. */
-export const CheckoutPaymentStep: FC<Props> = ({
+export const CheckoutPaymentStep = <T extends string>({
   options,
   value,
   onChange,
@@ -24,7 +23,7 @@ export const CheckoutPaymentStep: FC<Props> = ({
   onBack,
   onContinue,
   labels = DEFAULT_LABELS,
-}) => (
+}: Props<T>) => (
   <div className="space-y-6">
     <RadioCards name="payment" legend={labels.legend} options={options} value={value} onChange={onChange} />
 

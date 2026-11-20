@@ -22,7 +22,7 @@ export const SortMenu = <T extends string>({ options, value, onChange, label = '
     <Menu as="div" className="relative shrink-0">
       <MenuButton
         type="button"
-        className="field-focus-plain p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+        className="p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700"
         aria-label={`${label}: ${activeLabel}`}
       >
         <ArrowsUpDownIcon aria-hidden="true" className="size-6" />

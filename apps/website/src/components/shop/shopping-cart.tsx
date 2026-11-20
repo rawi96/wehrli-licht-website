@@ -1,5 +1,6 @@
 'use client';
 
+import { MAX_LINE_QUANTITY } from '@/constants/shop-commerce';
 import { useShopContext } from '@/app/context/shop-context';
 import { SHOP_HOME_PATH } from '@/constants/shop-paths';
 import { toCartLine } from '@/utils/cart';
@@ -26,6 +27,7 @@ export const ShoppingCart = ({ open, setOpen }: Props) => {
       <CartContent
         loading={!isHydrated}
         items={shoppingCart.items.map(toCartLine)}
+        maxQuantity={MAX_LINE_QUANTITY}
         subtotal={formatPriceToCHF(shoppingCart.sub_total)}
         total={formatPriceToCHF(shoppingCart.sub_total)}
         onQuantityChange={updateItemQuantity}

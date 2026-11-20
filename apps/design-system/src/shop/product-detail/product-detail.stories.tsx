@@ -51,5 +51,3 @@ export const Minimal: Story = {
     specs: [],
   },
 };
-
-export const Adding: Story = { args: { adding: true } };

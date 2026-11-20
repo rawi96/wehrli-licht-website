@@ -1,5 +1,6 @@
 import { Breadcrumbs } from '@/components/breadcrumbs';
 import { CatalogHeader, Container } from '@wehrli/design-system';
+import { CmsHtml } from '@/components/cms-html';
 import { Footer } from '@/components/layout/footer';
 import { Header } from '@/components/layout/header';
 import NotFound from '@/components/not-found';
@@ -64,7 +65,10 @@ export default async function ShopCategoryPage({ params }: Props) {
           />
         </div>
         <ShopBrowseLayout activeCategorySlug={slug}>
-          <CatalogHeader title={category.name} descriptionHtml={category.description} />
+          <CatalogHeader
+            title={category.name}
+            description={category.description ? <CmsHtml html={category.description} /> : null}
+          />
           {products.length > 0 && (
             <ShopProductCatalog
               products={products}

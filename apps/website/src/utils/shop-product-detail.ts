@@ -31,6 +31,32 @@ export const resolveSelectedOptions = (options: VariationOption[], picked: Selec
   return resolved;
 };
 
+/**
+ * The picked values after the customer chose `value` for `option`. If that combination does not exist as a variant,
+ * the other options switch to the variant with this value that keeps most of the current picks, so a picked
+ * combination always exists (and can be added to the cart).
+ */
+export const pickVariantOptions = (
+  variants: ProductVariant[],
+  picked: SelectedOptions,
+  option: string,
+  value: string,
+): SelectedOptions => {
+  const next = { ...picked, [option]: value };
+  const candidates = variants.filter((variant) =>
+    variant.selections.some((selection) => selection.option === option && selection.value === value),
+  );
+  const matches = (variant: ProductVariant) =>
+    variant.selections.filter((selection) => next[selection.option] === selection.value).length;
+  const [best] = [...candidates].sort((a, b) => matches(b) - matches(a));
+
+  if (!best || matches(best) === best.selections.length) {
+    return next;
+  }
+
+  return Object.fromEntries(best.selections.map((selection) => [selection.option, selection.value]));
+};
+
 export const findMatchingVariant = (variants: ProductVariant[], selected: SelectedOptions): ProductVariant | null =>
   variants.find((variant) => variant.selections.every((selection) => selected[selection.option] === selection.value)) ??
   null;

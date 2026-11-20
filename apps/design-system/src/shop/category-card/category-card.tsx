@@ -1,14 +1,13 @@
-/* eslint-disable @eslint-react/dom-no-dangerously-set-innerhtml -- descriptions are HTML from the CMS */
 import Link from 'next/link';
-import { FC } from 'react';
+import { FC, ReactNode } from 'react';
 import { Image, ImageData } from '../../content/image/image';
 
 export type ShopCategoryCardData = {
   id: string;
   name: string;
   href: string;
-  /** Short description from the CMS, as HTML (inline markup only, it is rendered inside a `<p>`). */
-  descriptionHtml?: string | null;
+  /** Short description, rendered by the website (e.g. HTML from the CMS); clamped to a few lines. */
+  description?: ReactNode;
   image?: ImageData | null;
 };
 
@@ -18,7 +17,7 @@ type Props = ShopCategoryCardData & {
 };
 
 /** A product category in the storefront's category section (4 columns from lg): image, name, description, link. */
-export const ShopCategoryCard: FC<Props> = ({ name, href, descriptionHtml, image, linkLabel = 'Produkte ansehen →' }) => (
+export const ShopCategoryCard: FC<Props> = ({ name, href, description, image, linkLabel = 'Produkte ansehen →' }) => (
   <Link href={href} className="group block overflow-hidden rounded-lg bg-white shadow-sm">
     <div className="relative aspect-[4/3] overflow-hidden bg-gray-100">
       {image && (
@@ -31,9 +30,7 @@ export const ShopCategoryCard: FC<Props> = ({ name, href, descriptionHtml, image
     </div>
     <div className="p-4 sm:p-5">
       <h3 className="text-wehrli text-base font-bold sm:text-lg">{name}</h3>
-      {descriptionHtml && (
-        <p className="mt-2 line-clamp-2 text-sm text-gray-600" dangerouslySetInnerHTML={{ __html: descriptionHtml }} />
-      )}
+      {description ? <div className="mt-2 line-clamp-2 text-sm text-gray-600">{description}</div> : null}
       <p className="text-wehrli mt-3 text-sm font-bold">{linkLabel}</p>
     </div>
   </Link>

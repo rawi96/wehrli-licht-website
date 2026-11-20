@@ -26,6 +26,8 @@ type Props = {
   subtotal: string;
   total: string;
   onQuantityChange: (lineId: string, quantity: number) => void;
+  /** Highest quantity per line offered in the quantity select. */
+  maxQuantity: number;
   onRemove: (lineId: string) => void;
   onGoToCheckout?: () => void;
   /** Link of the empty cart. */
@@ -66,6 +68,7 @@ export const CartContent: FC<Props> = ({
   subtotal,
   total,
   onQuantityChange,
+  maxQuantity,
   onRemove,
   onGoToCheckout,
   shopHref,
@@ -118,6 +121,7 @@ export const CartContent: FC<Props> = ({
                 </p>
                 <div className="flex items-center sm:block sm:flex-none sm:text-center">
                   <QuantitySelect
+                    max={maxQuantity}
                     id={`cart-quantity-${index}`}
                     name={`cart-quantity-${index}`}
                     value={item.quantity}

@@ -1,3 +1,4 @@
+import { CmsHtml } from '@/components/cms-html';
 import { getShopCategoryPath, getShopProductPath } from '@/constants/shop-paths';
 import { toImage } from '@/utils/image';
 import { getLowestPriceFromProduct } from '@/utils/price';
@@ -17,11 +18,11 @@ export const toProductCardData = (product: ShopProductListItem, basePath?: strin
   };
 };
 
-/** A category as the design system's category cards (description is HTML from the CMS). */
+/** A category as the design system's category cards; the description is HTML from the CMS. */
 export const toShopCategoryCardData = (category: ShopCategory): ShopCategoryCardData => ({
   id: category.id,
   name: category.name,
   href: getShopCategoryPath(category.slug),
-  descriptionHtml: category.description,
+  description: category.description ? <CmsHtml html={category.description} /> : null,
   image: toImage(category.image),
 });

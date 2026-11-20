@@ -15,8 +15,6 @@ type Props = {
   /** Option dropdowns, usually a VariationSelector. */
   variations?: ReactNode;
   onAddToCart: () => void;
-  /** While the product is added: the button shows a spinner. */
-  adding?: boolean;
   /** Link of the secondary button (book a viewing). */
   viewingHref: string;
   onViewingClick?: () => void;
@@ -57,7 +55,6 @@ export const ProductDetail: FC<Props> = ({
   shippingCost,
   variations,
   onAddToCart,
-  adding,
   viewingHref,
   onViewingClick,
   questionHref,
@@ -86,32 +83,14 @@ export const ProductDetail: FC<Props> = ({
       <div className="mt-6">
         {variations}
 
-        <div className="hidden lg:block">
-          <div className="mt-3">
-            <div className="mt-6 mb-10 flex items-center">
-              <div className="mr-2">
-                <Button variant="primary" onClick={onAddToCart} loading={adding}>
-                  {labels.addToCart}
-                </Button>
-              </div>
-              <Button variant="secondary" href={viewingHref} onClick={onViewingClick}>
-                {labels.viewing}
-              </Button>
-            </div>
-          </div>
-        </div>
-        <div className="block lg:hidden">
-          <div className="w-full pt-6">
-            <Button variant="primary" onClick={onAddToCart} fullWidth loading={adding}>
-              {labels.addToCart}
-            </Button>
-          </div>
-
-          <div className="pt-6 pb-10">
-            <Button variant="secondary" href={viewingHref} onClick={onViewingClick} fullWidth>
-              {labels.viewing}
-            </Button>
-          </div>
+        {/* Stacked full-width buttons on mobile, side by side from lg. */}
+        <div className="flex flex-col gap-6 pt-6 pb-10 lg:mt-6 lg:mb-10 lg:flex-row lg:items-center lg:gap-2 lg:pt-0 lg:pb-0">
+          <Button variant="primary" onClick={onAddToCart}>
+            {labels.addToCart}
+          </Button>
+          <Button variant="secondary" href={viewingHref} onClick={onViewingClick}>
+            {labels.viewing}
+          </Button>
         </div>
 
         {questionHref && (

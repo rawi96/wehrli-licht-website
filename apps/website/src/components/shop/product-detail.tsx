@@ -6,10 +6,13 @@ import { DEFAULT_SHIPPING_COST_CHF } from '@/constants/shop-commerce';
 import { trackEvent } from '@/lib/analytics/gtag';
 import { CONTACT_FORM_ANCHOR, PRODUCT_PREFILL_PARAM } from '@/lib/contact-form/schema';
 import { toImage } from '@/utils/image';
+import { formatShippingCostLabel } from '@/utils/product-commerce';
+import { toStructuredTextValue } from '@/utils/shop-structured-text';
 import { formatPriceToCHF } from '@/utils/price';
 import { ShopProduct } from '@/utils/shop';
 import {
   findMatchingVariant,
+  pickVariantOptions,
   getProductSpecRows,
   getVariationOptions,
   ProductVariant,
@@ -17,7 +20,6 @@ import {
   SelectedOptions,
 } from '@/utils/shop-product-detail';
 import { ProductDetail as ProductDetailView, VariationSelector } from '@wehrli/design-system';
-import { isEmptyDocument, StructuredText as StructuredTextType } from 'datocms-structured-text-utils';
 import { useEffect, useMemo, useState } from 'react';
 
 type Props = {
@@ -44,7 +46,6 @@ const productQuestionHref = (contactHref: string, product: ShopProduct) =>
 
 export const ProductDetail = ({ product, contactHref, viewingHref }: Props) => {
   const [pickedOptions, setPickedOptions] = useState<SelectedOptions>({});
-  const [loading, setLoading] = useState(false);
   const { addToCart, setIsShowCart } = useShopContext();
 
   const variationOptions = useMemo(() => getVariationOptions(product.variants), [product.variants]);
@@ -63,17 +64,12 @@ export const ProductDetail = ({ product, contactHref, viewingHref }: Props) => {
       id: image.url,
       image: toImage({
         ...image,
-        alt: image.alt?.trim() ?? `${product.name}${list.length > 1 ? ` – Bild ${index + 1}` : ''}`,
+        alt: image.alt?.trim() ? image.alt : `${product.name}${list.length > 1 ? ` – Bild ${index + 1}` : ''}`,
       }),
     }));
   const displayPrice = activeVariant?.price ?? product.price;
   const shippingCost = typeof product.shippingCost === 'number' ? product.shippingCost : DEFAULT_SHIPPING_COST_CHF;
-  const description =
-    product.description?.value !== undefined &&
-    product.description?.value !== null &&
-    !isEmptyDocument(product.description.value)
-      ? (product.description.value as StructuredTextType)
-      : null;
+  const description = toStructuredTextValue(product.description);
 
   useEffect(() => {
     const item = toAnalyticsItem(product, null);
@@ -83,8 +79,6 @@ export const ProductDetail = ({ product, contactHref, viewingHref }: Props) => {
   const handleViewingClick = () => trackEvent('besichtigung_klick', { item_name: product.name });
 
   const handleAddToCartClick = () => {
-    setLoading(true);
-
     const added = addToCart(product, activeVariant);
     if (added) {
       const item = toAnalyticsItem(product, activeVariant);
@@ -93,8 +87,6 @@ export const ProductDetail = ({ product, contactHref, viewingHref }: Props) => {
     } else {
       console.error('Produkt konnte nicht in den Warenkorb gelegt werden.');
     }
-
-    setLoading(false);
   };
 
   return (
@@ -103,18 +95,19 @@ export const ProductDetail = ({ product, contactHref, viewingHref }: Props) => {
       images={images}
       price={formatPriceToCHF(displayPrice ?? undefined)}
       deliveryTime={product.deliveryTime}
-      shippingCost={shippingCost > 0 ? formatPriceToCHF(shippingCost) : 'Gratis'}
+      shippingCost={formatShippingCostLabel('post', shippingCost)}
       variations={
         product.variants.length > 0 ? (
           <VariationSelector
             options={variationOptions}
             selected={selectedOptions}
-            onSelect={(option, value) => setPickedOptions((previous) => ({ ...previous, [option]: value }))}
+            onSelect={(option, value) =>
+              setPickedOptions(pickVariantOptions(product.variants, selectedOptions, option, value))
+            }
           />
         ) : null
       }
       onAddToCart={handleAddToCartClick}
-      adding={loading}
       viewingHref={viewingHref}
       onViewingClick={handleViewingClick}
       questionHref={contactHref ? productQuestionHref(contactHref, product) : null}

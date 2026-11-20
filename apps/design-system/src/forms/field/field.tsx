@@ -1,4 +1,4 @@
-import { FC, ReactNode, Ref } from 'react';
+import { FC, ReactNode } from 'react';
 import { cn } from '../../fundamentals/cn';
 
 // Form controls shared by the contact form, the FAQ search and the checkout. Values come out as strings (not events).
@@ -24,7 +24,6 @@ type ControlProps = {
   invalid?: boolean;
   /** id of the element that describes the control, usually its FieldError. */
   describedBy?: string;
-  ref?: Ref<HTMLInputElement & HTMLTextAreaElement & HTMLSelectElement>;
 };
 
 type TextInputProps = ControlProps & {
@@ -33,6 +32,7 @@ type TextInputProps = ControlProps & {
   inputMode?: 'text' | 'numeric' | 'email' | 'tel' | 'search';
   maxLength?: number;
   placeholder?: string;
+  /** Shown, not editable (e.g. the only delivery country), in a darker gray. */
   readOnly?: boolean;
   /** Room for an icon at the start, e.g. the magnifier of a search field. */
   withIcon?: boolean;
@@ -46,7 +46,6 @@ export const TextInput: FC<TextInputProps> = ({
   required,
   invalid,
   describedBy,
-  ref,
   type = 'text',
   autoComplete,
   inputMode,
@@ -56,7 +55,6 @@ export const TextInput: FC<TextInputProps> = ({
   withIcon,
 }) => (
   <input
-    ref={ref}
     id={id}
     name={name}
     type={type}
@@ -71,15 +69,14 @@ export const TextInput: FC<TextInputProps> = ({
     inputMode={inputMode}
     maxLength={maxLength}
     placeholder={placeholder}
-    className={cn(INPUT_CLASS, withIcon && 'pl-10')}
+    className={cn(INPUT_CLASS, withIcon && 'pl-10', readOnly && 'cursor-default text-gray-700')}
   />
 );
 
 type TextareaProps = ControlProps & { rows?: number };
 
-export const Textarea: FC<TextareaProps> = ({ id, name, value, onChange, required, invalid, describedBy, ref, rows }) => (
+export const Textarea: FC<TextareaProps> = ({ id, name, value, onChange, required, invalid, describedBy, rows }) => (
   <textarea
-    ref={ref}
     id={id}
     name={name}
     value={value}
@@ -94,9 +91,8 @@ export const Textarea: FC<TextareaProps> = ({ id, name, value, onChange, require
 
 type SelectProps = ControlProps & { options: { value: string; label: string }[] };
 
-export const Select: FC<SelectProps> = ({ id, name, value, onChange, required, invalid, describedBy, ref, options }) => (
+export const Select: FC<SelectProps> = ({ id, name, value, onChange, required, invalid, describedBy, options }) => (
   <select
-    ref={ref}
     id={id}
     name={name}
     value={value}

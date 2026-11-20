@@ -14,7 +14,14 @@ const Example = ({ variant }: { variant: 'bold' | 'field' }) => {
 
   return (
     <div className="w-48">
-      <QuantitySelect id={`quantity-${variant}`} value={quantity} onChange={setQuantity} label="Anzahl" variant={variant} />
+      <QuantitySelect
+        id={`quantity-${variant}`}
+        value={quantity}
+        onChange={setQuantity}
+        max={10}
+        label="Anzahl"
+        variant={variant}
+      />
     </div>
   );
 };
