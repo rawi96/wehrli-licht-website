@@ -1,5 +1,4 @@
-import { BlockWrapper } from '@/components/block-wrapper';
-import { Heading } from '@/components/nodes/heading';
+import { Section, Heading } from '@wehrli/design-system';
 import { classNames } from '@/utils/css';
 import { ReactNode } from 'react';
 
@@ -14,20 +13,11 @@ type Props = {
   children: ReactNode;
 };
 
-export const HighlightTeaserSection = ({
-  blockId,
-  title,
-  subline,
-  disableMarginTop,
-  disableMarginBottom,
-  bordered,
-  footer,
-  children,
-}: Props) => {
+export const HighlightTeaserSection = ({ blockId, title, subline, bordered, footer, children }: Props) => {
   const headingId = `highlight-teaser-${blockId}`;
 
   return (
-    <BlockWrapper disableMarginTop={disableMarginTop} disableMarginBottom={disableMarginBottom} className="!my-0">
+    <Section marginTop={false} marginBottom={false}>
       <section
         aria-labelledby={headingId}
         className={classNames('highlight-teaser-breakout bg-white-200', bordered && 'border-b border-black/5')}
@@ -45,6 +35,6 @@ export const HighlightTeaserSection = ({
           <footer className="highlight-teaser-cta-footer mt-10 sm:mt-14 md:mt-16">{footer}</footer>
         </div>
       </section>
-    </BlockWrapper>
+    </Section>
   );
 };

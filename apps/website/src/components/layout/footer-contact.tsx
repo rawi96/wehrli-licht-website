@@ -79,7 +79,7 @@ export const FooterContact: FC<Props> = (props) => {
           itemType="https://schema.org/Organization"
         >
           {hasText(companyName) && (
-            <p className="font-semibold text-white" itemProp="name">
+            <p className="text-white" itemProp="name">
               {companyName}
             </p>
           )}

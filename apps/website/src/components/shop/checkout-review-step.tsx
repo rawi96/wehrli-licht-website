@@ -1,6 +1,6 @@
 'use client';
 
-import { Button } from '@/components/button';
+import { Button } from '@wehrli/design-system';
 import { CHECKOUT_PAYMENT_LABELS, CHECKOUT_SHIPPING_LABELS } from '@/constants/checkout-labels';
 import { CheckoutCustomer, CheckoutPaymentMethod, CheckoutShippingAddress, CheckoutShippingMethod } from '@/types/checkout';
 import { checkoutInlineErrorClass } from '@/components/shop/checkout-styles';
@@ -133,14 +133,17 @@ export const CheckoutReviewStep = ({
       {error && <p className={checkoutInlineErrorClass}>{error}</p>}
 
       <div className="flex justify-between gap-4">
-        <Button type="secondary" text="Zurück" showArrow={false} onClick={onBack} />
+        <Button variant="secondary" showArrow={false} onClick={onBack}>
+          Zurück
+        </Button>
         <Button
-          type="primary"
-          text={submitLabel}
+          variant="primary"
           onClick={onSubmit}
           loading={isSubmitting}
           disabled={isQuoteLoading || cartLines.length === 0}
-        />
+        >
+          {submitLabel}
+        </Button>
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
 import { Breadcrumbs } from '@/components/breadcrumbs';
-import { ContentWrapper } from '@/components/layout/content-wrapper';
+import { Container } from '@wehrli/design-system';
 import { Footer } from '@/components/layout/footer';
 import { Header } from '@/components/layout/header';
 import NotFound from '@/components/not-found';
@@ -53,7 +53,7 @@ export default async function ShopProductPage({ params }: Props) {
     <main>
       <JsonLd data={buildProductJsonLd(product)} />
       <Header headerFooter={headerFooter} />
-      <ContentWrapper>
+      <Container>
         <div className="mb-32">
           <Breadcrumbs
             customBreadcrumbs={[
@@ -65,7 +65,7 @@ export default async function ShopProductPage({ params }: Props) {
         <ShopBrowseLayout>
           <ProductDetail product={product} contactHref={getCmsPagePath(headerFooter.contactPage)} />
         </ShopBrowseLayout>
-      </ContentWrapper>
+      </Container>
       <Footer headerFooter={headerFooter} />
     </main>
   );

@@ -1,6 +1,6 @@
 import { Breadcrumbs } from '@/components/breadcrumbs';
 import { ContentBlocks } from '@/components/content-blocks';
-import { ContentWrapper } from '@/components/layout/content-wrapper';
+import { Container } from '@wehrli/design-system';
 import { Footer } from '@/components/layout/footer';
 import { Header } from '@/components/layout/header';
 import { HeaderFooterDocument, HeaderFooterRecord, PageDocument, PageRecord } from '@/graphql/generated';
@@ -98,10 +98,10 @@ export default async function ContentPage({ params }: Params) {
           })}
         />
       )}
-      <ContentWrapper>
+      <Container>
         <Breadcrumbs page={page as unknown as PageRecord} />
         <ContentBlocks blocks={page.content} />
-      </ContentWrapper>
+      </Container>
       <Footer headerFooter={headerFooter as HeaderFooterRecord} />
     </main>
   );

@@ -1,5 +1,5 @@
 {
   "$schema": "https://unpkg.com/knip@6/schema.json",
-  "entry": ["src/index.ts", "src/**/*.stories.tsx", "src/**/*.mdx"],
-  "ignoreDependencies": ["tailwindcss", "@tailwindcss/forms", "@tailwindcss/postcss"]
+  "entry": ["src/**/*.stories.tsx", "src/**/*.mdx"],
+  "ignoreDependencies": ["@headlessui/react", "@heroicons/react", "yet-another-react-lightbox"]
 }

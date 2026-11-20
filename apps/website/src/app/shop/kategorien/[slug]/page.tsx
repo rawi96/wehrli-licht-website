@@ -1,8 +1,7 @@
 import { Breadcrumbs } from '@/components/breadcrumbs';
-import { ContentWrapper } from '@/components/layout/content-wrapper';
+import { Container, Heading } from '@wehrli/design-system';
 import { Footer } from '@/components/layout/footer';
 import { Header } from '@/components/layout/header';
-import { Heading } from '@/components/nodes';
 import NotFound from '@/components/not-found';
 import { ShopProductCatalog } from '@/components/shop/shop-product-catalog';
 import { ShopBrowseLayout } from '@/components/shop/shop-browse-layout';
@@ -55,7 +54,7 @@ export default async function ShopCategoryPage({ params }: Props) {
     <main>
       <JsonLd data={buildCategoryJsonLd(category, products)} />
       <Header headerFooter={headerFooter} />
-      <ContentWrapper>
+      <Container>
         <div className="mb-20">
           <Breadcrumbs
             customBreadcrumbs={[
@@ -80,7 +79,7 @@ export default async function ShopCategoryPage({ params }: Props) {
             </section>
           )}
         </ShopBrowseLayout>
-      </ContentWrapper>
+      </Container>
       <Footer headerFooter={headerFooter} />
     </main>
   );

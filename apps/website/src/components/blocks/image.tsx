@@ -1,8 +1,7 @@
+import { Section, CONTENT_IMAGE_SIZES } from '@wehrli/design-system';
 import { ImageBlockFragment } from '@/graphql/generated';
 import { FC } from 'react';
-import { BlockWrapper } from '../block-wrapper';
 import { ImageComponent } from '../image';
-import { CONTENT_IMAGE_SIZES } from '@/utils/image-sizes';
 
 type Props = {
   block: ImageBlockFragment;
@@ -27,7 +26,7 @@ export const ImageBlock: FC<Props> = ({
     }
 
     return (
-      <BlockWrapper disableMarginBottom={disableMarginBottom} disableMarginTop={disableMarginTop}>
+      <Section marginBottom={!disableMarginBottom} marginTop={!disableMarginTop}>
         <ImageComponent
           key={image.id}
           image={image}
@@ -37,11 +36,11 @@ export const ImageBlock: FC<Props> = ({
           imgClassName="rounded-lg object-cover"
         />
         {image?.title && <p className="mt-2 text-sm italic">{image.title}</p>}
-      </BlockWrapper>
+      </Section>
     );
   } else if (images.length > 1) {
     return (
-      <BlockWrapper disableMarginBottom={disableMarginBottom} disableMarginTop={disableMarginTop}>
+      <Section marginBottom={!disableMarginBottom} marginTop={!disableMarginTop}>
         <div className="grid gap-2 sm:auto-cols-[minmax(0,_1fr)] sm:grid-flow-col sm:gap-8 xl:gap-16">
           {images.map((image, index) => (
             <div key={image.id}>
@@ -58,7 +57,7 @@ export const ImageBlock: FC<Props> = ({
             </div>
           ))}
         </div>
-      </BlockWrapper>
+      </Section>
     );
   }
 };

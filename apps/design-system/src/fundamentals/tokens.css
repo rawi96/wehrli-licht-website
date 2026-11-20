@@ -52,7 +52,9 @@
 
   /* Status */
   --color-success: #16a34a;
-  --color-error: #ef4444;
+  --color-error: #ef4444; /* borders of invalid fields and alerts */
+  --color-error-50: #fdecec; /* background of error alerts */
+  --color-error-700: #b91c1c; /* error text, readable on white and error-50 */
   --color-warning: #ffab00;
 
   /* Typography ------------------------------------------------------------------------------------------------ */

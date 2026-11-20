@@ -1,4 +1,4 @@
-import { Heading } from '@/components/nodes';
+import { Heading } from '@wehrli/design-system';
 import { faqCardClass } from '@/components/faq/faq-styles';
 import type { FaqTopicGroup } from '@/utils/faq/group-by-topic';
 import { formatFaqCount } from '@/utils/faq/format-faq-count';

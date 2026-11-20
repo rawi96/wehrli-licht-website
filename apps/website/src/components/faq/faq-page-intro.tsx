@@ -1,4 +1,4 @@
-import { Heading } from '@/components/nodes';
+import { Heading } from '@wehrli/design-system';
 import { faqKontaktLinkClass, faqTopicPillClass } from '@/components/faq/faq-styles';
 import type { FaqTopicGroup } from '@/utils/faq/group-by-topic';
 import Link from 'next/link';

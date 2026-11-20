@@ -8,6 +8,7 @@
 @source '.';
 @source not './**/*.stories.tsx';
 @source not './docs';
+@source not './fundamentals';
 
 /* Base styles for text inputs, selects, checkboxes and radios. */
 @plugin '@tailwindcss/forms';

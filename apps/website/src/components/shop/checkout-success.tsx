@@ -1,7 +1,7 @@
 'use client';
 
 import { useShopContext } from '@/app/context/shop-context';
-import { Button } from '@/components/button';
+import { Button } from '@wehrli/design-system';
 import { CheckoutErrorAlert } from '@/components/shop/checkout-error-alert';
 import { trackPurchaseOnce } from '@/lib/analytics/purchase';
 import { CHECKOUT_PAYMENT_LABELS, CHECKOUT_SHIPPING_LABELS, CHECKOUT_SUCCESS_HEADING } from '@/constants/checkout-labels';
@@ -19,8 +19,12 @@ type Props = {
 
 const CheckoutSuccessActions = () => (
   <div className="mt-8 flex flex-wrap gap-3">
-    <Button text="Zum Shop" type="primary" href="/shop" showArrow={false} />
-    <Button text="Zur Website" type="secondary" href="/" showArrow={false} />
+    <Button variant="primary" href="/shop" showArrow={false}>
+      Zum Shop
+    </Button>
+    <Button variant="secondary" href="/" showArrow={false}>
+      Zur Website
+    </Button>
   </div>
 );
 
@@ -58,7 +62,9 @@ export const CheckoutSuccess = ({ status }: Props) => {
       <div className="mx-auto max-w-lg py-12">
         <CheckoutErrorAlert variant="payment_received_no_email" />
         <div className="mt-8">
-          <Button text="Zum Shop" type="secondary" href="/shop" showArrow={false} />
+          <Button variant="secondary" href="/shop" showArrow={false}>
+            Zum Shop
+          </Button>
         </div>
       </div>
     );
@@ -67,7 +73,7 @@ export const CheckoutSuccess = ({ status }: Props) => {
   if (status.kind === 'invalid') {
     return (
       <div className="mx-auto max-w-lg py-12">
-        <h1 className="text-2xl font-bold">Bestellung prüfen</h1>
+        <h1 className="font-bold">Bestellung prüfen</h1>
         <p className="mt-4 text-sm text-gray-600">
           Diese Seite ist ungültig oder die Zahlung wurde noch nicht bestätigt. Bitte prüfen Sie Ihre E-Mails oder melden Sie
           sich über unsere{' '}
@@ -86,7 +92,7 @@ export const CheckoutSuccess = ({ status }: Props) => {
 
     return (
       <div className="mx-auto max-w-lg py-8">
-        <h1 className="text-2xl font-bold">{CHECKOUT_SUCCESS_HEADING}</h1>
+        <h1 className="font-bold">{CHECKOUT_SUCCESS_HEADING}</h1>
         <p className="mt-2 text-sm text-gray-600">
           Bestätigung an{' '}
           <a className="underline" href={`mailto:${order.customer.email}`}>
@@ -97,7 +103,7 @@ export const CheckoutSuccess = ({ status }: Props) => {
         <dl className="mt-6 space-y-1 border-t border-gray-200 pt-4 text-sm">
           <div className="flex justify-between gap-4">
             <dt className="text-gray-500">Nr.</dt>
-            <dd className="font-mono text-xs">{order.orderId}</dd>
+            <dd className="text-xs">{order.orderId}</dd>
           </div>
           <div className="flex justify-between gap-4">
             <dt className="text-gray-500">Zahlung</dt>
@@ -140,7 +146,7 @@ export const CheckoutSuccess = ({ status }: Props) => {
 
   return (
     <div className="mx-auto max-w-lg py-12">
-      <h1 className="text-2xl font-bold">{CHECKOUT_SUCCESS_HEADING}</h1>
+      <h1 className="font-bold">{CHECKOUT_SUCCESS_HEADING}</h1>
       <p className="mt-2 text-sm text-gray-600">Bestätigung per E-Mail wurde versendet.</p>
       <CheckoutSuccessActions />
     </div>

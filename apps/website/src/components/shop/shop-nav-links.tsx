@@ -19,8 +19,8 @@ type Props = {
 };
 
 const sidebarLinkClassName =
-  'group relative flex items-center gap-3 py-2 pr-2 pl-3 text-sm font-medium text-gray-600 transition-colors hover:bg-white-300 hover:text-wehrli';
-const sidebarActiveLinkClassName = 'bg-white-300 font-semibold text-wehrli';
+  'group relative flex items-center gap-3 py-2 pr-2 pl-3 text-sm text-gray-600 transition-colors hover:bg-white-300 hover:text-wehrli';
+const sidebarActiveLinkClassName = 'bg-white-300 text-wehrli';
 
 const CategoryThumbnail = ({ category }: { category: ShopCategory }) => {
   const src = category.image?.responsiveImage?.src;

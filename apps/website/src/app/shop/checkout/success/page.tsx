@@ -1,4 +1,4 @@
-import { ContentWrapper } from '@/components/layout/content-wrapper';
+import { Container } from '@wehrli/design-system';
 import { Footer } from '@/components/layout/footer';
 import { Header } from '@/components/layout/header';
 import { CheckoutSuccess } from '@/components/shop/checkout-success';
@@ -33,9 +33,9 @@ export default async function CheckoutSuccessPage({ searchParams }: Props) {
   return (
     <main>
       <Header headerFooter={headerFooter as HeaderFooterRecord} />
-      <ContentWrapper>
+      <Container>
         <CheckoutSuccess status={status} />
-      </ContentWrapper>
+      </Container>
       <Footer headerFooter={headerFooter as HeaderFooterRecord} />
     </main>
   );

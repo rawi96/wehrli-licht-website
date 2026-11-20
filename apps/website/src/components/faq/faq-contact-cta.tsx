@@ -1,4 +1,4 @@
-import { Heading } from '@/components/nodes';
+import { Heading } from '@wehrli/design-system';
 import { faqCardClass, faqKontaktLinkClass } from '@/components/faq/faq-styles';
 import Link from 'next/link';
 import { FC } from 'react';

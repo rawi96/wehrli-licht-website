@@ -1,7 +1,7 @@
+import { Section } from '@wehrli/design-system';
 import { TeaserRowBlockFragment } from '@/graphql/generated';
 import NextLink from 'next/link';
 import { FC } from 'react';
-import { BlockWrapper } from '../block-wrapper';
 import { ImageComponent } from '../image';
 
 type Props = {
@@ -9,7 +9,7 @@ type Props = {
 };
 
 export const TeaserRowBlock: FC<Props> = ({ block: { teasers, disableMarginBottom, disableMarginTop } }) => (
-  <BlockWrapper disableMarginBottom={disableMarginBottom} disableMarginTop={disableMarginTop}>
+  <Section marginBottom={!disableMarginBottom} marginTop={!disableMarginTop}>
     <div className="my-8">
       <div className="flex overflow-x-scroll pb-5">
         <div className="flex flex-nowrap gap-4">
@@ -43,5 +43,5 @@ export const TeaserRowBlock: FC<Props> = ({ block: { teasers, disableMarginBotto
         </div>
       </div>
     </div>
-  </BlockWrapper>
+  </Section>
 );

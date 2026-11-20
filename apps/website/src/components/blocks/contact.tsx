@@ -1,8 +1,8 @@
+import { Section } from '@wehrli/design-system';
 import { ContactBlockFragment } from '@/graphql/generated';
 import Link from 'next/link';
 import { FC } from 'react';
 import { SRCImage as DatoSRCImage } from 'react-datocms';
-import { BlockWrapper } from '../block-wrapper';
 
 type Props = {
   block: ContactBlockFragment;
@@ -12,7 +12,7 @@ export const ContactBlock: FC<Props> = ({ block: { text, employee } }) => {
   const { firstname, email, phone, image, appointmentLink, appointmentAnchorLink, appointmentText } = employee;
 
   return (
-    <BlockWrapper>
+    <Section>
       <div className="grid grid-flow-row place-content-center items-center justify-items-center gap-6 px-4 text-center lg:grid-flow-col lg:gap-12 lg:px-14 lg:text-left">
         {image?.responsiveImage && (
           <div className="h-36 w-36 lg:h-52 lg:w-52">
@@ -45,6 +45,6 @@ export const ContactBlock: FC<Props> = ({ block: { text, employee } }) => {
           </div>
         </div>
       </div>
-    </BlockWrapper>
+    </Section>
   );
 };

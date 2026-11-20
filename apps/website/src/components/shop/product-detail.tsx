@@ -1,7 +1,7 @@
 'use client';
 
 import { useShopContext } from '@/app/context/shop-context';
-import { Button } from '@/components/button';
+import { Button } from '@wehrli/design-system';
 import { ImageComponent } from '@/components/image';
 import { ProductVariationSelector } from '@/components/shop/product-variation-selector';
 import { ProductSpecs } from '@/components/shop/product-specs';
@@ -88,7 +88,7 @@ export const ProductDetail = ({ product, contactHref }: Props) => {
               {images.map((image) => (
                 <Tab
                   key={image.url}
-                  className="focus:ring-opacity-50 relative flex h-24 cursor-pointer items-center justify-center rounded-lg bg-white text-sm uppercase hover:bg-gray-50 focus:ring focus:ring-offset-4 focus:outline-none"
+                  className="relative flex h-24 cursor-pointer items-center justify-center rounded-lg bg-white text-sm uppercase hover:bg-gray-50 focus:ring focus:ring-offset-4 focus:outline-none"
                 >
                   {({ selected }) => (
                     <>
@@ -121,7 +121,12 @@ export const ProductDetail = ({ product, contactHref }: Props) => {
               <Tab.Panel key={image.url}>
                 {image.responsiveImage && (
                   // The first product image is the LCP element on product pages.
-                  <ImageComponent image={image} priority={index === 0} sizes={PRODUCT_IMAGE_SIZES} imgClassName="rounded-lg" />
+                  <ImageComponent
+                    image={image}
+                    priority={index === 0}
+                    sizes={PRODUCT_IMAGE_SIZES}
+                    imgClassName="rounded-lg"
+                  />
                 )}
               </Tab.Panel>
             ))}
@@ -148,38 +153,29 @@ export const ProductDetail = ({ product, contactHref }: Props) => {
 
           <div className="hidden lg:block">
             <div className="mt-3">
-              <div className="sm:flex-col1 mt-6 mb-10 flex items-center">
+              <div className="mt-6 mb-10 flex items-center">
                 <div className="mr-2">
-                  <Button text="Zum Warenkorb hinzufügen" type="primary" onClick={handleAddToCartClick} loading={loading} />
+                  <Button variant="primary" onClick={handleAddToCartClick} loading={loading}>
+                    Zum Warenkorb hinzufügen
+                  </Button>
                 </div>
-                <Button
-                  text="Besichtigungstermin vereinbaren"
-                  type="secondary"
-                  href="/kontakt#termin"
-                  onClick={handleViewingClick}
-                />
+                <Button variant="secondary" href="/kontakt#termin" onClick={handleViewingClick}>
+                  Besichtigungstermin vereinbaren
+                </Button>
               </div>
             </div>
           </div>
           <div className="block lg:hidden">
             <div className="w-full pt-6">
-              <Button
-                text="Zum Warenkorb hinzufügen"
-                type="primary"
-                onClick={handleAddToCartClick}
-                fullWidth
-                loading={loading}
-              />
+              <Button variant="primary" onClick={handleAddToCartClick} fullWidth loading={loading}>
+                Zum Warenkorb hinzufügen
+              </Button>
             </div>
 
             <div className="pt-6 pb-10">
-              <Button
-                text="Besichtigungstermin vereinbaren"
-                type="secondary"
-                href="/kontakt#termin"
-                onClick={handleViewingClick}
-                fullWidth
-              />
+              <Button variant="secondary" href="/kontakt#termin" onClick={handleViewingClick} fullWidth>
+                Besichtigungstermin vereinbaren
+              </Button>
             </div>
           </div>
 

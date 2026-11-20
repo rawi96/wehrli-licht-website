@@ -1,6 +1,5 @@
-import { BlockWrapper } from '@/components/block-wrapper';
+import { Section, Heading } from '@wehrli/design-system';
 import { CmsLinkButton } from '@/components/cms/cms-link-button';
-import { Heading } from '@/components/nodes/heading';
 import { getShopCategoryPath } from '@/constants/shop-paths';
 import { HighlightShopTeaserFragment } from '@/graphql/generated';
 import { getCmsLinkHref } from '@/utils/cms-link';
@@ -25,8 +24,6 @@ export const HighlightShopTeaserBlock = async ({ block, aboveFold = false }: Pro
     popularCategoriesLabel,
     moreCategoriesLabel,
     featuredCategories,
-    disableMarginTop,
-    disableMarginBottom,
   } = block;
 
   if (!primaryCta || !secondaryCta) {
@@ -47,7 +44,7 @@ export const HighlightShopTeaserBlock = async ({ block, aboveFold = false }: Pro
   const categoriesNavLabel = moreCategoriesLabel ?? 'Weitere Kategorien';
 
   return (
-    <BlockWrapper disableMarginTop={disableMarginTop} disableMarginBottom={disableMarginBottom} className="!my-0">
+    <Section marginTop={false} marginBottom={false}>
       <section aria-labelledby={headingId} className="highlight-teaser-breakout bg-wehrli text-white">
         <div className="highlight-teaser-container py-12 sm:py-16 md:py-24">
           <div className="grid gap-8 sm:gap-10 lg:grid-cols-12 lg:items-center lg:gap-14">
@@ -58,8 +55,8 @@ export const HighlightShopTeaserBlock = async ({ block, aboveFold = false }: Pro
               </Heading>
               <p className="max-w-md text-sm leading-relaxed text-pretty text-white/85 sm:text-base">{subline}</p>
               <div className="highlight-shop-ctas mt-6 sm:mt-8">
-                <CmsLinkButton link={primaryCta} type="primary" white fullWidth />
-                <CmsLinkButton link={secondaryCta} type="secondary" white showArrow fullWidth />
+                <CmsLinkButton link={primaryCta} variant="primary-white" fullWidth />
+                <CmsLinkButton link={secondaryCta} variant="secondary-white" showArrow fullWidth />
               </div>
             </div>
 
@@ -133,6 +130,6 @@ export const HighlightShopTeaserBlock = async ({ block, aboveFold = false }: Pro
           )}
         </div>
       </section>
-    </BlockWrapper>
+    </Section>
   );
 };

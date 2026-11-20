@@ -1,6 +1,6 @@
 'use client';
 
-import { Button } from '@/components/button';
+import { Button } from '@wehrli/design-system';
 import { CheckoutCommerceHints } from '@/components/shop/checkout-commerce-hints';
 import { checkoutRadioCardClass } from '@/components/shop/checkout-styles';
 import { CheckoutShippingMethod } from '@/types/checkout';
@@ -62,8 +62,12 @@ export const CheckoutShippingStep = ({
       <CheckoutCommerceHints lineItems={lineItems} productCommerce={productCommerce} />
 
       <div className="flex justify-between gap-4">
-        <Button type="secondary" text="Zurück" showArrow={false} href="/shop" />
-        <Button type="primary" text="Weiter" onClick={onContinue} />
+        <Button variant="secondary" showArrow={false} href="/shop">
+          Zurück
+        </Button>
+        <Button variant="primary" onClick={onContinue}>
+          Weiter
+        </Button>
       </div>
     </div>
   );

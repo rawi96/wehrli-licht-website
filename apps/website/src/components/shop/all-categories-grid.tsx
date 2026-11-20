@@ -1,4 +1,4 @@
-import { BlockWrapper } from '@/components/block-wrapper';
+import { Section } from '@wehrli/design-system';
 import { ImageComponent } from '@/components/image';
 import { ShopHorizontalScroll, ShopHorizontalScrollItem } from '@/components/shop/shop-horizontal-scroll';
 import { getShopCategoryPath } from '@/constants/shop-paths';
@@ -61,7 +61,7 @@ const CategoryCard = ({ item, compact }: { item: CategoryGridItem; compact?: boo
         </div>
         <div className="flex min-h-0 flex-1 flex-col p-4">
           {item.eyebrow ? (
-            <p className="text-xs font-medium text-gray-500">{item.eyebrow}</p>
+            <p className="text-xs text-gray-500">{item.eyebrow}</p>
           ) : (
             <span className="block h-[1.125rem]" aria-hidden="true" />
           )}
@@ -105,7 +105,7 @@ const CategoryCard = ({ item, compact }: { item: CategoryGridItem; compact?: boo
 };
 
 export const AllCategoriesGrid: FC<Props> = ({ items, layout = 'grid', disableMarginBottom, disableMarginTop }) => (
-  <BlockWrapper disableMarginBottom={disableMarginBottom} disableMarginTop={disableMarginTop}>
+  <Section marginBottom={!disableMarginBottom} marginTop={!disableMarginTop}>
     <div className="my-8">
       {layout === 'grid' && (
         <div className={`grid gap-4 ${gridColsClass(items.length)}`}>
@@ -125,5 +125,5 @@ export const AllCategoriesGrid: FC<Props> = ({ items, layout = 'grid', disableMa
         </ShopHorizontalScroll>
       )}
     </div>
-  </BlockWrapper>
+  </Section>
 );

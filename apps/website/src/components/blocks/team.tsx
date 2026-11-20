@@ -1,11 +1,8 @@
+import { Section, Grid, CONTENT_IMAGE_SIZES, Heading } from '@wehrli/design-system';
 import { TeamBlockFragment } from '@/graphql/generated';
 import { classNames } from '@/utils/css';
 import { FC } from 'react';
-import { BlockWrapper } from '../block-wrapper';
-import { Grid } from '../grid';
 import { ImageComponent } from '../image';
-import { CONTENT_IMAGE_SIZES } from '@/utils/image-sizes';
-import { Heading } from '../nodes';
 
 type Props = {
   block: TeamBlockFragment;
@@ -21,7 +18,7 @@ export const TeamBlock: FC<Props> = ({
   const NameHeading = teamTitle ? 'h3' : 'h2';
 
   return (
-    <BlockWrapper disableMarginBottom={disableMarginBottom} disableMarginTop={disableMarginTop}>
+    <Section marginBottom={!disableMarginBottom} marginTop={!disableMarginTop}>
       {teamTitle && <Heading level="2">{teamTitle}</Heading>}
       <Grid cols={3}>
         {employees.map(({ firstname, lastname, bio, image, function: emplFunction }, index) => (
@@ -37,7 +34,7 @@ export const TeamBlock: FC<Props> = ({
             </div>
             <div className="flex flex-1 flex-col p-8 text-sm font-normal lg:text-sm">
               <p className="mb-6">{emplFunction}</p>
-              <NameHeading className="lg:text-l text-wehrli mb-4 text-base font-bold break-words md:text-lg">
+              <NameHeading className="text-wehrli mb-4 text-base font-bold break-words md:text-lg">
                 {firstname} {lastname}
               </NameHeading>
               <p>{bio}</p>
@@ -52,6 +49,6 @@ export const TeamBlock: FC<Props> = ({
           </div>
         ))}
       </Grid>
-    </BlockWrapper>
+    </Section>
   );
 };

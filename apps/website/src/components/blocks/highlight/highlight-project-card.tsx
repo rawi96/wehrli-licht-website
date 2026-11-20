@@ -102,7 +102,10 @@ export const HighlightProjectCompactCard: FC<CompactProps> = ({ project }) => {
   return (
     <Link
       href={getCmsLinkHref(project.projectLink)}
-      className={classNames('group bg-white-100 flex h-full flex-col overflow-hidden rounded-lg no-underline', cardLinkClass)}
+      className={classNames(
+        'group bg-white-100 flex h-full flex-col overflow-hidden rounded-lg no-underline',
+        cardLinkClass,
+      )}
     >
       <div className="relative aspect-[4/3] overflow-hidden">
         <ImageComponent

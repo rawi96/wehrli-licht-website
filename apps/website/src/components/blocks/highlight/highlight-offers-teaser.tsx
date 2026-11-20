@@ -27,7 +27,7 @@ export const HighlightOffersTeaserBlock: FC<Props> = ({ block, aboveFold = false
       bordered
       disableMarginTop={disableMarginTop}
       disableMarginBottom={disableMarginBottom}
-      footer={<CmsLinkButton link={footerCta} type="primary" fullWidth />}
+      footer={<CmsLinkButton link={footerCta} variant="primary" fullWidth />}
     >
       <div className="flex flex-col gap-4 sm:gap-5">
         <ul className="grid list-none grid-cols-1 gap-4 p-0 sm:grid-cols-2 sm:gap-4">

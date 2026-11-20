@@ -1,6 +1,6 @@
 'use client';
 
-import { Button } from '@/components/button';
+import { Button } from '@wehrli/design-system';
 import { checkoutInlineErrorClass, checkoutRadioCardClass } from '@/components/shop/checkout-styles';
 import { CHECKOUT_PAYMENT_LABELS } from '@/constants/checkout-labels';
 import { CheckoutPaymentMethod } from '@/types/checkout';
@@ -45,8 +45,12 @@ export const CheckoutPaymentStep = ({
 
     {error && <p className={checkoutInlineErrorClass}>{error}</p>}
     <div className="flex justify-between gap-4">
-      <Button type="secondary" text="Zurück" showArrow={false} onClick={onBack} />
-      <Button type="primary" text="Weiter zur Zusammenfassung" onClick={onContinue} />
+      <Button variant="secondary" showArrow={false} onClick={onBack}>
+        Zurück
+      </Button>
+      <Button variant="primary" onClick={onContinue}>
+        Weiter zur Zusammenfassung
+      </Button>
     </div>
   </div>
 );

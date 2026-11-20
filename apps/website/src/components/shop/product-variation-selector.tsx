@@ -85,7 +85,7 @@ export const ProductVariationSelector = ({ product, setActiveVariant }: Props) =
     <>
       {optionGroups.map((group) => (
         <div key={group.option} className="mb-4">
-          <label className="block text-sm font-medium">{group.option}</label>
+          <label className="block text-sm">{group.option}</label>
           <Menu as="div" className="relative inline-block w-full text-left">
             <div>
               <Menu.Button className="inline-flex w-full justify-center gap-x-1.5 rounded-lg bg-white px-3 py-2 text-sm font-bold text-gray-900 shadow-sm ring-1 ring-gray-300 ring-inset hover:bg-gray-50">
@@ -103,7 +103,7 @@ export const ProductVariationSelector = ({ product, setActiveVariant }: Props) =
               leaveFrom="transform opacity-100 scale-100"
               leaveTo="transform opacity-0 scale-95"
             >
-              <Menu.Items className="ring-opacity-5 absolute right-0 z-10 mt-2 w-full origin-top-right cursor-pointer rounded-lg bg-white shadow-lg ring-1 ring-black focus:outline-none">
+              <Menu.Items className="absolute right-0 z-10 mt-2 w-full origin-top-right cursor-pointer rounded-lg bg-white shadow-lg ring-1 ring-black focus:outline-none">
                 <div className="py-1">
                   {group.values.map((value) => (
                     <Menu.Item key={value}>

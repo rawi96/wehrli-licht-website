@@ -1,6 +1,6 @@
+import { Section } from '@wehrli/design-system';
 import { QuoteBlockFragment } from '@/graphql/generated';
 import { FC } from 'react';
-import { BlockWrapper } from '../block-wrapper';
 import { SmallTestimonial } from '../small-testimonial';
 import { Testimonial } from '../testimonial';
 
@@ -13,7 +13,7 @@ export const QuoteBlock: FC<Props> = ({ block: { testimonials, disableMarginBott
     const { text, authorImage, authorName, authorFunction, companyName, companyUrl } = testimonials[0];
 
     return (
-      <BlockWrapper disableMarginBottom={disableMarginBottom} disableMarginTop={disableMarginTop}>
+      <Section marginBottom={!disableMarginBottom} marginTop={!disableMarginTop}>
         <Testimonial
           quote={text}
           image={authorImage?.responsiveImage}
@@ -22,12 +22,12 @@ export const QuoteBlock: FC<Props> = ({ block: { testimonials, disableMarginBott
           companyName={companyName}
           companyUrl={companyUrl}
         />
-      </BlockWrapper>
+      </Section>
     );
   }
 
   return (
-    <BlockWrapper disableMarginBottom={disableMarginBottom} disableMarginTop={disableMarginTop}>
+    <Section marginBottom={!disableMarginBottom} marginTop={!disableMarginTop}>
       <div className="grid gap-4 lg:grid-cols-2 lg:gap-8 xl:gap-16">
         {testimonials.map(({ text, authorImage, authorName, authorFunction, companyName, companyUrl }, index) => (
           <SmallTestimonial
@@ -41,6 +41,6 @@ export const QuoteBlock: FC<Props> = ({ block: { testimonials, disableMarginBott
           />
         ))}
       </div>
-    </BlockWrapper>
+    </Section>
   );
 };

@@ -5,7 +5,7 @@ type Props = {
 };
 
 export const RichText = ({ html }: Props) => (
-  <div className="richtext space-y-6 text-sm">
+  <div className="space-y-6 text-sm">
     <div
       className={styles.richtext}
       dangerouslySetInnerHTML={{

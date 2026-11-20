@@ -1,11 +1,10 @@
+import { Section, CONTENT_IMAGE_SIZES } from '@wehrli/design-system';
 import { TextImageBlockFragment } from '@/graphql/generated';
 import { classNames } from '@/utils/css';
 import { isEmptyDocument } from 'datocms-structured-text-utils';
 import { FC } from 'react';
-import { BlockWrapper } from '../block-wrapper';
 import { StructuredTextRenderer } from '../dato-structured-text';
 import { ImageComponent } from '../image';
-import { CONTENT_IMAGE_SIZES } from '@/utils/image-sizes';
 
 type Props = {
   block: TextImageBlockFragment;
@@ -17,7 +16,7 @@ export const TextImageBlock: FC<Props> = ({
   block: { content, image, layout, anchorId, disableMarginBottom, disableMarginTop },
   aboveFold = false,
 }) => (
-  <BlockWrapper anchorId={anchorId} disableMarginBottom={disableMarginBottom} disableMarginTop={disableMarginTop}>
+  <Section id={anchorId} marginBottom={!disableMarginBottom} marginTop={!disableMarginTop}>
     <div
       className={classNames(
         'flex flex-col items-center gap-8 md:flex-row xl:gap-16',
@@ -40,5 +39,5 @@ export const TextImageBlock: FC<Props> = ({
         </div>
       )}
     </div>
-  </BlockWrapper>
+  </Section>
 );

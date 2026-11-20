@@ -38,7 +38,7 @@ const GROUPS: Record<string, { tokens: string[]; usage: string }> = {
     usage: 'Secondary text (`gray-600`), borders and dividers (`gray-200`).',
   },
   Status: {
-    tokens: ['success', 'warning', 'error'],
+    tokens: ['success', 'warning', 'error', 'error-50', 'error-700'],
     usage: 'Form validation, alerts and order states.',
   },
 };

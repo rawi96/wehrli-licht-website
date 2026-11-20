@@ -1,7 +1,7 @@
+import { Section } from '@wehrli/design-system';
 import { TextBlockFragment } from '@/graphql/generated';
 import { isEmptyDocument } from 'datocms-structured-text-utils';
 import { FC } from 'react';
-import { BlockWrapper } from '../block-wrapper';
 import { StructuredTextRenderer } from '../dato-structured-text';
 
 type Props = {
@@ -9,12 +9,7 @@ type Props = {
 };
 
 export const TextBlock: FC<Props> = ({ block: { content, anchorId, disableMarginTop, disableMarginBottom } }) => (
-  <BlockWrapper
-    className="first-of-type:text-base lg:first-of-type:text-lg"
-    anchorId={anchorId}
-    disableMarginTop={disableMarginTop}
-    disableMarginBottom={disableMarginBottom}
-  >
+  <Section lead id={anchorId} marginTop={!disableMarginTop} marginBottom={!disableMarginBottom}>
     {!isEmptyDocument(content) && <StructuredTextRenderer data={content} />}
-  </BlockWrapper>
+  </Section>
 );

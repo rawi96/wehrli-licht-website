@@ -15,24 +15,28 @@ import { StructuredText, renderMarkRule, renderNodeRule } from 'react-datocms';
 import { ImageBlock } from './blocks/image';
 import {
   Blockquote,
-  Code,
-  Copy,
-  Decoration,
+  CtaLink,
+  Emphasis,
   Heading,
-  Link,
+  InlineCode,
   ListItem,
   OrderedList,
+  Paragraph,
+  RichText,
+  RichTextEmbed,
+  Strong,
   TextLink,
   ThematicBreak,
   UnorderedList,
-} from './nodes';
+} from '@wehrli/design-system';
 
 type Props = {
   data: StructuredTextType | null | undefined;
 };
 
+// Maps DatoCMS structured text onto the design system's rich text components (Storybook: Typography/RichText).
 export const StructuredTextRenderer: FC<Props> = ({ data }) => (
-  <div className="text-sm lg:text-base">
+  <RichText>
     <StructuredText
       data={data}
       customNodeRules={[
@@ -67,7 +71,7 @@ export const StructuredTextRenderer: FC<Props> = ({ data }) => (
             return <Fragment key={key}>{children}</Fragment>;
           }
 
-          return <Copy key={key}>{children}</Copy>;
+          return <Paragraph key={key}>{children}</Paragraph>;
         }),
         renderNodeRule(isBlockquote, ({ key, children, node }) => (
           <Blockquote key={key} attribution={node.attribution}>
@@ -77,13 +81,9 @@ export const StructuredTextRenderer: FC<Props> = ({ data }) => (
         renderNodeRule(isThematicBreak, ({ key }) => <ThematicBreak key={key} />),
       ]}
       customMarkRules={[
-        renderMarkRule('emphasis', ({ children, key }) => <Decoration key={key}>{children}</Decoration>),
-        renderMarkRule('code', ({ children, key }) => <Code key={key}>{children}</Code>),
-        renderMarkRule('strong', ({ children, key }) => (
-          <strong key={key} className="font-bold">
-            {children}
-          </strong>
-        )),
+        renderMarkRule('emphasis', ({ children, key }) => <Emphasis key={key}>{children}</Emphasis>),
+        renderMarkRule('code', ({ children, key }) => <InlineCode key={key}>{children}</InlineCode>),
+        renderMarkRule('strong', ({ children, key }) => <Strong key={key}>{children}</Strong>),
       ]}
       renderBlock={({ record }) => {
         let internalLink = '#';
@@ -101,20 +101,19 @@ export const StructuredTextRenderer: FC<Props> = ({ data }) => (
         switch (record._modelApiKey) {
           case 'image':
             return (
-              <div className="my-4 lg:my-8">
+              <RichTextEmbed>
                 <ImageBlock key={record.id} block={record as ImageBlockFragment} />
-              </div>
+              </RichTextEmbed>
             );
           case 'link':
             return (
-              <Link
+              <CtaLink
                 key={record.id}
                 href={record.isExternalUrl ? (record.externalUrl as string) : internalLink}
-                target={record.newTab ? '_blank' : '_self'}
-                rel={record.newTab ? 'noopener noreferrer' : undefined}
+                newTab={!!record.newTab}
               >
                 {record.label as string}
-              </Link>
+              </CtaLink>
             );
           default:
             return null;
@@ -130,11 +129,12 @@ export const StructuredTextRenderer: FC<Props> = ({ data }) => (
               parent: record.parent as PageRecord,
             }) ?? '#'
           }
-          {...transformedMeta}
+          newTab={transformedMeta?.target === '_blank'}
+          rel={typeof transformedMeta?.rel === 'string' ? transformedMeta.rel : undefined}
         >
           {children}
         </TextLink>
       )}
     />
-  </div>
+  </RichText>
 );

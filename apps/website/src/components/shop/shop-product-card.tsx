@@ -65,7 +65,7 @@ export const ShopProductCard: FC<Props> = ({ product, basePath, compact, priorit
         </div>
       )}
       <div className="flex flex-1 flex-col justify-between p-4">
-        <h3 className="text-sm font-medium">
+        <h3 className="text-sm">
           <Link href={productHref} className="text-wehrli font-bold hover:underline">
             <span aria-hidden="true" className="absolute inset-0" />
             {product.name}

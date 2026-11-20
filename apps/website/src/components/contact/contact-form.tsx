@@ -1,6 +1,6 @@
 'use client';
 
-import { Button } from '@/components/button';
+import { Button } from '@wehrli/design-system';
 import {
   checkoutInlineErrorClass,
   checkoutInputClass,
@@ -39,7 +39,7 @@ const readApiResult = async (response: Response): Promise<ApiResult> => {
 
 const FieldError: FC<{ id: string; message?: string }> = ({ id, message }) =>
   message ? (
-    <p id={id} className="mt-1 text-sm text-[#b91c1c]">
+    <p id={id} className="text-error-700 mt-1 text-sm">
       {message}
     </p>
   ) : null;
@@ -251,7 +251,9 @@ export const ContactForm: FC<Props> = ({ formId, topics, privacyHref }) => {
         )}
       </p>
 
-      <Button type="primary" submit text="Anfrage senden" loading={status === 'sending'} />
+      <Button variant="primary" type="submit" loading={status === 'sending'}>
+        Anfrage senden
+      </Button>
     </form>
   );
 };

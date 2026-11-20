@@ -1,6 +1,6 @@
+import { Section } from '@wehrli/design-system';
 import { LogoGridBlockFragment } from '@/graphql/generated';
 import { FC } from 'react';
-import { BlockWrapper } from '../block-wrapper';
 import Link from 'next/link';
 
 type Props = {
@@ -8,7 +8,7 @@ type Props = {
 };
 
 export const LogoGridBlock: FC<Props> = ({ block: { logos, disableMarginBottom, disableMarginTop } }) => (
-  <BlockWrapper disableMarginBottom={disableMarginBottom} disableMarginTop={disableMarginTop}>
+  <Section marginBottom={!disableMarginBottom} marginTop={!disableMarginTop}>
     <div className="grid grid-cols-3 gap-8 rounded-lg p-10 sm:gap-12 md:grid-cols-4 md:gap-16 xl:grid-cols-6">
       {logos?.map((logo) => (
         <Link key={logo.id} href={logo.title ?? '#'} target="_blank" rel="noopener noreferrer" className="block">
@@ -25,5 +25,5 @@ export const LogoGridBlock: FC<Props> = ({ block: { logos, disableMarginBottom, 
         </Link>
       ))}
     </div>
-  </BlockWrapper>
+  </Section>
 );

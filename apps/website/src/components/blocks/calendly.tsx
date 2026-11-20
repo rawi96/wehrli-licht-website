@@ -1,9 +1,9 @@
 'use client';
+import { Section } from '@wehrli/design-system';
 
 import { CalendlyBlockFragment } from '@/graphql/generated';
 import { trackEvent } from '@/lib/analytics/gtag';
 import { FC, useEffect, useRef } from 'react';
-import { BlockWrapper } from '../block-wrapper';
 
 declare global {
   interface Window {
@@ -90,13 +90,13 @@ export const CalendlyBlock: FC<Props> = ({ block: { url: calendlyUrl, disableMar
   }
 
   return (
-    <BlockWrapper disableMarginTop={disableMarginTop} disableMarginBottom={disableMarginBottom}>
+    <Section marginTop={!disableMarginTop} marginBottom={!disableMarginBottom}>
       <div
         ref={containerRef}
         className="calendly-inline-widget"
         data-url={calendlyUrl}
         style={{ minWidth: '320px', height: '700px' }}
       />
-    </BlockWrapper>
+    </Section>
   );
 };

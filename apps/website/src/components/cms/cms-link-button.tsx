@@ -1,24 +1,17 @@
-import { Button } from '@/components/button';
 import { LinkBlockFragment } from '@/graphql/generated';
 import { getCmsLinkHref } from '@/utils/cms-link';
-import { FC } from 'react';
+import { Button } from '@wehrli/design-system';
+import { ComponentProps, FC } from 'react';
 
 type Props = {
   link: LinkBlockFragment;
-  type: 'primary' | 'secondary';
+  variant: ComponentProps<typeof Button>['variant'];
   fullWidth?: boolean;
-  white?: boolean;
   showArrow?: boolean;
 };
 
-export const CmsLinkButton: FC<Props> = ({ link, type, fullWidth, white, showArrow = false }) => (
-  <Button
-    text={link.label}
-    type={type}
-    href={getCmsLinkHref(link)}
-    showArrow={showArrow}
-    fullWidth={fullWidth}
-    white={white}
-    newTab={link.newTab}
-  />
+export const CmsLinkButton: FC<Props> = ({ link, variant, fullWidth, showArrow = false }) => (
+  <Button variant={variant} href={getCmsLinkHref(link)} showArrow={showArrow} fullWidth={fullWidth} newTab={link.newTab}>
+    {link.label}
+  </Button>
 );

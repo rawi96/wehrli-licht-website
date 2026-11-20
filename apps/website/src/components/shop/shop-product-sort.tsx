@@ -38,7 +38,7 @@ export const ShopProductSort: FC<Props> = ({ value, onChange }) => {
               onClick={() => onChange(option.value)}
               className={classNames(
                 'block w-full px-4 py-2 text-left text-sm data-[focus]:bg-gray-100 data-[focus]:outline-none',
-                value === option.value ? 'font-medium text-gray-900' : 'text-gray-600',
+                value === option.value ? 'text-gray-900' : 'text-gray-600',
               )}
             >
               {option.label}

@@ -2,9 +2,8 @@ import { HeaderFooterDocument, HeaderFooterRecord, HomeStageBlockFragment } from
 import { queryDatoCMS } from '@/utils/query-dato-cms';
 import { draftMode } from 'next/headers';
 import { FC } from 'react';
-import { Button } from '../button';
+import { Button, Heading } from '@wehrli/design-system';
 import { Header } from '../layout/header';
-import { Heading } from '../nodes';
 import { HeroReveal } from './home-stage-content';
 import { HomeStageSlideshow, HomeStageSlide } from './home-stage-slideshow';
 
@@ -89,10 +88,14 @@ export const HomeStageBlock: FC<Props> = async ({ block }) => {
             <HeroReveal delay={300}>
               <div className="mt-10 flex flex-wrap items-center justify-center gap-4 sm:gap-x-6">
                 {callToActions[0] && (
-                  <Button type="primary" text={callToActions[0].label} href={ctaHref(callToActions[0])} />
+                  <Button variant="primary" href={ctaHref(callToActions[0])}>
+                    {callToActions[0].label}
+                  </Button>
                 )}
                 {callToActions[1] && (
-                  <Button type="secondary" white text={callToActions[1].label} href={ctaHref(callToActions[1])} />
+                  <Button variant="secondary-white" href={ctaHref(callToActions[1])}>
+                    {callToActions[1].label}
+                  </Button>
                 )}
               </div>
             </HeroReveal>

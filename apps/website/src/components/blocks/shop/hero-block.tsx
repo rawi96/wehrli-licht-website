@@ -1,5 +1,5 @@
 import { ImageComponent } from '@/components/image';
-import { Heading } from '@/components/nodes';
+import { Heading } from '@wehrli/design-system';
 import { ShopCmsButton } from '@/components/shop/shop-cms-button';
 import { ShopStructuredText } from '@/components/shop/shop-structured-text';
 import { ShopTextLink } from '@/components/shop/shop-text-link';
@@ -34,8 +34,8 @@ export const ShopHeroBlock: FC<Props> = ({ block, fallbackCategories }) => {
           <ShopStructuredText data={intro} className="text-sm leading-relaxed text-gray-600 lg:text-base" />
 
           <div className="mt-6 hidden flex-wrap gap-3 lg:mt-8 lg:flex">
-            <ShopCmsButton link={block.primaryCta} type="primary" />
-            <ShopCmsButton link={block.secondaryCta} type="secondary" />
+            <ShopCmsButton link={block.primaryCta} variant="primary" />
+            <ShopCmsButton link={block.secondaryCta} variant="secondary" />
           </div>
         </div>
 
@@ -76,8 +76,8 @@ export const ShopHeroBlock: FC<Props> = ({ block, fallbackCategories }) => {
         )}
 
         <div className="flex flex-col gap-3 lg:hidden">
-          <ShopCmsButton link={block.primaryCta} type="primary" fullWidth />
-          <ShopCmsButton link={block.secondaryCta} type="secondary" fullWidth />
+          <ShopCmsButton link={block.primaryCta} variant="primary" fullWidth />
+          <ShopCmsButton link={block.secondaryCta} variant="secondary" fullWidth />
         </div>
       </div>
     </section>

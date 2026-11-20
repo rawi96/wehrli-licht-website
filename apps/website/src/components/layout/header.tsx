@@ -131,11 +131,7 @@ export const Header: FC<Props> = ({ headerFooter: { menu }, variant = 'solid' })
                 <span className="sr-only">Wehrli Licht GmbH</span>
                 <Logo />
               </Link>
-              <button
-                type="button"
-                className="-m-2.5 p-2.5 text-gray-400"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
+              <button type="button" className="-m-2.5 p-2.5 text-gray-400" onClick={() => setIsMobileMenuOpen(false)}>
                 <span className="sr-only">Menu schliessen</span>
                 <XMarkIcon className="h-6 w-6 text-white" aria-hidden="true" />
               </button>

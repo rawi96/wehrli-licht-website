@@ -25,7 +25,7 @@ export const HighlightProjectsTeaserBlock: FC<Props> = ({ block, aboveFold = fal
       subline={subline}
       disableMarginTop={disableMarginTop}
       disableMarginBottom={disableMarginBottom}
-      footer={<CmsLinkButton link={primaryCta} type="primary" fullWidth />}
+      footer={<CmsLinkButton link={primaryCta} variant="primary" fullWidth />}
     >
       <div className="flex flex-col gap-6 sm:gap-8 lg:gap-10">
         {featuredProject && <HighlightProjectFeaturedCard project={featuredProject} priority={aboveFold} />}

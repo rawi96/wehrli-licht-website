@@ -1,6 +1,6 @@
 'use client';
+import { Section } from '@wehrli/design-system';
 
-import { BlockWrapper } from '@/components/block-wrapper';
 import { ShopProductCard } from '@/components/shop/shop-product-card';
 import { ShopProductSort } from '@/components/shop/shop-product-sort';
 import { ShopProductListItem } from '@/utils/shop';
@@ -26,7 +26,7 @@ export const ShopProductCatalog: FC<Props> = ({ products, basePath = '/shop' }) 
       : `${visibleProducts.length} von ${products.length} Produkten`;
 
   return (
-    <BlockWrapper disableMarginTop={true}>
+    <Section marginTop={false}>
       <search className="mb-6 flex items-center gap-3">
         <div className="flex min-w-0 flex-1 items-center gap-2 rounded-full border border-gray-300 px-4 py-2 transition-colors focus-within:border-gray-400">
           <label htmlFor={searchId} className="sr-only">
@@ -65,13 +65,13 @@ export const ShopProductCatalog: FC<Props> = ({ products, basePath = '/shop' }) 
           {query.trim() && (
             <>
               {' '}
-              <button type="button" onClick={() => setQuery('')} className="text-wehrli font-medium hover:underline">
+              <button type="button" onClick={() => setQuery('')} className="text-wehrli hover:underline">
                 Suche zurücksetzen
               </button>
             </>
           )}
         </p>
       )}
-    </BlockWrapper>
+    </Section>
   );
 };

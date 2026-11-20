@@ -1,9 +1,8 @@
+import { Section, Grid } from '@wehrli/design-system';
 import { TextTwoColsBlockFragment } from '@/graphql/generated';
 import { isEmptyDocument } from 'datocms-structured-text-utils';
 import { FC } from 'react';
-import { BlockWrapper } from '../block-wrapper';
 import { StructuredTextRenderer } from '../dato-structured-text';
-import { Grid } from '../grid';
 
 type Props = {
   block: TextTwoColsBlockFragment;
@@ -12,15 +11,10 @@ type Props = {
 export const TextTwoColBlock: FC<Props> = ({
   block: { contentLeft, contentRight, anchorId, disableMarginTop, disableMarginBottom },
 }) => (
-  <BlockWrapper
-    className="first-of-type:text-base lg:first-of-type:text-lg"
-    anchorId={anchorId}
-    disableMarginTop={disableMarginTop}
-    disableMarginBottom={disableMarginBottom}
-  >
+  <Section lead id={anchorId} marginTop={!disableMarginTop} marginBottom={!disableMarginBottom}>
     <Grid cols={2}>
       {!isEmptyDocument(contentLeft) && <StructuredTextRenderer data={contentLeft} />}
       {!isEmptyDocument(contentRight) && <StructuredTextRenderer data={contentRight} />}
     </Grid>
-  </BlockWrapper>
+  </Section>
 );

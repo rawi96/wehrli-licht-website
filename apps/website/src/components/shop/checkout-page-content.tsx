@@ -1,7 +1,7 @@
 'use client';
 
 import { useShopContext } from '@/app/context/shop-context';
-import { Button } from '@/components/button';
+import { Button } from '@wehrli/design-system';
 import { CheckoutErrorAlert } from '@/components/shop/checkout-error-alert';
 import { CheckoutCartSidebar } from '@/components/shop/checkout-cart-sidebar';
 import { CheckoutContactFields } from '@/components/shop/checkout-contact-fields';
@@ -200,7 +200,7 @@ export const CheckoutPageContent = () => {
   if (!isHydrated || !draft.draftLoaded) {
     return (
       <div>
-        <h1 className="text-2xl font-bold">Kasse</h1>
+        <h1 className="font-bold">Kasse</h1>
         <p className="mt-4 text-sm text-gray-500">Laden…</p>
       </div>
     );
@@ -218,7 +218,7 @@ export const CheckoutPageContent = () => {
         </aside>
 
         <div className="order-2 lg:order-1 lg:col-span-3">
-          <h1 className="mb-6 text-2xl font-bold">{CHECKOUT_STEP_HEADINGS[step]}</h1>
+          <h1 className="mb-6 font-bold">{CHECKOUT_STEP_HEADINGS[step]}</h1>
 
           {orderFailure && (
             <div className="mb-6">
@@ -263,8 +263,12 @@ export const CheckoutPageContent = () => {
 
               {displayError && <p className={checkoutInlineErrorClass}>{displayError}</p>}
               <div className="flex justify-between gap-4">
-                <Button type="secondary" text="Zurück" showArrow={false} onClick={() => goToStep('shipping')} />
-                <Button type="primary" text="Weiter" submit />
+                <Button variant="secondary" showArrow={false} onClick={() => goToStep('shipping')}>
+                  Zurück
+                </Button>
+                <Button variant="primary" type="submit">
+                  Weiter
+                </Button>
               </div>
             </form>
           )}

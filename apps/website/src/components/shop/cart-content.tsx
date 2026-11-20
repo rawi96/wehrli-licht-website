@@ -1,7 +1,7 @@
 'use client';
 
 import { useShopContext } from '@/app/context/shop-context';
-import { Button } from '@/components/button';
+import { Button } from '@wehrli/design-system';
 import { formatPriceToCHF } from '@/utils/price';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -35,7 +35,9 @@ export const CartContent = ({ onGoToCheckout, onShopLinkClick }: Props) => {
             <li className="py-4">
               <p className="text-sm text-gray-600">Sie haben keine Produkte im Warenkorb.</p>
               <div className="mt-4">
-                <Button text="Zum Shop" type="primary" href="/shop" showArrow={false} onClick={onShopLinkClick} />
+                <Button variant="primary" href="/shop" showArrow={false} onClick={onShopLinkClick}>
+                  Zum Shop
+                </Button>
               </div>
             </li>
           )}
@@ -116,7 +118,9 @@ export const CartContent = ({ onGoToCheckout, onShopLinkClick }: Props) => {
           </div>
 
           <div className="mt-8 flex justify-end px-4 sm:px-6 lg:px-8">
-            <Button type="primary" text="Zur Kasse" onClick={onGoToCheckout} />
+            <Button variant="primary" onClick={onGoToCheckout}>
+              Zur Kasse
+            </Button>
           </div>
         </section>
       )}

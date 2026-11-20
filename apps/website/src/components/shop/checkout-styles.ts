@@ -11,4 +11,4 @@ export const checkoutRadioCardClass =
 export const checkoutFieldGroupClass = 'space-y-4';
 
 export const checkoutInlineErrorClass =
-  'rounded-lg border-2 border-error bg-[#fdecec] px-3 py-2 text-sm font-medium text-[#b91c1c]';
+  'rounded-lg border-2 border-error bg-error-50 px-3 py-2 text-sm font-medium text-error-700';

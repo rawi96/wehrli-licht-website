@@ -29,16 +29,12 @@ export const Address = ({ companyName, street, zip, place, phone, email, mapsLin
         <p className="mt-4">
           {phone && (
             <Link className="block p-4 underline hover:opacity-50" href={`tel:${phone}`} itemProp="telephone">
-              <span className={`'text-white lg:px-6'} relative inline-flex items-center border px-6 py-4 text-sm`}>
-                {phone}
-              </span>
+              <span className="relative inline-flex items-center border px-6 py-4 text-sm">{phone}</span>
             </Link>
           )}
           {email && (
             <Link className="block p-4 underline hover:opacity-50" href={`mailto:${email}`} itemProp="email">
-              <span className={`lg:px-6'} relative inline-flex items-center border px-6 py-4 text-sm text-white`}>
-                {email}
-              </span>
+              <span className="relative inline-flex items-center border px-6 py-4 text-sm text-white">{email}</span>
             </Link>
           )}
         </p>

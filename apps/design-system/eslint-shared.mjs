@@ -7,11 +7,15 @@ const arbitrary = (utilities) => `^(?:\\S*:)?!?-?(?:${utilities})-\\[`;
  * The theme is strict (see src/foundation/tokens.css): a class without a token generates no CSS, so it fails lint.
  * Arbitrary values are fine for layout (grid templates, calc, aspect ratios), never for brand values.
  */
-export const tailwindConfig = (entryPoint) => ({
+export const tailwindConfig = (entryPoint, { ignore = [] } = {}) => ({
   plugins: { 'better-tailwindcss': betterTailwindcss },
   settings: { 'better-tailwindcss': { entryPoint } },
   rules: {
-    'better-tailwindcss/no-unknown-classes': ['error', { ignore: ['^group/', '^peer/', '^field-focus-plain$'] }],
+    'better-tailwindcss/no-unknown-classes': [
+      'error',
+      // field-focus-plain: opts an input out of the global focus ring (styles.css).
+      { ignore: ['^group/', '^peer/', '^field-focus-plain$', ...ignore] },
+    ],
     'better-tailwindcss/no-conflicting-classes': 'error',
     'better-tailwindcss/no-duplicate-classes': 'error',
     'better-tailwindcss/no-deprecated-classes': 'error',

@@ -7,7 +7,7 @@ type Props = {
 
 export const CheckoutErrorAlert = ({ variant }: Props) => {
   return (
-    <div role="alert" className="border-error rounded-lg border-2 bg-[#fdecec] p-4 text-[#b91c1c]">
+    <div role="alert" className="border-error bg-error-50 text-error-700 rounded-lg border-2 p-4">
       <p className="text-base leading-snug font-bold">Etwas ist schiefgelaufen</p>
       <p className="mt-2 text-sm leading-relaxed">{CHECKOUT_ERROR_ALERT_COPY[variant]}</p>
       <p className="mt-3 text-sm">

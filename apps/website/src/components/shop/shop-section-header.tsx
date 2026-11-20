@@ -1,4 +1,4 @@
-import { Heading } from '@/components/nodes';
+import { Heading } from '@wehrli/design-system';
 import { FC, ReactNode } from 'react';
 
 type Props = {

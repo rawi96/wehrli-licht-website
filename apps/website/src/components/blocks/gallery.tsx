@@ -1,9 +1,9 @@
+import { Section } from '@wehrli/design-system';
 import { GalleryBlockFragment } from '@/graphql/generated';
 import { classNames } from '@/utils/css';
 import NextLink from 'next/link';
 import { FC, Suspense } from 'react';
 import { SRCImage as DatoSRCImage } from 'react-datocms';
-import { BlockWrapper } from '../block-wrapper';
 import { LightboxGate } from '@/components/lightbox-gate';
 
 type Props = {
@@ -26,7 +26,7 @@ export const GalleryBlock: FC<Props> = ({
   }));
 
   return (
-    <BlockWrapper disableMarginBottom={disableMarginBottom} disableMarginTop={disableMarginTop}>
+    <Section marginBottom={!disableMarginBottom} marginTop={!disableMarginTop}>
       <Suspense fallback={null}>
         <LightboxGate slides={slides} />
       </Suspense>
@@ -43,7 +43,7 @@ export const GalleryBlock: FC<Props> = ({
               key={id}
               href={`?image=${id}`}
               scroll={false}
-              className="group relative block flex-grow overflow-hidden text-center md:h-[339px]"
+              className="group relative block grow overflow-hidden text-center md:h-[339px]"
               style={{ flexBasis: (smallSize.width / smallSize.height) * 339 }}
             >
               {showImageTitles && (
@@ -66,6 +66,6 @@ export const GalleryBlock: FC<Props> = ({
           );
         })}
       </div>
-    </BlockWrapper>
+    </Section>
   );
 };

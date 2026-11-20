@@ -1,6 +1,6 @@
 import { HomeStageBlock } from '@/components/blocks/home-stage';
 import { ContentBlocks } from '@/components/content-blocks';
-import { ContentWrapper } from '@/components/layout/content-wrapper';
+import { Container } from '@wehrli/design-system';
 import { Footer } from '@/components/layout/footer';
 import { HeaderFooterDocument, HeaderFooterRecord, PageDocument } from '@/graphql/generated';
 import { queryDatoCMS } from '@/utils/query-dato-cms';
@@ -44,9 +44,9 @@ export default async function HomePage() {
     <>
       <main>
         {homeStageBlock && <HomeStageBlock key={homeStageBlock.id} block={homeStageBlock} />}
-        <ContentWrapper>
+        <Container>
           <ContentBlocks blocks={pageBlocks} eagerBlockCount={0} />
-        </ContentWrapper>
+        </Container>
       </main>
       <Footer headerFooter={headerFooter as HeaderFooterRecord} />
     </>
