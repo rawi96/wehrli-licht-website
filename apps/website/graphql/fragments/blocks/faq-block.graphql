@@ -1,0 +1,16 @@
+fragment faqBlock on FaqBlockRecord {
+  id
+  faqTitle: title
+  faqIntro: intro
+  allFaqsLinkText
+  allFaqsPage {
+    ...pageRecordLink
+  }
+  disableMarginTop
+  disableMarginBottom
+  faqs {
+    id
+    question
+    answer
+  }
+}

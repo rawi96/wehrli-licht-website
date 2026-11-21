@@ -1,6 +1,7 @@
 export * from './calendly/calendly-block';
 export * from './contact/contact-block';
 export * from './contact-form/contact-form-block';
+export * from './faq/faq-block';
 export * from './gallery/gallery-block';
 export * from './highlight-offers-teaser/highlight-offers-teaser-block';
 export * from './highlight-projects-teaser/highlight-projects-teaser-block';
