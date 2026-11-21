@@ -74,8 +74,8 @@ export const Page: Story = {
         topics={TOPICS.map((topic) => ({ id: topic.id, label: topic.title, slug: topic.slug }))}
       />
       <FaqTopics topics={TOPICS} />
-      <FaqContactCta>
-        Auf unserer <FaqLink href="#">Kontaktseite</FaqLink> finden Sie alle Wege, uns zu erreichen.
+      <FaqContactCta action={{ label: 'Zum Kontakt', href: '#' }}>
+        Rufen Sie uns an, schreiben Sie uns oder buchen Sie einen Termin.
       </FaqContactCta>
     </div>
   ),

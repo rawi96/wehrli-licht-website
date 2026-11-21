@@ -2,6 +2,7 @@ export * from './card/card';
 export * from './cookie-banner/cookie-banner';
 export * from './draft-mode-banner/draft-mode-banner';
 export * from './faq/faq';
+export * from './faq/faq-accordion';
 export * from './gallery-grid/gallery-grid';
 export * from './highlight-category-tile/highlight-category-tile';
 export * from './highlight-offer-card/highlight-offer-card';

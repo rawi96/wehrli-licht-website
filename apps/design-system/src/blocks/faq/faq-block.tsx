@@ -1,9 +1,7 @@
-'use client';
-
-import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react';
-import { ArrowRightIcon, PlusIcon } from '@heroicons/react/24/outline';
+import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { FC } from 'react';
+import { FaqAccordion } from '../../content/faq/faq-accordion';
 import { Section } from '../../layout/section/section';
 import type { BlockMargins } from '../block-margins';
 
@@ -54,26 +52,7 @@ export const FaqBlock: FC<Props> = ({ title, intro, items, allFaqsLink, labels, 
           )}
         </div>
 
-        <ul className="divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow-sm">
-          {items.map((item) => (
-            <li key={item.id}>
-              <Disclosure>
-                <DisclosureButton className="group hover:bg-white-200 flex w-full items-start justify-between gap-4 px-5 py-4 text-left transition-colors sm:px-6">
-                  <span className="text-sm font-bold text-black">{item.question}</span>
-                  <span className="bg-white-300 text-wehrli group-data-open:bg-wehrli flex size-7 shrink-0 items-center justify-center rounded-full transition-colors group-data-open:text-white">
-                    <PlusIcon
-                      className="size-4 transition-transform duration-200 group-data-open:rotate-45 motion-reduce:transition-none"
-                      aria-hidden="true"
-                    />
-                  </span>
-                </DisclosureButton>
-                <DisclosurePanel unmount={false} className="px-5 pb-5 text-sm whitespace-pre-line text-gray-700 sm:px-6">
-                  {item.answer}
-                </DisclosurePanel>
-              </Disclosure>
-            </li>
-          ))}
-        </ul>
+        <FaqAccordion items={items} />
       </div>
     </Section>
   );

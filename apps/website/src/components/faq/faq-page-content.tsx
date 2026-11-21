@@ -56,6 +56,7 @@ export const FaqPageContent: FC<Props> = ({ title, intro, groups, contactHref })
         </FaqNoResults>
       ) : (
         <FaqTopics
+          expanded={hasQuery}
           topics={filteredGroups.map(({ topic, faqs }) => ({
             id: topic.id,
             slug: topic.slug,
@@ -66,9 +67,8 @@ export const FaqPageContent: FC<Props> = ({ title, intro, groups, contactHref })
         />
       )}
 
-      <FaqContactCta>
-        Ihre Frage ist nicht dabei? Auf unserer <FaqLink href={contactHref}>Kontaktseite</FaqLink> finden Sie alle Wege, uns
-        zu erreichen – per Telefon, E-Mail oder Termin im Atelier Goldach.
+      <FaqContactCta action={{ label: 'Zum Kontakt', href: contactHref }}>
+        Ihre Frage ist nicht dabei? Rufen Sie uns an, schreiben Sie uns oder buchen Sie einen Termin im Showroom in Goldach.
       </FaqContactCta>
     </>
   );

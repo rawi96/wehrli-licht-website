@@ -1,12 +1,11 @@
-import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
+import { ArrowRightIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { FC, ReactNode } from 'react';
 import { Label, TextInput } from '../../forms/field/field';
 import { Heading } from '../../typography/heading/heading';
+import { FaqAccordion } from './faq-accordion';
 
 // Parts of the FAQ page. The website groups, filters and counts the questions and passes the result.
-
-const CARD_CLASS = 'bg-white p-6 shadow-sm sm:p-8 lg:p-10';
 
 type FaqLinkProps = { href: string; children: ReactNode };
 
@@ -41,33 +40,37 @@ type FaqIntroProps = {
   labels?: { topicsNavigation?: string; topics?: string };
 };
 
-/** Head of the FAQ page: title, lead text, search and topic links. */
+/** Head of the FAQ page: title and lead text, then a card with the search and the topic links. */
 export const FaqIntro: FC<FaqIntroProps> = ({ title, intro, search, topics, labels }) => (
   <header className="mt-20 mb-12 lg:mt-24 lg:mb-16">
+    <p className="text-xxs text-wehrli-300 mb-3 font-bold tracking-wide uppercase">FAQ</p>
     <Heading level="1" id="faq-page-heading">
       {title}
     </Heading>
-    <p className="mt-4 max-w-2xl text-sm md:max-w-prose lg:text-base">{intro}</p>
-
-    <div className="mt-8">{search}</div>
-
-    {topics.length > 1 && (
-      <nav aria-label={labels?.topicsNavigation ?? 'Themen auf dieser Seite'} className="mt-8">
-        <p className="text-wehrli mb-3 text-sm font-bold">{labels?.topics ?? 'Themen'}</p>
-        <ul className="flex flex-wrap gap-2">
-          {topics.map((topic) => (
-            <li key={topic.id}>
-              <a
-                href={`#${topicHeadingId(topic.slug)}`}
-                className="bg-white-100 text-wehrli hover:bg-wehrli inline-block rounded-full px-4 py-2 text-sm font-bold transition-colors duration-150 hover:text-white"
-              >
-                {topic.label}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </nav>
-    )}
+    <p className="max-w-2xl text-sm md:max-w-prose lg:text-base">{intro}</p>
+    <div className="mt-8 rounded-lg bg-white p-6 shadow-sm sm:p-8">
+      {search}
+      {topics.length > 1 && (
+        <nav
+          aria-label={labels?.topicsNavigation ?? 'Themen auf dieser Seite'}
+          className="mt-6 border-t border-gray-200 pt-6"
+        >
+          <p className="text-xxs mb-3 font-bold tracking-wide text-gray-500 uppercase">{labels?.topics ?? 'Themen'}</p>
+          <ul className="flex flex-wrap gap-2">
+            {topics.map((topic) => (
+              <li key={topic.id}>
+                <a
+                  href={`#${topicHeadingId(topic.slug)}`}
+                  className="hover:border-wehrli hover:bg-wehrli text-wehrli bg-white-200 inline-block rounded-full border border-gray-200 px-4 py-2 text-sm font-bold transition-colors duration-150 hover:text-white"
+                >
+                  {topic.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      )}
+    </div>
   </header>
 );
 
@@ -92,7 +95,7 @@ export const FaqSearch: FC<FaqSearchProps> = ({
 }) => (
   <div>
     <Label htmlFor={id}>{label}</Label>
-    <div className="relative mt-1 max-w-xl">
+    <div className="relative mt-1">
       <MagnifyingGlassIcon
         className="pointer-events-none absolute top-1/2 left-3 size-5 -translate-y-1/2 text-gray-400"
         aria-hidden
@@ -132,37 +135,36 @@ export type FaqTopic = {
   questions: FaqQuestion[];
 };
 
-type FaqTopicsProps = { topics: FaqTopic[] };
+type FaqTopicsProps = {
+  topics: FaqTopic[];
+  /** All answers open, e.g. while searching. */
+  expanded?: boolean;
+};
 
-/** One card per topic with its questions and answers in two columns. */
-export const FaqTopics: FC<FaqTopicsProps> = ({ topics }) => (
-  <div className="space-y-10 lg:space-y-12">
+/** One card per topic: title and count on the left, the questions as an accordion on the right (as the FAQ block). */
+export const FaqTopics: FC<FaqTopicsProps> = ({ topics, expanded }) => (
+  <div className="space-y-8 lg:space-y-10">
     {topics.map((topic) => {
       const headingId = topicHeadingId(topic.slug);
 
       return (
-        <section key={topic.id} id={topic.slug} aria-labelledby={headingId} className={`scroll-mt-28 ${CARD_CLASS}`}>
-          <div className="border-wehrli mb-8 border-b-2 pb-5">
-            <Heading level="2" id={headingId}>
+        <section
+          key={topic.id}
+          id={topic.slug}
+          aria-labelledby={headingId}
+          className="bg-white-300 grid scroll-mt-28 gap-6 rounded-lg p-6 sm:p-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] lg:gap-12 lg:p-12"
+        >
+          <div className="lg:sticky lg:top-28 lg:self-start">
+            <p className="text-xxs text-wehrli-300 mb-3 font-bold tracking-wide uppercase">Thema</p>
+            <h2 id={headingId} className="text-wehrli scroll-mt-28 text-lg font-bold break-words md:text-xl">
               {topic.title}
-            </Heading>
+            </h2>
             <p className="mt-2 text-sm text-gray-600">{topic.countLabel}</p>
           </div>
-
-          <div className="grid gap-10 sm:grid-cols-2 lg:gap-x-12">
-            {topic.questions.map((faq) => {
-              const questionId = `faq-${faq.slug}`;
-
-              return (
-                <article key={faq.id} id={faq.slug} className="scroll-mt-32" aria-labelledby={questionId}>
-                  <h3 id={questionId} className="text-wehrli text-base font-bold lg:text-lg">
-                    {faq.question}
-                  </h3>
-                  <p className="mt-3 text-sm whitespace-pre-line md:max-w-prose lg:text-base">{faq.answer}</p>
-                </article>
-              );
-            })}
-          </div>
+          <FaqAccordion
+            expanded={expanded}
+            items={topic.questions.map(({ id, slug, question, answer }) => ({ id, anchor: slug, question, answer }))}
+          />
         </section>
       );
     })}
@@ -177,7 +179,7 @@ type FaqNoResultsProps = {
 
 /** Shown instead of the topics when the search finds nothing. */
 export const FaqNoResults: FC<FaqNoResultsProps> = ({ title = 'Keine passenden Fragen gefunden', children }) => (
-  <div className={`${CARD_CLASS} text-center`} role="status" aria-live="polite">
+  <div className="bg-white-300 rounded-lg p-8 text-center lg:p-12" role="status" aria-live="polite">
     <p className="text-wehrli text-base font-bold">{title}</p>
     <p className="mt-2 text-sm text-gray-600">{children}</p>
   </div>
@@ -185,16 +187,35 @@ export const FaqNoResults: FC<FaqNoResultsProps> = ({ title = 'Keine passenden F
 
 type FaqContactCtaProps = {
   title?: string;
-  /** Text with a link to the contact page (FaqLink). */
+  /** Text below the title. */
   children: ReactNode;
+  /** Button to the contact page. */
+  action?: { label: string; href: string } | null;
 };
 
-/** Card at the end of the FAQ page that points to the contact page. */
-export const FaqContactCta: FC<FaqContactCtaProps> = ({ title = 'Noch Fragen?', children }) => (
-  <section className={`mt-12 scroll-mt-28 lg:mt-16 ${CARD_CLASS}`} aria-labelledby="faq-contact-heading">
-    <Heading level="2" id="faq-contact-heading">
-      {title}
-    </Heading>
-    <p className="mt-3 max-w-2xl text-sm lg:text-base">{children}</p>
+/** Brand card at the end of the FAQ page that points to the contact page. */
+export const FaqContactCta: FC<FaqContactCtaProps> = ({ title = 'Noch Fragen?', children, action }) => (
+  <section
+    className="bg-wehrli mt-12 flex scroll-mt-28 flex-col gap-6 rounded-lg p-6 text-white sm:p-8 lg:mt-16 lg:flex-row lg:items-center lg:justify-between lg:p-12"
+    aria-labelledby="faq-contact-heading"
+  >
+    <div>
+      <h2 id="faq-contact-heading" className="text-lg font-bold md:text-xl">
+        {title}
+      </h2>
+      <p className="mt-2 max-w-2xl text-sm text-white/80 lg:text-base">{children}</p>
+    </div>
+    {action && (
+      <Link
+        href={action.href}
+        className="group text-wehrli inline-flex shrink-0 items-center gap-x-2 self-start rounded-lg bg-white px-5 py-3 text-sm font-bold transition-colors hover:bg-gray-100 lg:self-auto"
+      >
+        {action.label}
+        <ArrowRightIcon
+          className="size-4 transition-transform duration-200 group-hover:translate-x-1 motion-reduce:transition-none"
+          aria-hidden="true"
+        />
+      </Link>
+    )}
   </section>
 );
