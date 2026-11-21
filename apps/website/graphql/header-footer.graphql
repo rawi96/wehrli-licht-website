@@ -22,6 +22,9 @@ query HeaderFooter {
         columns {
           ... on MenuColumnRecord {
             title
+            page {
+              ...pageRecordLink
+            }
             links {
               ...menuLink
             }

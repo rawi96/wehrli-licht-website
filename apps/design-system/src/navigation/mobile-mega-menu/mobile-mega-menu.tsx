@@ -43,7 +43,17 @@ export const MobileMegaMenu: FC<Props> = ({ label, columns, overview, footerLink
           )}
           {columns.map((column) => (
             <div key={column.title}>
-              <p className="text-xxs text-wehrli-50 mb-1 font-bold tracking-wide uppercase">{column.title}</p>
+              {column.href ? (
+                <Link
+                  href={column.href}
+                  className="text-xxs text-wehrli-50 mb-1 inline-block font-bold tracking-wide uppercase hover:underline"
+                  onClick={onNavigate}
+                >
+                  {column.title}
+                </Link>
+              ) : (
+                <p className="text-xxs text-wehrli-50 mb-1 font-bold tracking-wide uppercase">{column.title}</p>
+              )}
               {column.links.map((link) => (
                 <Link key={`${link.href}-${link.label}`} href={link.href} className={linkClasses} onClick={onNavigate}>
                   {link.label}

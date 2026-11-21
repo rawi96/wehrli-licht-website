@@ -62,7 +62,11 @@ const toMenuLinks = (links: MainMenuLink[]): MenuLink[] =>
 const toMainMenuItem = (section: MainMenuSection): MenuItem | null => {
   const href = toMenuLinkHref(section);
   const columns = section.columns
-    .map((column) => ({ title: column.title.trim(), links: toMenuLinks(column.links) }))
+    .map((column) => ({
+      title: column.title.trim(),
+      href: getCmsPagePath(column.page),
+      links: toMenuLinks(column.links),
+    }))
     .filter((column) => column.title && column.links.length > 0);
 
   if (!href && columns.length === 0) {

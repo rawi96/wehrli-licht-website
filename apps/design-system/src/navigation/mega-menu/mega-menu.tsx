@@ -9,6 +9,8 @@ import type { NavigationLink } from '../flyout/flyout';
 /** A titled group of links in the mega menu. */
 export type NavigationColumn = {
   title: string;
+  /** Overview page of the group: the title becomes a link. */
+  href?: string | null;
   links: NavigationLink[];
 };
 
@@ -72,7 +74,17 @@ export const MegaMenu: FC<Props> = ({ label, columns, overview, footerLinks = []
             <div className="grid grid-cols-[repeat(auto-fit,minmax(12rem,1fr))] gap-x-8 gap-y-6">
               {columns.map((column) => (
                 <div key={column.title}>
-                  <p className="text-xxs mb-2 font-bold tracking-wide text-gray-500 uppercase">{column.title}</p>
+                  {column.href ? (
+                    <Link
+                      href={column.href}
+                      className="text-xxs hover:text-wehrli mb-2 inline-block font-bold tracking-wide text-gray-500 uppercase hover:underline"
+                      onClick={() => close()}
+                    >
+                      {column.title}
+                    </Link>
+                  ) : (
+                    <p className="text-xxs mb-2 font-bold tracking-wide text-gray-500 uppercase">{column.title}</p>
+                  )}
                   <ul className="space-y-1">
                     {column.links.map((link) => (
                       <li key={`${link.href}-${link.label}`}>
