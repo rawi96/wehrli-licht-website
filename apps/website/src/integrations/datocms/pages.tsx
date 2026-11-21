@@ -27,40 +27,30 @@ export const getPageMetadata = async (path: string): Promise<PageMetadata> => {
   return buildDatoPageMetadata([...site.favicon, ...(page?.seo ?? [])], path);
 };
 
+type HierarchyPage = { slug: string; title: string; parent?: HierarchyPage | null };
+
+/** The page and its parents, from the top-level page down to the page. */
+const toHierarchy = (page: HierarchyPage): HierarchyPage[] => [...(page.parent ? toHierarchy(page.parent) : []), page];
+
 /**
- * Slugs are unique in DatoCMS, so a page is found by its last slug. The ones before must be its parents: a page with
- * a parent is not served without it, and every slug must be the parent of the next one.
+ * Slugs are unique in DatoCMS, so a page is found by its last slug. It is only served at its own path: the slugs
+ * before must be exactly its parents (a top-level page has none), otherwise any prefix would serve the same page.
+ * The page query loads three levels of parents, deeper pages are not served.
  */
-const hasValidParents = async (page: Page, slugs: string[], includeDrafts: boolean): Promise<boolean> => {
-  // From the page up to the top-level page; easier to compare with the page hierarchy.
-  const upwards = [...slugs].reverse();
+const isPagePath = (page: Page, slugs: string[]): boolean => {
+  const hierarchy = toHierarchy(page).map(({ slug }) => slug);
 
-  if (page.parent && upwards.length === 1) {
-    return false;
-  }
-
-  if (upwards.length === 2) {
-    return upwards[1] === page.parent?.slug;
-  }
-
-  // Deeper pages: we do not know the complete hierarchy, so each slug is checked against its parent.
-  for (let i = 0; i < upwards.length - 1; i++) {
-    const { page: current } = await getPageBySlug(upwards[i], includeDrafts);
-
-    if (current?.parent?.slug !== upwards[i + 1]) {
-      return false;
-    }
-  }
-
-  return true;
+  return hierarchy.length === slugs.length && hierarchy.every((slug, index) => slug === slugs[index]);
 };
 
-type BreadcrumbPage = { slug: string; title: string; parent?: BreadcrumbPage | null };
-
-const toBreadcrumbs = (page: BreadcrumbPage): Breadcrumb[] => [
-  ...(page.parent ? toBreadcrumbs(page.parent) : []),
-  { name: page.title || page.slug, href: `/${page.slug}` },
-];
+const toBreadcrumbs = (page: HierarchyPage): Breadcrumb[] =>
+  toHierarchy(page).map((step, index, hierarchy) => ({
+    name: step.title || step.slug,
+    href: `/${hierarchy
+      .slice(0, index + 1)
+      .map(({ slug }) => slug)
+      .join('/')}`,
+  }));
 
 const metaContent = (tags: SeoTag[], key: string): string | null =>
   tags.find((tag) => tag.tag === 'meta' && (tag.attributes?.property === key || tag.attributes?.name === key))?.attributes
@@ -93,7 +83,7 @@ export const getPage = async (path: string): Promise<ContentPage | null> => {
     return null;
   }
 
-  if (page.parent && !(await hasValidParents(page, slugs, includeDrafts))) {
+  if (!isPagePath(page, slugs)) {
     return null;
   }
 

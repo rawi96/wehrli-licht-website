@@ -51,3 +51,38 @@ export const WithMobileExtra: Story = {
   },
   globals: { viewport: { value: 'mobile1' } },
 };
+
+const megaMenuColumns = [
+  {
+    title: 'Service',
+    links: [
+      { label: 'Lampenschirm nach Mass', href: '#nach-mass' },
+      { label: 'Neu beziehen', href: '#neu-beziehen' },
+    ],
+  },
+  {
+    title: 'Gestalten',
+    links: [
+      { label: 'Formen', href: '#formen' },
+      { label: 'Materialien', href: '#materialien' },
+    ],
+  },
+];
+
+export const WithMegaMenuAndShop: Story = {
+  args: {
+    navigation: [
+      { label: 'Lampenschirme', overview: { label: 'Übersicht Lampenschirme', href: '#' }, columns: megaMenuColumns },
+      { label: 'Projekte', href: '#projekte' },
+    ],
+    shop: { label: 'Shop', overview: { label: 'Zum Shop', href: '#shop' }, columns: megaMenuColumns },
+    contact: { label: 'Termin', href: '#termin' },
+  },
+  decorators: [
+    (Story) => (
+      <div className="pb-96">
+        <Story />
+      </div>
+    ),
+  ],
+};

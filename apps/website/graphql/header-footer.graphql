@@ -1,5 +1,41 @@
+fragment menuLink on MenuLinkRecord {
+  label
+  path
+  page {
+    ...pageRecordLink
+  }
+  shopCategory {
+    slug
+  }
+}
+
 query HeaderFooter {
   headerFooter {
+    mainMenu {
+      ... on MenuSectionRecord {
+        label
+        path
+        isShop
+        page {
+          ...pageRecordLink
+        }
+        columns {
+          ... on MenuColumnRecord {
+            title
+            links {
+              ...menuLink
+            }
+          }
+        }
+        footerLinks {
+          ...menuLink
+        }
+      }
+    }
+    appointmentLabel
+    appointmentPage {
+      ...pageRecordLink
+    }
     menu {
       ... on DirectoryRecord {
         label
