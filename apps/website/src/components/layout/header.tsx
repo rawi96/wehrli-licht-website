@@ -81,9 +81,9 @@ export const Header: FC<Props> = ({ navigation, contactLink, shopMenu, variant =
             navigation.map(({ href }) => href),
           ),
         ),
-        ...(shop ? [] : [{ label: 'Shop', href: SHOP_HOME_PATH, active: isActive(SHOP_HOME_PATH) }]),
+        // The shop is the last entry of the main navigation; on the right are only contact and cart.
+        shop ?? { label: 'Shop', href: SHOP_HOME_PATH, active: isActive(SHOP_HOME_PATH) },
       ]}
-      shop={shop}
       contact={contactLink}
       cartButton={<ShopCartButton />}
       renderMobileMenuExtra={shop ? undefined : (closeMobileMenu) => <ShopMobileNav onLinkClick={closeMobileMenu} />}
