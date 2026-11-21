@@ -4,6 +4,8 @@ export type MenuLink = {
   href: string;
 };
 
+import type { ResponsiveImage } from '../shop/image';
+
 /** A titled group of links in a mega menu section. */
 export type MenuColumn = {
   title: string;
@@ -20,6 +22,8 @@ export type MenuItem = MenuLink & {
   columns?: MenuColumn[];
   /** Links below the columns of a mega menu section. */
   footerLinks?: MenuLink[];
+  /** Image and short text of the section's overview page, shown in its mega menu. */
+  teaser?: { description: string | null; image: ResponsiveImage | null };
 };
 
 /** A group of links in the footer. */

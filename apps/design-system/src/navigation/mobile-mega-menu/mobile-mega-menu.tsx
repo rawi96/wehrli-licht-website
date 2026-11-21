@@ -18,7 +18,8 @@ type Props = {
 };
 
 const linkClasses = 'hover:bg-wehrli-400 -mx-3 block rounded-lg px-3 py-2 text-sm font-normal text-white';
-const strongLinkClasses = 'hover:bg-wehrli-400 -mx-3 block rounded-lg px-3 py-2 text-sm font-bold text-white';
+const strongLinkClasses =
+  'hover:bg-wehrli-400 -mx-3 mt-2 block rounded-lg border border-white/30 px-3 py-2 text-sm font-bold text-white';
 
 /** A mega menu entry in the mobile menu: the label expands the overview link and the titled groups of links. */
 export const MobileMegaMenu: FC<Props> = ({ label, columns, overview, footerLinks = [], onNavigate }) => (
@@ -45,7 +46,11 @@ export const MobileMegaMenu: FC<Props> = ({ label, columns, overview, footerLink
                 </Link>
               ))}
               {column.overview && (
-                <Link href={column.overview.href} className={strongLinkClasses} onClick={onNavigate}>
+                <Link
+                  href={column.overview.href}
+                  className="-mx-3 block rounded-lg px-3 py-1.5 text-xs text-white/60 hover:text-white"
+                  onClick={onNavigate}
+                >
                   {column.overview.label} →
                 </Link>
               )}

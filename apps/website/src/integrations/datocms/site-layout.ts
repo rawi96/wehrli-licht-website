@@ -82,10 +82,19 @@ const toMainMenuItem = (section: MainMenuSection): MenuItem | null => {
     return null;
   }
 
+  const image = section.page?.teaserImage?.responsiveImage;
+
   return {
     label: section.label,
     href: href ?? '/',
-    ...(columns.length > 0 && { columns, footerLinks: toMenuLinks(section.footerLinks) }),
+    ...(columns.length > 0 && {
+      columns,
+      footerLinks: toMenuLinks(section.footerLinks),
+      teaser: {
+        description: section.page?.teaserDescription?.trim() ?? null,
+        image: image?.src ? { ...image, alt: image.alt ?? '' } : null,
+      },
+    }),
   };
 };
 

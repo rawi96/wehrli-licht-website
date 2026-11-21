@@ -18,7 +18,7 @@ type Props = {
 };
 
 /** Label of the overview link at the top of a mega menu. */
-const toOverviewLabel = (label: string) => `Übersicht ${label}`;
+const toOverviewLabel = () => 'Zur Übersicht';
 
 const toNavigationItem = (item: MenuItem, isActive: (path: string) => boolean): HeaderNavigationItem => {
   if (item.columns) {
@@ -29,7 +29,8 @@ const toNavigationItem = (item: MenuItem, isActive: (path: string) => boolean): 
       active: paths.some((path) => path !== '/' && isActive(path)),
       columns: item.columns,
       footerLinks: item.footerLinks,
-      overview: item.href !== '/' ? { label: toOverviewLabel(item.label), href: item.href } : null,
+      feature: item.teaser ? { description: item.teaser.description, image: item.teaser.image } : null,
+      overview: item.href !== '/' ? { label: toOverviewLabel(), href: item.href } : null,
     };
   }
 

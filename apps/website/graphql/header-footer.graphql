@@ -18,6 +18,12 @@ query HeaderFooter {
         isShop
         page {
           ...pageRecordLink
+          teaserDescription
+          teaserImage {
+            responsiveImage(imgixParams: { fit: crop, w: 576, h: 432, auto: format }) {
+              ...responsiveImageFragment
+            }
+          }
         }
         columns {
           ... on MenuColumnRecord {

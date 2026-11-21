@@ -7,7 +7,7 @@ import { FC, ReactNode, useState } from 'react';
 import { cn } from '../../fundamentals/cn';
 import { Logo } from '../../icons/logo/logo';
 import { Flyout, NavigationLink } from '../../navigation/flyout/flyout';
-import { MegaMenu, NavigationColumn } from '../../navigation/mega-menu/mega-menu';
+import { MegaMenu, NavigationColumn, NavigationFeature } from '../../navigation/mega-menu/mega-menu';
 import { MobileMegaMenu } from '../../navigation/mobile-mega-menu/mobile-mega-menu';
 import { NavigationAccordion } from '../../navigation/navigation-accordion/navigation-accordion';
 
@@ -23,6 +23,8 @@ export type HeaderNavigationItem = {
   overview?: NavigationLink | null;
   /** Links below the columns of a mega menu entry. */
   footerLinks?: NavigationLink[];
+  /** Image and text of a mega menu entry, shown with its overview link. */
+  feature?: NavigationFeature | null;
   /** The current page is (in) this entry: the label is underlined. */
   active?: boolean;
 };
@@ -107,6 +109,7 @@ export const Header: FC<Props> = ({
           label={item.label}
           columns={item.columns}
           overview={item.overview}
+          feature={item.feature}
           footerLinks={item.footerLinks}
           active={item.active}
           trigger={trigger}
