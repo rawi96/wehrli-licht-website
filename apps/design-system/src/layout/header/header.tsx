@@ -71,7 +71,7 @@ const shopButtonClasses =
 const contactButtonMobileClasses =
   'inline-flex w-full items-center justify-center rounded-lg bg-white px-5 py-2.5 text-sm font-bold text-wehrli transition-colors hover:bg-gray-100';
 
-/** Site header: logo, main navigation, contact link and cart; below `xl` a menu button opens a full-screen menu. */
+/** Site header: logo, main navigation, contact link and cart; below `lg` a menu button opens a full-screen menu. */
 export const Header: FC<Props> = ({
   navigation,
   contact,
@@ -149,17 +149,17 @@ export const Header: FC<Props> = ({
     <header className={cn('relative z-20 pt-6 pb-6', variant === 'overlay' ? 'bg-transparent' : 'bg-wehrli')}>
       <div className="px-6 lg:px-8">
         <nav
-          className="flex items-center justify-between xl:grid xl:grid-cols-[1fr_auto_1fr] xl:items-center"
+          className="flex items-center justify-between lg:grid lg:grid-cols-[1fr_auto_1fr] lg:items-center"
           aria-label={labels.navigation}
         >
-          <div className="flex items-center xl:justify-self-start">
+          <div className="flex items-center lg:justify-self-start">
             <Link href="/" className="-m-1.5 flex items-center p-1.5">
               <span className="sr-only">{labels.home}</span>
               <Logo />
             </Link>
           </div>
 
-          <div className="flex items-center gap-x-3 xl:hidden">
+          <div className="flex items-center gap-x-3 lg:hidden">
             {cartButton}
             <button
               type="button"
@@ -171,11 +171,11 @@ export const Header: FC<Props> = ({
             </button>
           </div>
 
-          <div className="hidden items-center justify-center gap-x-8 xl:flex 2xl:gap-x-10">
+          <div className="hidden items-center justify-center gap-x-8 lg:flex xl:gap-x-10">
             {navigation.map((item, index) => renderItem(item, index))}
           </div>
 
-          <div className="hidden items-center justify-end gap-x-5 xl:flex">
+          <div className="hidden items-center justify-end gap-x-5 lg:flex">
             {shop && renderItem(shop, navigation.length, false, 'button')}
             {contact && (
               <Link href={contact.href} className={contactButtonClasses}>
@@ -187,7 +187,7 @@ export const Header: FC<Props> = ({
         </nav>
 
         <Dialog as="div" open={isMobileMenuOpen} onClose={setIsMobileMenuOpen}>
-          <DialogPanel className="bg-wehrli fixed inset-0 z-10 overflow-y-auto px-6 py-6 xl:hidden">
+          <DialogPanel className="bg-wehrli fixed inset-0 z-10 overflow-y-auto px-6 py-6 lg:hidden">
             <div className="flex items-center justify-between">
               <Link href="/" className="-m-1.5 p-1.5" onClick={closeMobileMenu}>
                 <span className="sr-only">{labels.home}</span>
