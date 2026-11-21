@@ -171,7 +171,7 @@ export const Header: FC<Props> = ({
             </button>
           </div>
 
-          <div className="hidden items-center justify-center gap-x-8 lg:flex xl:gap-x-10">
+          <div className="hidden items-center justify-center gap-x-6 lg:flex xl:gap-x-10">
             {navigation.map((item, index) => renderItem(item, index))}
           </div>
 
