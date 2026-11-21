@@ -1,5 +1,6 @@
 import { TeaserGridBlockFragment } from '@/graphql/generated';
 import { toImage } from '../image';
+import { getPublicPagePath } from '../paths';
 import { TeaserGridBlock as TeaserGridBlockView } from '@wehrli/design-system';
 import { FC } from 'react';
 
@@ -12,7 +13,7 @@ export const TeaserGridBlock: FC<Props> = ({ block: { teasers, disableMarginBott
     marginTop={!disableMarginTop}
     marginBottom={!disableMarginBottom}
     teasers={teasers.map((teaser) => {
-      const href = `${teaser.parent?.slug ? `/${teaser.parent?.slug}` : ''}/${teaser.slug}`;
+      const href = getPublicPagePath(teaser);
 
       return {
         id: teaser.id,

@@ -1,5 +1,52 @@
+fragment menuLink on MenuLinkRecord {
+  label
+  path
+  page {
+    ...pageRecordLink
+  }
+  shopCategory {
+    slug
+  }
+}
+
 query HeaderFooter {
   headerFooter {
+    mainMenu {
+      ... on MenuSectionRecord {
+        label
+        path
+        isShop
+        page {
+          ...pageRecordLink
+          teaserDescription
+          teaserImage {
+            responsiveImage(imgixParams: { fit: crop, w: 576, h: 432, auto: format }) {
+              ...responsiveImageFragment
+            }
+          }
+        }
+        columns {
+          ... on MenuColumnRecord {
+            title
+            overviewLabel
+            overviewPath
+            page {
+              ...pageRecordLink
+            }
+            links {
+              ...menuLink
+            }
+          }
+        }
+        footerLinks {
+          ...menuLink
+        }
+      }
+    }
+    appointmentLabel
+    appointmentPage {
+      ...pageRecordLink
+    }
     menu {
       ... on DirectoryRecord {
         label

@@ -1,5 +1,6 @@
 const path = require('node:path');
 const { withBotId } = require('botid/next/config');
+const { getCmsRedirects } = require('./cms-redirects');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -26,10 +27,12 @@ const nextConfig = {
         permanent: true,
       },
       {
-        source: '/ueber-uns',
-        destination: '/atelier',
+        // URLs of the website before the current one.
+        source: '/index.php/:path*',
+        destination: '/:path*',
         permanent: true,
       },
+      ...(await getCmsRedirects()),
     ];
   },
 };

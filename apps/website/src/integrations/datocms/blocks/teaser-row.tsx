@@ -1,5 +1,6 @@
 import { TeaserRowBlockFragment } from '@/graphql/generated';
 import { toImage } from '../image';
+import { getPublicPagePath } from '../paths';
 import { TeaserRowBlock as TeaserRowBlockView } from '@wehrli/design-system';
 import { FC } from 'react';
 
@@ -13,7 +14,7 @@ export const TeaserRowBlock: FC<Props> = ({ block: { teasers, disableMarginBotto
     marginBottom={!disableMarginBottom}
     teasers={teasers.map((teaser) => ({
       id: teaser.id,
-      href: `${teaser.parent?.slug ? `/${teaser.parent?.slug}` : ''}/${teaser.slug}`,
+      href: getPublicPagePath(teaser),
       title: teaser.teaserTitle,
       eyebrow: teaser.teaserEyebrow,
       linkLabel: teaser.teaserLinkText,

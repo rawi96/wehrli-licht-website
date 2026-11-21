@@ -15,10 +15,7 @@ fragment teaserGridBlock on TeaserGridRecord {
           ...responsiveImageFragment
         }
       }
-      slug
-      parent {
-        slug
-      }
+      ...pageRecordLink
     }
   }
 }

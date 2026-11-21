@@ -5,6 +5,7 @@ import type { FooterLinkGroup, MenuItem, MenuLink, SiteLayout, SiteNotice } from
 import { cache } from 'react';
 import { queryDatoCMS } from './client';
 import { isDraftMode } from './draft';
+import { getShopCategoryPath } from '@/domain/shop/paths';
 import { getCmsPagePath } from './paths';
 import { toLines } from './text';
 
@@ -36,6 +37,73 @@ const toMenuItem = (item: HeaderMenuItem): MenuItem =>
         })),
       }
     : { label: item.label, href: `/${item.link?.slug}` };
+
+type MainMenuSection = HeaderFooter['mainMenu'][number];
+type MainMenuLink = MainMenuSection['footerLinks'][number];
+
+/** Target of a menu link: a page wins over a shop category, a category over a path. Null if none is set. */
+const toMenuLinkHref = (link: {
+  page?: MainMenuLink['page'];
+  shopCategory?: MainMenuLink['shopCategory'];
+  path?: string | null;
+}): string | null =>
+  getCmsPagePath(link.page) ??
+  (link.shopCategory?.slug ? getShopCategoryPath(link.shopCategory.slug) : null) ??
+  (hasText(link.path) ? link.path.trim() : null);
+
+const toMenuLinks = (links: MainMenuLink[]): MenuLink[] =>
+  links.flatMap((link) => {
+    const href = toMenuLinkHref(link);
+
+    return href && hasText(link.label) ? [{ label: link.label.trim(), href }] : [];
+  });
+
+type MainMenuColumn = MainMenuSection['columns'][number];
+
+/** The link below a column's links («Alle Leistungen»): needs a text and a page or path. */
+const toColumnOverview = (column: MainMenuColumn): MenuLink | null => {
+  const href = toMenuLinkHref({ page: column.page, path: column.overviewPath });
+
+  return href && hasText(column.overviewLabel) ? { label: column.overviewLabel.trim(), href } : null;
+};
+
+/** A section of the new main menu: a mega menu with columns, or a plain link without. */
+const toMainMenuItem = (section: MainMenuSection): MenuItem | null => {
+  const href = toMenuLinkHref(section);
+  const columns = section.columns
+    .map((column) => ({
+      title: column.title.trim(),
+      links: toMenuLinks(column.links),
+      overview: toColumnOverview(column),
+    }))
+    .filter((column) => column.title && column.links.length > 0);
+
+  if (!href && columns.length === 0) {
+    return null;
+  }
+
+  const image = section.page?.teaserImage?.responsiveImage;
+
+  return {
+    label: section.label,
+    href: href ?? '/',
+    ...(columns.length > 0 && {
+      columns,
+      footerLinks: toMenuLinks(section.footerLinks),
+      teaser: {
+        description: section.page?.teaserDescription?.trim() ?? null,
+        image: image?.src ? { ...image, alt: image.alt ?? '' } : null,
+      },
+    }),
+  };
+};
+
+/** The appointment button of the header, null if not set. */
+const toAppointmentLink = (headerFooter: HeaderFooter): MenuLink | null => {
+  const href = getCmsPagePath(headerFooter.appointmentPage);
+
+  return href && hasText(headerFooter.appointmentLabel) ? { label: headerFooter.appointmentLabel.trim(), href } : null;
+};
 
 /** The last contact entry of the menu, as a link if it links a page. */
 const toContactLink = (menu: HeaderMenuItem[]): MenuLink | null => {
@@ -72,11 +140,36 @@ const toNotice = (title?: string | null, html?: string | null): SiteNotice | nul
 /** Used when no contact page is set in Header & Footer. */
 const FALLBACK_CONTACT_PATH = '/kontakt';
 
+/**
+ * Navigation from «Hauptmenü» (mega menu) when it has entries, otherwise from the old «Menü»: the old one stays usable
+ * until the new menu is maintained.
+ */
+const toNavigation = (headerFooter: HeaderFooter): Pick<SiteLayout, 'navigation' | 'contactLink' | 'shopMenu'> => {
+  if (headerFooter.mainMenu.length > 0) {
+    const sections = headerFooter.mainMenu.flatMap((section) => {
+      const item = toMainMenuItem(section);
+
+      return item ? [{ item, isShop: section.isShop }] : [];
+    });
+
+    return {
+      navigation: sections.filter(({ isShop }) => !isShop).map(({ item }) => item),
+      shopMenu: sections.find(({ isShop }) => isShop)?.item ?? null,
+      contactLink: toAppointmentLink(headerFooter) ?? toContactLink(headerFooter.menu),
+    };
+  }
+
+  return {
+    navigation: headerFooter.menu
+      .filter((item) => !isMenuLinkTo(item, 'shop') && !isMenuLinkTo(item, 'kontakt'))
+      .map(toMenuItem),
+    shopMenu: null,
+    contactLink: toContactLink(headerFooter.menu),
+  };
+};
+
 const toSiteLayout = (headerFooter: HeaderFooter): SiteLayout => ({
-  navigation: headerFooter.menu
-    .filter((item) => !isMenuLinkTo(item, 'shop') && !isMenuLinkTo(item, 'kontakt'))
-    .map(toMenuItem),
-  contactLink: toContactLink(headerFooter.menu),
+  ...toNavigation(headerFooter),
   contact: {
     companyName: headerFooter.companyName ?? null,
     street: headerFooter.street ?? null,

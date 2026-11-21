@@ -10,6 +10,16 @@ query Page($slug: String!) {
       id
       slug
       title
+      parent {
+        id
+        slug
+        title
+        parent {
+          id
+          slug
+          title
+        }
+      }
     }
     content {
       __typename
@@ -63,6 +73,9 @@ query Page($slug: String!) {
       }
       ... on ContactFormRecord {
         ...contactFormBlock
+      }
+      ... on FaqBlockRecord {
+        ...faqBlock
       }
       ... on HighlightProjectsTeaserRecord {
         ...highlightProjectsTeaser

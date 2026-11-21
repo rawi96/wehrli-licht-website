@@ -9,7 +9,7 @@ export const SitePage: FC<{ children: ReactNode }> = async ({ children }) => {
 
   return (
     <main>
-      <Header navigation={layout.navigation} contactLink={layout.contactLink} />
+      <Header navigation={layout.navigation} contactLink={layout.contactLink} shopMenu={layout.shopMenu} />
       {children}
       <Footer layout={layout} />
     </main>

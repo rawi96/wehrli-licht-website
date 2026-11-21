@@ -23,7 +23,7 @@ const buildSlides = (block: HomeStageBlockFragment): HomeStageSlide[] => [
 ];
 
 export const HomeStageBlock: FC<Props> = async ({ block }) => {
-  const { navigation, contactLink } = await getSiteLayout();
+  const { navigation, contactLink, shopMenu } = await getSiteLayout();
 
   return (
     <HomeStageBlockView
@@ -31,7 +31,7 @@ export const HomeStageBlock: FC<Props> = async ({ block }) => {
       intro={block.intro}
       ctas={block.callToActions.slice(0, 2).map(toLink)}
       slides={buildSlides(block)}
-      header={<Header navigation={navigation} contactLink={contactLink} variant="overlay" />}
+      header={<Header navigation={navigation} contactLink={contactLink} shopMenu={shopMenu} variant="overlay" />}
     />
   );
 };
