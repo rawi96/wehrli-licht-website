@@ -7,9 +7,9 @@ export type MenuLink = {
 /** A titled group of links in a mega menu section. */
 export type MenuColumn = {
   title: string;
-  /** Overview page of the group, linked from the title; null if the title is plain text. */
-  href: string | null;
   links: MenuLink[];
+  /** Link to the group's overview below its links («Alle Leistungen»), null if none. */
+  overview: MenuLink | null;
 };
 
 /** An entry of the main navigation: a link, a section with sub pages (`children`) or a mega menu (`columns`). */

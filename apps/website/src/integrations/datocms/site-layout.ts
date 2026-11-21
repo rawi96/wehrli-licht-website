@@ -58,14 +58,23 @@ const toMenuLinks = (links: MainMenuLink[]): MenuLink[] =>
     return href && hasText(link.label) ? [{ label: link.label.trim(), href }] : [];
   });
 
+type MainMenuColumn = MainMenuSection['columns'][number];
+
+/** The link below a column's links («Alle Leistungen»): needs a text and a page or path. */
+const toColumnOverview = (column: MainMenuColumn): MenuLink | null => {
+  const href = toMenuLinkHref({ page: column.page, path: column.overviewPath });
+
+  return href && hasText(column.overviewLabel) ? { label: column.overviewLabel.trim(), href } : null;
+};
+
 /** A section of the new main menu: a mega menu with columns, or a plain link without. */
 const toMainMenuItem = (section: MainMenuSection): MenuItem | null => {
   const href = toMenuLinkHref(section);
   const columns = section.columns
     .map((column) => ({
       title: column.title.trim(),
-      href: getCmsPagePath(column.page),
       links: toMenuLinks(column.links),
+      overview: toColumnOverview(column),
     }))
     .filter((column) => column.title && column.links.length > 0);
 

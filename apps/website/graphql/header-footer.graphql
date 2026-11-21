@@ -22,6 +22,8 @@ query HeaderFooter {
         columns {
           ... on MenuColumnRecord {
             title
+            overviewLabel
+            overviewPath
             page {
               ...pageRecordLink
             }

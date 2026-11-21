@@ -10,7 +10,7 @@ import type { NavigationColumn } from '../mega-menu/mega-menu';
 type Props = {
   label: string;
   columns: NavigationColumn[];
-  /** The section's overview page, the first link («Übersicht …»). */
+  /** The section's overview page, the last link («Übersicht …»). */
   overview?: NavigationLink | null;
   footerLinks?: NavigationLink[];
   /** Called when a link is clicked, e.g. to close the mobile menu. */
@@ -36,34 +36,24 @@ export const MobileMegaMenu: FC<Props> = ({ label, columns, overview, footerLink
           </span>
         </DisclosureButton>
         <DisclosurePanel unmount={false} className="space-y-4 pt-1 pb-3 pl-3">
-          {overview && (
-            <Link href={overview.href} className={strongLinkClasses} onClick={onNavigate}>
-              {overview.label}
-            </Link>
-          )}
           {columns.map((column) => (
             <div key={column.title}>
-              {column.href ? (
-                <Link
-                  href={column.href}
-                  className="text-xxs text-wehrli-50 mb-1 inline-block font-bold tracking-wide uppercase hover:underline"
-                  onClick={onNavigate}
-                >
-                  {column.title}
-                </Link>
-              ) : (
-                <p className="text-xxs text-wehrli-50 mb-1 font-bold tracking-wide uppercase">{column.title}</p>
-              )}
+              <p className="text-xxs text-wehrli-50 mb-1 font-bold tracking-wide uppercase">{column.title}</p>
               {column.links.map((link) => (
                 <Link key={`${link.href}-${link.label}`} href={link.href} className={linkClasses} onClick={onNavigate}>
                   {link.label}
                 </Link>
               ))}
+              {column.overview && (
+                <Link href={column.overview.href} className={strongLinkClasses} onClick={onNavigate}>
+                  {column.overview.label} →
+                </Link>
+              )}
             </div>
           ))}
-          {footerLinks.length > 0 && (
+          {[...(overview ? [overview] : []), ...footerLinks].length > 0 && (
             <div>
-              {footerLinks.map((link) => (
+              {[...(overview ? [overview] : []), ...footerLinks].map((link) => (
                 <Link key={`${link.href}-${link.label}`} href={link.href} className={strongLinkClasses} onClick={onNavigate}>
                   {link.label}
                 </Link>

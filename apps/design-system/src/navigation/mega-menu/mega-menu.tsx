@@ -9,15 +9,15 @@ import type { NavigationLink } from '../flyout/flyout';
 /** A titled group of links in the mega menu. */
 export type NavigationColumn = {
   title: string;
-  /** Overview page of the group: the title becomes a link. */
-  href?: string | null;
   links: NavigationLink[];
+  /** Link to the group's overview, with an arrow below its links (e.g. «Alle Leistungen»). */
+  overview?: NavigationLink | null;
 };
 
 type Props = {
   label: string;
   columns: NavigationColumn[];
-  /** The section's overview page, linked at the top of the panel («Übersicht …»). */
+  /** The section's overview page, the first link with an arrow below the columns («Übersicht …»). */
   overview?: NavigationLink | null;
   /** Further links below the columns. */
   footerLinks?: NavigationLink[];
@@ -61,30 +61,10 @@ export const MegaMenu: FC<Props> = ({ label, columns, overview, footerLinks = []
           className="absolute inset-x-0 top-full z-20 px-6 pt-2 transition duration-200 ease-out data-closed:translate-y-1 data-closed:opacity-0 lg:px-8"
         >
           <div className="mx-auto max-w-7xl rounded-lg bg-white p-8 shadow-lg">
-            {overview && (
-              <Link
-                href={overview.href}
-                className="text-wehrli mb-6 inline-flex items-center gap-x-2 text-base font-bold hover:underline"
-                onClick={() => close()}
-              >
-                {overview.label}
-                <ArrowRightIcon className="size-5 shrink-0" aria-hidden="true" />
-              </Link>
-            )}
             <div className="grid grid-cols-[repeat(auto-fit,minmax(12rem,1fr))] gap-x-8 gap-y-6">
               {columns.map((column) => (
                 <div key={column.title}>
-                  {column.href ? (
-                    <Link
-                      href={column.href}
-                      className="text-xxs hover:text-wehrli mb-2 inline-block font-bold tracking-wide text-gray-500 uppercase hover:underline"
-                      onClick={() => close()}
-                    >
-                      {column.title}
-                    </Link>
-                  ) : (
-                    <p className="text-xxs mb-2 font-bold tracking-wide text-gray-500 uppercase">{column.title}</p>
-                  )}
+                  <p className="text-xxs mb-2 font-bold tracking-wide text-gray-500 uppercase">{column.title}</p>
                   <ul className="space-y-1">
                     {column.links.map((link) => (
                       <li key={`${link.href}-${link.label}`}>
@@ -98,12 +78,22 @@ export const MegaMenu: FC<Props> = ({ label, columns, overview, footerLinks = []
                       </li>
                     ))}
                   </ul>
+                  {column.overview && (
+                    <Link
+                      href={column.overview.href}
+                      className="text-wehrli mt-2 inline-flex items-center gap-x-1 text-sm font-bold hover:underline"
+                      onClick={() => close()}
+                    >
+                      {column.overview.label}
+                      <ArrowRightIcon className="size-4 shrink-0" aria-hidden="true" />
+                    </Link>
+                  )}
                 </div>
               ))}
             </div>
-            {footerLinks.length > 0 && (
+            {[...(overview ? [overview] : []), ...footerLinks].length > 0 && (
               <div className="mt-6 flex flex-wrap gap-x-6 gap-y-2 border-t border-gray-200 pt-4">
-                {footerLinks.map((link) => (
+                {[...(overview ? [overview] : []), ...footerLinks].map((link) => (
                   <Link
                     key={`${link.href}-${link.label}`}
                     href={link.href}

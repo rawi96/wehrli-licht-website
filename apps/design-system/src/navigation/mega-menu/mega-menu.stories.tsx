@@ -10,7 +10,7 @@ const meta: Meta<typeof MegaMenu> = {
     columns: [
       {
         title: 'Service',
-        href: '#service',
+        overview: { label: 'Alle Leistungen', href: '#service' },
         links: [
           { label: 'Lampenschirm nach Mass', href: '#nach-mass' },
           { label: 'Neu beziehen & reparieren', href: '#neu-beziehen' },
