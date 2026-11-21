@@ -20,13 +20,30 @@ type Props = {
 /** Label of the overview link at the top of a mega menu. */
 const toOverviewLabel = () => 'Zur Übersicht';
 
-const toNavigationItem = (item: MenuItem, isActive: (path: string) => boolean): HeaderNavigationItem => {
-  if (item.columns) {
-    const paths = [item.href, ...item.columns.flatMap(({ links }) => links.map(({ href }) => href))];
+/**
+ * A mega menu section is active on its own pages (below its overview page). Pages it only links to are counted when
+ * no section owns them, e.g. /kontakt in «Über uns», but not the room pages the «Ratgeber» shares with «Licht planen».
+ */
+const isSectionActive = (item: MenuItem, sectionHrefs: string[], isActive: (path: string) => boolean): boolean => {
+  if (item.href !== '/' && isActive(item.href)) {
+    return true;
+  }
 
+  const ownedByASection = sectionHrefs.some((href) => href !== '/' && isActive(href));
+  const links = item.columns?.flatMap(({ links: columnLinks }) => columnLinks.map(({ href }) => href)) ?? [];
+
+  return !ownedByASection && links.some((path) => path !== '/' && isActive(path));
+};
+
+const toNavigationItem = (
+  item: MenuItem,
+  isActive: (path: string) => boolean,
+  sectionHrefs: string[] = [],
+): HeaderNavigationItem => {
+  if (item.columns) {
     return {
       label: item.label,
-      active: paths.some((path) => path !== '/' && isActive(path)),
+      active: isSectionActive(item, sectionHrefs, isActive),
       columns: item.columns,
       footerLinks: item.footerLinks,
       feature: item.teaser ? { description: item.teaser.description, image: item.teaser.image } : null,
@@ -57,7 +74,13 @@ export const Header: FC<Props> = ({ navigation, contactLink, shopMenu, variant =
     <HeaderLayout
       variant={variant}
       navigation={[
-        ...navigation.map((item) => toNavigationItem(item, isActive)),
+        ...navigation.map((item) =>
+          toNavigationItem(
+            item,
+            isActive,
+            navigation.map(({ href }) => href),
+          ),
+        ),
         ...(shop ? [] : [{ label: 'Shop', href: SHOP_HOME_PATH, active: isActive(SHOP_HOME_PATH) }]),
       ]}
       shop={shop}

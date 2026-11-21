@@ -38,14 +38,14 @@ type Props = {
 
 const triggerClasses = {
   link: {
-    idle: 'group inline-flex items-center gap-x-1 border-b-2 border-transparent pb-0.5 text-sm leading-none font-bold text-white transition-colors duration-150 hover:border-white',
+    idle: 'group inline-flex items-center whitespace-nowrap gap-x-1 border-b-2 border-transparent pb-0.5 text-sm leading-none font-bold text-white transition-colors duration-150 hover:border-white',
     active:
-      'group inline-flex items-center gap-x-1 border-b-2 border-white pb-0.5 text-sm leading-none font-bold text-white transition-colors duration-150',
+      'group inline-flex items-center gap-x-1 whitespace-nowrap border-b-2 border-white pb-0.5 text-sm leading-none font-bold text-white transition-colors duration-150',
   },
   button: {
-    idle: 'group inline-flex items-center gap-x-1 rounded-lg border-2 border-white px-3 py-1 text-sm leading-none font-bold text-white transition-colors hover:bg-white hover:text-wehrli',
+    idle: 'group inline-flex items-center whitespace-nowrap gap-x-1 rounded-lg border-2 border-white px-3 py-1 text-sm leading-none font-bold text-white transition-colors hover:bg-white hover:text-wehrli',
     active:
-      'group inline-flex items-center gap-x-1 rounded-lg border-2 border-white bg-white px-3 py-1 text-sm leading-none font-bold text-wehrli transition-colors',
+      'group inline-flex items-center gap-x-1 whitespace-nowrap rounded-lg border-2 border-white bg-white px-3 py-1 text-sm leading-none font-bold text-wehrli transition-colors',
   },
 };
 
