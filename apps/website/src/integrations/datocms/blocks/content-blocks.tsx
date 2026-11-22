@@ -10,6 +10,7 @@ import { HighlightOffersTeaserBlock } from './highlight/highlight-offers-teaser'
 import { HighlightProjectsTeaserBlock } from './highlight/highlight-projects-teaser';
 import { HighlightShopTeaserBlock } from './highlight/highlight-shop-teaser';
 import { IframeBlock } from './iframe';
+import { LampshadeConfiguratorBlock } from './lampshade-configurator';
 import { LocationBlock } from './location';
 import { ImageBlock } from './image';
 import { LogoGridBlock } from './logo-grid';
@@ -73,6 +74,8 @@ export const ContentBlocks: FC<Props> = ({ blocks, eagerBlockCount = 2 }) => {
             return <IframeBlock key={block.id} block={block} />;
           case 'LocationRecord':
             return <LocationBlock key={block.id} block={block} />;
+          case 'LampshadeConfiguratorRecord':
+            return <LampshadeConfiguratorBlock key={block.id} block={block} />;
           case 'QuoteRecord':
             return <QuoteBlock key={block.id} block={block} />;
           case 'GalleryRecord':

@@ -1,13 +1,20 @@
 'use client';
 
 import { ContactFieldErrors, ContactFormValues, HONEYPOT_FIELD, validateContactForm } from '@/features/contact/schema';
-import { PRODUCT_PREFILL_PARAM } from '@/domain/contact/links';
+import { DESIGN_PREFILL_PARAM, PRODUCT_PREFILL_PARAM } from '@/domain/contact/links';
 import { analytics } from '@/integrations/client';
 import { ContactForm as ContactFormView, ContactFormStatus } from '@wehrli/design-system';
 import { FC, useEffect, useRef, useState } from 'react';
 
-const readProductPrefill = (): Partial<ContactFormValues> => {
-  const product = new URLSearchParams(window.location.search).get(PRODUCT_PREFILL_PARAM)?.slice(0, 200);
+/** Message prefilled by links: a question about a product, or a design from the lampshade configurator. */
+const readPrefill = (): Partial<ContactFormValues> => {
+  const params = new URLSearchParams(window.location.search);
+  const product = params.get(PRODUCT_PREFILL_PARAM)?.slice(0, 200);
+  const design = params.get(DESIGN_PREFILL_PARAM)?.slice(0, 1500);
+
+  if (design) {
+    return { message: `${design}\n\n` };
+  }
 
   return product ? { message: `Ich habe eine Frage zur Leuchte «${product}»:\n\n` } : {};
 };
@@ -50,7 +57,7 @@ export const ContactForm: FC<Props> = ({ formId, topics, privacyHref, labels }) 
 
   useEffect(() => {
     shownAtRef.current = Date.now();
-    const prefill = readProductPrefill();
+    const prefill = readPrefill();
     if (Object.keys(prefill).length > 0) {
       // eslint-disable-next-line @eslint-react/set-state-in-effect -- URL params are only readable after mount
       setValues((current) => ({ ...current, ...prefill }));

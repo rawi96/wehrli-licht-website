@@ -1,0 +1,4 @@
+fragment lampshadeConfiguratorBlock on LampshadeConfiguratorRecord {
+  id
+  anchorId
+}

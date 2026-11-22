@@ -47,6 +47,9 @@ query Page($id: ItemId!) {
       ... on LocationRecord {
         ...locationBlock
       }
+      ... on LampshadeConfiguratorRecord {
+        ...lampshadeConfiguratorBlock
+      }
       ... on QuoteRecord {
         ...quoteBlock
       }
