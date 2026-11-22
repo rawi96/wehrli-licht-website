@@ -27,9 +27,11 @@ export const ProductGallery: FC<Props> = ({ images, label }) => (
   <Tab.Group as="div" className="flex flex-col-reverse">
     <div className="mx-auto mt-6 w-full max-w-2xl lg:max-w-none">
       <Tab.List className="grid grid-cols-2 gap-6 sm:grid-cols-4">
-        {images.map(({ id, image }) => (
+        {images.map(({ id, image }, index) => (
           <Tab
-            key={id}
+            // A product can show the same image twice.
+            // eslint-disable-next-line @eslint-react/no-array-index-key
+            key={`${index}-${id}`}
             className="relative flex h-24 cursor-pointer items-center justify-center rounded-md bg-white text-sm font-bold hover:bg-gray-50"
           >
             {({ selected }) => (
@@ -54,7 +56,8 @@ export const ProductGallery: FC<Props> = ({ images, label }) => (
 
     <Tab.Panels>
       {images.map(({ id, image }, index) => (
-        <Tab.Panel key={id}>
+        // eslint-disable-next-line @eslint-react/no-array-index-key
+        <Tab.Panel key={`${index}-${id}`}>
           {image && (
             // The first product image is the LCP element on product pages.
             <Image image={image} priority={index === 0} sizes={PRODUCT_IMAGE_SIZES} fit="fill" rounded="lg" />

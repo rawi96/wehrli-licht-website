@@ -66,7 +66,10 @@ export const Header: FC<Props> = ({ navigation, contactLink, shopMenu, labels, v
         ...toNavigationItem(shopMenu, isActive, labels.overview),
         // The shop's columns also link content pages (rooms, showroom): it is active on its own pages only.
         active: isActive(shopMenu.href === '/' ? SHOP_HOME_PATH : shopMenu.href),
-        overview: shopMenu.columns ? { label: labels.shopOverview, href: shopMenu.href } : null,
+        // Without its own page or path the shop section links «/»: its overview is the shop home then.
+        overview: shopMenu.columns
+          ? { label: labels.shopOverview, href: shopMenu.href === '/' ? SHOP_HOME_PATH : shopMenu.href }
+          : null,
       }
     : null;
 

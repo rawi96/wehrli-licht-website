@@ -24,7 +24,9 @@ export type HomePage = {
 /** A page under /projekte/<slug>: a project with its rendered content, or an area: the overview page with its chip active. */
 export type ProjectPage =
   | { kind: 'project'; project: ProjectSummary; intro: ReactNode; content: ReactNode; projects: ProjectSummary[] }
-  | { kind: 'area'; area: ProjectArea; content: ReactNode };
+  | { kind: 'area'; area: ProjectArea; content: ReactNode }
+  /** A CMS page below «Projekte» that is not a project record. */
+  | { kind: 'page'; page: ContentPage };
 
 export type FaqPage = {
   /** Title and intro of the FAQ page, null if not set. */

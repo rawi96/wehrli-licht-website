@@ -69,6 +69,11 @@ html {
   --focus-color: var(--color-white);
 }
 
+/* White panels inside a dark surface (menus, cards): focus outlines back in the brand colour. */
+@utility surface-light {
+  --focus-color: var(--color-wehrli);
+}
+
 @layer utilities {
   /* Respect the OS setting for reduced motion: decorative animations stop, reveals show their end state. */
   @media (prefers-reduced-motion: reduce) {

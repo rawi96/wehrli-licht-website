@@ -39,18 +39,35 @@ const shadeCentre = (design: LampshadeDesign): Vector3 => {
   return new Vector3(placement.anchor[0], placement.shadeBottom + design.height / 200, z);
 };
 
+const MAX_DISTANCE = 3.6;
+const MAX_AZIMUTH = 1.15;
+
+/**
+ * How far the camera may orbit to the left before it passes the side wall (rooms have one on the left). With
+ * MAX_DISTANCE and a polar angle up to 1.75 (slightly below the horizon) it also stays above the floor.
+ */
+const minAzimuthFor = (room: LampshadeDesign['room'], target: Vector3): number => {
+  if (room === 'atelier') {
+    return -MAX_AZIMUTH;
+  }
+  const space = (target.x - (SIDE_WALL_X + 0.3)) / MAX_DISTANCE;
+
+  return -Math.min(MAX_AZIMUTH, Math.asin(Math.min(1, Math.max(0, space))));
+};
+
 /** Moves the camera smoothly to the lamp whenever lamp or room change. */
 const CameraRig: FC<{ design: LampshadeDesign; onInteract?: () => void }> = ({ design, onInteract }) => {
   const controlsRef = useRef<CameraControls>(null);
   const firstRef = useRef(true);
   const { room, lamp } = design;
+  const minAzimuth = minAzimuthFor(room, shadeCentre(design));
 
   useEffect(() => {
     const { view } = ROOM_LAYOUTS[room];
     const target = shadeCentre({ ...design, room, lamp });
     const direction = new Vector3(view[0], lamp === 'pendel' ? -0.04 : view[1], view[2]).normalize();
     const size = Math.max(design.bottom, design.top, design.height) / 40;
-    const distance = DISTANCE[lamp] * Math.min(1.35, Math.max(0.85, size));
+    const distance = Math.min(MAX_DISTANCE, DISTANCE[lamp] * Math.min(1.35, Math.max(0.85, size)));
     const position = target.clone().add(direction.clone().multiplyScalar(distance));
     const camera = controlsRef.current;
     if (!camera) {
@@ -72,11 +89,11 @@ const CameraRig: FC<{ design: LampshadeDesign; onInteract?: () => void }> = ({ d
       ref={controlsRef}
       makeDefault
       minDistance={0.6}
-      maxDistance={4.5}
+      maxDistance={MAX_DISTANCE}
       minPolarAngle={0.25}
-      maxPolarAngle={2.3}
-      minAzimuthAngle={-1.15}
-      maxAzimuthAngle={1.15}
+      maxPolarAngle={1.75}
+      minAzimuthAngle={minAzimuth}
+      maxAzimuthAngle={MAX_AZIMUTH}
       smoothTime={0.45}
       onStart={onInteract}
     />

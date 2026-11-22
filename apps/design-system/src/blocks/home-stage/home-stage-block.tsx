@@ -42,7 +42,8 @@ export const HomeStageBlock: FC<Props> = ({ title, intro, ctas, slides, header, 
 
   return (
     <section aria-labelledby="home-stage-heading" className="surface-dark bg-wehrli-dark">
-      <div className="relative isolate min-h-[100svh] overflow-hidden">
+      {/* Clipped sideways only: the mega menu of the header inside may reach below the stage. */}
+      <div className="relative isolate min-h-[100svh] overflow-x-clip">
         <HomeStageSlideshow slides={slides} labels={labels} />
 
         <div className="from-wehrli-dark/75 via-wehrli-dark/50 to-wehrli-dark/90 pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b" />

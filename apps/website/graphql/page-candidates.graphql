@@ -1,4 +1,5 @@
-# Pages with a slug: slugs are unique per parent, so the path picks the right one.
+# Pages with a slug: slugs are unique per parent, so the path picks the right one. Four levels of parents, as in
+# AllRoutes and pageRecordLink: deeper pages are neither linked nor served.
 query PageCandidates($slug: String!) {
   allPages(filter: { slug: { eq: $slug } }, first: 20) {
     id
@@ -9,6 +10,9 @@ query PageCandidates($slug: String!) {
         slug
         parent {
           slug
+          parent {
+            slug
+          }
         }
       }
     }

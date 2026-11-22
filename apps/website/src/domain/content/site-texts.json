@@ -40,7 +40,7 @@
     {
       "title": "❓ Häufige Fragen",
       "fields": [
-        { "key": "faq_block_eyebrow", "label": "Dachzeile im Block «Häufige Fragen»", "default": "FAQ" },
+        { "key": "faq_block_eyebrow", "label": "Dachzeile «FAQ» (Block und Seite «Häufige Fragen»)", "default": "FAQ" },
         {
           "key": "faq_block_title",
           "label": "Überschrift im Block «Häufige Fragen»",

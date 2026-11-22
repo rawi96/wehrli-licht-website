@@ -34,6 +34,9 @@ type Props = {
   labels?: { back?: string };
 };
 
+/** Duration of the slide between the levels (duration-300). */
+const SLIDE_MS = 300;
+
 const hasPanel = (item: MobileMenuItem): boolean => (item.columns?.length ?? 0) + (item.children?.length ?? 0) > 0;
 
 const rowClasses =
@@ -56,17 +59,29 @@ export const MobileMenu: FC<Props> = ({ items, onNavigate, footer, labels }) => 
   const panelItem = panelIndex === null ? null : items[panelIndex];
 
   useEffect(() => {
+    // preventScroll: the panel is still sliding in, scrolling to it would shift the menu sideways.
     if (open) {
-      backRef.current?.focus();
+      backRef.current?.focus({ preventScroll: true });
     } else if (panelIndex !== null) {
-      triggersRef.current[panelIndex]?.focus();
+      triggersRef.current[panelIndex]?.focus({ preventScroll: true });
     }
+  }, [open, panelIndex]);
+
+  // Unmount a closed panel after its slide-out. transitionend does not fire without a transition (reduced motion),
+  // so a timeout of the transition's length clears it as well.
+  useEffect(() => {
+    if (open || panelIndex === null) {
+      return;
+    }
+    const timeout = window.setTimeout(() => setPanelIndex(null), SLIDE_MS);
+
+    return () => window.clearTimeout(timeout);
   }, [open, panelIndex]);
 
   const sliding = 'col-start-1 row-start-1 transition-transform duration-300 ease-out motion-reduce:transition-none';
 
   return (
-    <div className="grid overflow-hidden">
+    <div className="grid overflow-x-clip">
       {/* First level */}
       <div className={cn(sliding, open ? '-translate-x-full' : 'translate-x-0')} inert={open}>
         <ul className="divide-y divide-white/10">
@@ -120,11 +135,6 @@ export const MobileMenu: FC<Props> = ({ items, onNavigate, footer, labels }) => 
         inert={!open}
         role="region"
         aria-label={panelItem?.label}
-        onTransitionEnd={(event) => {
-          if (event.target === event.currentTarget && !open) {
-            setPanelIndex(null);
-          }
-        }}
       >
         {panelItem && (
           <div className="flex flex-col gap-6">
@@ -160,8 +170,10 @@ export const MobileMenu: FC<Props> = ({ items, onNavigate, footer, labels }) => 
               </Link>
             )}
 
-            {panelItem.columns?.map((column) => (
-              <div key={column.title}>
+            {panelItem.columns?.map((column, index) => (
+              // Column titles come from the CMS and need not be unique.
+              // eslint-disable-next-line @eslint-react/no-array-index-key
+              <div key={`${index}-${column.title}`}>
                 <p className="mb-1 px-3 text-sm font-bold text-white/80">{column.title}</p>
                 <ul>
                   {column.links.map((link) => (

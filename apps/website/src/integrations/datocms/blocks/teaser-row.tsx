@@ -15,7 +15,7 @@ export const TeaserRowBlock: FC<Props> = ({ block: { teasers, disableMarginBotto
     teasers={teasers.map((teaser) => ({
       id: teaser.id,
       href: getPublicPagePath(teaser),
-      title: teaser.teaserTitle,
+      title: teaser.teaserTitle?.trim() ? teaser.teaserTitle.trim() : teaser.title,
       eyebrow: teaser.teaserEyebrow,
       linkLabel: teaser.teaserLinkText,
       image: toImage({ responsiveImage: teaser.teaserImage?.responsiveImage }),

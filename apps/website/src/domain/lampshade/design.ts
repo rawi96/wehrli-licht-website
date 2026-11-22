@@ -61,12 +61,21 @@ function sizeOf(shape: ShapeId) {
   return { height: size.height, bottom: size.bottom, top: size.top, depth: size.depth };
 }
 
-/** Choosing a form resets its proportions; a half shade belongs on the wall. */
+/** Lamp for a form: a half shade belongs on the wall; leaving a half shade goes back to a table lamp. */
+const lampFor = (shape: ShapeId, previous: LampshadeDesign): LampId => {
+  if (findShape(shape).half) {
+    return 'wand';
+  }
+
+  return findShape(previous.shape).half ? 'tisch' : previous.lamp;
+};
+
+/** Choosing a form resets its proportions. */
 export const withShape = (design: LampshadeDesign, shape: ShapeId): LampshadeDesign => ({
   ...design,
   shape,
   ...sizeOf(shape),
-  lamp: findShape(shape).half ? 'wand' : design.lamp === 'wand' ? 'tisch' : design.lamp,
+  lamp: lampFor(shape, design),
 });
 
 /** Materials with their own colours (e.g. leaf metal) switch to one of them. */
@@ -254,6 +263,9 @@ export const decodeDesign = (query: string): LampshadeDesign | null => {
   };
   const material = oneOf(params.get(PARAMS.material), MATERIALS) ?? base.material;
   const pattern = oneOf(params.get(PARAMS.pattern), PATTERNS);
+  const palette = findMaterial(material).colors;
+  const color = hex('color', base.color);
+  const lamp = oneOf(params.get(PARAMS.lamp), LAMPS) ?? base.lamp;
 
   return {
     ...base,
@@ -262,14 +274,16 @@ export const decodeDesign = (query: string): LampshadeDesign | null => {
     top: size('top'),
     depth: size('depth'),
     material,
-    color: hex('color', base.color),
+    // Materials with their own colours (leaf metal, parchment …) only come in those.
+    color: !palette || palette.some(({ hex: own }) => own === color) ? color : palette[0].hex,
     // An own motif is a local image and cannot be shared.
     pattern: pattern && pattern !== 'motiv' && findMaterial(material).patterns ? pattern : 'uni',
     patternColor: hex('patternColor', base.patternColor),
     lining: oneOf(params.get(PARAMS.lining), LININGS) ?? base.lining,
     trim: oneOf(params.get(PARAMS.trim), TRIMS) ?? base.trim,
     trimColor: hex('trimColor', base.trimColor),
-    lamp: oneOf(params.get(PARAMS.lamp), LAMPS) ?? base.lamp,
+    // The same rule as in the configurator: a half shade only on the wall.
+    lamp: findShape(shape).half ? 'wand' : lamp,
     finish: oneOf(params.get(PARAMS.finish), FINISHES) ?? base.finish,
     room: oneOf(params.get(PARAMS.room), ROOMS) ?? base.room,
   };

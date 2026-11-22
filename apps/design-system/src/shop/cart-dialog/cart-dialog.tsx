@@ -17,7 +17,7 @@ const DEFAULT_LABELS = { title: 'Warenkorb', close: 'Schliessen' };
 /** The cart as a modal dialog over the page. */
 export const CartDialog: FC<Props> = ({ open, onClose, children, labels = DEFAULT_LABELS }) => (
   <Transition.Root show={open} as={Fragment}>
-    <Dialog as="div" className="relative z-10" onClose={onClose}>
+    <Dialog as="div" className="relative z-50" onClose={onClose}>
       <Transition.Child
         as={Fragment}
         enter="ease-out duration-300"

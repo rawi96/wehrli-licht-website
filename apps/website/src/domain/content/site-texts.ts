@@ -77,3 +77,19 @@ export const DEFAULT_SITE_TEXTS = Object.fromEntries(
 /** Replaces `{name}` placeholders, e.g. in «Zum {shop}». */
 export const fillText = (text: string, values: Record<string, string>): string =>
   text.replace(/\{\{(\w+)\}\}/g, (match, name: string) => values[name] ?? match);
+
+const FAQ_TEXT_KEYS = [
+  'faqBlockEyebrow',
+  'faqSearchPlaceholder',
+  'faqNoResultsTitle',
+  'faqNoResultsText',
+  'faqContactTitle',
+  'faqContactText',
+  'faqContactLink',
+] as const satisfies readonly SiteTextKey[];
+
+/** Texts of the FAQ page: only these go to the browser (not e.g. the bank details). */
+export type FaqTexts = Pick<SiteTexts, (typeof FAQ_TEXT_KEYS)[number]>;
+
+export const pickFaqTexts = (texts: SiteTexts): FaqTexts =>
+  Object.fromEntries(FAQ_TEXT_KEYS.map((key) => [key, texts[key]])) as FaqTexts;

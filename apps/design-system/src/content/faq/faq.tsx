@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { FC, ReactNode } from 'react';
 import { Label, TextInput } from '../../forms/field/field';
 import { Heading } from '../../typography/heading/heading';
-import { FaqAccordion } from './faq-accordion';
+import { FaqAccordion } from '../faq-accordion/faq-accordion';
 
 // Parts of the FAQ page. The website groups, filters and counts the questions and passes the result.
 
@@ -37,13 +37,14 @@ type FaqIntroProps = {
   search: ReactNode;
   /** Jump links to the topic sections, shown with more than one topic. */
   topics: FaqTopicLink[];
-  labels?: { topicsNavigation?: string; topics?: string };
+  /** `eyebrow` above the title (DatoCMS «Texte & Beschriftungen»). */
+  labels?: { eyebrow?: string; topicsNavigation?: string; topics?: string };
 };
 
 /** Head of the FAQ page: title and lead text, then a card with the search and the topic links. */
 export const FaqIntro: FC<FaqIntroProps> = ({ title, intro, search, topics, labels }) => (
   <header className="mt-20 mb-12 lg:mt-24 lg:mb-16">
-    <p className="text-wehrli mb-3 text-xs font-bold">FAQ</p>
+    <p className="text-wehrli mb-3 text-xs font-bold">{labels?.eyebrow ?? 'FAQ'}</p>
     <Heading level="1" id="faq-page-heading">
       {title}
     </Heading>
@@ -139,10 +140,12 @@ type FaqTopicsProps = {
   topics: FaqTopic[];
   /** All answers open, e.g. while searching. */
   expanded?: boolean;
+  /** `topic` above each topic title. */
+  labels?: { topic?: string };
 };
 
 /** One card per topic: title and count on the left, the questions as an accordion on the right (as the FAQ block). */
-export const FaqTopics: FC<FaqTopicsProps> = ({ topics, expanded }) => (
+export const FaqTopics: FC<FaqTopicsProps> = ({ topics, expanded, labels }) => (
   <div className="space-y-8 lg:space-y-10">
     {topics.map((topic) => {
       const headingId = topicHeadingId(topic.slug);
@@ -155,7 +158,7 @@ export const FaqTopics: FC<FaqTopicsProps> = ({ topics, expanded }) => (
           className="bg-wehrli-50 grid scroll-mt-28 gap-6 rounded-md p-6 sm:p-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] lg:gap-12 lg:p-12"
         >
           <div className="lg:sticky lg:top-28 lg:self-start">
-            <p className="text-wehrli mb-3 text-xs font-bold">Thema</p>
+            <p className="text-wehrli mb-3 text-xs font-bold">{labels?.topic ?? 'Thema'}</p>
             <h2 id={headingId} className="text-wehrli scroll-mt-28 text-lg font-bold break-words md:text-xl">
               {topic.title}
             </h2>

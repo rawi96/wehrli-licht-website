@@ -1,7 +1,7 @@
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { FC } from 'react';
-import { FaqAccordion } from '../../content/faq/faq-accordion';
+import { FaqAccordion } from '../../content/faq-accordion/faq-accordion';
 import { Section } from '../../layout/section/section';
 import type { BlockMargins } from '../block-margins';
 

@@ -18,6 +18,11 @@ query Page($id: ItemId!) {
           id
           slug
           title
+          parent {
+            id
+            slug
+            title
+          }
         }
       }
     }

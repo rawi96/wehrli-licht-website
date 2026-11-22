@@ -6,12 +6,12 @@ const meta: Meta<typeof LocationBlock> = {
   component: LocationBlock,
   args: {
     title: 'Öffnungszeiten & Anfahrt',
-    companyName: 'Wehrli Licht GmbH',
-    street: 'Blumenstrasse 66',
-    zip: '9403',
-    place: 'Goldach',
-    phone: '+41 71 841 23 68',
-    email: 'info@wehrli-licht.ch',
+    companyName: 'Muster Licht GmbH',
+    street: 'Musterstrasse 1',
+    zip: '9000',
+    place: 'St. Gallen',
+    phone: '+41 71 000 00 00',
+    email: 'hallo@example.com',
     mapsHref: '#karte',
     openingHours: {
       title: 'Öffnungszeiten',

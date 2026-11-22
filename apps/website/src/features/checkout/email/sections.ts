@@ -26,9 +26,9 @@ export const renderLineItems = (order: CheckoutOrder): string => {
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;font-size:14px;">
       <thead>
         <tr>
-          <th align="left" style="padding:8px 0;border-bottom:2px solid ${brandColor};font-size:12px;text-transform:;letter-spacing:0.05em;color:${brandColor}; font-bold">Artikel</th>
-          <th align="center" style="padding:8px 0;border-bottom:2px solid ${brandColor};font-size:12px;text-transform:;letter-spacing:0.05em;color:${brandColor}; font-bold">Anz.</th>
-          <th align="right" style="padding:8px 0;border-bottom:2px solid ${brandColor};font-size:12px;text-transform:;letter-spacing:0.05em;color:${brandColor}; font-bold">Preis</th>
+          <th align="left" style="padding:8px 0;border-bottom:2px solid ${brandColor};font-size:12px;font-weight:600;color:${brandColor};">Artikel</th>
+          <th align="center" style="padding:8px 0;border-bottom:2px solid ${brandColor};font-size:12px;font-weight:600;color:${brandColor};">Anz.</th>
+          <th align="right" style="padding:8px 0;border-bottom:2px solid ${brandColor};font-size:12px;font-weight:600;color:${brandColor};">Preis</th>
         </tr>
       </thead>
       <tbody>

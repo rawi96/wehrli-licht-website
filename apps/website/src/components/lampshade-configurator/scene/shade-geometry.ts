@@ -18,7 +18,8 @@ export const createShadeGeometry = (): BufferGeometry => {
   for (let i = 0; i <= ROWS; i += 1) {
     for (let j = 0; j <= SEGMENTS; j += 1) {
       const k = i * (SEGMENTS + 1) + j;
-      uv[k * 2] = j / SEGMENTS;
+      // The angle runs from the right to the left across the front: u the other way, so images are not mirrored.
+      uv[k * 2] = 1 - j / SEGMENTS;
       uv[k * 2 + 1] = i / ROWS;
       if (i < ROWS && j < SEGMENTS) {
         const a = k;

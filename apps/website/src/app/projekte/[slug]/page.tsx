@@ -16,7 +16,8 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
 export async function generateStaticParams() {
   const [projects, areas] = await Promise.all([content.listProjects(), content.listProjectAreas()]);
 
-  return [...projects, ...areas].map(({ slug }) => ({ slug }));
+  // A project and an area with the same slug share a URL: the project wins (see getProjectPage).
+  return [...new Set([...projects, ...areas].map(({ slug }) => slug))].map((slug) => ({ slug }));
 }
 
 export const dynamicParams = true;
@@ -27,6 +28,17 @@ export default async function ProjectPage({ params }: Params) {
 
   if (!page) {
     notFound();
+  }
+
+  if (page.kind === 'page') {
+    return (
+      <SitePage>
+        <Container>
+          <Breadcrumbs customBreadcrumbs={page.page.breadcrumbs} />
+          {page.page.content}
+        </Container>
+      </SitePage>
+    );
   }
 
   if (page.kind === 'area') {

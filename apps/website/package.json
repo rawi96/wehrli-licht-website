@@ -19,7 +19,6 @@
     "knip": "knip"
   },
   "dependencies": {
-    "@heroicons/react": "^2.2.0",
     "@react-three/drei": "^10.7.9",
     "@react-three/fiber": "^9.8.2",
     "@types/react": "^19.3.0",

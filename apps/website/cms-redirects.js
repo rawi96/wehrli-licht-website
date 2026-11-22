@@ -1,6 +1,6 @@
 /**
  * Permanent redirects maintained in DatoCMS («Weiterleitung»), read at build time by next.config.js.
- * A failing request does not fail the build: the site then deploys without the CMS redirects and logs a warning.
+ * Neither a failing request nor an unusable record fails the build: they are left out with a warning.
  */
 const QUERY = `query CmsRedirects($skip: IntType) {
   allRedirects(first: 100, skip: $skip) { source destination }
@@ -26,6 +26,29 @@ const fetchPage = async (skip) => {
   return data.allRedirects;
 };
 
+const WILDCARD = '/:path*';
+/** A plain path: Next.js parses redirect paths as patterns and stops the build on an invalid one (e.g. «?» or «+»). */
+const PLAIN_PATH = /^\/[A-Za-z0-9._~%/-]*$/;
+
+/** Whether Next.js can use the redirect: plain paths, «/:path*» only at the end of both, and no loop. */
+const isUsable = ({ source, destination }) => {
+  // The destination may jump to an anchor (e.g. /kontakt#termin).
+  const target = destination.replace(/#[\w-]+$/, '');
+  const wildcard = source.endsWith(WILDCARD);
+  const from = wildcard ? source.slice(0, -WILDCARD.length) || '/' : source;
+  const to = target.endsWith(WILDCARD) ? target.slice(0, -WILDCARD.length) || '/' : target;
+
+  if (!PLAIN_PATH.test(from) || !PLAIN_PATH.test(to) || source === destination) {
+    return false;
+  }
+  if (target.endsWith(WILDCARD) && !wildcard) {
+    return false;
+  }
+
+  // «/alt/:path*» → «/alt/neu/:path*» (or anything below «/:path*») would redirect forever.
+  return !(wildcard && `${to}/`.startsWith(from === '/' ? '/' : `${from}/`));
+};
+
 /** @returns {Promise<import('next/dist/lib/load-custom-routes').Redirect[]>} */
 const getCmsRedirects = async () => {
   if (!process.env.NEXT_DATOCMS_API_TOKEN) {
@@ -42,9 +65,15 @@ const getCmsRedirects = async () => {
       }
     }
 
-    return redirects
-      .filter(({ source, destination }) => source && destination && source !== destination)
-      .map(({ source, destination }) => ({ source: source.trim(), destination: destination.trim(), permanent: true }));
+    const candidates = redirects
+      .filter(({ source, destination }) => source && destination)
+      .map(({ source, destination }) => ({ source: source.trim(), destination: destination.trim() }));
+    const skipped = candidates.filter((redirect) => !isUsable(redirect));
+    if (skipped.length > 0) {
+      console.warn('[redirects] Skipped DatoCMS redirects Next.js cannot use:', skipped);
+    }
+
+    return candidates.filter(isUsable).map((redirect) => ({ ...redirect, permanent: true }));
   } catch (error) {
     console.warn('[redirects] DatoCMS redirects could not be loaded, deploying without them:', error);
 

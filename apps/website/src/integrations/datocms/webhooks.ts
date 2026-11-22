@@ -1,7 +1,6 @@
 import 'server-only';
 import type { ContentRevalidation } from '@/ports/content-source';
 import { revalidatePath } from 'next/cache';
-import { HOME_PAGE_SLUG } from './paths';
 
 type DatoEntity = {
   type?: string;
@@ -45,19 +44,6 @@ const revalidateShopIndexAndFeeds = (paths: string[]): void => {
   }
 };
 
-const revalidatePage = (slug: string, paths: string[]): void => {
-  if (slug === HOME_PAGE_SLUG) {
-    revalidatePath('/');
-    paths.push('/');
-
-    return;
-  }
-
-  const path = `/${slug}`;
-  revalidatePath(path);
-  paths.push(path);
-};
-
 const revalidateProductSlug = (slug: string, paths: string[]): void => {
   const path = `/shop/produkte/${slug}`;
   revalidatePath(path);
@@ -91,18 +77,9 @@ const revalidateFromDatoWebhook = (payload: DatoWebhookPayload): string[] => {
 
   switch (model) {
     case 'page': {
-      if (slug) {
-        revalidatePage(slug, paths);
-      }
-
-      if (previousSlug && previousSlug !== slug) {
-        revalidatePage(previousSlug, paths);
-      }
-
-      // Page titles and SEO descriptions are listed in llms.txt.
-      revalidatePath('/llms.txt');
-      paths.push('/llms.txt');
-
+      // A page appears beyond its own path: in the mega menu (title, teaser, slug), breadcrumbs and teasers of other
+      // pages, project areas and llms.txt. Its path also depends on its parents, so everything is refreshed.
+      revalidateSite(paths);
       break;
     }
     case 'header_footer':
@@ -132,9 +109,8 @@ const revalidateFromDatoWebhook = (payload: DatoWebhookPayload): string[] => {
         revalidateCategorySlug(previousSlug, paths);
       }
 
-      // Category names are listed in llms.txt.
-      revalidatePath('/llms.txt');
-      paths.push('/llms.txt');
+      // Categories are linked in the menu of every page and listed in llms.txt.
+      revalidateSite(paths);
 
       break;
     }

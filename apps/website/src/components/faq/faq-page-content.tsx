@@ -3,7 +3,7 @@
 import { countFaqsInGroups, filterFaqGroups, type FaqTopicGroup } from '@/domain/content/faq';
 import { formatFaqCount, formatFaqSearchStatus } from './format-faq-count';
 import { FaqContactCta, FaqIntro, FaqLink, FaqNoResults, FaqSearch, FaqTopics } from '@wehrli/design-system';
-import type { SiteTexts } from '@/domain/content/site-texts';
+import type { FaqTexts } from '@/domain/content/site-texts';
 import { FC, useMemo, useState } from 'react';
 
 type Props = {
@@ -12,15 +12,7 @@ type Props = {
   groups: FaqTopicGroup[];
   /** Contact page (from the CMS). */
   contactHref: string;
-  texts: Pick<
-    SiteTexts,
-    | 'faqSearchPlaceholder'
-    | 'faqNoResultsTitle'
-    | 'faqNoResultsText'
-    | 'faqContactTitle'
-    | 'faqContactText'
-    | 'faqContactLink'
-  >;
+  texts: FaqTexts;
 };
 
 const DefaultIntro: FC<{ contactHref: string }> = ({ contactHref }) => (
@@ -44,6 +36,7 @@ export const FaqPageContent: FC<Props> = ({ title, intro, groups, contactHref, t
     <>
       <FaqIntro
         title={title}
+        labels={{ eyebrow: texts.faqBlockEyebrow }}
         intro={intro ?? <DefaultIntro contactHref={contactHref} />}
         topics={topicNavGroups.map(({ topic }) => ({
           id: topic.id,
@@ -62,7 +55,9 @@ export const FaqPageContent: FC<Props> = ({ title, intro, groups, contactHref, t
       />
 
       {hasQuery && filteredGroups.length === 0 ? (
-        <FaqNoResults title={texts.faqNoResultsTitle}>{texts.faqNoResultsText}</FaqNoResults>
+        <FaqNoResults title={texts.faqNoResultsTitle}>
+          {texts.faqNoResultsText} <FaqLink href={contactHref}>{texts.faqContactLink}</FaqLink>
+        </FaqNoResults>
       ) : (
         <FaqTopics
           expanded={hasQuery}

@@ -11,7 +11,8 @@ import type { PageMetadata } from '@/domain/content/page';
 import type { ProjectArea, ProjectSummary } from '@/domain/content/project';
 import { getProjectAreaPath, getProjectPath, PROJECTS_PATH } from '@/domain/content/project';
 import { setActiveProjectArea } from './active-project-area';
-import { getPage } from './pages';
+import { ProjectsOverviewBlock } from './blocks/projects';
+import { getPage, getPageMetadata } from './pages';
 import type { ProjectPage } from '@/ports/content-source';
 import { cache } from 'react';
 import { ContentBlocks } from './blocks/content-blocks';
@@ -106,20 +107,27 @@ export const getProjectPage = async (slug: string): Promise<ProjectPage | null> 
   const { projectArea } = await getAreaBySlug(slug, includeDrafts);
 
   if (!projectArea) {
-    return null;
+    // Pages below «Projekte» that are not (yet) project records stay reachable.
+    const page = await getPage(getProjectPath(slug));
+
+    return page ? { kind: 'page', page } : null;
   }
 
   const area = toArea(projectArea);
   const overview = await getPage(PROJECTS_PATH);
 
-  if (!overview) {
-    return null;
-  }
-
-  // The area page is the overview page (/projekte) with the area's chip active.
+  // The area page is the overview page (/projekte) with the area's chip active; without that page, the overview alone.
   setActiveProjectArea(area);
 
-  return { kind: 'area', area, content: overview.content };
+  return {
+    kind: 'area',
+    area,
+    content: overview?.content ?? (
+      <ProjectsOverviewBlock
+        block={{ __typename: 'ProjectsOverviewRecord', id: `projects-overview-${slug}`, allLabel: null }}
+      />
+    ),
+  };
 };
 
 export const getProjectPageMetadata = async (slug: string): Promise<PageMetadata> => {
@@ -132,5 +140,9 @@ export const getProjectPageMetadata = async (slug: string): Promise<PageMetadata
 
   const { projectArea, site: areaSite } = await getAreaBySlug(slug, includeDrafts);
 
-  return buildDatoPageMetadata([...areaSite.favicon, ...(projectArea?.seo ?? [])], getProjectAreaPath(slug));
+  if (!projectArea) {
+    return getPageMetadata(getProjectPath(slug));
+  }
+
+  return buildDatoPageMetadata([...areaSite.favicon, ...projectArea.seo], getProjectAreaPath(slug));
 };

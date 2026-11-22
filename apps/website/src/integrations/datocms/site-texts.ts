@@ -26,8 +26,10 @@ const loadSiteTexts = cache(async (includeDrafts: boolean): Promise<SiteTexts> =
 export const getSiteTexts = async (): Promise<SiteTexts> => {
   try {
     return await loadSiteTexts(await isDraftMode());
-  } catch {
-    // E.g. the 404 page or an e-mail while DatoCMS is unreachable.
+  } catch (error) {
+    // E.g. the 404 page while DatoCMS is unreachable. Without bank details, prepayment e-mails are not sent.
+    console.error('[site-texts] DatoCMS texts could not be loaded, using the defaults:', error);
+
     return { ...DEFAULT_SITE_TEXTS, bankDetails: null };
   }
 };

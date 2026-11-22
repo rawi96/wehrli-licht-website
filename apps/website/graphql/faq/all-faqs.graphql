@@ -1,5 +1,5 @@
 query AllFaqs($skip: IntType) {
-  allFaqs(first: 100, skip: $skip, orderBy: sortOrder_ASC) {
+  allFaqs(first: 100, skip: $skip, orderBy: [sortOrder_ASC, id_ASC]) {
     id
     question
     slug

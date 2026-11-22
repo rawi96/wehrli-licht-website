@@ -51,10 +51,11 @@ export const ROOM_LAYOUTS: Record<RoomId, RoomLayout> = {
     ceiling: CEILING,
     view: [0.3, 0.25, 1],
     lamps: {
-      tisch: { anchor: [0.55, 0.78, -2.12], shadeBottom: 0.78 + 0.34 },
+      tisch: { anchor: [0.55, 0.805, -2.12], shadeBottom: 0.805 + 0.34 },
       steh: { anchor: [-1.75, 0, -1.95], shadeBottom: 1.28 },
       pendel: { anchor: [0, CEILING, -0.85], shadeBottom: 1.42 },
-      wand: { anchor: [-0.7, 1.5, BACK_WALL_Z], shadeBottom: 1.5 },
+      // Right of the picture (x −0.8 to 0).
+      wand: { anchor: [0.75, 1.5, BACK_WALL_Z], shadeBottom: 1.5 },
     },
   },
   schlafen: {
@@ -62,7 +63,7 @@ export const ROOM_LAYOUTS: Record<RoomId, RoomLayout> = {
     ceiling: CEILING,
     view: [0.3, 0.2, 1],
     lamps: {
-      tisch: { anchor: [1.25, 0.52, -2.08], shadeBottom: 0.52 + 0.34 },
+      tisch: { anchor: [1.25, 0.51, -2.08], shadeBottom: 0.51 + 0.34 },
       steh: { anchor: [-2.15, 0, -1.95], shadeBottom: 1.28 },
       pendel: { anchor: [-1.25, CEILING, -2.0], shadeBottom: 1.15 },
       wand: { anchor: [1.25, 1.2, BACK_WALL_Z], shadeBottom: 1.2 },

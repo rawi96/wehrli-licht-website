@@ -6,8 +6,8 @@
  *   notice, 404 page and footer, in groups. Fields and current texts come from src/domain/content/site-texts.json,
  *   the record is created with them, so nothing changes on the website.
  * - «Firmenprofil»: the bank details for prepayment e-mails.
- * - The old navigation («Menü» with the blocks «Verzeichnis» and «Navigationspunkt») is removed: the website uses
- *   «Hauptmenü» only.
+ * The old navigation («Menü» with the blocks «Verzeichnis» and «Navigationspunkt») is no longer used by the website
+ * but stays until the new site is live everywhere: the deployed site still queries it while the migrations run.
  *
  * @param client { import("@datocms/cli/lib/cma-client-node").Client }
  */
@@ -76,19 +76,10 @@ module.exports = async (client) => {
     await client.items.update(profile.id, { bank_details: BANK_DETAILS });
     if (profile.meta.status === 'published') {
       await client.items.publish(profile.id);
-    }
-  }
-
-  // Old navigation: replaced by «Hauptmenü».
-  const headerFooter = await client.itemTypes.find('header_footer');
-  const oldMenu = (await client.fields.list(headerFooter.id)).find((field) => field.api_key === 'menu');
-  if (oldMenu) {
-    await client.fields.destroy(oldMenu.id);
-  }
-  for (const apiKey of ['directory', 'navigation_item']) {
-    const block = (await client.itemTypes.list()).find((itemType) => itemType.api_key === apiKey);
-    if (block) {
-      await client.itemTypes.destroy(block.id);
+    } else {
+      // Publishing now would also publish the editors' unfinished changes. Until it is published, prepayment
+      // e-mails are not sent (the checkout reports an error).
+      console.warn('«Firmendaten» has unpublished changes: check «Bankverbindung» and publish the record.');
     }
   }
 };

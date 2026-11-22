@@ -1,4 +1,5 @@
 import { ClockIcon, EnvelopeIcon, MapPinIcon, PhoneIcon } from '@heroicons/react/24/outline';
+import { cn } from '../../fundamentals/cn';
 import { FC, ReactNode } from 'react';
 import { Heading } from '../../typography/heading/heading';
 import { Section } from '../../layout/section/section';
@@ -55,71 +56,84 @@ export const LocationBlock: FC<Props> = ({
   labels,
   marginTop,
   marginBottom,
-}) => (
-  <Section id={anchorId} marginTop={marginTop} marginBottom={marginBottom}>
-    <div className="grid gap-6 lg:grid-cols-2">
-      <div className="flex flex-col gap-6 rounded-md bg-white p-6 shadow-sm sm:p-8">
-        <Heading level="2">{title}</Heading>
+}) => {
+  // Empty CMS fields may be '' rather than null.
+  const town = [zip, place]
+    .map((part) => part?.trim())
+    .filter(Boolean)
+    .join(' ');
 
-        <address className="flex flex-col gap-4 text-sm not-italic">
-          <div className={rowClasses}>
-            <MapPinIcon className={iconClasses} aria-hidden="true" />
-            <div>
-              {companyName && <p className="font-bold text-black">{companyName}</p>}
-              {street && <p>{street}</p>}
-              {(zip ?? place) && <p>{[zip, place].filter(Boolean).join(' ')}</p>}
-              {mapsHref && (
-                <a href={mapsHref} target="_blank" rel="noopener noreferrer" className={`${linkClasses} mt-1 inline-block`}>
-                  {labels?.route ?? 'Route planen'}
+  return (
+    <Section id={anchorId} marginTop={marginTop} marginBottom={marginBottom}>
+      <div className={cn('grid gap-6', mapSrc && 'lg:grid-cols-2')}>
+        <div className="flex flex-col gap-6 rounded-md bg-white p-6 shadow-sm sm:p-8">
+          <Heading level="2">{title}</Heading>
+
+          <address className="flex flex-col gap-4 text-sm not-italic">
+            <div className={rowClasses}>
+              <MapPinIcon className={iconClasses} aria-hidden="true" />
+              <div>
+                {companyName && <p className="font-bold text-black">{companyName}</p>}
+                {street && <p>{street}</p>}
+                {town ? <p>{town}</p> : null}
+                {mapsHref && (
+                  <a
+                    href={mapsHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`${linkClasses} mt-1 inline-block`}
+                  >
+                    {labels?.route ?? 'Route planen'}
+                  </a>
+                )}
+              </div>
+            </div>
+            {phone && (
+              <div className={rowClasses}>
+                <PhoneIcon className={iconClasses} aria-hidden="true" />
+                <a href={`tel:${phone.replace(/\s/g, '')}`} className={linkClasses}>
+                  {phone}
                 </a>
-              )}
-            </div>
-          </div>
-          {phone && (
-            <div className={rowClasses}>
-              <PhoneIcon className={iconClasses} aria-hidden="true" />
-              <a href={`tel:${phone.replace(/\s/g, '')}`} className={linkClasses}>
-                {phone}
-              </a>
+              </div>
+            )}
+            {email && (
+              <div className={rowClasses}>
+                <EnvelopeIcon className={iconClasses} aria-hidden="true" />
+                <a href={`mailto:${email}`} className={linkClasses}>
+                  {email}
+                </a>
+              </div>
+            )}
+          </address>
+
+          {holiday && (
+            <div className="bg-wehrli-50 rounded-md p-4">
+              <p className="text-wehrli text-sm font-bold">{holiday.title}</p>
+              <div className={`mt-1 ${richTextClasses}`}>{holiday.text}</div>
             </div>
           )}
-          {email && (
+
+          {openingHours && (
             <div className={rowClasses}>
-              <EnvelopeIcon className={iconClasses} aria-hidden="true" />
-              <a href={`mailto:${email}`} className={linkClasses}>
-                {email}
-              </a>
+              <ClockIcon className={iconClasses} aria-hidden="true" />
+              <div>
+                <p className="text-sm font-bold text-black">{openingHours.title}</p>
+                <div className={`mt-1 ${richTextClasses}`}>{openingHours.text}</div>
+              </div>
             </div>
           )}
-        </address>
+        </div>
 
-        {holiday && (
-          <div className="bg-wehrli-50 rounded-md p-4">
-            <p className="text-wehrli text-sm font-bold">{holiday.title}</p>
-            <div className={`mt-1 ${richTextClasses}`}>{holiday.text}</div>
-          </div>
-        )}
-
-        {openingHours && (
-          <div className={rowClasses}>
-            <ClockIcon className={iconClasses} aria-hidden="true" />
-            <div>
-              <p className="text-sm font-bold text-black">{openingHours.title}</p>
-              <div className={`mt-1 ${richTextClasses}`}>{openingHours.text}</div>
-            </div>
-          </div>
+        {mapSrc && (
+          <iframe
+            title={labels?.map ?? 'Karte'}
+            src={mapSrc}
+            className="h-full min-h-80 w-full rounded-md border-0 shadow-sm"
+            loading="lazy"
+            allowFullScreen
+          />
         )}
       </div>
-
-      {mapSrc && (
-        <iframe
-          title={labels?.map ?? 'Karte'}
-          src={mapSrc}
-          className="h-full min-h-80 w-full rounded-md border-0 shadow-sm"
-          loading="lazy"
-          allowFullScreen
-        />
-      )}
-    </div>
-  </Section>
-);
+    </Section>
+  );
+};

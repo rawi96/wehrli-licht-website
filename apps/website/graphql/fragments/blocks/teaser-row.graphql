@@ -6,6 +6,7 @@ fragment teaserRowBlock on TeaserRowRecord {
     __typename
     ... on PageRecord {
       id
+      title
       teaserTitle
       teaserEyebrow
       teaserLinkText

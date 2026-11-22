@@ -5,3 +5,4 @@ export * from './footer/footer';
 export * from './footer-contact/footer-contact';
 export * from './header/header';
 export * from './not-found/not-found';
+export * from './configurator-shell/configurator-shell';

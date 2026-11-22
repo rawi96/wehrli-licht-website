@@ -14,11 +14,7 @@ fragment textBlock on TextRecord {
     links {
       ... on PageRecord {
         __typename
-        id
-        slug
-        parent {
-          slug
-        }
+        ...pageRecordLink
       }
     }
   }

@@ -13,7 +13,9 @@ const MAX_PROJECTS = 3;
 /** Projects of an area or a service page; the featured projects when nothing matches. Renders nothing without projects. */
 export const ProjectsBlock: FC<{ block: ProjectsBlockFragment }> = async ({ block }) => {
   const [projects, texts] = await Promise.all([getRequestProjects(), getSiteTexts()]);
-  const matching = filterProjects(projects, { areaId: block.area?.id, serviceId: block.service?.id });
+  // Without area and service, the block shows the featured projects (as its hint in DatoCMS says).
+  const matching =
+    block.area || block.service ? filterProjects(projects, { areaId: block.area?.id, serviceId: block.service?.id }) : [];
   const shown = (matching.length > 0 ? matching : projects.filter(({ featured }) => featured)).slice(0, MAX_PROJECTS);
 
   if (shown.length === 0) {

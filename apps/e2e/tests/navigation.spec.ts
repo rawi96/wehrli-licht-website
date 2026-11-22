@@ -5,13 +5,21 @@ import { expect, test } from './support/fixtures';
 test('the main navigation leads to the shop', async ({ page, isMobile }) => {
   await page.goto('/');
 
+  // The shop is the last main entry. Its label comes from DatoCMS; with columns it opens a panel that links /shop.
   if (isMobile) {
     await page.getByRole('button', { name: 'Menu öffnen' }).click();
     const menu = page.getByRole('dialog');
     await expect(menu.getByRole('button', { name: 'Menu schliessen' })).toBeVisible();
-    await menu.getByRole('link', { name: 'Shop', exact: true }).click();
+    if ((await menu.locator('a[href="/shop"]:visible').count()) === 0) {
+      await menu.getByRole('button', { expanded: false }).last().click();
+    }
+    await menu.locator('a[href="/shop"]:visible').first().click();
   } else {
-    await page.getByRole('navigation', { name: 'Hauptnavigation' }).getByRole('link', { name: 'Shop', exact: true }).click();
+    const navigation = page.getByRole('navigation', { name: 'Hauptnavigation' });
+    if ((await navigation.locator('a[href="/shop"]:visible').count()) === 0) {
+      await navigation.getByRole('button', { expanded: false }).last().click();
+    }
+    await navigation.locator('a[href="/shop"]:visible').first().click();
   }
 
   await expect(page).toHaveURL(/\/shop$/);
@@ -23,7 +31,8 @@ test('a missing page shows the 404 page with links back', async ({ page, smoke }
 
   expect(response?.status()).toBe(404);
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
-  await expect(page.getByRole('link', { name: 'Zur Startseite' })).toHaveAttribute('href', '/');
+  // The link text is maintained in DatoCMS («Texte & Beschriftungen»).
+  await expect(page.locator('a[href="/"]:visible').first()).toBeVisible();
   // The 404 response of the page itself is expected.
   smoke.issues = smoke.issues.filter((issue) => !issue.text.includes('diese-seite-gibt-es-nicht'));
 });

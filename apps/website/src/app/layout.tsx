@@ -46,7 +46,7 @@ const RootLayout = async ({ children }: { children: ReactNode }) => {
 
   return (
     // data-consent is set on <html> by the Google tag init script before hydration.
-    <html lang="de" className="scroll-smooth" suppressHydrationWarning>
+    <html lang="de" className="scroll-smooth" data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href={content.assetOrigin} crossOrigin="" />
         <link rel="dns-prefetch" href={content.assetOrigin} />

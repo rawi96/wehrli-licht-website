@@ -9,11 +9,7 @@ fragment textImageBlock on TextImageRecord {
     links {
       ... on PageRecord {
         __typename
-        id
-        slug
-        parent {
-          slug
-        }
+        ...pageRecordLink
       }
     }
   }

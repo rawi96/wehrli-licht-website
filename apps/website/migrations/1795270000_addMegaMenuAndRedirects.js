@@ -5,10 +5,15 @@
  * - Blocks «Menü-Link», «Menü-Spalte» and «Hauptmenüpunkt»
  * - «Header & Footer»: «Hauptmenü» (mega menu) and the «Termin» button in the header
  * - Model «Weiterleitung»: permanent redirects of old URLs, applied by the website at build time
- * Additive only: the old «Menü» field stays and is used as long as «Hauptmenü» is empty.
+ * Additive only: the old «Menü» field stays (the website then reads «Hauptmenü» only).
  *
  * @param client { import("@datocms/cli/lib/cma-client-node").Client }
  */
+/** A plain path, optionally ending in «/:path*»: other patterns would stop the build (see cms-redirects.js). */
+const REDIRECT_PATH = '^/[A-Za-z0-9._~%/-]*?(/:path\\*)?$';
+/** The destination may also jump to an anchor (e.g. /kontakt#termin). */
+const REDIRECT_DESTINATION = '^/[A-Za-z0-9._~%/-]*?(/:path\\*)?(#[A-Za-z0-9_-]+)?$';
+
 module.exports = async (client) => {
   const pageModel = await client.itemTypes.find('page');
   const categoryModel = await client.itemTypes.find('shop_category');
@@ -144,15 +149,15 @@ module.exports = async (client) => {
     api_key: 'source',
     label: 'Alte URL',
     field_type: 'string',
-    hint: 'Pfad ohne Domain, z. B. /angebot/lampenschirme. «:path*» am Ende leitet alle Unterseiten mit weiter.',
-    validators: { required: {}, unique: {}, format: { custom_pattern: '^/[^\\s]*$' } },
+    hint: 'Pfad ohne Domain, z. B. /angebot/lampenschirme: nur Buchstaben, Ziffern, - _ . / (ohne ? oder Leerzeichen). «/:path*» am Ende leitet alle Unterseiten mit weiter.',
+    validators: { required: {}, unique: {}, format: { custom_pattern: REDIRECT_PATH } },
   });
   await client.fields.create(redirect.id, {
     api_key: 'destination',
     label: 'Neue URL',
     field_type: 'string',
     hint: 'Pfad ohne Domain, z. B. /lampenschirme.',
-    validators: { required: {}, format: { custom_pattern: '^/[^\\s]*$' } },
+    validators: { required: {}, format: { custom_pattern: REDIRECT_DESTINATION } },
   });
   await client.itemTypes.update(redirect.id, { title_field: { id: source.id, type: 'field' } });
 };

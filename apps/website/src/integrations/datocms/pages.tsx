@@ -69,9 +69,8 @@ type HierarchyPage = { slug: string; title: string; parent?: HierarchyPage | nul
 const toHierarchy = (page: HierarchyPage): HierarchyPage[] => [...(page.parent ? toHierarchy(page.parent) : []), page];
 
 /**
- * Slugs are unique in DatoCMS, so a page is found by its last slug. It is only served at its own path: the slugs
- * before must be exactly its parents (a top-level page has none), otherwise any prefix would serve the same page.
- * The page query loads three levels of parents, deeper pages are not served.
+ * A page is only served at its own path: the slugs before its own must be exactly its parents (a top-level page has
+ * none), otherwise any prefix would serve the same page. The queries load four levels of parents, like the links.
  */
 const isPagePath = (page: Page, slugs: string[]): boolean => {
   const hierarchy = toHierarchy(page).map(({ slug }) => slug);
@@ -113,8 +112,8 @@ export const getPage = async (path: string): Promise<ContentPage | null> => {
 
   const { page } = await getPageByPath(path, await isDraftMode());
 
-  // The home page is served at / only.
-  if (!page || page.slug === HOME_PAGE_SLUG) {
+  // The home page is served at / only (a child page may still be called «home»).
+  if (!page || (page.slug === HOME_PAGE_SLUG && !page.parent)) {
     return null;
   }
 

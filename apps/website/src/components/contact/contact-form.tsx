@@ -1,6 +1,12 @@
 'use client';
 
-import { ContactFieldErrors, ContactFormValues, HONEYPOT_FIELD, validateContactForm } from '@/features/contact/schema';
+import {
+  ContactFieldErrors,
+  ContactFormValues,
+  HONEYPOT_FIELD,
+  MIN_FILL_TIME_MS,
+  validateContactForm,
+} from '@/features/contact/schema';
 import { DESIGN_PREFILL_PARAM, PRODUCT_PREFILL_PARAM } from '@/domain/contact/links';
 import { analytics } from '@/integrations/client';
 import { ContactForm as ContactFormView, ContactFormStatus } from '@wehrli/design-system';
@@ -78,6 +84,13 @@ export const ContactForm: FC<Props> = ({ formId, topics, privacyHref, labels }) 
 
     setStatus('sending');
     setErrorMessage(undefined);
+
+    // The server treats very fast submissions as bots and drops them silently. With a prefilled message (product,
+    // configurator) and autofill a person can be that fast: wait out the rest of the minimum time instead.
+    const remaining = MIN_FILL_TIME_MS + 200 - (Date.now() - shownAtRef.current);
+    if (remaining > 0) {
+      await new Promise((resolve) => setTimeout(resolve, remaining));
+    }
 
     try {
       const response = await fetch('/api/contact', {
