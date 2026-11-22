@@ -3,6 +3,8 @@ import { AllRoutesDocument, LlmsPagesDocument } from '@/graphql/generated';
 import type { PageRoute, PageSummary, PreviewLink } from '@/domain/content/page';
 import { queryDatoCMS } from './client';
 import { getPublicPagePath } from './paths';
+import { getProjectAreaPath, getProjectPath } from '@/domain/content/project';
+import { listProjectAreas, listProjects } from './projects';
 
 const getPageRoutes = async (includeDrafts: boolean): Promise<PageRoute[]> => {
   const { allPages } = await queryDatoCMS({ document: AllRoutesDocument, includeDrafts });
@@ -14,7 +16,16 @@ const getPageRoutes = async (includeDrafts: boolean): Promise<PageRoute[]> => {
   }));
 };
 
-export const listRoutes = (): Promise<PageRoute[]> => getPageRoutes(false);
+/** Published pages, projects and project areas. */
+export const listRoutes = async (): Promise<PageRoute[]> => {
+  const [pages, projects, areas] = await Promise.all([getPageRoutes(false), listProjects(), listProjectAreas()]);
+
+  return [
+    ...pages,
+    ...projects.map(({ slug, lastModified }) => ({ path: getProjectPath(slug), lastModified })),
+    ...areas.map(({ slug, lastModified }) => ({ path: getProjectAreaPath(slug), lastModified })),
+  ];
+};
 
 export const listPages = async (): Promise<PageSummary[]> => {
   const { allPages } = await queryDatoCMS({ document: LlmsPagesDocument });

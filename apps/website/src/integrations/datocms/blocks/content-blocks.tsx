@@ -4,6 +4,7 @@ import { CalendlyBlock } from './calendly';
 import { ContactBlock } from './contact';
 import { ContactFormBlock } from './contact-form';
 import { FaqBlock } from './faq';
+import { ProjectsBlock, ProjectsOverviewBlock } from './projects';
 import { GalleryBlock } from './gallery';
 import { HighlightOffersTeaserBlock } from './highlight/highlight-offers-teaser';
 import { HighlightProjectsTeaserBlock } from './highlight/highlight-projects-teaser';
@@ -89,6 +90,10 @@ export const ContentBlocks: FC<Props> = ({ blocks, eagerBlockCount = 2 }) => {
             return <ContactFormBlock key={block.id} block={block} />;
           case 'FaqBlockRecord':
             return <FaqBlock key={block.id} block={block} />;
+          case 'ProjectsBlockRecord':
+            return <ProjectsBlock key={block.id} block={block} />;
+          case 'ProjectsOverviewRecord':
+            return <ProjectsOverviewBlock key={block.id} block={block} />;
           case 'HighlightProjectsTeaserRecord':
             return <HighlightProjectsTeaserBlock key={block.id} block={block} aboveFold={aboveFold} />;
           case 'HighlightOffersTeaserRecord':

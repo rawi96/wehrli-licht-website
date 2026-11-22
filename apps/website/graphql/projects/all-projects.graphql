@@ -1,0 +1,29 @@
+query AllProjects {
+  allProjects(first: 100, orderBy: [featured_DESC, _createdAt_DESC]) {
+    ...projectSummary
+  }
+}
+
+query AllProjectAreas {
+  allProjectAreas(first: 100, orderBy: position_ASC) {
+    ...projectArea
+  }
+}
+
+query ProjectAreaBySlug($slug: String!) {
+  projectArea(filter: { slug: { eq: $slug } }) {
+    ...projectArea
+    seo: _seoMetaTags {
+      attributes
+      content
+      tag
+    }
+  }
+  site: _site {
+    favicon: faviconMetaTags {
+      attributes
+      content
+      tag
+    }
+  }
+}

@@ -13,3 +13,4 @@ export * from './lightbox/lightbox';
 export * from './team-member-card/team-member-card';
 export * from './teaser-tile/teaser-tile';
 export * from './testimonial/testimonial';
+export * from './project-facts/project-facts';

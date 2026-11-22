@@ -1,0 +1,39 @@
+fragment projectArea on ProjectAreaRecord {
+  id
+  name
+  slug
+  intro
+  image {
+    responsiveImage(imgixParams: { fit: crop, w: 460, h: 240, auto: format }) {
+      ...responsiveImageFragment
+    }
+  }
+  _updatedAt
+}
+
+fragment projectSummary on ProjectRecord {
+  id
+  title
+  slug
+  client
+  location
+  year
+  featured
+  teaserDescription
+  _updatedAt
+  teaserImage {
+    responsiveImage(imgixParams: { fit: crop, w: 460, h: 240, auto: format }) {
+      ...responsiveImageFragment
+    }
+  }
+  area {
+    id
+    name
+    slug
+  }
+  services {
+    id
+    title
+    ...pageRecordLink
+  }
+}

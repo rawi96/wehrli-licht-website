@@ -1,6 +1,7 @@
 import type { CompanyProfile } from '@/domain/content/company-profile';
 import type { FaqEntry } from '@/domain/content/faq';
 import type { ArticleInfo, Breadcrumb, PageMetadata, PageRoute, PageSummary, PreviewLink } from '@/domain/content/page';
+import type { ProjectArea, ProjectSummary } from '@/domain/content/project';
 import type { SiteLayout } from '@/domain/content/site-layout';
 import type { ReactNode } from 'react';
 
@@ -18,6 +19,11 @@ export type HomePage = {
   stage: ReactNode;
   content: ReactNode;
 };
+
+/** A page under /projekte/<slug>: a project with its rendered content, or an area with its projects. */
+export type ProjectPage =
+  | { kind: 'project'; project: ProjectSummary; intro: ReactNode; content: ReactNode; projects: ProjectSummary[] }
+  | { kind: 'area'; area: ProjectArea; projects: ProjectSummary[] };
 
 export type FaqPage = {
   /** Title and intro of the FAQ page, null if not set. */
@@ -54,6 +60,13 @@ export type ContentSource = {
   getPage(path: string): Promise<ContentPage | null>;
   getHomePage(): Promise<HomePage | null>;
   getFaqPage(): Promise<FaqPage>;
+  /** All projects, featured first. */
+  listProjects(): Promise<ProjectSummary[]>;
+  /** Project areas that have projects, in their order. */
+  listProjectAreas(): Promise<ProjectArea[]>;
+  /** The project or project area at /projekte/<slug>, null if there is none. */
+  getProjectPage(slug: string): Promise<ProjectPage | null>;
+  getProjectPageMetadata(slug: string): Promise<PageMetadata>;
   /** Published pages with their path, for sitemap, robots.txt and prerendering. */
   listRoutes(): Promise<PageRoute[]>;
   /** Published pages with title and description, for llms.txt. */

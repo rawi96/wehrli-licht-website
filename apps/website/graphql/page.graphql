@@ -77,6 +77,12 @@ query Page($slug: String!) {
       ... on FaqBlockRecord {
         ...faqBlock
       }
+      ... on ProjectsBlockRecord {
+        ...projectsBlock
+      }
+      ... on ProjectsOverviewRecord {
+        ...projectsOverviewBlock
+      }
       ... on HighlightProjectsTeaserRecord {
         ...highlightProjectsTeaser
       }
