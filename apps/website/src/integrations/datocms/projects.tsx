@@ -9,7 +9,9 @@ import {
 } from '@/graphql/generated';
 import type { PageMetadata } from '@/domain/content/page';
 import type { ProjectArea, ProjectSummary } from '@/domain/content/project';
-import { getProjectAreaPath, getProjectPath } from '@/domain/content/project';
+import { getProjectAreaPath, getProjectPath, PROJECTS_PATH } from '@/domain/content/project';
+import { setActiveProjectArea } from './active-project-area';
+import { getPage } from './pages';
 import type { ProjectPage } from '@/ports/content-source';
 import { cache } from 'react';
 import { ContentBlocks } from './blocks/content-blocks';
@@ -108,9 +110,16 @@ export const getProjectPage = async (slug: string): Promise<ProjectPage | null> 
   }
 
   const area = toArea(projectArea);
-  const projects = await getRequestProjects();
+  const overview = await getPage(PROJECTS_PATH);
 
-  return { kind: 'area', area, projects: projects.filter((p) => p.area?.id === area.id) };
+  if (!overview) {
+    return null;
+  }
+
+  // The area page is the overview page (/projekte) with the area's chip active.
+  setActiveProjectArea(area);
+
+  return { kind: 'area', area, content: overview.content };
 };
 
 export const getProjectPageMetadata = async (slug: string): Promise<PageMetadata> => {

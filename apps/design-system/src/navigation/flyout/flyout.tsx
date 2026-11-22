@@ -41,7 +41,7 @@ export const Flyout: FC<Props> = ({ label, items, active }) => (
           leaveTo="opacity-0 translate-y-1"
         >
           <PopoverPanel className="absolute left-1/2 z-10 mt-5 flex w-screen max-w-min -translate-x-1/2 px-4">
-            <div className="w-56 shrink rounded-lg bg-white p-4 text-sm font-bold">
+            <div className="w-56 shrink rounded-md bg-white p-4 text-sm font-bold">
               {items.map((item) => (
                 <Link key={item.label} href={item.href} className="hover:text-wehrli block p-2" onClick={() => close()}>
                   {item.label}

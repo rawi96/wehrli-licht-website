@@ -1,35 +1,39 @@
-'use client';
-
-import type { ProjectArea, ProjectSummary } from '@/domain/content/project';
-import { FilterChips } from '@wehrli/design-system';
-import { FC, useState } from 'react';
+import { getProjectAreaPath, PROJECTS_PATH, type ProjectArea, type ProjectSummary } from '@/domain/content/project';
+import { FilterChips, RichText } from '@wehrli/design-system';
+import { FC } from 'react';
 import { ProjectCards } from './project-cards';
 
 type Props = {
   projects: ProjectSummary[];
   areas: ProjectArea[];
+  /** The area whose page this is (/projekte/<slug>), null on the page with all projects. */
+  activeArea: ProjectArea | null;
   allLabel?: string | null;
 };
 
-/** All projects with a filter by area. */
-export const ProjectsOverview: FC<Props> = ({ projects, areas, allLabel }) => {
-  const [areaId, setAreaId] = useState<string | null>(null);
-  const visible = areaId ? projects.filter((project) => project.area?.id === areaId) : projects;
+/** All projects with a chip per area; each area has its own page with the same overview and its chip active. */
+export const ProjectsOverview: FC<Props> = ({ projects, areas, activeArea, allLabel }) => {
+  const visible = activeArea ? projects.filter((project) => project.area?.id === activeArea.id) : projects;
 
   return (
-    <section className="mt-12">
+    <section className="mt-12 flex flex-col gap-8">
       {areas.length > 1 && (
         <FilterChips
           label="Projekte nach Bereich"
-          allLabel={allLabel?.trim() ? allLabel.trim() : 'Alle'}
-          value={areaId}
-          onChange={setAreaId}
+          all={{ label: allLabel?.trim() ? allLabel.trim() : 'Alle', href: PROJECTS_PATH }}
+          value={activeArea?.id ?? null}
           options={areas.map((area) => ({
             id: area.id,
             label: area.name,
+            href: getProjectAreaPath(area.slug),
             count: projects.filter((project) => project.area?.id === area.id).length,
           }))}
         />
+      )}
+      {activeArea?.intro && (
+        <RichText>
+          <p>{activeArea.intro}</p>
+        </RichText>
       )}
       <ProjectCards projects={visible} />
     </section>

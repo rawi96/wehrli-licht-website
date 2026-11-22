@@ -7,7 +7,7 @@ const meta: Meta<typeof FooterNavigation> = {
   args: {
     sections: [
       {
-        title: 'Angebot',
+        title: 'Leistungen',
         links: [
           { label: 'Lichtplanung', href: '#planung' },
           { label: 'Leuchtenbau', href: '#bau' },
@@ -38,4 +38,4 @@ type Story = StoryObj<typeof FooterNavigation>;
 
 export const Default: Story = {};
 
-export const OneSection: Story = { args: { sections: [{ title: 'Service', links: [{ label: 'FAQ', href: '#faq' }] }] } };
+export const OneSection: Story = { args: { sections: [{ title: 'Beratung', links: [{ label: 'FAQ', href: '#faq' }] }] } };

@@ -2,6 +2,7 @@ import { TypedDocumentNode } from '@graphql-typed-document-node/core';
 import { print } from 'graphql';
 
 type Variables = {
+  id?: string;
   slug?: string;
   categoryId?: string;
   ids?: string[] | string;

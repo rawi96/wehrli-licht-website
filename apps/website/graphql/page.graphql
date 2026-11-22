@@ -1,5 +1,5 @@
-query Page($slug: String!) {
-  page(filter: { slug: { eq: $slug } }) {
+query Page($id: ItemId!) {
+  page(filter: { id: { eq: $id } }) {
     id
     slug
     title

@@ -16,7 +16,7 @@ export const Shadows: StoryObj = {
   render: () => (
     <div className="grid grid-cols-1 gap-8 p-4 sm:grid-cols-3">
       {SHADOWS.map(({ className, usage }) => (
-        <div key={className} className={`${className} flex h-28 flex-col justify-end rounded-lg bg-white p-4 text-xs`}>
+        <div key={className} className={`${className} flex h-28 flex-col justify-end rounded-md bg-white p-4 text-xs`}>
           <code className="font-bold">{className}</code>
           <span className="text-gray-600">{usage}</span>
         </div>

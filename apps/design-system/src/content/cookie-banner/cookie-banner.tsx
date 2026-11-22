@@ -1,8 +1,7 @@
 import Link from 'next/link';
 import { FC } from 'react';
 
-const buttonBase =
-  'min-h-11 rounded-lg px-4 py-2 text-sm font-bold transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-wehrli';
+const buttonBase = 'min-h-11 rounded-md px-4 py-2 text-sm font-bold transition-colors duration-150';
 
 type CookieBannerLabels = {
   /** What is tracked and why. */
@@ -42,9 +41,9 @@ export const CookieBanner: FC<Props> = ({ labels: labelOverrides, privacyHref, r
       data-cookie-banner
       data-open={reopened ? '' : undefined}
       aria-label={labels.region}
-      className="fixed inset-x-4 bottom-4 z-50 mx-auto max-w-md rounded-lg bg-white p-4 shadow-lg ring-1 ring-gray-200 sm:left-6 sm:mx-0"
+      className="fixed inset-x-4 bottom-4 z-50 mx-auto max-w-md rounded-md bg-white p-4 shadow-lg ring-1 ring-gray-200 sm:left-6 sm:mx-0"
     >
-      <p className="text-sm text-gray-700">
+      <p className="text-sm text-gray-600">
         {labels.text}{' '}
         {privacyHref && (
           <Link href={privacyHref} className="text-wehrli font-bold underline">
@@ -56,7 +55,7 @@ export const CookieBanner: FC<Props> = ({ labels: labelOverrides, privacyHref, r
         <button
           type="button"
           onClick={onDecline}
-          className={`${buttonBase} hover:border-wehrli hover:text-wehrli border border-gray-300 text-gray-800`}
+          className={`${buttonBase} hover:border-wehrli hover:text-wehrli border border-gray-200 text-black`}
         >
           {labels.decline}
         </button>

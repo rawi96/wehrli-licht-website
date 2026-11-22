@@ -7,7 +7,7 @@ const meta: Meta<typeof HighlightOfferCard> = {
   component: HighlightOfferCard,
   args: {
     variant: 'featured',
-    eyebrow: 'Angebot',
+    eyebrow: 'Leistungen',
     title: 'Lichtberatung vor Ort',
     href: '#',
     image: PLACEHOLDER_LANDSCAPE,

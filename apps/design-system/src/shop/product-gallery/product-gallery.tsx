@@ -30,18 +30,18 @@ export const ProductGallery: FC<Props> = ({ images, label }) => (
         {images.map(({ id, image }) => (
           <Tab
             key={id}
-            className="relative flex h-24 cursor-pointer items-center justify-center rounded-lg bg-white text-sm uppercase hover:bg-gray-50 focus:ring focus:ring-offset-4 focus:outline-none"
+            className="relative flex h-24 cursor-pointer items-center justify-center rounded-md bg-white text-sm font-bold hover:bg-gray-50"
           >
             {({ selected }) => (
               <>
                 <span className="sr-only">{label}</span>
-                <span className="absolute inset-0 overflow-hidden rounded-lg">
+                <span className="absolute inset-0 overflow-hidden rounded-md">
                   {image && <Image image={image} sizes={PRODUCT_THUMB_SIZES} />}
                 </span>
                 <span
                   className={cn(
-                    selected ? 'ring-wehrli-500' : 'ring-transparent',
-                    'pointer-events-none absolute inset-0 rounded-lg ring-2 ring-offset-2',
+                    selected ? 'ring-wehrli' : 'ring-transparent',
+                    'pointer-events-none absolute inset-0 rounded-md ring-2 ring-offset-2',
                   )}
                   aria-hidden="true"
                 />

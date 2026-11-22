@@ -17,7 +17,7 @@ const meta: Meta<typeof Card> = {
   },
   decorators: [
     (Story) => (
-      <div className="bg-white-200 max-w-sm p-4">
+      <div className="max-w-sm bg-gray-50 p-4">
         <Story />
       </div>
     ),

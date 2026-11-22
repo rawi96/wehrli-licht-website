@@ -30,7 +30,7 @@ export const CheckoutShippingStep = <T extends string>({
     <RadioCards name="shipping" legend={labels.legend} options={options} value={value} onChange={onChange} />
 
     {deliveryTime && (
-      <p className="mt-4 text-sm text-gray-500">
+      <p className="mt-4 text-sm text-gray-600">
         {labels.deliveryTime} {deliveryTime}
       </p>
     )}

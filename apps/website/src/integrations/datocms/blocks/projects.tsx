@@ -4,6 +4,7 @@ import { filterProjects, getProjectAreaPath, PROJECTS_PATH } from '@/domain/cont
 import { ProjectsBlockFragment, ProjectsOverviewBlockFragment } from '@/graphql/generated';
 import { CtaLink, Heading, Section } from '@wehrli/design-system';
 import { FC } from 'react';
+import { getActiveProjectArea } from '../active-project-area';
 import { getRequestProjectAreas, getRequestProjects } from '../projects';
 
 const MAX_PROJECTS = 3;
@@ -29,9 +30,11 @@ export const ProjectsBlock: FC<{ block: ProjectsBlockFragment }> = async ({ bloc
   );
 };
 
-/** All projects with a filter by area. */
+/** All projects with a chip per area; on an area page (/projekte/<slug>) with that area's chip active. */
 export const ProjectsOverviewBlock: FC<{ block: ProjectsOverviewBlockFragment }> = async ({ block }) => {
   const [projects, areas] = await Promise.all([getRequestProjects(), getRequestProjectAreas()]);
 
-  return <ProjectsOverview projects={projects} areas={areas} allLabel={block.allLabel} />;
+  return (
+    <ProjectsOverview projects={projects} areas={areas} activeArea={getActiveProjectArea()} allLabel={block.allLabel} />
+  );
 };

@@ -103,7 +103,7 @@ export const CartContent: FC<Props> = ({
                 <NextImage
                   src={item.imageUrl}
                   alt={item.name}
-                  className="h-24 w-24 flex-none rounded-lg border border-gray-200 sm:h-32 sm:w-32"
+                  className="h-24 w-24 flex-none rounded-md border border-gray-200 sm:h-32 sm:w-32"
                   width={1000}
                   height={1000}
                 />
@@ -131,7 +131,7 @@ export const CartContent: FC<Props> = ({
 
                   <button
                     type="button"
-                    className="text-wehrli hover:text-wehrli-600 ml-4 font-bold sm:mt-2 sm:ml-0"
+                    className="text-wehrli hover:text-wehrli-dark ml-4 font-bold sm:mt-2 sm:ml-0"
                     onClick={() => onRemove(item.id)}
                   >
                     {labels.remove}
@@ -145,7 +145,7 @@ export const CartContent: FC<Props> = ({
 
       {items.length > 0 && (
         <section aria-labelledby="cart-summary-heading" className="mt-auto sm:px-6 lg:px-8">
-          <div className="bg-gray-50 p-6 sm:mx-4 sm:rounded-lg sm:p-8 lg:mx-8">
+          <div className="bg-gray-50 p-6 sm:mx-4 sm:rounded-md sm:p-8 lg:mx-8">
             <h2 id="cart-summary-heading" className="sr-only">
               {labels.summaryHeading}
             </h2>

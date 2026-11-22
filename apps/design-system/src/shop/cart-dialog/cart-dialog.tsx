@@ -27,7 +27,7 @@ export const CartDialog: FC<Props> = ({ open, onClose, children, labels = DEFAUL
         leaveFrom="opacity-100"
         leaveTo="opacity-0"
       >
-        <div className="fixed inset-0 bg-gray-500 transition-opacity" />
+        <div className="fixed inset-0 bg-gray-600 transition-opacity" />
       </Transition.Child>
 
       <div className="fixed inset-0 z-10 overflow-y-auto">
@@ -42,10 +42,10 @@ export const CartDialog: FC<Props> = ({ open, onClose, children, labels = DEFAUL
             leaveTo="opacity-0 scale-105"
           >
             <Dialog.Panel className="flex w-full max-w-3xl transform text-left text-base transition sm:my-8">
-              <div className="relative flex w-full flex-col overflow-hidden rounded-lg bg-white pt-6 pb-8 sm:pb-6 lg:py-8">
+              <div className="relative flex w-full flex-col overflow-hidden rounded-md bg-white pt-6 pb-8 sm:pb-6 lg:py-8">
                 <div className="flex items-center justify-between px-4 sm:px-6 lg:px-8">
                   <Dialog.Title className="text-lg font-bold">{labels.title}</Dialog.Title>
-                  <button type="button" className="text-gray-400 hover:text-gray-500" onClick={onClose}>
+                  <button type="button" className="text-gray-400 hover:text-gray-600" onClick={onClose}>
                     <span className="sr-only">{labels.close}</span>
                     <XMarkIcon className="h-6 w-6" aria-hidden="true" />
                   </button>

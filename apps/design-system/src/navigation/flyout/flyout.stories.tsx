@@ -5,7 +5,7 @@ const meta: Meta<typeof Flyout> = {
   title: 'Navigation/Flyout',
   component: Flyout,
   args: {
-    label: 'Angebot',
+    label: 'Leistungen',
     items: [
       { label: 'Lichtplanung', href: '#' },
       { label: 'Leuchtenbau', href: '#' },

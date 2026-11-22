@@ -43,25 +43,25 @@ type FaqIntroProps = {
 /** Head of the FAQ page: title and lead text, then a card with the search and the topic links. */
 export const FaqIntro: FC<FaqIntroProps> = ({ title, intro, search, topics, labels }) => (
   <header className="mt-20 mb-12 lg:mt-24 lg:mb-16">
-    <p className="text-xxs text-wehrli-300 mb-3 font-bold tracking-wide uppercase">FAQ</p>
+    <p className="text-wehrli mb-3 text-xs font-bold">FAQ</p>
     <Heading level="1" id="faq-page-heading">
       {title}
     </Heading>
     <p className="max-w-2xl text-sm md:max-w-prose lg:text-base">{intro}</p>
-    <div className="mt-8 rounded-lg bg-white p-6 shadow-sm sm:p-8">
+    <div className="mt-8 rounded-md bg-white p-6 shadow-sm sm:p-8">
       {search}
       {topics.length > 1 && (
         <nav
           aria-label={labels?.topicsNavigation ?? 'Themen auf dieser Seite'}
           className="mt-6 border-t border-gray-200 pt-6"
         >
-          <p className="text-xxs mb-3 font-bold tracking-wide text-gray-500 uppercase">{labels?.topics ?? 'Themen'}</p>
+          <p className="mb-3 text-xs font-bold text-gray-600">{labels?.topics ?? 'Themen'}</p>
           <ul className="flex flex-wrap gap-2">
             {topics.map((topic) => (
               <li key={topic.id}>
                 <a
                   href={`#${topicHeadingId(topic.slug)}`}
-                  className="hover:border-wehrli hover:bg-wehrli text-wehrli bg-white-200 inline-block rounded-full border border-gray-200 px-4 py-2 text-sm font-bold transition-colors duration-150 hover:text-white"
+                  className="hover:border-wehrli hover:bg-wehrli text-wehrli inline-block rounded-md border border-gray-200 bg-gray-50 px-4 py-2 text-sm font-bold transition-colors duration-150 hover:text-white"
                 >
                   {topic.label}
                 </a>
@@ -152,10 +152,10 @@ export const FaqTopics: FC<FaqTopicsProps> = ({ topics, expanded }) => (
           key={topic.id}
           id={topic.slug}
           aria-labelledby={headingId}
-          className="bg-white-300 grid scroll-mt-28 gap-6 rounded-lg p-6 sm:p-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] lg:gap-12 lg:p-12"
+          className="bg-wehrli-50 grid scroll-mt-28 gap-6 rounded-md p-6 sm:p-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] lg:gap-12 lg:p-12"
         >
           <div className="lg:sticky lg:top-28 lg:self-start">
-            <p className="text-xxs text-wehrli-300 mb-3 font-bold tracking-wide uppercase">Thema</p>
+            <p className="text-wehrli mb-3 text-xs font-bold">Thema</p>
             <h2 id={headingId} className="text-wehrli scroll-mt-28 text-lg font-bold break-words md:text-xl">
               {topic.title}
             </h2>
@@ -179,7 +179,7 @@ type FaqNoResultsProps = {
 
 /** Shown instead of the topics when the search finds nothing. */
 export const FaqNoResults: FC<FaqNoResultsProps> = ({ title = 'Keine passenden Fragen gefunden', children }) => (
-  <div className="bg-white-300 rounded-lg p-8 text-center lg:p-12" role="status" aria-live="polite">
+  <div className="bg-wehrli-50 rounded-md p-8 text-center lg:p-12" role="status" aria-live="polite">
     <p className="text-wehrli text-base font-bold">{title}</p>
     <p className="mt-2 text-sm text-gray-600">{children}</p>
   </div>
@@ -196,7 +196,7 @@ type FaqContactCtaProps = {
 /** Brand card at the end of the FAQ page that points to the contact page. */
 export const FaqContactCta: FC<FaqContactCtaProps> = ({ title = 'Noch Fragen?', children, action }) => (
   <section
-    className="bg-wehrli mt-12 flex scroll-mt-28 flex-col gap-6 rounded-lg p-6 text-white sm:p-8 lg:mt-16 lg:flex-row lg:items-center lg:justify-between lg:p-12"
+    className="surface-dark bg-wehrli mt-12 flex scroll-mt-28 flex-col gap-6 rounded-md p-6 text-white sm:p-8 lg:mt-16 lg:flex-row lg:items-center lg:justify-between lg:p-12"
     aria-labelledby="faq-contact-heading"
   >
     <div>
@@ -208,7 +208,7 @@ export const FaqContactCta: FC<FaqContactCtaProps> = ({ title = 'Noch Fragen?', 
     {action && (
       <Link
         href={action.href}
-        className="group text-wehrli inline-flex shrink-0 items-center gap-x-2 self-start rounded-lg bg-white px-5 py-3 text-sm font-bold transition-colors hover:bg-gray-100 lg:self-auto"
+        className="group text-wehrli inline-flex shrink-0 items-center gap-x-2 self-start rounded-md bg-white px-5 py-3 text-sm font-bold transition-colors hover:bg-gray-100 lg:self-auto"
       >
         {action.label}
         <ArrowRightIcon

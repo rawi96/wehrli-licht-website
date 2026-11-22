@@ -1,5 +1,5 @@
 import 'server-only';
-import { PageDocument, PageQuery } from '@/graphql/generated';
+import { PageCandidatesDocument, PageCandidatesQuery, PageDocument, PageQuery } from '@/graphql/generated';
 import type { ArticleInfo, Breadcrumb, PageMetadata } from '@/domain/content/page';
 import type { ContentPage, HomePage } from '@/ports/content-source';
 import { cache } from 'react';
@@ -13,16 +13,52 @@ import { HOME_PAGE_SLUG } from './paths';
 type Page = NonNullable<PageQuery['page']>;
 type SeoTag = Page['seo'][number];
 
-/** Page by slug, deduplicated per request (metadata and page both need it). */
-const getPageBySlug = cache(async (slug: string, includeDrafts: boolean) =>
-  queryDatoCMS({ document: PageDocument, variables: { slug }, includeDrafts }),
-);
-
 const toSlugs = (path: string): string[] => path.split('/').filter(Boolean);
 
+type Candidate = PageCandidatesQuery['allPages'][number];
+type CandidateParent = { slug: string; parent?: CandidateParent | null } | null | undefined;
+
+const candidateSlugs = (candidate: Candidate): string[] => {
+  const slugs = [candidate.slug];
+  for (let parent: CandidateParent = candidate.parent; parent; parent = parent.parent) {
+    slugs.unshift(parent.slug);
+  }
+
+  return slugs;
+};
+
+/**
+ * Id of the page at `path` (`/` is the home page). Slugs only need to be unique below the same parent (e.g.
+ * /lampenschirme/leistungen and /licht-planen/leistungen), so the page whose parents match the path wins.
+ */
+const resolvePageId = cache(async (path: string, includeDrafts: boolean): Promise<string | null> => {
+  const slugs = path === '/' ? [HOME_PAGE_SLUG] : toSlugs(path);
+  const slug = slugs.at(-1);
+
+  if (!slug) {
+    return null;
+  }
+
+  const { allPages } = await queryDatoCMS({ document: PageCandidatesDocument, variables: { slug }, includeDrafts });
+  const match = allPages.find((candidate) => {
+    const hierarchy = candidateSlugs(candidate);
+
+    return hierarchy.length === slugs.length && hierarchy.every((part, index) => part === slugs[index]);
+  });
+
+  return match?.id ?? null;
+});
+
+/** Page at `path`, deduplicated per request (metadata and page both need it). Null page if there is none. */
+const getPageByPath = cache(async (path: string, includeDrafts: boolean) => {
+  const id = await resolvePageId(path, includeDrafts);
+
+  // Without a page the query still returns the site's favicon tags for the metadata.
+  return queryDatoCMS({ document: PageDocument, variables: { id: id ?? '0' }, includeDrafts });
+});
+
 export const getPageMetadata = async (path: string): Promise<PageMetadata> => {
-  const slug = path === '/' ? HOME_PAGE_SLUG : (toSlugs(path).at(-1) ?? '');
-  const { site, page } = await getPageBySlug(slug, await isDraftMode());
+  const { site, page } = await getPageByPath(path, await isDraftMode());
 
   return buildDatoPageMetadata([...site.favicon, ...(page?.seo ?? [])], path);
 };
@@ -75,8 +111,7 @@ export const getPage = async (path: string): Promise<ContentPage | null> => {
     return null;
   }
 
-  const includeDrafts = await isDraftMode();
-  const { page } = await getPageBySlug(slug, includeDrafts);
+  const { page } = await getPageByPath(path, await isDraftMode());
 
   // The home page is served at / only.
   if (!page || page.slug === HOME_PAGE_SLUG) {
@@ -96,7 +131,7 @@ export const getPage = async (path: string): Promise<ContentPage | null> => {
 };
 
 export const getHomePage = async (): Promise<HomePage | null> => {
-  const { page } = await getPageBySlug(HOME_PAGE_SLUG, await isDraftMode());
+  const { page } = await getPageByPath('/', await isDraftMode());
 
   if (!page) {
     return null;

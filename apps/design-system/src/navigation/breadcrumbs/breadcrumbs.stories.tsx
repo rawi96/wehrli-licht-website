@@ -7,7 +7,7 @@ const meta: Meta<typeof Breadcrumbs> = {
   args: {
     items: [
       { label: 'Home', href: '/' },
-      { label: 'Angebot', href: '/angebot' },
+      { label: 'Leistungen', href: '/angebot' },
       { label: 'Lichtplanung', href: '/angebot/lichtplanung' },
     ],
   },

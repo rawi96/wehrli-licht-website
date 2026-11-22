@@ -21,7 +21,7 @@ type Props = {
 const cardLinkClass = cn(
   'shadow-sm ring-1 ring-black/5 transition-shadow duration-300 hover:shadow-md',
   'active:scale-[0.99] motion-reduce:active:scale-100',
-  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-wehrli focus-visible:ring-offset-2',
+  '',
 );
 
 /** A reference project: image, offer, title, company and description. The whole card is the link. */
@@ -40,7 +40,7 @@ export const HighlightProjectCard: FC<Props> = ({
 
   const content = (
     <>
-      <p className="text-wehrli-400 text-xxs tracking-eyebrow sm:tracking-eyebrow-wider font-bold uppercase">{offer}</p>
+      <p className="text-wehrli text-xs font-bold">{offer}</p>
       <h3
         className={cn(
           'text-wehrli mt-2 leading-snug font-bold text-balance',
@@ -50,7 +50,7 @@ export const HighlightProjectCard: FC<Props> = ({
         {title}
       </h3>
       <p className="mt-1.5 text-sm font-bold text-black/70 sm:mt-2">{company}</p>
-      <p className={cn('mt-2.5 text-sm leading-relaxed text-pretty text-gray-700 sm:mt-3', compact ? 'flex-1' : 'max-w-sm')}>
+      <p className={cn('mt-2.5 text-sm leading-relaxed text-pretty text-gray-600 sm:mt-3', compact ? 'flex-1' : 'max-w-sm')}>
         {description}
       </p>
       <span
@@ -66,7 +66,7 @@ export const HighlightProjectCard: FC<Props> = ({
   return compact ? (
     <NextLink
       href={href}
-      className={cn('group bg-white-100 flex h-full flex-col overflow-hidden rounded-lg no-underline', cardLinkClass)}
+      className={cn('group flex h-full flex-col overflow-hidden rounded-md bg-white no-underline', cardLinkClass)}
     >
       <div className="relative aspect-[4/3] overflow-hidden">
         <Image image={image} sizes={HIGHLIGHT_IMAGE_SIZES.projectCompact} priority={priority} hoverZoom="slow-subtle" />
@@ -77,7 +77,7 @@ export const HighlightProjectCard: FC<Props> = ({
     <NextLink
       href={href}
       className={cn(
-        'group bg-white-100 grid w-full grid-cols-1 overflow-hidden rounded-lg no-underline',
+        'group grid w-full grid-cols-1 overflow-hidden rounded-md bg-white no-underline',
         cardLinkClass,
         'lg:min-h-[18rem] lg:grid-cols-12',
       )}

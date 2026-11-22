@@ -26,18 +26,31 @@ html {
   }
 
   body {
-    @apply bg-white-200 text-black antialiased;
+    @apply bg-gray-50 text-black antialiased;
     text-rendering: optimizeLegibility;
   }
 
-  /* One keyboard focus style for every interactive element. Inputs that show focus with their border opt out with field-focus-plain. */
+  /*
+   * One keyboard focus style for every interactive element: a 2px outline in the brand blue, offset by 2px, following
+   * the element's rounded corners. Dark surfaces (class `surface-dark`) switch it to white. Inputs that show focus
+   * with their border opt out with field-focus-plain.
+   */
+  :root {
+    --focus-color: var(--color-wehrli);
+  }
+
   a,
   button,
+  summary,
   [role='button'],
+  [tabindex]:not([tabindex='-1']),
   input:not(.field-focus-plain),
-  textarea,
-  select {
-    @apply focus-visible:ring-wehrli focus-visible:ring-offset-white-200 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none;
+  textarea:not(.field-focus-plain),
+  select:not(.field-focus-plain) {
+    &:focus-visible {
+      outline: 2px solid var(--focus-color);
+      outline-offset: 2px;
+    }
   }
 
   .field-focus-plain:focus,
@@ -47,9 +60,13 @@ html {
   }
 
   ::selection {
-    @apply bg-wehrli-500;
-    @apply text-white;
+    @apply bg-wehrli text-white;
   }
+}
+
+/* Dark brand or photo surfaces: focus outlines inside turn white. */
+@utility surface-dark {
+  --focus-color: var(--color-white);
 }
 
 @layer utilities {
@@ -72,8 +89,8 @@ html {
 /* Legible white text on photos */
 @utility hero-text-shadow {
   text-shadow:
-    0 2px 24px --theme(--color-wehrli-700 / 65%),
-    0 1px 4px --theme(--color-wehrli-700 / 50%);
+    0 2px 24px --theme(--color-wehrli-dark / 65%),
+    0 1px 4px --theme(--color-wehrli-dark / 50%);
 }
 
 /* Cookie banner: hidden before first paint when a choice is already stored (set by the website's Google tag script). */

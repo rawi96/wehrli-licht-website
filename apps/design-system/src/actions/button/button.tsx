@@ -27,12 +27,12 @@ type Props = {
 const isPrimary = (variant: Variant) => variant === 'primary' || variant === 'primary-white';
 
 const buttonClasses = (variant: Variant, fullWidth: boolean | undefined, isDisabled: boolean | undefined) => {
-  const base = 'px-5 py-2.5 rounded-lg text-center inline-flex items-center justify-center text-sm font-bold group';
+  const base = 'px-5 py-2.5 rounded-md text-center inline-flex items-center justify-center text-sm font-bold group';
 
   if (isPrimary(variant)) {
     return cn(
       base,
-      variant === 'primary-white' ? 'text-wehrli bg-white hover:bg-gray-300' : 'text-white bg-wehrli hover:bg-wehrli-600',
+      variant === 'primary-white' ? 'text-wehrli bg-white hover:bg-gray-200' : 'text-white bg-wehrli hover:bg-wehrli-dark',
       fullWidth && 'w-full',
       !isDisabled && 'shadow-sm',
       isDisabled && 'bg-gray-400 cursor-not-allowed',

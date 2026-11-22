@@ -69,7 +69,7 @@ export const CheckoutCartSummary: FC<Props> = ({
             <Link href={item.href} className="font-bold underline-offset-2 hover:underline">
               {item.name}
             </Link>
-            {item.selectionsLabel && <p className="mt-0.5 text-gray-500">{item.selectionsLabel}</p>}
+            {item.selectionsLabel && <p className="mt-0.5 text-gray-600">{item.selectionsLabel}</p>}
             <p className="mt-1">{item.price}</p>
             <div className="mt-2 flex items-center gap-3">
               <QuantitySelect
@@ -109,7 +109,7 @@ export const CheckoutCartSummary: FC<Props> = ({
     </dl>
 
     {deliveryTime && (
-      <p className="mt-4 text-sm text-gray-500">
+      <p className="mt-4 text-sm text-gray-600">
         {labels.deliveryTime} {deliveryTime}
       </p>
     )}

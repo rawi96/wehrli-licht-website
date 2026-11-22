@@ -106,7 +106,7 @@ export const HomeStageSlideshow: FC<Props> = ({ slides, labels, intervalMs = 700
             type="button"
             onClick={() => setIsPaused((value) => !value)}
             aria-label={isPaused ? labels.play : labels.pause}
-            className="rounded-sm p-1.5 text-white/70 transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-transparent focus-visible:outline-none"
+            className="rounded-md p-1.5 text-white/80 transition-colors hover:text-white"
           >
             {isPaused ? <PlayIcon /> : <PauseIcon />}
           </button>
@@ -119,13 +119,13 @@ export const HomeStageSlideshow: FC<Props> = ({ slides, labels, intervalMs = 700
                 aria-label={labels.slide.replace('{index}', String(index + 1)).replace('{count}', String(slides.length))}
                 aria-current={index === activeIndex ? 'true' : undefined}
                 onClick={() => setActiveIndex(index)}
-                className="group/dot flex h-6 min-w-6 items-center justify-center rounded-full px-1 focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none"
+                className="group/dot flex h-6 min-w-6 items-center justify-center rounded-full px-1"
               >
                 <span
                   aria-hidden="true"
                   className={cn(
                     'h-1.5 rounded-full transition-all duration-500',
-                    index === activeIndex ? 'w-8 bg-white' : 'w-1.5 bg-white/40 group-hover/dot:bg-white/70',
+                    index === activeIndex ? 'w-8 bg-white' : 'w-1.5 bg-white/40 group-hover/dot:bg-white/80',
                   )}
                 />
               </button>

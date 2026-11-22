@@ -18,7 +18,7 @@ type Props = {
 const cardLinkClass = cn(
   'ring-1 ring-black/5 transition-shadow duration-300 hover:shadow-lg',
   'active:scale-[0.99] motion-reduce:active:scale-100',
-  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-wehrli focus-visible:ring-offset-2',
+  '',
 );
 
 /** An offer (service) with its text on the darkened image. The whole card is the link. */
@@ -28,7 +28,7 @@ export const HighlightOfferCard: FC<Props> = ({
   title,
   href,
   image,
-  linkLabel = 'Angebot ansehen',
+  linkLabel = 'Mehr erfahren',
   priority,
 }) => {
   const featured = variant === 'featured';
@@ -37,7 +37,7 @@ export const HighlightOfferCard: FC<Props> = ({
     <NextLink
       href={href}
       className={cn(
-        'group relative block min-w-0 overflow-hidden rounded-lg no-underline',
+        'group relative block min-w-0 overflow-hidden rounded-md no-underline',
         featured
           ? 'aspect-[4/3] min-h-[12.5rem] sm:aspect-[16/10] sm:min-h-[16rem] lg:min-h-[18rem]'
           : 'aspect-[3/4] min-h-[10.5rem] sm:aspect-[4/5] sm:min-h-0 lg:aspect-[4/5]',
@@ -50,17 +50,10 @@ export const HighlightOfferCard: FC<Props> = ({
         sizes={featured ? HIGHLIGHT_IMAGE_SIZES.offerFeatured : HIGHLIGHT_IMAGE_SIZES.offerCompact}
         hoverZoom="slow"
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-gray-900/95 via-gray-900/40 to-gray-900/10" aria-hidden />
-      <div className="absolute inset-0 rounded-lg ring-1 ring-gray-900/10 ring-inset" aria-hidden />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-black/10" aria-hidden />
+      <div className="absolute inset-0 rounded-md ring-1 ring-black/10 ring-inset" aria-hidden />
       <div className={cn('absolute inset-x-0 bottom-0 text-white', featured ? 'p-4 sm:p-6 lg:p-8' : 'p-3 sm:p-4')}>
-        <p
-          className={cn(
-            'font-bold text-white/75 uppercase',
-            featured
-              ? 'text-xxs tracking-eyebrow sm:tracking-eyebrow-wide'
-              : 'sm:text-xxs text-xxxs tracking-label-tight sm:tracking-label-wide lg:tracking-label leading-tight',
-          )}
-        >
+        <p className={cn('font-bold text-white/80', featured ? 'text-xxs' : 'sm:text-xxs text-xxxs leading-tight')}>
           {eyebrow}
         </p>
         <h3
@@ -73,7 +66,7 @@ export const HighlightOfferCard: FC<Props> = ({
         </h3>
         <span
           className={cn(
-            'mt-2 inline-block border-b border-white/50 font-bold text-white/90 sm:mt-3',
+            'mt-2 inline-block border-b border-white/80 font-bold text-white/90 sm:mt-3',
             featured ? 'text-xs sm:text-sm' : 'text-xs lg:mt-2',
           )}
         >

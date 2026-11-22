@@ -20,10 +20,10 @@ export type HomePage = {
   content: ReactNode;
 };
 
-/** A page under /projekte/<slug>: a project with its rendered content, or an area with its projects. */
+/** A page under /projekte/<slug>: a project with its rendered content, or an area: the overview page with its chip active. */
 export type ProjectPage =
   | { kind: 'project'; project: ProjectSummary; intro: ReactNode; content: ReactNode; projects: ProjectSummary[] }
-  | { kind: 'area'; area: ProjectArea; projects: ProjectSummary[] };
+  | { kind: 'area'; area: ProjectArea; content: ReactNode };
 
 export type FaqPage = {
   /** Title and intro of the FAQ page, null if not set. */

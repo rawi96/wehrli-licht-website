@@ -36,14 +36,14 @@ const CATEGORY_GRID_SIZES = '(min-width: 1400px) 410px, (min-width: 1024px) 30vw
 const RowCard: FC<{ item: ShopCategoryGridItem }> = ({ item }) => (
   <Link
     href={item.href}
-    className="group hover:ring-wehrli/30 flex h-full w-64 shrink-0 flex-col overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-gray-200 transition-shadow hover:shadow-md"
+    className="group hover:ring-wehrli/30 flex h-full w-64 shrink-0 flex-col overflow-hidden rounded-md bg-white shadow-sm ring-1 ring-gray-200 transition-shadow hover:shadow-md"
   >
     <div className="relative h-52 w-full shrink-0 overflow-hidden bg-gray-100">
       {item.image && <Image sizes="256px" image={item.image} hoverZoom="quick" />}
     </div>
     <div className="flex min-h-0 flex-1 flex-col p-4">
       {item.eyebrow ? (
-        <p className="text-xs text-gray-500">{item.eyebrow}</p>
+        <p className="text-xs text-gray-600">{item.eyebrow}</p>
       ) : (
         <span className="block h-[1.125rem]" aria-hidden="true" />
       )}
@@ -54,7 +54,7 @@ const RowCard: FC<{ item: ShopCategoryGridItem }> = ({ item }) => (
         <div className="flex-1" aria-hidden="true" />
       )}
       {item.linkLabel && (
-        <span className="text-wehrli group-hover:border-wehrli-400 mt-auto inline-block w-fit border-b-2 border-black pt-4 text-sm font-bold transition-colors">
+        <span className="text-wehrli group-hover:border-wehrli mt-auto inline-block w-fit border-b-2 border-black pt-4 text-sm font-bold transition-colors">
           {item.linkLabel}
           <span aria-hidden="true"> →</span>
         </span>
@@ -66,7 +66,7 @@ const RowCard: FC<{ item: ShopCategoryGridItem }> = ({ item }) => (
 const GridCard: FC<{ item: ShopCategoryGridItem }> = ({ item }) => (
   <Link href={item.href} className="group block">
     <div className="group relative cursor-pointer">
-      <div className="relative h-80 w-full overflow-hidden rounded-lg bg-white shadow-sm sm:h-64">
+      <div className="relative h-80 w-full overflow-hidden rounded-md bg-white shadow-sm sm:h-64">
         {item.image && <Image sizes={CATEGORY_GRID_SIZES} image={item.image} hoverZoom="quick" />}
       </div>
       <h3 className="text-wehrli my-4 text-sm font-bold md:text-base lg:text-lg">{item.name}</h3>

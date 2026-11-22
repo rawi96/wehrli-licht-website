@@ -26,7 +26,7 @@ export const Animations: StoryObj = {
     <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
       {ANIMATIONS.map(({ className, usage }) => (
         <div key={className} className="flex flex-col gap-2 text-xs">
-          <div className="bg-white-300 flex h-24 items-center justify-center overflow-hidden rounded-lg">
+          <div className="bg-wehrli-50 flex h-24 items-center justify-center overflow-hidden rounded-md">
             <div className={`${className} bg-wehrli size-10 rounded-full`} />
           </div>
           <code className="font-bold">{className}</code>

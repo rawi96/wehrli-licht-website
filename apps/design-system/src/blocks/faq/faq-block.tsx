@@ -33,11 +33,11 @@ export const FaqBlock: FC<Props> = ({ title, intro, items, allFaqsLink, labels, 
 
   return (
     <Section marginTop={marginTop} marginBottom={marginBottom}>
-      <div className="bg-white-300 grid gap-8 rounded-lg p-6 sm:p-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] lg:gap-12 lg:p-12">
+      <div className="bg-wehrli-50 grid gap-8 rounded-md p-6 sm:p-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] lg:gap-12 lg:p-12">
         <div className="flex flex-col gap-4">
-          <p className="text-xxs text-wehrli-300 font-bold tracking-wide uppercase">{labels?.eyebrow ?? 'FAQ'}</p>
+          <p className="text-wehrli text-xs font-bold">{labels?.eyebrow ?? 'FAQ'}</p>
           <h2 className="text-wehrli text-lg font-bold break-words md:text-xl">{title?.trim() ?? 'Häufige Fragen'}</h2>
-          {intro && <p className="text-sm text-gray-700">{intro}</p>}
+          {intro && <p className="text-sm text-gray-600">{intro}</p>}
           {allFaqsLink && (
             <Link
               href={allFaqsLink.href}

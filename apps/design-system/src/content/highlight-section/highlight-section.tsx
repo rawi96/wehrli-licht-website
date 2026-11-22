@@ -36,7 +36,7 @@ export const HighlightBreakout: FC<BreakoutProps> = ({ headingId, surface, child
       aria-labelledby={headingId}
       className={cn(
         'relative left-1/2 w-screen max-w-[100vw] -translate-x-1/2',
-        surface === 'brand' ? 'bg-wehrli text-white' : 'bg-white-200',
+        surface === 'brand' ? 'surface-dark bg-wehrli text-white' : 'bg-gray-50',
         surface === 'light-bordered' && 'border-b border-black/5',
       )}
     >
@@ -67,7 +67,7 @@ export const HighlightSection: FC<Props> = ({ id, title, subline, bordered, cta,
         <Heading level="2" id={headingId}>
           <span className="text-balance">{title}</span>
         </Heading>
-        <p className="mt-3 text-sm leading-relaxed text-pretty text-gray-700 sm:text-base">{subline}</p>
+        <p className="mt-3 text-sm leading-relaxed text-pretty text-gray-600 sm:text-base">{subline}</p>
       </header>
 
       {children}

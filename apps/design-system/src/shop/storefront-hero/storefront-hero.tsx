@@ -57,7 +57,7 @@ const CategoryTile: FC<{
     href={category.href}
     aria-label={`${category.name} – ${label}`}
     className={cn(
-      'group relative block min-h-0 overflow-hidden rounded-lg bg-gray-100 shadow-sm',
+      'group relative block min-h-0 overflow-hidden rounded-md bg-gray-100 shadow-sm',
       TILE_STYLES[size].className,
     )}
   >
@@ -73,7 +73,7 @@ const CategoryTile: FC<{
     <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent" aria-hidden="true" />
     {/* Compact below lg, large tile layout from lg. */}
     <div className="absolute inset-x-0 bottom-0 p-3 lg:p-4">
-      <p className="text-xxxs font-bold text-white/80 uppercase lg:text-xs">{label}</p>
+      <p className="text-xs font-bold text-white/80 lg:text-xs">{label}</p>
       <p className="mt-0.5 text-sm font-bold text-white sm:text-base lg:text-lg">{category.name}</p>
     </div>
   </Link>
@@ -97,7 +97,7 @@ export const StorefrontHero: FC<Props> = ({
     <section aria-labelledby={headingId} className="border-b border-gray-200 bg-white">
       <div className="mx-auto grid w-11/12 max-w-7xl gap-8 py-8 sm:gap-10 sm:py-12 md:gap-12 md:py-16 lg:grid-cols-12 lg:items-center lg:gap-16 lg:py-20">
         <div className="lg:col-span-5 [&_h1]:mb-4 sm:[&_h1]:mb-6 lg:[&_h1]:mb-8">
-          <p className="text-wehrli text-xs font-bold tracking-wide sm:text-sm">{eyebrow}</p>
+          <p className="text-wehrli text-xs font-bold sm:text-sm">{eyebrow}</p>
           <Heading level="1" id={headingId}>
             {title}
           </Heading>
@@ -112,7 +112,7 @@ export const StorefrontHero: FC<Props> = ({
         {categories.length > 0 && (
           <div className="lg:col-span-7">
             <div className="mb-3 flex items-center justify-between gap-3">
-              <p className="text-xs font-bold tracking-wide text-gray-500 uppercase">{labels.topCategories}</p>
+              <p className="text-xs font-bold text-gray-600">{labels.topCategories}</p>
               <ShopTextLink {...allProductsLink} />
             </div>
 

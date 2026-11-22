@@ -18,7 +18,7 @@ type Props = ShopCategoryCardData & {
 
 /** A product category in the storefront's category section (4 columns from lg): image, name, description, link. */
 export const ShopCategoryCard: FC<Props> = ({ name, href, description, image, linkLabel = 'Produkte ansehen →' }) => (
-  <Link href={href} className="group block overflow-hidden rounded-lg bg-white shadow-sm">
+  <Link href={href} className="group block overflow-hidden rounded-md bg-white shadow-sm">
     <div className="relative aspect-[4/3] overflow-hidden bg-gray-100">
       {image && (
         <Image

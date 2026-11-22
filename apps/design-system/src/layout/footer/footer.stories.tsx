@@ -27,7 +27,7 @@ const meta: Meta<typeof Footer> = {
     },
     navigation: [
       {
-        title: 'Angebot',
+        title: 'Leistungen',
         links: [
           { label: 'Lichtplanung', href: '#planung' },
           { label: 'Leuchtenbau', href: '#bau' },
@@ -40,7 +40,7 @@ const meta: Meta<typeof Footer> = {
           { label: 'Stehleuchten', href: '#steh' },
         ],
       },
-      { title: 'Service', links: [{ label: 'FAQ', href: '#faq' }] },
+      { title: 'Beratung', links: [{ label: 'FAQ', href: '#faq' }] },
     ],
     copyrightHolder: 'Muster Licht GmbH',
     year: 2026,

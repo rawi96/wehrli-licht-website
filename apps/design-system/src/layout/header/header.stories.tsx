@@ -8,7 +8,7 @@ const meta: Meta<typeof Header> = {
   args: {
     navigation: [
       {
-        label: 'Angebot',
+        label: 'Leistungen',
         active: true,
         children: [
           { label: 'Lichtplanung', href: '#planung' },
@@ -32,7 +32,7 @@ export const Overlay: Story = {
   args: { variant: 'overlay' },
   decorators: [
     (Story) => (
-      <div className="from-wehrli-300 to-wehrli-700 bg-linear-to-br pb-48">
+      <div className="from-wehrli to-wehrli-dark bg-linear-to-br pb-48">
         <Story />
       </div>
     ),
@@ -54,7 +54,7 @@ export const WithMobileExtra: Story = {
 
 const megaMenuColumns = [
   {
-    title: 'Service',
+    title: 'Beratung',
     links: [
       { label: 'Lampenschirm nach Mass', href: '#nach-mass' },
       { label: 'Neu beziehen', href: '#neu-beziehen' },

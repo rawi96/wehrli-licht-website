@@ -43,9 +43,9 @@ const triggerClasses = {
       'group inline-flex items-center gap-x-1 whitespace-nowrap border-b-2 border-white pb-0.5 text-sm leading-none font-bold text-white transition-colors duration-150',
   },
   button: {
-    idle: 'group inline-flex items-center whitespace-nowrap gap-x-1 rounded-lg border-2 border-white px-3 py-1 text-sm leading-none font-bold text-white transition-colors hover:bg-white hover:text-wehrli',
+    idle: 'group inline-flex items-center whitespace-nowrap gap-x-1 rounded-md border-2 border-white px-3 py-1 text-sm leading-none font-bold text-white transition-colors hover:bg-white hover:text-wehrli',
     active:
-      'group inline-flex items-center gap-x-1 whitespace-nowrap rounded-lg border-2 border-white bg-white px-3 py-1 text-sm leading-none font-bold text-wehrli transition-colors',
+      'group inline-flex items-center gap-x-1 whitespace-nowrap rounded-md border-2 border-white bg-white px-3 py-1 text-sm leading-none font-bold text-wehrli transition-colors',
   },
 };
 
@@ -72,11 +72,11 @@ export const MegaMenu: FC<Props> = ({ label, columns, overview, feature, footerL
           transition
           className="absolute inset-x-0 top-full z-20 px-6 pt-3 transition duration-200 ease-out data-closed:-translate-y-2 data-closed:opacity-0 lg:px-8"
         >
-          <div className="mx-auto grid max-w-7xl overflow-hidden rounded-lg bg-white shadow-lg lg:grid-cols-[18rem_1fr]">
+          <div className="mx-auto grid max-w-7xl overflow-hidden rounded-md bg-white shadow-lg lg:grid-cols-[18rem_1fr]">
             {(overview ?? feature) && (
-              <div className="bg-wehrli flex flex-col gap-4 p-6 text-white">
+              <div className="surface-dark bg-wehrli flex flex-col gap-4 p-6 text-white">
                 {feature?.image && (
-                  <div className="relative aspect-[4/3] overflow-hidden rounded-sm">
+                  <div className="relative aspect-[4/3] overflow-hidden rounded-md">
                     <Image image={feature.image} sizes="18rem" absolute />
                   </div>
                 )}
@@ -87,7 +87,7 @@ export const MegaMenu: FC<Props> = ({ label, columns, overview, feature, footerL
                 {overview && (
                   <Link
                     href={overview.href}
-                    className="group text-wehrli inline-flex items-center justify-between gap-x-2 rounded-lg bg-white px-4 py-2.5 text-sm font-bold transition-colors hover:bg-gray-100"
+                    className="group text-wehrli inline-flex items-center justify-between gap-x-2 rounded-md bg-white px-4 py-2.5 text-sm font-bold transition-colors hover:bg-gray-100"
                     onClick={() => close()}
                   >
                     {overview.label}
@@ -104,15 +104,13 @@ export const MegaMenu: FC<Props> = ({ label, columns, overview, feature, footerL
               <div className="grid grid-cols-[repeat(auto-fit,minmax(11rem,1fr))] gap-8">
                 {columns.map((column) => (
                   <div key={column.title} className="flex flex-col">
-                    <p className="text-xxs text-wehrli-300 mb-3 border-b border-gray-200 pb-2 font-bold tracking-wide uppercase">
-                      {column.title}
-                    </p>
+                    <p className="text-wehrli mb-3 border-b border-gray-200 pb-2 text-xs font-bold">{column.title}</p>
                     <ul className="space-y-0.5">
                       {column.links.map((link) => (
                         <li key={`${link.href}-${link.label}`}>
                           <Link
                             href={link.href}
-                            className="group hover:bg-white-300 hover:text-wehrli -mx-2 flex items-center justify-between gap-x-2 rounded-sm px-2 py-1.5 text-sm text-black transition-colors"
+                            className="group hover:bg-wehrli-50 hover:text-wehrli -mx-2 flex items-center justify-between gap-x-2 rounded-md px-2 py-1.5 text-sm text-black transition-colors"
                             onClick={() => close()}
                           >
                             <span>{link.label}</span>
@@ -127,7 +125,7 @@ export const MegaMenu: FC<Props> = ({ label, columns, overview, feature, footerL
                     {column.overview && (
                       <Link
                         href={column.overview.href}
-                        className="group hover:text-wehrli mt-3 inline-flex items-center gap-x-1 text-xs text-gray-500 transition-colors"
+                        className="group hover:text-wehrli mt-3 inline-flex items-center gap-x-1 text-xs text-gray-600 transition-colors"
                         onClick={() => close()}
                       >
                         {column.overview.label}
@@ -146,7 +144,7 @@ export const MegaMenu: FC<Props> = ({ label, columns, overview, feature, footerL
                     <Link
                       key={`${link.href}-${link.label}`}
                       href={link.href}
-                      className="hover:text-wehrli text-xs text-gray-500 transition-colors"
+                      className="hover:text-wehrli text-xs text-gray-600 transition-colors"
                       onClick={() => close()}
                     >
                       {link.label}

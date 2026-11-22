@@ -8,8 +8,7 @@ import { cn } from '../../fundamentals/cn';
 import { Logo } from '../../icons/logo/logo';
 import { Flyout, NavigationLink } from '../../navigation/flyout/flyout';
 import { MegaMenu, NavigationColumn, NavigationFeature } from '../../navigation/mega-menu/mega-menu';
-import { MobileMegaMenu } from '../../navigation/mobile-mega-menu/mobile-mega-menu';
-import { NavigationAccordion } from '../../navigation/navigation-accordion/navigation-accordion';
+import { MobileMenu } from '../../navigation/mobile-menu/mobile-menu';
 
 export type HeaderNavigationItem = {
   label: string;
@@ -63,13 +62,12 @@ type Props = {
 
 const desktopNavItemClasses =
   'inline-flex whitespace-nowrap items-center border-b-2 pb-0.5 text-sm font-bold leading-none text-white transition-colors duration-150 hover:border-white';
-const mobileLinkClasses = 'rounded-lg -mx-3 block font-bold text-sm px-3 py-2 text-white hover:bg-wehrli-400';
 const contactButtonClasses =
-  'inline-flex items-center justify-center rounded-lg bg-white px-3 py-1.5 text-sm font-bold leading-none text-wehrli transition-colors hover:bg-gray-100';
+  'inline-flex items-center justify-center rounded-md bg-white px-3 py-1.5 text-sm font-bold leading-none text-wehrli transition-colors hover:bg-gray-100';
 const shopButtonClasses =
-  'inline-flex items-center rounded-lg border-2 border-white px-3 py-1 text-sm font-bold leading-none text-white transition-colors hover:bg-white hover:text-wehrli';
+  'inline-flex items-center rounded-md border-2 border-white px-3 py-1 text-sm font-bold leading-none text-white transition-colors hover:bg-white hover:text-wehrli';
 const contactButtonMobileClasses =
-  'inline-flex w-full items-center justify-center rounded-lg bg-white px-5 py-2.5 text-sm font-bold text-wehrli transition-colors hover:bg-gray-100';
+  'inline-flex w-full items-center justify-center rounded-md bg-white px-5 py-3 text-base font-bold text-wehrli transition-colors hover:bg-gray-100';
 
 /** Site header: logo, main navigation, contact link and cart; below `lg` a menu button opens a full-screen menu. */
 export const Header: FC<Props> = ({
@@ -89,21 +87,11 @@ export const Header: FC<Props> = ({
   };
 
   // Keyed by position and label: labels come from the CMS and need not be unique.
-  const renderItem = (item: HeaderNavigationItem, index: number, isMobile = false, trigger: 'link' | 'button' = 'link') => {
+  const renderItem = (item: HeaderNavigationItem, index: number, trigger: 'link' | 'button' = 'link') => {
     const key = `${index}-${item.label}`;
 
     if (item.columns && item.columns.length > 0) {
-      return isMobile ? (
-        <div key={key} className="relative font-bold">
-          <MobileMegaMenu
-            label={item.label}
-            columns={item.columns}
-            overview={item.overview}
-            footerLinks={item.footerLinks}
-            onNavigate={closeMobileMenu}
-          />
-        </div>
-      ) : (
+      return (
         <MegaMenu
           key={key}
           label={item.label}
@@ -118,13 +106,7 @@ export const Header: FC<Props> = ({
     }
 
     if (item.children) {
-      return isMobile ? (
-        <div key={key} className="relative font-bold">
-          <NavigationAccordion label={item.label} items={item.children} onNavigate={closeMobileMenu} />
-        </div>
-      ) : (
-        <Flyout key={key} label={item.label} items={item.children} active={item.active} />
-      );
+      return <Flyout key={key} label={item.label} items={item.children} active={item.active} />;
     }
 
     return (
@@ -132,13 +114,10 @@ export const Header: FC<Props> = ({
         key={key}
         href={item.href ?? '/'}
         className={
-          isMobile
-            ? mobileLinkClasses
-            : trigger === 'button'
-              ? shopButtonClasses
-              : cn(desktopNavItemClasses, item.active ? 'border-white' : 'border-transparent')
+          trigger === 'button'
+            ? shopButtonClasses
+            : cn(desktopNavItemClasses, item.active ? 'border-white' : 'border-transparent')
         }
-        onClick={closeMobileMenu}
       >
         {item.label}
       </Link>
@@ -146,7 +125,7 @@ export const Header: FC<Props> = ({
   };
 
   return (
-    <header className={cn('relative z-20 pt-6 pb-6', variant === 'overlay' ? 'bg-transparent' : 'bg-wehrli')}>
+    <header className={cn('surface-dark relative z-20 pt-6 pb-6', variant === 'overlay' ? 'bg-transparent' : 'bg-wehrli')}>
       <div className="px-6 lg:px-8">
         <nav
           className="flex items-center justify-between lg:grid lg:grid-cols-[1fr_auto_1fr] lg:items-center"
@@ -163,7 +142,7 @@ export const Header: FC<Props> = ({
             {cartButton}
             <button
               type="button"
-              className="-m-2.5 inline-flex items-center justify-center rounded-lg p-2.5 text-gray-400"
+              className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-400"
               onClick={() => setIsMobileMenuOpen(true)}
             >
               <span className="sr-only">{labels.openMenu}</span>
@@ -176,7 +155,7 @@ export const Header: FC<Props> = ({
           </div>
 
           <div className="hidden items-center justify-end gap-x-5 lg:flex">
-            {shop && renderItem(shop, navigation.length, false, 'button')}
+            {shop && renderItem(shop, navigation.length, 'button')}
             {contact && (
               <Link href={contact.href} className={contactButtonClasses}>
                 {contact.label}
@@ -187,7 +166,7 @@ export const Header: FC<Props> = ({
         </nav>
 
         <Dialog as="div" open={isMobileMenuOpen} onClose={setIsMobileMenuOpen}>
-          <DialogPanel className="bg-wehrli fixed inset-0 z-10 overflow-y-auto px-6 py-6 lg:hidden">
+          <DialogPanel className="surface-dark bg-wehrli fixed inset-0 z-50 overflow-y-auto px-6 py-6 lg:hidden">
             <div className="flex items-center justify-between">
               <Link href="/" className="-m-1.5 p-1.5" onClick={closeMobileMenu}>
                 <span className="sr-only">{labels.home}</span>
@@ -198,19 +177,23 @@ export const Header: FC<Props> = ({
                 <XMarkIcon className="h-6 w-6 text-white" aria-hidden="true" />
               </button>
             </div>
-            <div className="mt-6 flow-root">
-              <div className="space-y-2 py-6">
-                {navigation.map((item, index) => renderItem(item, index, true))}
-                {shop && <div className="border-t border-white/20 pt-2">{renderItem(shop, navigation.length, true)}</div>}
-                {renderMobileMenuExtra?.(closeMobileMenu)}
-                {contact && (
-                  <div className="border-t border-white/20 pt-4">
-                    <Link href={contact.href} className={contactButtonMobileClasses} onClick={closeMobileMenu}>
-                      {contact.label}
-                    </Link>
-                  </div>
-                )}
-              </div>
+            <div className="mt-8">
+              <MobileMenu
+                items={[...navigation, ...(shop ? [shop] : [])]}
+                onNavigate={closeMobileMenu}
+                footer={
+                  renderMobileMenuExtra || contact ? (
+                    <div className="flex flex-col gap-6">
+                      {renderMobileMenuExtra?.(closeMobileMenu)}
+                      {contact && (
+                        <Link href={contact.href} className={contactButtonMobileClasses} onClick={closeMobileMenu}>
+                          {contact.label}
+                        </Link>
+                      )}
+                    </div>
+                  ) : null
+                }
+              />
             </div>
           </DialogPanel>
         </Dialog>

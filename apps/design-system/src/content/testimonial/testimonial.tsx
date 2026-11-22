@@ -32,7 +32,7 @@ export const Testimonial: FC<Props> = ({
   size = 'large',
 }) =>
   size === 'small' ? (
-    <div className="bg-wehrli grid grid-rows-[1fr_auto] items-center rounded-lg p-6 text-white lg:p-10">
+    <div className="surface-dark bg-wehrli grid grid-rows-[1fr_auto] items-center rounded-md p-6 text-white lg:p-10">
       <p className="text-center text-sm font-bold md:text-base lg:text-lg">
         <span>&laquo;</span>
         {quote}
@@ -64,7 +64,7 @@ export const Testimonial: FC<Props> = ({
       </div>
     </div>
   ) : (
-    <div className="bg-wehrli relative grid w-full grid-flow-row place-items-center overflow-hidden rounded-lg p-8 text-center text-sm font-normal text-white lg:p-20 lg:text-sm">
+    <div className="surface-dark bg-wehrli relative grid w-full grid-flow-row place-items-center overflow-hidden rounded-md p-8 text-center text-sm font-normal text-white lg:p-20 lg:text-sm">
       {image && (
         <div className="z-10 h-24 w-24 lg:h-32 lg:w-32">
           <Image image={image} sizes={image.sizes ?? undefined} fit="fill" rounded="full" />

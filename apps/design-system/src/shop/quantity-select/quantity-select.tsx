@@ -36,7 +36,7 @@ export const QuantitySelect: FC<Props> = ({ id, name, value, onChange, max, labe
           id={id}
           name={name}
           value={value}
-          className="focus:border-wehrli-500 focus:ring-wehrli-500 block max-w-full rounded-lg border border-gray-300 py-1.5 text-left text-base leading-5 font-bold shadow-sm focus:ring-1 focus:outline-none sm:text-sm"
+          className="field-focus-plain focus:border-wehrli focus:ring-wehrli block max-w-full rounded-md border border-gray-200 py-1.5 text-left text-base leading-5 font-bold shadow-sm focus:ring-1 focus:outline-none sm:text-sm"
           onChange={(event) => onChange(parseInt(event.target.value, 10))}
         >
           {quantities.map((quantity) => (

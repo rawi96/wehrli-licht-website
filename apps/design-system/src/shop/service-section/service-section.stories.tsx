@@ -27,9 +27,9 @@ const meta: Meta<typeof ShopServiceSection> = {
   parameters: { layout: 'fullscreen' },
   args: {
     headingId: 'service-heading',
-    title: 'Unser Service',
+    title: 'Unsere Beratung',
     intro: <p>Persönlich beraten, sorgfältig geliefert.</p>,
-    actionLink: { href: '#', label: 'Alle Angebote' },
+    actionLink: { href: '#', label: 'Alle Leistungen' },
     items: ITEMS,
   },
 };

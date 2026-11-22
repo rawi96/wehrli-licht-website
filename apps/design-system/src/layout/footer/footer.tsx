@@ -53,7 +53,7 @@ export const Footer: FC<Props> = ({
   const labels = { ...DEFAULT_LABELS, ...labelOverrides };
 
   return (
-    <footer className="bg-wehrli text-white/90" aria-labelledby="footer-heading">
+    <footer className="surface-dark bg-wehrli text-white/90" aria-labelledby="footer-heading">
       <h2 id="footer-heading" className="sr-only">
         {labels.heading}
       </h2>

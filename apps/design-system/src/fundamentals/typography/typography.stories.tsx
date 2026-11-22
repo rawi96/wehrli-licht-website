@@ -59,14 +59,14 @@ export const LineHeightsAndTracking: StoryObj = {
           </p>
         </div>
       ))}
-      {['tracking-tight', 'tracking-wide', 'tracking-widest'].map((tracking) => (
-        <div key={tracking}>
-          <code className="text-xs text-gray-600">{tracking}</code>
-          <p className={tracking}>
-            <span className="text-xs font-bold uppercase">Eyebrow label</span>
-          </p>
-        </div>
-      ))}
+      <div>
+        <code className="text-xs text-gray-600">tracking-tight</code>
+        <p className="text-xl font-bold tracking-tight">Large headings only</p>
+      </div>
+      <div>
+        <code className="text-xs text-gray-600">Labels</code>
+        <p className="text-wehrli text-xs font-bold">Small labels use bold, never uppercase</p>
+      </div>
     </div>
   ),
 };

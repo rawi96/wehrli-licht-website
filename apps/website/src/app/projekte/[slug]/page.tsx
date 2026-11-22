@@ -3,7 +3,7 @@ import { SitePage } from '@/components/layout/site-page';
 import { ProjectCards } from '@/components/projects/project-cards';
 import { projectBreadcrumbs, relatedProjects } from '@/domain/content/project';
 import { content } from '@/integrations';
-import { Container, Heading, ProjectFacts, RichText, Section } from '@wehrli/design-system';
+import { Container, Heading, ProjectFacts, Section } from '@wehrli/design-system';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
@@ -30,21 +30,11 @@ export default async function ProjectPage({ params }: Params) {
   }
 
   if (page.kind === 'area') {
-    const { area, projects } = page;
-
     return (
       <SitePage>
         <Container>
-          <Breadcrumbs customBreadcrumbs={projectBreadcrumbs(area)} />
-          <Section marginTop={false}>
-            <Heading level="1">{`Projekte: ${area.name}`}</Heading>
-            {area.intro && (
-              <RichText>
-                <p>{area.intro}</p>
-              </RichText>
-            )}
-            <ProjectCards projects={projects} />
-          </Section>
+          <Breadcrumbs customBreadcrumbs={projectBreadcrumbs(page.area)} />
+          {page.content}
         </Container>
       </SitePage>
     );

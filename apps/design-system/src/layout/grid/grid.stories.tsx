@@ -9,7 +9,7 @@ const meta: Meta<typeof Grid> = {
   render: ({ cols }) => (
     <Grid cols={cols}>
       {Array.from({ length: cols }, (_, index) => (
-        <div key={index} className="bg-wehrli-50 rounded-sm p-6 text-sm text-white">
+        <div key={index} className="bg-wehrli-50 rounded-md p-6 text-sm text-white">
           Item {index + 1}
         </div>
       ))}

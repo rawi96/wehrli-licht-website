@@ -9,7 +9,7 @@ const meta: Meta<typeof MegaMenu> = {
     overview: { label: 'Übersicht Lampenschirme', href: '#' },
     columns: [
       {
-        title: 'Service',
+        title: 'Beratung',
         overview: { label: 'Alle Leistungen', href: '#service' },
         links: [
           { label: 'Lampenschirm nach Mass', href: '#nach-mass' },

@@ -16,7 +16,7 @@ type Props = {
 
 /** A person of the team: portrait, function, name and a short bio. Sized for a Grid with 3 columns. */
 export const TeamMemberCard: FC<Props> = ({ name, role, bio, image, headingLevel = 'h3', priority }) => (
-  <div className="bg-white-100 flex flex-col overflow-hidden rounded-lg">
+  <div className="flex flex-col overflow-hidden rounded-md bg-white">
     <div className="w-full">{image && <Image image={image} sizes={CONTENT_IMAGE_SIZES.thirds} priority={priority} />}</div>
     <div className="flex flex-1 flex-col p-8 text-sm font-normal lg:text-sm">
       <p className="mb-6">{role}</p>

@@ -50,7 +50,7 @@ type Props = {
 
 const FIT = { cover: 'object-cover', contain: 'object-contain', fill: '' } as const;
 
-const ROUNDED = { lg: 'rounded-lg', full: 'rounded-full' } as const;
+const ROUNDED = { lg: 'rounded-md', full: 'rounded-full' } as const;
 
 /** Hover zoom presets: duration and scale per card type. Turned off for reduced motion. */
 const HOVER_ZOOM = {
