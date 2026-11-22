@@ -15,10 +15,9 @@ type Props = {
   /** The shop as a mega menu on the right; without it the header links the shop. */
   shopMenu?: MenuItem | null;
   variant?: 'overlay' | 'solid';
+  /** Overview links of the mega menus («Zur Übersicht», «Zum Online-Shop»). */
+  labels: { overview: string; shopOverview: string };
 };
-
-/** Label of the overview link at the top of a mega menu. */
-const toOverviewLabel = () => 'Zur Übersicht';
 
 /**
  * A mega menu section is active on its own pages (below its overview page). Pages it only links to are counted when
@@ -38,6 +37,7 @@ const isSectionActive = (item: MenuItem, sectionHrefs: string[], isActive: (path
 const toNavigationItem = (
   item: MenuItem,
   isActive: (path: string) => boolean,
+  overviewLabel: string,
   sectionHrefs: string[] = [],
 ): HeaderNavigationItem => {
   if (item.columns) {
@@ -47,7 +47,7 @@ const toNavigationItem = (
       columns: item.columns,
       footerLinks: item.footerLinks,
       feature: item.teaser ? { description: item.teaser.description, image: item.teaser.image } : null,
-      overview: item.href !== '/' ? { label: toOverviewLabel(), href: item.href } : null,
+      overview: item.href !== '/' ? { label: overviewLabel, href: item.href } : null,
     };
   }
 
@@ -56,17 +56,17 @@ const toNavigationItem = (
     : { label: item.label, href: item.href, active: isActive(item.href) };
 };
 
-export const Header: FC<Props> = ({ navigation, contactLink, shopMenu, variant = 'solid' }) => {
+export const Header: FC<Props> = ({ navigation, contactLink, shopMenu, labels, variant = 'solid' }) => {
   const pathname = usePathname();
 
   const isActive = (path: string) => pathname?.startsWith(path.split('#')[0]) ?? false;
 
   const shop = shopMenu
     ? {
-        ...toNavigationItem(shopMenu, isActive),
+        ...toNavigationItem(shopMenu, isActive, labels.overview),
         // The shop's columns also link content pages (rooms, showroom): it is active on its own pages only.
         active: isActive(shopMenu.href === '/' ? SHOP_HOME_PATH : shopMenu.href),
-        overview: shopMenu.columns ? { label: `Zum ${shopMenu.label}`, href: shopMenu.href } : null,
+        overview: shopMenu.columns ? { label: labels.shopOverview, href: shopMenu.href } : null,
       }
     : null;
 
@@ -78,6 +78,7 @@ export const Header: FC<Props> = ({ navigation, contactLink, shopMenu, variant =
           toNavigationItem(
             item,
             isActive,
+            labels.overview,
             navigation.map(({ href }) => href),
           ),
         ),

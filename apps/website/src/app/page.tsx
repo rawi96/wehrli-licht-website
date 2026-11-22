@@ -21,7 +21,7 @@ export default async function HomePage() {
         {page.stage}
         <Container>{page.content}</Container>
       </main>
-      <Footer layout={layout} />
+      <Footer layout={layout} rightsReserved={(await content.getSiteTexts()).footerRights} />
     </>
   );
 }

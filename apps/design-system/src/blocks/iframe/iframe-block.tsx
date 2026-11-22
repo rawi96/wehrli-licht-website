@@ -11,6 +11,14 @@ type Props = BlockMargins & {
 /** An embedded page (e.g. a map), 500px high over the content width, loaded lazily. */
 export const IframeBlock: FC<Props> = ({ src, title = 'Google Maps', marginTop, marginBottom }) => (
   <Section marginBottom={marginBottom} marginTop={marginTop}>
-    <iframe title={title} className="mb-20" src={src} width="100%" height="500" allowFullScreen loading="lazy" />
+    <iframe
+      title={title}
+      className="mb-20 rounded-md border-0"
+      src={src}
+      width="100%"
+      height="500"
+      allowFullScreen
+      loading="lazy"
+    />
   </Section>
 );

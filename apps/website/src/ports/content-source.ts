@@ -1,3 +1,4 @@
+import type { SiteTexts } from '@/domain/content/site-texts';
 import type { CompanyProfile } from '@/domain/content/company-profile';
 import type { FaqEntry } from '@/domain/content/faq';
 import type { ArticleInfo, Breadcrumb, PageMetadata, PageRoute, PageSummary, PreviewLink } from '@/domain/content/page';
@@ -54,6 +55,8 @@ export type ContentSource = {
   getSiteLayout(): Promise<SiteLayout>;
   /** Business facts for structured data and llms.txt, null if not maintained. */
   getCompanyProfile(): Promise<CompanyProfile | null>;
+  /** Labels, notices and e-mail texts of «Texte & Beschriftungen», defaults for empty ones. */
+  getSiteTexts(): Promise<SiteTexts>;
   /** Metadata of the page at `path` (`/` for the home page); site-wide defaults if there is no such page. */
   getPageMetadata(path: string): Promise<PageMetadata>;
   /** The content page at `path` (not the home page), null if there is none at exactly this path. */

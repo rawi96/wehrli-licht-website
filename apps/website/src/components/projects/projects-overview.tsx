@@ -9,10 +9,12 @@ type Props = {
   /** The area whose page this is (/projekte/<slug>), null on the page with all projects. */
   activeArea: ProjectArea | null;
   allLabel?: string | null;
+  /** Link text of each project card. */
+  cardLinkLabel: string;
 };
 
 /** All projects with a chip per area; each area has its own page with the same overview and its chip active. */
-export const ProjectsOverview: FC<Props> = ({ projects, areas, activeArea, allLabel }) => {
+export const ProjectsOverview: FC<Props> = ({ projects, areas, activeArea, allLabel, cardLinkLabel }) => {
   const visible = activeArea ? projects.filter((project) => project.area?.id === activeArea.id) : projects;
 
   return (
@@ -35,7 +37,7 @@ export const ProjectsOverview: FC<Props> = ({ projects, areas, activeArea, allLa
           <p>{activeArea.intro}</p>
         </RichText>
       )}
-      <ProjectCards projects={visible} />
+      <ProjectCards projects={visible} linkLabel={cardLinkLabel} />
     </section>
   );
 };

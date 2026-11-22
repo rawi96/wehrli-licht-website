@@ -34,6 +34,7 @@ export default async function FaqPage() {
           intro={intro}
           groups={groupFaqsByTopic(faqs)}
           contactHref={await content.getContactPath()}
+          texts={await content.getSiteTexts()}
         />
       </Container>
     </SitePage>

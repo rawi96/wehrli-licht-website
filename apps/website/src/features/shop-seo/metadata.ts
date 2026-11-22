@@ -58,13 +58,9 @@ export const buildCategoryMetadata = (category: Category): Metadata =>
     noIndex: category.seo.noIndex,
   });
 
-export const shopAllProductsMetadata: Metadata = {
-  ...baseMetadata({
-    title: 'Alle Leuchten – Leuchten Shop | Wehrli Licht',
-    description:
-      'Alle Leuchten im Online-Shop von Wehrli Licht: Pendelleuchten, Deckenleuchten, Wandleuchten und Tischleuchten für Zuhause und Gewerbe in der Schweiz.',
-    path: '/shop/alle-leuchten',
-  }),
+/** Title and description are maintained in DatoCMS («Texte & Beschriftungen»). */
+export const shopAllProductsMetadata = ({ title, description }: { title: string; description: string }): Metadata => ({
+  ...baseMetadata({ title, description, path: '/shop/alle-leuchten' }),
   keywords: [
     'Alle Leuchten',
     'Leuchten Shop',
@@ -74,7 +70,7 @@ export const shopAllProductsMetadata: Metadata = {
     'Tischleuchte',
     'Wehrli Licht',
   ],
-};
+});
 
 export const shopIndexMetadata: Metadata = {
   ...baseMetadata({

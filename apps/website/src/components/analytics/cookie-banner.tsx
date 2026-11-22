@@ -19,9 +19,11 @@ type BannerState = 'initial' | 'closed' | 'reopened';
 type Props = {
   /** Privacy page from DatoCMS («Header & Footer»), link omitted if not set. */
   privacyHref: string | null;
+  /** Text and buttons (CMS «Texte & Beschriftungen»). */
+  labels: { text: string; accept: string; decline: string };
 };
 
-export const CookieBanner: FC<Props> = ({ privacyHref }) => {
+export const CookieBanner: FC<Props> = ({ privacyHref, labels }) => {
   const [state, setState] = useState<BannerState>('initial');
 
   useEffect(() => {
@@ -47,9 +49,7 @@ export const CookieBanner: FC<Props> = ({ privacyHref }) => {
 
   return (
     <CookieBannerView
-      labels={{
-        text: 'Wir nutzen Google Analytics, um die Website zu verbessern, und mit Ihrer Zustimmung Google Ads für passende Werbung.',
-      }}
+      labels={labels}
       privacyHref={privacyHref}
       reopened={state === 'reopened'}
       onDecline={() => choose('denied')}

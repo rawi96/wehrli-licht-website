@@ -2,16 +2,21 @@ import { FC, PropsWithChildren } from 'react';
 import { cn } from '../../fundamentals/cn';
 
 type Props = PropsWithChildren<{
-  /** Number of items, or the wanted columns: 1 column on mobile, 2 from md, 3 from lg (when 3 or more). */
+  /**
+   * Number of items, or the wanted columns: 1 column on mobile, 2 from md, 3 from lg (when 3 or more). Exactly 4 stay
+   * in 2 columns, so no single item is left in the last row.
+   */
   cols: number;
 }>;
+
+const isTwoColumns = (cols: number): boolean => cols === 2 || cols === 4;
 
 /** Equal-height grid for cards and text columns. Works for any number of items. */
 export const Grid: FC<Props> = ({ cols, children }) => (
   <div
     className={cn(
       'my-8 grid grid-flow-row grid-cols-1 gap-4 md:auto-rows-fr md:gap-8 xl:my-16 xl:gap-16',
-      cols === 2 ? 'md:grid-cols-2' : cols >= 3 ? 'md:grid-cols-2 lg:grid-cols-3' : undefined,
+      isTwoColumns(cols) ? 'md:grid-cols-2' : cols >= 3 ? 'md:grid-cols-2 lg:grid-cols-3' : undefined,
     )}
   >
     {children}
@@ -34,9 +39,9 @@ export const CONTENT_IMAGE_SIZES = {
 
 /** `sizes` of an image in a Grid with `cols` columns. */
 export const gridImageSizes = (cols: number): string => {
-  if (cols >= 3) {
-    return CONTENT_IMAGE_SIZES.thirds;
+  if (isTwoColumns(cols)) {
+    return CONTENT_IMAGE_SIZES.halves;
   }
 
-  return cols === 2 ? CONTENT_IMAGE_SIZES.halves : CONTENT_IMAGE_SIZES.full;
+  return cols >= 3 ? CONTENT_IMAGE_SIZES.thirds : CONTENT_IMAGE_SIZES.full;
 };

@@ -3,6 +3,7 @@
 import { countFaqsInGroups, filterFaqGroups, type FaqTopicGroup } from '@/domain/content/faq';
 import { formatFaqCount, formatFaqSearchStatus } from './format-faq-count';
 import { FaqContactCta, FaqIntro, FaqLink, FaqNoResults, FaqSearch, FaqTopics } from '@wehrli/design-system';
+import type { SiteTexts } from '@/domain/content/site-texts';
 import { FC, useMemo, useState } from 'react';
 
 type Props = {
@@ -11,6 +12,15 @@ type Props = {
   groups: FaqTopicGroup[];
   /** Contact page (from the CMS). */
   contactHref: string;
+  texts: Pick<
+    SiteTexts,
+    | 'faqSearchPlaceholder'
+    | 'faqNoResultsTitle'
+    | 'faqNoResultsText'
+    | 'faqContactTitle'
+    | 'faqContactText'
+    | 'faqContactLink'
+  >;
 };
 
 const DefaultIntro: FC<{ contactHref: string }> = ({ contactHref }) => (
@@ -20,7 +30,7 @@ const DefaultIntro: FC<{ contactHref: string }> = ({ contactHref }) => (
   </>
 );
 
-export const FaqPageContent: FC<Props> = ({ title, intro, groups, contactHref }) => {
+export const FaqPageContent: FC<Props> = ({ title, intro, groups, contactHref, texts }) => {
   const [query, setQuery] = useState('');
   const totalCount = useMemo(() => countFaqsInGroups(groups), [groups]);
 
@@ -43,6 +53,7 @@ export const FaqPageContent: FC<Props> = ({ title, intro, groups, contactHref })
         search={
           <FaqSearch
             id="faq-search"
+            placeholder={texts.faqSearchPlaceholder}
             value={query}
             onChange={setQuery}
             status={formatFaqSearchStatus(resultCount, totalCount, hasQuery)}
@@ -51,9 +62,7 @@ export const FaqPageContent: FC<Props> = ({ title, intro, groups, contactHref })
       />
 
       {hasQuery && filteredGroups.length === 0 ? (
-        <FaqNoResults>
-          Versuchen Sie ein anderes Stichwort oder <FaqLink href={contactHref}>kontaktieren Sie uns</FaqLink>.
-        </FaqNoResults>
+        <FaqNoResults title={texts.faqNoResultsTitle}>{texts.faqNoResultsText}</FaqNoResults>
       ) : (
         <FaqTopics
           expanded={hasQuery}
@@ -67,8 +76,8 @@ export const FaqPageContent: FC<Props> = ({ title, intro, groups, contactHref })
         />
       )}
 
-      <FaqContactCta action={{ label: 'Zum Kontakt', href: contactHref }}>
-        Ihre Frage ist nicht dabei? Rufen Sie uns an, schreiben Sie uns oder buchen Sie einen Termin im Showroom in Goldach.
+      <FaqContactCta title={texts.faqContactTitle} action={{ label: texts.faqContactLink, href: contactHref }}>
+        {texts.faqContactText}
       </FaqContactCta>
     </>
   );

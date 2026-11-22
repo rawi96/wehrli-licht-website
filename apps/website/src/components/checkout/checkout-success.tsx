@@ -2,7 +2,7 @@
 
 import { useShopContext } from '@/components/shop/shop-context';
 import { SHOP_HOME_PATH } from '@/domain/shop/paths';
-import { CHECKOUT_PAYMENT_LABELS, CHECKOUT_SHIPPING_LABELS } from '@/domain/checkout/labels';
+import type { CheckoutLabels } from '@/domain/checkout/labels';
 import { formatShippingAddress } from '@/domain/checkout/shipping-address';
 import { CheckoutSuccessStatus } from '@/domain/checkout/success-status';
 import { analytics } from '@/integrations/client';
@@ -17,9 +17,14 @@ type Props = {
   status: CheckoutSuccessStatus;
   /** Contact page from DatoCMS (Header & Footer). */
   contactHref: string;
+  /** Shipping and payment options (CMS). */
+  labels: CheckoutLabels;
 };
 
-const toViewStatus = (status: CheckoutSuccessStatus): ComponentProps<typeof CheckoutSuccessView>['status'] => {
+const toViewStatus = (
+  status: CheckoutSuccessStatus,
+  labels: CheckoutLabels,
+): ComponentProps<typeof CheckoutSuccessView>['status'] => {
   if (status.kind === 'invalid') {
     return { kind: 'invalid' };
   }
@@ -39,18 +44,18 @@ const toViewStatus = (status: CheckoutSuccessStatus): ComponentProps<typeof Chec
     order: {
       email: order.customer.email,
       number: order.orderId,
-      payment: CHECKOUT_PAYMENT_LABELS[order.paymentMethod].title,
-      shipping: CHECKOUT_SHIPPING_LABELS[order.shipping],
+      payment: labels.payment[order.paymentMethod].title,
+      shipping: labels.shipping[order.shipping],
       address: order.shipping === 'post' && order.shippingAddress ? formatShippingAddress(order.shippingAddress) : null,
       deliveryTime: order.deliveryTimeSummary,
       total: formatPriceToCHF(order.grandTotalChf),
       comment: order.comment,
-      note: order.paymentMethod === 'cash' ? 'Bezahlung bei Abholung in Goldach.' : null,
+      note: order.paymentMethod === 'cash' ? `${labels.payment.cash.description}.` : null,
     },
   };
 };
 
-export const CheckoutSuccess = ({ status, contactHref }: Props) => {
+export const CheckoutSuccess = ({ status, contactHref, labels }: Props) => {
   const { clearCart } = useShopContext();
   const isComplete = status.kind === 'complete';
 
@@ -80,6 +85,11 @@ export const CheckoutSuccess = ({ status, contactHref }: Props) => {
   }, [isComplete]);
 
   return (
-    <CheckoutSuccessView status={toViewStatus(status)} shopHref={SHOP_HOME_PATH} websiteHref="/" contactHref={contactHref} />
+    <CheckoutSuccessView
+      status={toViewStatus(status, labels)}
+      shopHref={SHOP_HOME_PATH}
+      websiteHref="/"
+      contactHref={contactHref}
+    />
   );
 };

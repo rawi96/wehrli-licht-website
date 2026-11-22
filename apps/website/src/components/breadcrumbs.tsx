@@ -1,4 +1,5 @@
 import { JsonLd } from '@/components/seo/json-ld';
+import { content } from '@/integrations';
 import type { Breadcrumb } from '@/domain/content/page';
 import { getSiteUrl } from '@/lib/site-url';
 import { Breadcrumbs as BreadcrumbsView } from '@wehrli/design-system';
@@ -8,7 +9,6 @@ type Props = {
   /** The trail after the home page. */
   customBreadcrumbs: Breadcrumb[];
   spacing?: ComponentProps<typeof BreadcrumbsView>['spacing'];
-  homeText?: string;
 };
 
 const toRichSnippet = (breadcrumbs: Breadcrumb[]) => {
@@ -27,8 +27,9 @@ const toRichSnippet = (breadcrumbs: Breadcrumb[]) => {
 };
 
 /** The breadcrumb trail, starting at the home page, with its structured data. */
-export const Breadcrumbs = ({ customBreadcrumbs, homeText = 'Home', spacing }: Props) => {
-  const breadcrumbsWithHome = [{ name: homeText, href: '/' }, ...customBreadcrumbs];
+export const Breadcrumbs = async ({ customBreadcrumbs, spacing }: Props) => {
+  const { breadcrumbHomeLabel } = await content.getSiteTexts();
+  const breadcrumbsWithHome = [{ name: breadcrumbHomeLabel, href: '/' }, ...customBreadcrumbs];
 
   return (
     <>

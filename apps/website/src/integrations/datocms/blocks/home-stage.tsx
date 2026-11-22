@@ -4,6 +4,7 @@ import { HomeStageBlock as HomeStageBlockView, HomeStageSlide } from '@wehrli/de
 import { FC } from 'react';
 import { toLink } from '../links';
 import { getSiteLayout } from '../site-layout';
+import { getSiteTexts } from '../site-texts';
 
 type Props = {
   block: HomeStageBlockFragment;
@@ -23,7 +24,7 @@ const buildSlides = (block: HomeStageBlockFragment): HomeStageSlide[] => [
 ];
 
 export const HomeStageBlock: FC<Props> = async ({ block }) => {
-  const { navigation, contactLink, shopMenu } = await getSiteLayout();
+  const [{ navigation, contactLink, shopMenu }, texts] = await Promise.all([getSiteLayout(), getSiteTexts()]);
 
   return (
     <HomeStageBlockView
@@ -31,7 +32,15 @@ export const HomeStageBlock: FC<Props> = async ({ block }) => {
       intro={block.intro}
       ctas={block.callToActions.slice(0, 2).map(toLink)}
       slides={buildSlides(block)}
-      header={<Header navigation={navigation} contactLink={contactLink} shopMenu={shopMenu} variant="overlay" />}
+      header={
+        <Header
+          navigation={navigation}
+          contactLink={contactLink}
+          shopMenu={shopMenu}
+          labels={{ overview: texts.menuOverviewLabel, shopOverview: texts.menuShopOverviewLabel }}
+          variant="overlay"
+        />
+      }
     />
   );
 };

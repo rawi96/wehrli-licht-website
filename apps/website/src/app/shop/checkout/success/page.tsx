@@ -1,3 +1,4 @@
+import { toCheckoutLabels } from '@/domain/checkout/labels';
 import { content } from '@/integrations';
 import { SitePage } from '@/components/layout/site-page';
 import { Container } from '@wehrli/design-system';
@@ -24,7 +25,11 @@ export default async function CheckoutSuccessPage({ searchParams }: Props) {
   return (
     <SitePage>
       <Container>
-        <CheckoutSuccess status={status} contactHref={await content.getContactPath()} />
+        <CheckoutSuccess
+          status={status}
+          contactHref={await content.getContactPath()}
+          labels={toCheckoutLabels(await content.getSiteTexts())}
+        />
       </Container>
     </SitePage>
   );

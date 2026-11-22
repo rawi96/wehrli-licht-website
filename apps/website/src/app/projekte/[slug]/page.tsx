@@ -41,11 +41,12 @@ export default async function ProjectPage({ params }: Params) {
   }
 
   const { project, projects } = page;
+  const texts = await content.getSiteTexts();
   const facts = [
-    { label: 'Kunde', value: project.client },
-    { label: 'Ort', value: project.location },
-    { label: 'Jahr', value: project.year },
-    { label: 'Bereich', value: project.area?.name ?? null },
+    { label: texts.projectFactClient, value: project.client },
+    { label: texts.projectFactLocation, value: project.location },
+    { label: texts.projectFactYear, value: project.year },
+    { label: texts.projectFactArea, value: project.area?.name ?? null },
   ].flatMap(({ label, value }) => (value ? [{ label, value }] : []));
   const related = relatedProjects(projects, project);
 
@@ -54,12 +55,16 @@ export default async function ProjectPage({ params }: Params) {
       <Container>
         <Breadcrumbs customBreadcrumbs={projectBreadcrumbs(project.area, project)} />
         {page.intro}
-        <ProjectFacts facts={facts} services={project.services.map(({ title, href }) => ({ label: title, href }))} />
+        <ProjectFacts
+          facts={facts}
+          services={project.services.map(({ title, href }) => ({ label: title, href }))}
+          labels={{ services: texts.projectFactServices }}
+        />
         {page.content}
         {related.length > 0 && (
           <Section>
-            <Heading level="2">Weitere Projekte</Heading>
-            <ProjectCards projects={related} />
+            <Heading level="2">{texts.projectsRelatedTitle}</Heading>
+            <ProjectCards projects={related} linkLabel={texts.projectsCardLink} />
           </Section>
         )}
       </Container>

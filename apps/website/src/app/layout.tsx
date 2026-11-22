@@ -41,6 +41,9 @@ const RootLayout = async ({ children }: { children: ReactNode }) => {
       )
     : null;
 
+  // Falls back to the default texts if the CMS fails.
+  const texts = await content.getSiteTexts();
+
   return (
     // data-consent is set on <html> by the Google tag init script before hydration.
     <html lang="de" className="scroll-smooth" suppressHydrationWarning>
@@ -58,7 +61,10 @@ const RootLayout = async ({ children }: { children: ReactNode }) => {
         </ShopContextProvider>
         {analytics.isEnabled && (
           <>
-            <CookieBanner privacyHref={privacyHref} />
+            <CookieBanner
+              privacyHref={privacyHref}
+              labels={{ text: texts.cookieText, accept: texts.cookieAccept, decline: texts.cookieDecline }}
+            />
             <ContactClickTracking />
           </>
         )}

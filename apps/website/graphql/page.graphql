@@ -44,6 +44,9 @@ query Page($id: ItemId!) {
       ... on IframeRecord {
         ...iframeBlock
       }
+      ... on LocationRecord {
+        ...locationBlock
+      }
       ... on QuoteRecord {
         ...quoteBlock
       }

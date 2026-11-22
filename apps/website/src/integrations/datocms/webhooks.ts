@@ -72,6 +72,12 @@ const revalidateCategorySlug = (slug: string, paths: string[]): void => {
   revalidateShopIndexAndFeeds(paths);
 };
 
+const revalidateSite = (paths: string[]): void => {
+  revalidatePath('/', 'layout');
+  revalidatePath('/llms.txt');
+  paths.push('/ (layout)', '/llms.txt');
+};
+
 const revalidateFromDatoWebhook = (payload: DatoWebhookPayload): string[] => {
   const model = getModelApiKey(payload);
   const paths: string[] = [];
@@ -100,11 +106,10 @@ const revalidateFromDatoWebhook = (payload: DatoWebhookPayload): string[] => {
       break;
     }
     case 'header_footer':
-    case 'company_profile': {
-      // Contact data, linked pages and business facts are used site-wide (layout, JSON-LD) and in llms.txt.
-      revalidatePath('/', 'layout');
-      revalidatePath('/llms.txt');
-      paths.push('/ (layout)', '/llms.txt');
+    case 'company_profile':
+    case 'site_text': {
+      // Contact data, menus, texts and business facts are used site-wide (layout, JSON-LD) and in llms.txt.
+      revalidateSite(paths);
       break;
     }
     case 'shop_product': {
@@ -138,6 +143,8 @@ const revalidateFromDatoWebhook = (payload: DatoWebhookPayload): string[] => {
       break;
     }
     default:
+      // Projects, FAQs, team members, testimonials, redirects…: shown on many pages, so all pages are refreshed.
+      revalidateSite(paths);
       break;
   }
 

@@ -10,7 +10,7 @@ import { useShopContext } from '@/components/shop/shop-context';
 import { SHOP_HOME_PATH } from '@/domain/shop/paths';
 import { buildCheckoutItemsFromCart } from '@/domain/checkout/cart-items';
 import { validateCheckoutCustomer } from '@/domain/checkout/customer';
-import { CHECKOUT_PAYMENT_LABELS, CHECKOUT_SHIPPING_LABELS } from '@/domain/checkout/labels';
+import type { CheckoutLabels } from '@/domain/checkout/labels';
 import { CheckoutPaymentMethod } from '@/domain/checkout/order';
 import {
   CHECKOUT_SHIPPING_COUNTRY,
@@ -47,17 +47,18 @@ const CHECKOUT_STEPS = (Object.keys(CHECKOUT_STEP_TITLES) as CheckoutStep[]).map
   title: CHECKOUT_STEP_TITLES[id],
 }));
 
-const PAYMENT_OPTIONS = (Object.keys(CHECKOUT_PAYMENT_LABELS) as CheckoutPaymentMethod[]).map((method) => ({
-  value: method,
-  ...CHECKOUT_PAYMENT_LABELS[method],
-}));
-
 type Props = {
   /** Contact page from DatoCMS (Header & Footer). */
   contactHref: string;
+  /** Shipping and payment options (CMS). */
+  labels: CheckoutLabels;
 };
 
-export const CheckoutPageContent = ({ contactHref }: Props) => {
+export const CheckoutPageContent = ({ contactHref, labels }: Props) => {
+  const paymentOptions = (Object.keys(labels.payment) as CheckoutPaymentMethod[]).map((method) => ({
+    value: method,
+    ...labels.payment[method],
+  }));
   const router = useRouter();
   const searchParams = useSearchParams();
   const { shoppingCart, isHydrated, updateItemQuantity, removeItem } = useShopContext();
@@ -268,10 +269,10 @@ export const CheckoutPageContent = ({ contactHref }: Props) => {
       {step === 'shipping' && (
         <CheckoutShippingStep
           options={[
-            { value: 'pickup', title: CHECKOUT_SHIPPING_LABELS.pickup, description: 'Gratis während den Öffnungszeiten' },
+            { value: 'pickup', title: labels.shipping.pickup, description: labels.pickupDescription },
             {
               value: 'post',
-              title: CHECKOUT_SHIPPING_LABELS.post,
+              title: labels.shipping.post,
               description: `In die Schweiz · ${formatShippingCostLabel('post', postShippingCostChf)}`,
             },
           ]}
@@ -308,7 +309,7 @@ export const CheckoutPageContent = ({ contactHref }: Props) => {
 
       {step === 'payment' && (
         <CheckoutPaymentStep
-          options={PAYMENT_OPTIONS}
+          options={paymentOptions}
           value={draft.paymentMethod}
           onChange={draft.setPaymentMethod}
           error={displayError}
@@ -326,11 +327,11 @@ export const CheckoutPageContent = ({ contactHref }: Props) => {
             phone: draft.customer.phone,
           }}
           shipping={{
-            method: CHECKOUT_SHIPPING_LABELS[draft.shipping],
+            method: labels.shipping[draft.shipping],
             address: draft.shipping === 'post' ? formatShippingAddress(draft.shippingAddress) : null,
             deliveryTime: verifiedQuote?.deliveryTimeSummary,
           }}
-          payment={CHECKOUT_PAYMENT_LABELS[draft.paymentMethod]}
+          payment={labels.payment[draft.paymentMethod]}
           comment={draft.comment.trim()}
           lines={reviewCartLines}
           subtotal={formatPriceToCHF(reviewTotals.subTotalChf)}

@@ -45,7 +45,7 @@ export default async function ShopProductPage({ params }: Props) {
 
   const { product, description } = found;
 
-  const contactPath = await content.getContactPath();
+  const [contactPath, texts] = await Promise.all([content.getContactPath(), content.getSiteTexts()]);
 
   return (
     <SitePage>
@@ -64,6 +64,12 @@ export default async function ShopProductPage({ params }: Props) {
             description={description}
             contactHref={contactPath}
             viewingHref={`${contactPath}#termin`}
+            labels={{
+              addToCart: texts.productAddToCart,
+              viewing: texts.productViewingLink,
+              question: texts.productQuestionTitle,
+              questionLink: texts.productQuestionLink,
+            }}
           />
         </ShopBrowseLayout>
       </Container>

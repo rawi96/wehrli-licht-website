@@ -26,6 +26,8 @@ type Props = {
   contactHref: string | null;
   /** Booking of a showroom visit: the contact page's appointment section. */
   viewingHref: string;
+  /** Texts of the buttons and the question line (CMS «Texte & Beschriftungen»). */
+  labels: { addToCart: string; viewing: string; question: string; questionLink: string };
 };
 
 const toAnalyticsItem = (product: Product, variant: ProductVariant | null) => {
@@ -42,7 +44,7 @@ const toAnalyticsItem = (product: Product, variant: ProductVariant | null) => {
 const productQuestionHref = (contactHref: string, product: Product) =>
   `${contactHref}?${new URLSearchParams({ [PRODUCT_PREFILL_PARAM]: product.name }).toString()}#${CONTACT_FORM_ANCHOR}`;
 
-export const ProductDetail = ({ product, description, contactHref, viewingHref }: Props) => {
+export const ProductDetail = ({ product, description, contactHref, viewingHref, labels }: Props) => {
   const [pickedOptions, setPickedOptions] = useState<SelectedOptions>({});
   const { addToCart, setIsShowCart } = useShopContext();
 
@@ -108,6 +110,7 @@ export const ProductDetail = ({ product, description, contactHref, viewingHref }
       viewingHref={viewingHref}
       onViewingClick={handleViewingClick}
       questionHref={contactHref ? productQuestionHref(contactHref, product) : null}
+      labels={labels}
       description={description}
       specs={getProductSpecRows(product)}
     />

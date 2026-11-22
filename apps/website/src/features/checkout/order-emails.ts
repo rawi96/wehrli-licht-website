@@ -1,7 +1,8 @@
 import 'server-only';
 import type { CheckoutOrder } from '@/domain/checkout/order';
 import { getShopNotificationEmails } from '@/features/mail/recipients';
-import { mailer, payments } from '@/integrations';
+import { getEmailSender } from '@/features/mail/sender';
+import { content, mailer, payments } from '@/integrations';
 import { buildCustomerOrderEmail, buildShopOrderEmail } from './email/build-emails';
 
 export type SendCheckoutEmailsResult = {
@@ -45,8 +46,9 @@ export const sendCheckoutOrderEmails = async (order: CheckoutOrder): Promise<Sen
     };
   }
 
-  const customerEmail = buildCustomerOrderEmail(order);
-  const shopEmail = buildShopOrderEmail(order);
+  const context = { texts: await content.getSiteTexts(), sender: await getEmailSender() };
+  const customerEmail = buildCustomerOrderEmail(order, context);
+  const shopEmail = buildShopOrderEmail(order, context);
   const idempotencyPrefix = `checkout-${order.orderId}`;
 
   try {

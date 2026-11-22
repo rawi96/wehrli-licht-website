@@ -8,6 +8,7 @@ export * from './highlight-projects-teaser/highlight-projects-teaser-block';
 export * from './highlight-shop-teaser/highlight-shop-teaser-block';
 export * from './home-stage/home-stage-block';
 export * from './iframe/iframe-block';
+export * from './location/location-block';
 export * from './image/image-block';
 export * from './logo-grid/logo-grid-block';
 export * from './quote/quote-block';

@@ -5,13 +5,15 @@ import { FC } from 'react';
 
 type Props = {
   projects: ProjectSummary[];
+  /** Link text of each card, e.g. «Projekt ansehen». */
+  linkLabel: string;
 };
 
 const toEyebrow = ({ area, location }: ProjectSummary): string | null =>
   [area?.name, location].filter(Boolean).join(' · ') || null;
 
 /** Projects as cards: area and place, title, short description. */
-export const ProjectCards: FC<Props> = ({ projects }) => (
+export const ProjectCards: FC<Props> = ({ projects, linkLabel }) => (
   <Grid cols={projects.length}>
     {projects.map((project) => (
       <Card
@@ -20,7 +22,7 @@ export const ProjectCards: FC<Props> = ({ projects }) => (
         description={project.description}
         eyebrow={toEyebrow(project)}
         href={getProjectPath(project.slug)}
-        linkLabel="Projekt ansehen"
+        linkLabel={linkLabel}
         prefetch={false}
         image={project.image}
         imageSizes={gridImageSizes(projects.length)}

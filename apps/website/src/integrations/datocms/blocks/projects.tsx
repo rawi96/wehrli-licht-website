@@ -6,12 +6,13 @@ import { CtaLink, Heading, Section } from '@wehrli/design-system';
 import { FC } from 'react';
 import { getActiveProjectArea } from '../active-project-area';
 import { getRequestProjectAreas, getRequestProjects } from '../projects';
+import { getSiteTexts } from '../site-texts';
 
 const MAX_PROJECTS = 3;
 
 /** Projects of an area or a service page; the featured projects when nothing matches. Renders nothing without projects. */
 export const ProjectsBlock: FC<{ block: ProjectsBlockFragment }> = async ({ block }) => {
-  const projects = await getRequestProjects();
+  const [projects, texts] = await Promise.all([getRequestProjects(), getSiteTexts()]);
   const matching = filterProjects(projects, { areaId: block.area?.id, serviceId: block.service?.id });
   const shown = (matching.length > 0 ? matching : projects.filter(({ featured }) => featured)).slice(0, MAX_PROJECTS);
 
@@ -23,18 +24,24 @@ export const ProjectsBlock: FC<{ block: ProjectsBlockFragment }> = async ({ bloc
 
   return (
     <Section>
-      <Heading level="2">{block.projectsTitle?.trim() ? block.projectsTitle.trim() : 'Projekte zu diesem Thema'}</Heading>
-      <ProjectCards projects={shown} />
-      <CtaLink href={moreHref}>Alle Projekte ansehen</CtaLink>
+      <Heading level="2">{block.projectsTitle?.trim() ? block.projectsTitle.trim() : texts.projectsBlockTitle}</Heading>
+      <ProjectCards projects={shown} linkLabel={texts.projectsCardLink} />
+      <CtaLink href={moreHref}>{texts.projectsAllLink}</CtaLink>
     </Section>
   );
 };
 
 /** All projects with a chip per area; on an area page (/projekte/<slug>) with that area's chip active. */
 export const ProjectsOverviewBlock: FC<{ block: ProjectsOverviewBlockFragment }> = async ({ block }) => {
-  const [projects, areas] = await Promise.all([getRequestProjects(), getRequestProjectAreas()]);
+  const [projects, areas, texts] = await Promise.all([getRequestProjects(), getRequestProjectAreas(), getSiteTexts()]);
 
   return (
-    <ProjectsOverview projects={projects} areas={areas} activeArea={getActiveProjectArea()} allLabel={block.allLabel} />
+    <ProjectsOverview
+      projects={projects}
+      areas={areas}
+      activeArea={getActiveProjectArea()}
+      allLabel={block.allLabel}
+      cardLinkLabel={texts.projectsCardLink}
+    />
   );
 };

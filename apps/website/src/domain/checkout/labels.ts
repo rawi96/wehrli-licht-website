@@ -1,21 +1,20 @@
+import type { SiteTexts } from '../content/site-texts';
 import type { CheckoutPaymentMethod, CheckoutShippingMethod } from './order';
 
-export const CHECKOUT_SHIPPING_LABELS: Record<CheckoutShippingMethod, string> = {
-  pickup: 'Abholung in Goldach',
-  post: 'Versand per Post',
+/** Names and descriptions of shipping and payment options, maintained in DatoCMS («Texte & Beschriftungen»). */
+export type CheckoutLabels = {
+  shipping: Record<CheckoutShippingMethod, string>;
+  /** Shown below the pickup option. */
+  pickupDescription: string;
+  payment: Record<CheckoutPaymentMethod, { title: string; description: string }>;
 };
 
-export const CHECKOUT_PAYMENT_LABELS: Record<CheckoutPaymentMethod, { title: string; description: string }> = {
-  prepayment: {
-    title: 'Vorauskasse',
-    description: 'Überweisung vor Lieferung oder Abholung',
+export const toCheckoutLabels = (texts: SiteTexts): CheckoutLabels => ({
+  shipping: { pickup: texts.shippingPickupLabel, post: texts.shippingPostLabel },
+  pickupDescription: texts.shippingPickupText,
+  payment: {
+    prepayment: { title: texts.paymentPrepaymentLabel, description: texts.paymentPrepaymentText },
+    cash: { title: texts.paymentCashLabel, description: texts.paymentCashText },
+    online: { title: texts.paymentOnlineLabel, description: texts.paymentOnlineText },
   },
-  cash: {
-    title: 'Bezahlung vor Ort',
-    description: 'Bar oder mit Karte bei Abholung in Goldach',
-  },
-  online: {
-    title: 'Online bezahlen',
-    description: 'Karte, TWINT, Apple Pay und weitere Methoden',
-  },
-};
+});

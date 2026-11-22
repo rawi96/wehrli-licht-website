@@ -29,10 +29,12 @@ type Props = {
   topics: string[];
   /** Privacy page from DatoCMS («Header & Footer»), link omitted if not set. */
   privacyHref: string | null;
+  /** Button, success message and privacy note (CMS «Texte & Beschriftungen»). */
+  labels: { submit: string; successTitle: string; successText: string; privacyNote: string };
 };
 
 /** Connects the design system's ContactForm with validation, the contact API and lead tracking. */
-export const ContactForm: FC<Props> = ({ formId, topics, privacyHref }) => {
+export const ContactForm: FC<Props> = ({ formId, topics, privacyHref, labels }) => {
   const [values, setValues] = useState<ContactFormValues>({
     name: '',
     email: '',
@@ -114,6 +116,7 @@ export const ContactForm: FC<Props> = ({ formId, topics, privacyHref }) => {
       errorMessage={errorMessage}
       topics={topics}
       privacyHref={privacyHref}
+      labels={labels}
       honeypot={{ name: HONEYPOT_FIELD, ref: honeypotRef }}
     />
   );

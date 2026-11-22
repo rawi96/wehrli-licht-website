@@ -47,29 +47,6 @@ query HeaderFooter {
     appointmentPage {
       ...pageRecordLink
     }
-    menu {
-      ... on DirectoryRecord {
-        label
-        slug
-        navigationItems {
-          label
-          id
-          link {
-            ... on PageRecord {
-              slug
-            }
-          }
-        }
-      }
-      ... on NavigationItemRecord {
-        label
-        link {
-          ... on PageRecord {
-            slug
-          }
-        }
-      }
-    }
     facebookUrl
     instagramUrl
     linkedinUrl

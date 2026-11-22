@@ -11,7 +11,6 @@ import { toLines } from './text';
 
 // The «Header & Footer» singleton always exists.
 type HeaderFooter = NonNullable<HeaderFooterQuery['headerFooter']>;
-type HeaderMenuItem = HeaderFooter['menu'][number];
 
 /** «Header & Footer» settings, deduplicated per request. */
 export const getHeaderFooter = cache(async (includeDrafts: boolean): Promise<HeaderFooter> => {
@@ -19,24 +18,6 @@ export const getHeaderFooter = cache(async (includeDrafts: boolean): Promise<Hea
 
   return headerFooter!;
 });
-
-const normalize = (value: string) => value.trim().toLowerCase();
-
-/** Menu entries named or linked like the shop and the contact page are shown separately in the header. */
-const isMenuLinkTo = (item: HeaderMenuItem, name: string): boolean =>
-  !('navigationItems' in item) && (normalize(item.label) === name || (item.link?.slug ?? '') === name);
-
-const toMenuItem = (item: HeaderMenuItem): MenuItem =>
-  'navigationItems' in item
-    ? {
-        label: item.label,
-        href: `/${item.slug}`,
-        children: item.navigationItems.map((child) => ({
-          label: child.label,
-          href: child.link?.slug ? `/${item.slug}/${child.link.slug}` : '/',
-        })),
-      }
-    : { label: item.label, href: `/${item.link?.slug}` };
 
 type MainMenuSection = HeaderFooter['mainMenu'][number];
 type MainMenuLink = MainMenuSection['footerLinks'][number];
@@ -105,15 +86,6 @@ const toAppointmentLink = (headerFooter: HeaderFooter): MenuLink | null => {
   return href && hasText(headerFooter.appointmentLabel) ? { label: headerFooter.appointmentLabel.trim(), href } : null;
 };
 
-/** The last contact entry of the menu, as a link if it links a page. */
-const toContactLink = (menu: HeaderMenuItem[]): MenuLink | null => {
-  const contact = menu.filter((item) => !isMenuLinkTo(item, 'shop') && isMenuLinkTo(item, 'kontakt')).at(-1);
-
-  return contact && !('navigationItems' in contact) && contact.link?.slug
-    ? { label: contact.label, href: `/${contact.link.slug}` }
-    : null;
-};
-
 const toFooterNavigation = (headerFooter: HeaderFooter): FooterLinkGroup[] =>
   headerFooter.footerNavigation.flatMap((group) => {
     const links = group.links
@@ -138,33 +110,20 @@ const toNotice = (title?: string | null, html?: string | null): SiteNotice | nul
   hasText(title) && hasText(html) ? { title, html } : null;
 
 /** Used when no contact page is set in Header & Footer. */
-const FALLBACK_CONTACT_PATH = '/kontakt';
+const FALLBACK_CONTACT_PATH = '/ueber-uns/kontakt';
 
-/**
- * Navigation from «Hauptmenü» (mega menu) when it has entries, otherwise from the old «Menü»: the old one stays usable
- * until the new menu is maintained.
- */
+/** Navigation from «Hauptmenü»: the entry marked as shop comes last, the contact button stands on the right. */
 const toNavigation = (headerFooter: HeaderFooter): Pick<SiteLayout, 'navigation' | 'contactLink' | 'shopMenu'> => {
-  if (headerFooter.mainMenu.length > 0) {
-    const sections = headerFooter.mainMenu.flatMap((section) => {
-      const item = toMainMenuItem(section);
+  const sections = headerFooter.mainMenu.flatMap((section) => {
+    const item = toMainMenuItem(section);
 
-      return item ? [{ item, isShop: section.isShop }] : [];
-    });
-
-    return {
-      navigation: sections.filter(({ isShop }) => !isShop).map(({ item }) => item),
-      shopMenu: sections.find(({ isShop }) => isShop)?.item ?? null,
-      contactLink: toAppointmentLink(headerFooter) ?? toContactLink(headerFooter.menu),
-    };
-  }
+    return item ? [{ item, isShop: section.isShop }] : [];
+  });
 
   return {
-    navigation: headerFooter.menu
-      .filter((item) => !isMenuLinkTo(item, 'shop') && !isMenuLinkTo(item, 'kontakt'))
-      .map(toMenuItem),
-    shopMenu: null,
-    contactLink: toContactLink(headerFooter.menu),
+    navigation: sections.filter(({ isShop }) => !isShop).map(({ item }) => item),
+    shopMenu: sections.find(({ isShop }) => isShop)?.item ?? null,
+    contactLink: toAppointmentLink(headerFooter),
   };
 };
 

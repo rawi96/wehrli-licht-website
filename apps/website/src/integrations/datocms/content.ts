@@ -5,6 +5,7 @@ import { getHomePage, getPage, getPageMetadata } from './pages';
 import { getProjectPage, getProjectPageMetadata, listProjectAreas, listProjects } from './projects';
 import { getPreviewLinks, listPages, listRoutes } from './routes';
 import { getCompanyProfile, getContactPath, getSiteLayout } from './site-layout';
+import { getSiteTexts } from './site-texts';
 import { revalidateChangedContent } from './webhooks';
 
 export const datocmsContent: ContentSource = {
@@ -12,6 +13,7 @@ export const datocmsContent: ContentSource = {
   getContactPath,
   getSiteLayout,
   getCompanyProfile,
+  getSiteTexts,
   getPageMetadata,
   getPage,
   getHomePage,
