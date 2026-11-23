@@ -33,6 +33,8 @@ type Props = {
   /** Year in the copyright line, usually the current year. */
   year: number;
   privacyHref?: string | null;
+  /** Legal pages (Impressum, Datenschutz, AGB …); replace the single privacy link when given. */
+  legalLinks?: { label: string; href: string }[];
   /** Extra entry next to the privacy link, e.g. a FooterLinkButton that reopens the cookie settings. */
   legalExtra?: ReactNode;
   socialLinks?: SocialLink[];
@@ -46,6 +48,7 @@ export const Footer: FC<Props> = ({
   copyrightHolder,
   year,
   privacyHref,
+  legalLinks = [],
   legalExtra,
   socialLinks = [],
   labels: labelOverrides,
@@ -76,11 +79,17 @@ export const Footer: FC<Props> = ({
             <p className={FOOTER_BODY_TEXT_CLASS}>
               &copy; {year} {copyrightHolder}. {labels.rightsReserved}
             </p>
-            {privacyHref && (
-              <Link href={privacyHref} className={FOOTER_LINK_CLASS}>
-                {labels.privacy}
-              </Link>
-            )}
+            {legalLinks.length > 0
+              ? legalLinks.map((link) => (
+                  <Link key={link.href} href={link.href} className={FOOTER_LINK_CLASS}>
+                    {link.label}
+                  </Link>
+                ))
+              : privacyHref && (
+                  <Link href={privacyHref} className={FOOTER_LINK_CLASS}>
+                    {labels.privacy}
+                  </Link>
+                )}
             {legalExtra}
           </div>
 

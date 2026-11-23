@@ -71,6 +71,8 @@ export type SiteLayout = {
   footerNavigation: FooterLinkGroup[];
   /** Path of the privacy policy, or null if none is set. */
   privacyPath: string | null;
+  /** Legal pages at the bottom of the footer (Impressum, Datenschutz, AGB …), in order. */
+  legalLinks: { label: string; href: string }[];
   /** Path of the contact page, with a fallback when none is set. */
   contactPath: string;
 };

@@ -147,6 +147,11 @@ const toSiteLayout = (headerFooter: HeaderFooter): SiteLayout => ({
   openingHours: toNotice(headerFooter.openingHoursTitle, headerFooter.openingHoursText),
   footerNavigation: toFooterNavigation(headerFooter),
   privacyPath: getCmsPagePath(headerFooter.privacyPage),
+  legalLinks: headerFooter.legalPages.flatMap((legalPage) => {
+    const href = getCmsPagePath(legalPage);
+
+    return href ? [{ label: legalPage.title, href }] : [];
+  }),
   contactPath: getCmsPagePath(headerFooter.contactPage) ?? FALLBACK_CONTACT_PATH,
 });
 

@@ -37,6 +37,7 @@ export const Footer: FC<Props> = ({ layout, rightsReserved }) => {
       copyrightHolder={contact.companyName ?? SITE_NAME}
       year={new Date().getFullYear()}
       privacyHref={layout.privacyPath}
+      legalLinks={layout.legalLinks}
       legalExtra={analytics.isEnabled && <CookieSettingsButton />}
       socialLinks={socialLinks}
       labels={{ rightsReserved }}

@@ -57,6 +57,10 @@ query HeaderFooter {
     privacyPage {
       ...pageRecordLink
     }
+    legalPages {
+      title
+      ...pageRecordLink
+    }
     street
     zip
     place
