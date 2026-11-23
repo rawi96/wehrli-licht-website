@@ -83,7 +83,8 @@ html {
       animation: none;
     }
 
-    .animate-hero-reveal {
+    .animate-hero-reveal,
+    .animate-step-in {
       animation: none;
       opacity: 1;
       transform: none;

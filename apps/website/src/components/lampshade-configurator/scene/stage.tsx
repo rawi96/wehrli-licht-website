@@ -10,6 +10,12 @@ import { Lamp, LightState } from './lamp';
 import { Room } from './room';
 import { BACK_WALL_Z, ROOM_LAYOUTS, SIDE_WALL_X } from './rooms';
 
+/** What the camera shows: the whole room, the shade, or a close look at fabric and details. */
+export type CameraFocus = 'room' | 'shade' | 'close';
+
+/** Camera distance relative to the normal view, per focus. */
+const FOCUS_DISTANCE: Record<CameraFocus, number> = { room: 1.6, shade: 1, close: 0.68 };
+
 export type StageHandle = {
   /** The current view as a JPEG data URL. */
   capture: () => string;
@@ -22,6 +28,7 @@ type Props = {
   kelvin: number;
   motif: HTMLImageElement | null;
   showSizes: boolean;
+  focus: CameraFocus;
   /** Pauses rendering, e.g. while the configurator is scrolled out of view. */
   paused: boolean;
   handle: RefObject<StageHandle | null>;
@@ -55,8 +62,12 @@ const minAzimuthFor = (room: LampshadeDesign['room'], target: Vector3): number =
   return -Math.min(MAX_AZIMUTH, Math.asin(Math.min(1, Math.max(0, space))));
 };
 
-/** Moves the camera smoothly to the lamp whenever lamp or room change. */
-const CameraRig: FC<{ design: LampshadeDesign; onInteract?: () => void }> = ({ design, onInteract }) => {
+/** Moves the camera smoothly to the lamp whenever lamp, room or focus change. */
+const CameraRig: FC<{ design: LampshadeDesign; focus: CameraFocus; onInteract?: () => void }> = ({
+  design,
+  focus,
+  onInteract,
+}) => {
   const controlsRef = useRef<CameraControls>(null);
   const firstRef = useRef(true);
   const { room, lamp } = design;
@@ -65,9 +76,11 @@ const CameraRig: FC<{ design: LampshadeDesign; onInteract?: () => void }> = ({ d
   useEffect(() => {
     const { view } = ROOM_LAYOUTS[room];
     const target = shadeCentre({ ...design, room, lamp });
-    const direction = new Vector3(view[0], lamp === 'pendel' ? -0.04 : view[1], view[2]).normalize();
+    // A close look comes from a little lower, so the lining inside shows too.
+    const lift = focus === 'close' ? -0.12 : focus === 'room' ? 0.12 : 0;
+    const direction = new Vector3(view[0], (lamp === 'pendel' ? -0.04 : view[1]) + lift, view[2]).normalize();
     const size = Math.max(design.bottom, design.top, design.height) / 40;
-    const distance = Math.min(MAX_DISTANCE, DISTANCE[lamp] * Math.min(1.35, Math.max(0.85, size)));
+    const distance = Math.min(MAX_DISTANCE, DISTANCE[lamp] * Math.min(1.35, Math.max(0.85, size)) * FOCUS_DISTANCE[focus]);
     const position = target.clone().add(direction.clone().multiplyScalar(distance));
     const camera = controlsRef.current;
     if (!camera) {
@@ -80,9 +93,9 @@ const CameraRig: FC<{ design: LampshadeDesign; onInteract?: () => void }> = ({ d
       void camera.setLookAt(far.x, far.y + 0.6, far.z, target.x, target.y, target.z, false);
     }
     void camera.setLookAt(position.x, position.y, position.z, target.x, target.y, target.z, true);
-    // Only lamp and room move the camera, not every change of the shade.
+    // Only lamp, room and focus move the camera, not every change of the shade.
     // eslint-disable-next-line @eslint-react/exhaustive-deps
-  }, [room, lamp]);
+  }, [room, lamp, focus]);
 
   return (
     <CameraControls
@@ -209,7 +222,18 @@ const Capture: FC<{ handle: RefObject<StageHandle | null> }> = ({ handle }) => {
   return null;
 };
 
-export const Stage: FC<Props> = ({ design, lightOn, dimmer, kelvin, motif, showSizes, paused, handle, onInteract }) => {
+export const Stage: FC<Props> = ({
+  design,
+  lightOn,
+  dimmer,
+  kelvin,
+  motif,
+  showSizes,
+  focus,
+  paused,
+  handle,
+  onInteract,
+}) => {
   const [dpr, setDpr] = useState(1.75);
   const lightRef = useRef<LightState>({ level: 0, target: 0, kelvin });
   lightRef.current.target = lightOn ? dimmer : 0;
@@ -244,7 +268,7 @@ export const Stage: FC<Props> = ({ design, lightOn, dimmer, kelvin, motif, showS
       <Room room={design.room} daylight={lightOn ? 0 : 1} showPlinth={design.lamp === 'tisch'} />
       <Lamp design={design} placement={placement} light={lightRef} motif={motif} shape={shapeRef} />
       {showSizes && <SizeLabels design={design} />}
-      <CameraRig design={design} onInteract={onInteract} />
+      <CameraRig design={design} focus={focus} onInteract={onInteract} />
       <Capture handle={handle} />
     </Canvas>
   );

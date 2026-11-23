@@ -5,3 +5,4 @@ export * from './mega-menu/mega-menu';
 export * from './mobile-menu/mobile-menu';
 export * from './filter-chips/filter-chips';
 export * from './tabs/tabs';
+export * from './step-wizard/step-wizard';
