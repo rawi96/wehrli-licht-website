@@ -1,0 +1,20 @@
+fragment partnersBlock on PartnersBlockRecord {
+  id
+  anchorId
+  disableMarginTop
+  disableMarginBottom
+  partnersTitle: title
+  partnersIntro: intro
+  partners {
+    id
+    name
+    place
+    description
+    website
+    logo {
+      url
+      width
+      height
+    }
+  }
+}

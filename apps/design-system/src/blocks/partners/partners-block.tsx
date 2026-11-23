@@ -1,0 +1,84 @@
+import { ArrowTopRightOnSquareIcon, MapPinIcon } from '@heroicons/react/20/solid';
+import { FC } from 'react';
+import { Section } from '../../layout/section/section';
+import type { BlockMargins } from '../block-margins';
+import { BlockIntro } from '../block-intro';
+
+export type PartnerItem = {
+  id: string;
+  name: string;
+  logo: { src: string; width?: number | null; height?: number | null };
+  /** E.g. «Flawil, Schweiz». */
+  place?: string | null;
+  description?: string | null;
+  website?: string | null;
+};
+
+type Props = BlockMargins & {
+  title?: string | null;
+  intro?: string | null;
+  partners: PartnerItem[];
+  anchorId?: string | null;
+  labels?: { website: string };
+};
+
+const hostOf = (url: string) => {
+  try {
+    return new URL(url).hostname.replace(/^www\./, '');
+  } catch {
+    return url;
+  }
+};
+
+/** Partners as cards: logo, name, place, a short text and a link to their website. */
+export const PartnersBlock: FC<Props> = ({
+  title,
+  intro,
+  partners,
+  anchorId,
+  marginTop,
+  marginBottom,
+  labels = { website: 'Website' },
+}) => (
+  <Section id={anchorId} scrollMargin marginTop={marginTop} marginBottom={marginBottom}>
+    <BlockIntro title={title} intro={intro} />
+    <ul className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 lg:gap-6">
+      {partners.map((partner) => (
+        <li key={partner.id} className="flex flex-col overflow-hidden rounded-md bg-white shadow-sm">
+          <div className="flex h-32 items-center justify-center border-b border-gray-100 px-10 py-6">
+            {/* Logos come in many formats: shown whole, never cropped. */}
+            <img
+              src={partner.logo.src}
+              width={partner.logo.width ?? undefined}
+              height={partner.logo.height ?? undefined}
+              alt={`Logo ${partner.name}`}
+              loading="lazy"
+              className="max-h-full w-auto max-w-full object-contain"
+            />
+          </div>
+          <div className="flex flex-1 flex-col p-6">
+            <h3 className="text-wehrli text-base font-bold">{partner.name}</h3>
+            {partner.place ? (
+              <p className="mt-1 flex items-center gap-1 text-xs text-gray-600">
+                <MapPinIcon className="size-4 shrink-0" aria-hidden="true" />
+                {partner.place}
+              </p>
+            ) : null}
+            {partner.description ? <p className="mt-3 text-sm text-black">{partner.description}</p> : null}
+            {partner.website ? (
+              <a
+                href={partner.website}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-wehrli hover:text-wehrli-dark mt-auto flex items-center gap-1.5 pt-5 text-sm font-bold"
+              >
+                {labels.website}: {hostOf(partner.website)}
+                <ArrowTopRightOnSquareIcon className="size-4" aria-hidden="true" />
+              </a>
+            ) : null}
+          </div>
+        </li>
+      ))}
+    </ul>
+  </Section>
+);

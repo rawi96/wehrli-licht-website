@@ -70,6 +70,9 @@ query Page($id: ItemId!) {
       ... on CtaBlockRecord {
         ...ctaBlock
       }
+      ... on PartnersBlockRecord {
+        ...partnersBlock
+      }
       ... on QuoteRecord {
         ...quoteBlock
       }

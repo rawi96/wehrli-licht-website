@@ -25,3 +25,4 @@ export * from './cards/cards-block';
 export * from './cta/cta-block';
 export * from './facts/facts-block';
 export * from './steps/steps-block';
+export * from './partners/partners-block';

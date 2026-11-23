@@ -24,3 +24,7 @@ type Story = StoryObj<typeof LogoGridBlock>;
 export const Default: Story = {};
 
 export const FewLogos: Story = { args: { logos: logos.slice(0, 2) } };
+
+export const TeaserWithLink: Story = {
+  args: { logos: logos.slice(0, 6), link: { label: 'Alle Partner ansehen', href: '#' } },
+};

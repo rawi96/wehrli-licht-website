@@ -1,6 +1,8 @@
 import NextLink from 'next/link';
 import { FC } from 'react';
+import { LinkButton } from '../../actions/button/button';
 import { Section } from '../../layout/section/section';
+import type { LinkData } from '../../typography/text-link/text-link';
 import type { BlockMargins } from '../block-margins';
 
 type Logo = {
@@ -16,10 +18,12 @@ type Logo = {
 
 type Props = BlockMargins & {
   logos: Logo[];
+  /** Below the logos, e.g. «Alle Partner ansehen» when only some are shown. */
+  link?: LinkData | null;
 };
 
 /** Partner logos: 3 per row, 4 from md, 6 from xl. Each links to the partner's website. */
-export const LogoGridBlock: FC<Props> = ({ logos, marginTop, marginBottom }) => (
+export const LogoGridBlock: FC<Props> = ({ logos, link, marginTop, marginBottom }) => (
   <Section marginBottom={marginBottom} marginTop={marginTop}>
     <div className="grid grid-cols-3 gap-8 rounded-md p-10 sm:gap-12 md:grid-cols-4 md:gap-16 xl:grid-cols-6">
       {logos.map((logo) => (
@@ -36,5 +40,10 @@ export const LogoGridBlock: FC<Props> = ({ logos, marginTop, marginBottom }) => 
         </NextLink>
       ))}
     </div>
+    {link ? (
+      <div className="flex justify-center">
+        <LinkButton link={link} variant="secondary" showArrow />
+      </div>
+    ) : null}
   </Section>
 );

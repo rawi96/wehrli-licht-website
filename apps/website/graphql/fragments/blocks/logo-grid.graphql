@@ -2,6 +2,10 @@ fragment logoGridBlock on LogoGridRecord {
   id
   disableMarginTop
   disableMarginBottom
+  limit
+  link {
+    ...linkBlock
+  }
   logos {
     id
     url

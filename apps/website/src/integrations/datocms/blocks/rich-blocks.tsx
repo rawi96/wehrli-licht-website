@@ -3,6 +3,7 @@ import {
   CardsBlockFragment,
   CtaBlockFragment,
   FactsBlockFragment,
+  PartnersBlockFragment,
   StepsBlockFragment,
 } from '@/graphql/generated';
 import {
@@ -11,6 +12,7 @@ import {
   CtaBlock as CtaBlockView,
   FactsBlock as FactsBlockView,
   isCardIconName,
+  PartnersBlock as PartnersBlockView,
   StepsBlock as StepsBlockView,
 } from '@wehrli/design-system';
 import { FC } from 'react';
@@ -93,3 +95,19 @@ export const CtaBlock: FC<{ block: CtaBlockFragment }> = ({ block }) =>
       secondary={block.secondary ? toLink(block.secondary) : null}
     />
   ) : null;
+
+export const PartnersBlock: FC<{ block: PartnersBlockFragment }> = ({ block }) => (
+  <PartnersBlockView
+    {...margins(block)}
+    title={optional(block.partnersTitle)}
+    intro={optional(block.partnersIntro)}
+    partners={block.partners.map((partner) => ({
+      id: partner.id,
+      name: partner.name,
+      logo: { src: partner.logo.url, width: partner.logo.width, height: partner.logo.height },
+      place: optional(partner.place),
+      description: optional(partner.description),
+      website: optional(partner.website),
+    }))}
+  />
+);

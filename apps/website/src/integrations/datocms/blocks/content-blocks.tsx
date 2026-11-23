@@ -15,7 +15,7 @@ import { LocationBlock } from './location';
 import { ImageBlock } from './image';
 import { LogoGridBlock } from './logo-grid';
 import { QuoteBlock } from './quote';
-import { AccordionBlock, CardsBlock, CtaBlock, FactsBlock, StepsBlock } from './rich-blocks';
+import { AccordionBlock, CardsBlock, CtaBlock, FactsBlock, PartnersBlock, StepsBlock } from './rich-blocks';
 import { AllCategoriesBlock } from '@/integrations/datocms/blocks/shop/all-categories';
 import { TeamBlock } from './team';
 import { TeaserGridBlock } from './teaser-grid';
@@ -87,6 +87,8 @@ export const ContentBlocks: FC<Props> = ({ blocks, eagerBlockCount = 2 }) => {
             return <AccordionBlock key={block.id} block={block} />;
           case 'CtaBlockRecord':
             return <CtaBlock key={block.id} block={block} />;
+          case 'PartnersBlockRecord':
+            return <PartnersBlock key={block.id} block={block} />;
           case 'QuoteRecord':
             return <QuoteBlock key={block.id} block={block} />;
           case 'GalleryRecord':
