@@ -164,7 +164,7 @@ export const MobileMenu: FC<Props> = ({ items, onNavigate, footer, labels }) => 
                   )}
                 </span>
                 <ArrowRightIcon
-                  className="text-wehrli size-5 shrink-0 transition-transform duration-200 group-hover:translate-x-1 motion-reduce:transition-none"
+                  className="text-wehrli size-5 shrink-0 transition-transform group-hover:translate-x-1 motion-reduce:transition-none"
                   aria-hidden="true"
                 />
               </Link>

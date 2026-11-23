@@ -95,7 +95,7 @@ export const ContactForm: FC<Props> = ({
 
   if (status === 'sent') {
     return (
-      <div ref={successRef} tabIndex={-1} role="status" className="rounded-md bg-gray-50 p-6 ring-1 ring-gray-200">
+      <div ref={successRef} tabIndex={-1} role="status" className="card-surface p-6">
         <p className="text-wehrli text-lg font-bold">{labels.successTitle}</p>
         <p className="mt-2 text-sm lg:text-base">{labels.successText}</p>
       </div>

@@ -34,7 +34,7 @@ const ServiceCard: FC<{ item: ShopServiceItem }> = ({ item }) => {
   const Icon = SERVICE_ICONS[item.icon] ?? TruckIcon;
 
   return (
-    <article className="flex h-full flex-col rounded-md bg-gray-50 p-6 shadow-sm ring-1 ring-gray-200">
+    <article className="card-surface flex h-full flex-col p-6">
       <div className="bg-wehrli/10 text-wehrli flex size-11 shrink-0 items-center justify-center rounded-md">
         <Icon className="size-6" aria-hidden="true" />
       </div>

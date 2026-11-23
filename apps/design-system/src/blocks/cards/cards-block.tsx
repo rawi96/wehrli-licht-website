@@ -63,7 +63,7 @@ const CardBody: FC<{ item: CardItem }> = ({ item }) => {
       ) : null}
     </>
   );
-  const className = 'flex w-full flex-col rounded-md bg-white p-6 lg:p-8';
+  const className = 'card-surface flex w-full flex-col p-6 lg:p-8';
 
   return item.link ? (
     <NextLink
@@ -71,7 +71,7 @@ const CardBody: FC<{ item: CardItem }> = ({ item }) => {
       target={item.link.newTab ? '_blank' : undefined}
       className={cn(
         className,
-        'group shadow-sm transition-[transform,box-shadow] duration-200 hover:-translate-y-1 hover:shadow-md motion-reduce:transition-none motion-reduce:hover:translate-y-0',
+        'group shadow-sm transition-[transform,box-shadow] hover:-translate-y-1 hover:shadow-md motion-reduce:transition-none motion-reduce:hover:translate-y-0',
       )}
     >
       {content}

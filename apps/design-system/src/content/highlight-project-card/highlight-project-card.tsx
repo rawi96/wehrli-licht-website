@@ -19,7 +19,7 @@ type Props = {
 };
 
 const cardLinkClass = cn(
-  'shadow-sm ring-1 ring-black/5 transition-shadow duration-300 hover:shadow-md',
+  'shadow-sm ring-1 ring-black/5 transition-shadow hover:shadow-md',
   'active:scale-[0.99] motion-reduce:active:scale-100',
   '',
 );
@@ -66,10 +66,13 @@ export const HighlightProjectCard: FC<Props> = ({
   return compact ? (
     <NextLink
       href={href}
-      className={cn('group flex h-full flex-col overflow-hidden rounded-md bg-white no-underline', cardLinkClass)}
+      className={cn(
+        'group card-surface flex h-full flex-col overflow-hidden no-underline transition-shadow hover:shadow-md',
+        cardLinkClass,
+      )}
     >
       <div className="relative aspect-[4/3] overflow-hidden">
-        <Image image={image} sizes={HIGHLIGHT_IMAGE_SIZES.projectCompact} priority={priority} hoverZoom="slow-subtle" />
+        <Image image={image} sizes={HIGHLIGHT_IMAGE_SIZES.projectCompact} priority={priority} hoverZoom />
       </div>
       <div className="flex flex-1 flex-col p-5 sm:p-6">{content}</div>
     </NextLink>
@@ -77,13 +80,13 @@ export const HighlightProjectCard: FC<Props> = ({
     <NextLink
       href={href}
       className={cn(
-        'group grid w-full grid-cols-1 overflow-hidden rounded-md bg-white no-underline',
+        'group card-surface grid w-full grid-cols-1 overflow-hidden no-underline transition-shadow hover:shadow-md',
         cardLinkClass,
         'lg:min-h-[18rem] lg:grid-cols-12',
       )}
     >
       <div className="relative aspect-[16/11] min-h-[11rem] overflow-hidden sm:min-h-[13rem] lg:col-span-7 lg:aspect-auto lg:min-h-full">
-        <Image image={image} sizes={HIGHLIGHT_IMAGE_SIZES.projectFeatured} priority={priority} hoverZoom="slow-subtle" />
+        <Image image={image} sizes={HIGHLIGHT_IMAGE_SIZES.projectFeatured} priority={priority} hoverZoom />
       </div>
       <div className="flex flex-col justify-center p-5 sm:p-6 lg:col-span-5 lg:p-8">{content}</div>
     </NextLink>

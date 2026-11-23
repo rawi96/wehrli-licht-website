@@ -43,7 +43,7 @@ export const FaqAccordion: FC<Props> = ({ items, expanded = false }) => {
   const anchor = useHashAnchor();
 
   return (
-    <ul className="divide-y divide-gray-200 overflow-hidden rounded-md bg-white shadow-sm">
+    <ul className="card-surface divide-y divide-gray-200 overflow-hidden">
       {items.map((item) => {
         const open = expanded || (!!item.anchor && item.anchor === anchor);
 
@@ -56,7 +56,7 @@ export const FaqAccordion: FC<Props> = ({ items, expanded = false }) => {
                 <span className="text-sm font-bold text-black">{item.question}</span>
                 <span className="bg-wehrli-50 text-wehrli group-data-open:bg-wehrli flex size-7 shrink-0 items-center justify-center rounded-full transition-colors group-data-open:text-white">
                   <PlusIcon
-                    className="size-4 transition-transform duration-200 group-data-open:rotate-45 motion-reduce:transition-none"
+                    className="size-4 transition-transform group-data-open:rotate-45 motion-reduce:transition-none"
                     aria-hidden="true"
                   />
                 </span>

@@ -40,7 +40,9 @@ All visual values live in `src/fundamentals/tokens.css` (Tailwind 4 `@theme`); m
 - Colors: `wehrli` (brand), `wehrli-dark`, `wehrli-100`, `wehrli-50`, `white`, `black` (text), `gray-50` (page background), `gray-100`, `gray-200`, `gray-400`, `gray-600`, `success`, `error`, `error-50`, `error-700`.
 - Font sizes are shifted against Tailwind's defaults: `text-sm` is 16px body copy, `text-base` 20px, `text-lg` 24px, `text-xl` 32px, `text-xxl` 64px; `text-xs` 14px and `text-xxs` 12px. Weights: `font-normal` (400) and `font-bold` (600) only.
 - Radii: `rounded-md` (0.75rem) for every box, `rounded-full` for pills and round buttons. Shadows: `shadow-sm`, `shadow-md`, `shadow-lg`.
+- Tiles: every card, box and panel on the page background is `card-surface` (white, `rounded-md`, `shadow-sm`); clickable ones add `transition-shadow hover:shadow-md`. No light blue or grey panels for content.
 - Spacing and sizes use Tailwind's 4px scale (`p-4`, `h-120`).
+- Hover: every hover effect (colours, shadows, arrows, lifts, image zoom) uses the site-wide default timing (`--default-transition-duration`, 300ms). Write `transition-colors` etc. without `duration-*` or `ease-*`; images zoom only through `Image`'s `hoverZoom`. Own timings are for opening and closing things (dialogs, menus, slideshows), not for hover.
 - Arbitrary values are fine for layout (`grid-cols-[...]`, `aspect-[4/3]`, `calc()`), never for colors, shadows, radii or font sizes. A value the design needs that has no token becomes a token in `tokens.css` and is shown in its Fundamentals story.
 
 ## Components

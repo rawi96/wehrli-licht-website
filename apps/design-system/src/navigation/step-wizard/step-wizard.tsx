@@ -83,7 +83,7 @@ export const StepWizard: FC<Props> = ({ steps, current, onChange, label, finish,
                 {index < steps.length - 1 ? (
                   <span
                     aria-hidden
-                    className={cn('mx-0.5 h-0.5 flex-1 transition-colors duration-300', done ? 'bg-wehrli' : 'bg-gray-200')}
+                    className={cn('mx-0.5 h-0.5 flex-1 transition-colors', done ? 'bg-wehrli' : 'bg-gray-200')}
                   />
                 ) : null}
               </li>

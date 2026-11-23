@@ -31,7 +31,7 @@ export const TextLink: FC<TextLinkProps> = ({ children, href, newTab, rel, title
     rel: rel ?? (newTab ? 'noreferrer' : undefined),
     title,
     className:
-      'border-wehrli text-wehrli hover:border-wehrli-dark hover:text-wehrli-dark border-b-2 no-underline transition-colors duration-150',
+      'border-wehrli text-wehrli hover:border-wehrli-dark hover:text-wehrli-dark border-b-2 no-underline transition-colors',
   };
 
   return isPageLink(href) ? <NextLink {...props}>{children}</NextLink> : <a {...props}>{children}</a>;
@@ -50,7 +50,7 @@ export const CtaLink: FC<CtaLinkProps> = ({ children, href, newTab }) => {
     target: newTab ? '_blank' : '_self',
     rel: newTab ? 'noopener noreferrer' : undefined,
     className:
-      'border-wehrli text-wehrli hover:border-wehrli-dark hover:text-wehrli-dark mt-4 mr-8 inline-block border-b-2 font-bold no-underline transition-colors duration-150 md:text-sm lg:border-b-4 lg:text-base lg:peer-[a&]:ml-8',
+      'border-wehrli text-wehrli hover:border-wehrli-dark hover:text-wehrli-dark mt-4 mr-8 inline-block border-b-2 font-bold no-underline transition-colors md:text-sm lg:border-b-4 lg:text-base lg:peer-[a&]:ml-8',
   };
 
   return isPageLink(href) ? <NextLink {...props}>{children}</NextLink> : <a {...props}>{children}</a>;

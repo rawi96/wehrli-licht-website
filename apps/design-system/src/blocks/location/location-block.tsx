@@ -66,7 +66,7 @@ export const LocationBlock: FC<Props> = ({
   return (
     <Section id={anchorId} marginTop={marginTop} marginBottom={marginBottom}>
       <div className={cn('grid gap-6', mapSrc && 'lg:grid-cols-2')}>
-        <div className="flex flex-col gap-6 rounded-md bg-white p-6 shadow-sm sm:p-8">
+        <div className="card-surface flex flex-col gap-6 p-6 sm:p-8">
           <Heading level="2">{title}</Heading>
 
           <address className="flex flex-col gap-4 text-sm not-italic">

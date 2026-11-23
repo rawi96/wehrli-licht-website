@@ -16,7 +16,7 @@ type Props = {
 };
 
 const cardLinkClass = cn(
-  'ring-1 ring-black/5 transition-shadow duration-300 hover:shadow-lg',
+  'ring-1 ring-black/5 transition-shadow hover:shadow-lg',
   'active:scale-[0.99] motion-reduce:active:scale-100',
   '',
 );
@@ -48,7 +48,7 @@ export const HighlightOfferCard: FC<Props> = ({
         image={image}
         priority={priority}
         sizes={featured ? HIGHLIGHT_IMAGE_SIZES.offerFeatured : HIGHLIGHT_IMAGE_SIZES.offerCompact}
-        hoverZoom="slow"
+        hoverZoom
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-black/10" aria-hidden />
       <div className="absolute inset-0 rounded-md ring-1 ring-black/10 ring-inset" aria-hidden />

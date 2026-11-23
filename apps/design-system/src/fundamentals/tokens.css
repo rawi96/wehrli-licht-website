@@ -121,4 +121,7 @@
   --ease-out: cubic-bezier(0, 0, 0.2, 1);
   --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
   --ease-reveal: cubic-bezier(0.16, 1, 0.3, 1);
+  /* Every hover effect (colours, shadows, arrows, image zoom) uses this one timing: no duration-* on hover. */
+  --default-transition-duration: 300ms;
+  --default-transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
 }

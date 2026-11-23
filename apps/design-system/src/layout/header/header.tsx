@@ -61,7 +61,7 @@ type Props = {
 };
 
 const desktopNavItemClasses =
-  'inline-flex whitespace-nowrap items-center border-b-2 pb-0.5 text-sm font-bold leading-none text-white transition-colors duration-150 hover:border-white';
+  'inline-flex whitespace-nowrap items-center border-b-2 pb-0.5 text-sm font-bold leading-none text-white transition-colors hover:border-white';
 const contactButtonClasses =
   'inline-flex items-center justify-center rounded-md bg-white px-3 py-1.5 text-sm font-bold leading-none text-wehrli transition-colors hover:bg-gray-100';
 const shopButtonClasses =

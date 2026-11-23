@@ -36,10 +36,10 @@ const CATEGORY_GRID_SIZES = '(min-width: 1400px) 410px, (min-width: 1024px) 30vw
 const RowCard: FC<{ item: ShopCategoryGridItem }> = ({ item }) => (
   <Link
     href={item.href}
-    className="group hover:ring-wehrli/30 flex h-full w-64 shrink-0 flex-col overflow-hidden rounded-md bg-white shadow-sm ring-1 ring-gray-200 transition-shadow hover:shadow-md"
+    className="group card-surface flex h-full w-64 shrink-0 flex-col overflow-hidden transition-shadow hover:shadow-md"
   >
     <div className="relative h-52 w-full shrink-0 overflow-hidden bg-gray-100">
-      {item.image && <Image sizes="256px" image={item.image} hoverZoom="quick" />}
+      {item.image && <Image sizes="256px" image={item.image} hoverZoom />}
     </div>
     <div className="flex min-h-0 flex-1 flex-col p-4">
       {item.eyebrow ? (
@@ -66,8 +66,8 @@ const RowCard: FC<{ item: ShopCategoryGridItem }> = ({ item }) => (
 const GridCard: FC<{ item: ShopCategoryGridItem }> = ({ item }) => (
   <Link href={item.href} className="group block">
     <div className="group relative cursor-pointer">
-      <div className="relative h-80 w-full overflow-hidden rounded-md bg-white shadow-sm sm:h-64">
-        {item.image && <Image sizes={CATEGORY_GRID_SIZES} image={item.image} hoverZoom="quick" />}
+      <div className="card-surface relative h-80 w-full overflow-hidden sm:h-64">
+        {item.image && <Image sizes={CATEGORY_GRID_SIZES} image={item.image} hoverZoom />}
       </div>
       <h3 className="text-wehrli my-4 text-sm font-bold md:text-base lg:text-lg">{item.name}</h3>
       {item.description ? <div className="mt-2 text-sm">{item.description}</div> : null}

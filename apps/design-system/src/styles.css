@@ -96,6 +96,11 @@ html {
 }
 
 /* Legible white text on photos */
+/* The one tile of the site: every card, box and panel on the page background looks like this. */
+@utility card-surface {
+  @apply rounded-md bg-white shadow-sm;
+}
+
 @utility hero-text-shadow {
   text-shadow:
     0 2px 24px --theme(--color-wehrli-dark / 65%),

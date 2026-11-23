@@ -73,6 +73,9 @@ query Page($id: ItemId!) {
       ... on PartnersBlockRecord {
         ...partnersBlock
       }
+      ... on ConfiguratorTeaserRecord {
+        ...configuratorTeaserBlock
+      }
       ... on QuoteRecord {
         ...quoteBlock
       }

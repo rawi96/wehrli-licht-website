@@ -28,3 +28,14 @@ export const WithoutTitle: Story = { args: { title: undefined } };
 export const OneMember: Story = { args: { members: members.slice(0, 1) } };
 
 export const WithoutImages: Story = { args: { members: members.map((member) => ({ ...member, image: undefined })) } };
+
+export const ThreeMembers: Story = { args: { members: members.slice(0, 3) } };
+
+export const SixMembers: Story = {
+  args: {
+    members: [...members, ...members.slice(0, 2)].map((member, index) => ({
+      ...member,
+      name: `${member.name} ${index + 1}`,
+    })),
+  },
+};

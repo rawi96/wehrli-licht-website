@@ -140,7 +140,8 @@ export const LampshadeConfigurator: FC<Props> = ({ contactPath, teaser }) => {
   const stageRef = useRef<StageHandle | null>(null);
   const motifUrlRef = useRef<string | null>(null);
 
-  // Browser-only: a shared design comes in the URL hash; WebGL decides whether the 3D view can run.
+  // Browser-only: a shared design comes in the URL hash and opens the configurator right away. WebGL is only checked
+  // when the configurator opens, so the page itself creates no GPU context.
   useEffect(() => {
     const shared = decodeDesign(window.location.hash);
     if (shared) {
@@ -150,9 +151,9 @@ export const LampshadeConfigurator: FC<Props> = ({ contactPath, teaser }) => {
       setStepIndex(LAST_STEP);
       setStarted(true);
       setOpen(true);
+      setWebGL(supportsWebGL());
       /* eslint-enable @eslint-react/set-state-in-effect */
     }
-    setWebGL(supportsWebGL());
   }, []);
 
   // The design goes into the URL once the visitor has started, so a reload or a shared link brings it back.
@@ -581,6 +582,7 @@ export const LampshadeConfigurator: FC<Props> = ({ contactPath, teaser }) => {
   const start = () => {
     setStarted(true);
     setOpen(true);
+    setWebGL((current) => current ?? supportsWebGL());
   };
 
   return (

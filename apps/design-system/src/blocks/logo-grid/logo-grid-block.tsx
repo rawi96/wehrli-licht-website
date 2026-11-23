@@ -42,7 +42,7 @@ const LogoTile: FC<{ logo: Logo; hidden?: boolean }> = ({ logo, hidden = false }
       height={logo.height ?? undefined}
       alt={hidden ? '' : logo.alt}
       loading="lazy"
-      className="max-h-full w-auto max-w-full object-contain opacity-70 grayscale transition duration-300 group-hover/logo:opacity-100 group-hover/logo:grayscale-0"
+      className="max-h-full w-auto max-w-full object-contain opacity-70 grayscale transition group-hover/logo:opacity-100 group-hover/logo:grayscale-0"
     />
   </a>
 );

@@ -13,7 +13,7 @@ type Props = {
 export const ContactFormBlock = async ({
   block: { id, formTitle, formIntro, topics, disableMarginTop, disableMarginBottom },
 }: Props) => {
-  const [{ privacyPath }, texts] = await Promise.all([getSiteLayout(), getSiteTexts()]);
+  const [{ privacyPath, contact }, texts] = await Promise.all([getSiteLayout(), getSiteTexts()]);
 
   return (
     // The anchor lets «Fragen zu dieser Leuchte?» jump straight to the form.
@@ -21,6 +21,14 @@ export const ContactFormBlock = async ({
       anchorId={CONTACT_FORM_ANCHOR}
       title={formTitle}
       intro={formIntro}
+      direct={{
+        phone: contact.phone,
+        email: contact.email,
+        address: [contact.street ?? '', `${contact.zip ?? ''} ${contact.place ?? ''}`.trim()].filter(
+          (line) => line.length > 0,
+        ),
+        mapsHref: contact.mapsHref,
+      }}
       marginTop={!disableMarginTop}
       marginBottom={!disableMarginBottom}
     >

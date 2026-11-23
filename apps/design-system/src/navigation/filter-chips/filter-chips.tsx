@@ -21,9 +21,9 @@ type Props = {
 };
 
 const chipClasses = {
-  idle: 'hover:border-wehrli hover:bg-wehrli-50 text-wehrli bg-white inline-flex whitespace-nowrap items-center gap-x-2 rounded-md border border-gray-200 px-4 py-2 text-sm font-bold transition-colors duration-150',
+  idle: 'hover:border-wehrli hover:bg-wehrli-50 text-wehrli bg-white inline-flex whitespace-nowrap items-center gap-x-2 rounded-md border border-gray-200 px-4 py-2 text-sm font-bold transition-colors',
   active:
-    'bg-wehrli border-wehrli inline-flex whitespace-nowrap items-center gap-x-2 rounded-md border px-4 py-2 text-sm font-bold text-white transition-colors duration-150',
+    'bg-wehrli border-wehrli inline-flex whitespace-nowrap items-center gap-x-2 rounded-md border px-4 py-2 text-sm font-bold text-white transition-colors',
 };
 
 const toState = (active: boolean): 'active' | 'idle' => (active ? 'active' : 'idle');

@@ -19,3 +19,5 @@ export default meta;
 type Story = StoryObj<typeof ConfiguratorTeaser>;
 
 export const Default: Story = {};
+
+export const AsLink: Story = { args: { action: { label: 'Zum Konfigurator', href: '#' } } };

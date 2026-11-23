@@ -33,12 +33,12 @@ export const Card: FC<Props> = ({
     href={href}
     title={linkTitle ?? title}
     prefetch={prefetch}
-    className="group grid w-full grid-rows-[auto_1fr_auto] overflow-hidden rounded-md bg-white text-black transition-transform active:scale-[.99]"
+    className="group card-surface grid w-full grid-rows-[auto_1fr_auto] overflow-hidden text-black transition-[transform,box-shadow] hover:shadow-md active:scale-[.99]"
     target="_self"
   >
     {/* Fixed 23:12, the crop of teaser images (460 × 240): equal image heights in a row, whatever the source size. */}
     <div className="relative aspect-[23/12] overflow-hidden">
-      <Image image={image} sizes={imageSizes} hoverZoom="strong" absolute />
+      <Image image={image} sizes={imageSizes} hoverZoom absolute />
     </div>
     <div className="grid grid-rows-[auto_1fr_auto] p-5 text-sm font-normal md:p-6 lg:p-8 lg:text-sm">
       {/* Always three rows (eyebrow, text, link), so the link sits at the bottom of equal-height cards. */}

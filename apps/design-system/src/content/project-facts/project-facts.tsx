@@ -20,7 +20,7 @@ export const ProjectFacts: FC<Props> = ({ facts, services = [], labels }) => {
   }
 
   return (
-    <div className="bg-wehrli-50 my-8 grid gap-6 rounded-md p-6 sm:grid-cols-2 sm:p-8 lg:grid-cols-[repeat(auto-fit,minmax(10rem,1fr))]">
+    <div className="card-surface my-8 grid gap-6 p-6 sm:grid-cols-2 sm:p-8 lg:grid-cols-[repeat(auto-fit,minmax(10rem,1fr))]">
       {facts.map((fact) => (
         <div key={fact.label}>
           <p className="text-wehrli text-xs font-bold">{fact.label}</p>

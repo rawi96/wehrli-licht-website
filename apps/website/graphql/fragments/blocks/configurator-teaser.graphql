@@ -1,0 +1,11 @@
+fragment configuratorTeaserBlock on ConfiguratorTeaserRecord {
+  id
+  teaserEyebrow: eyebrow
+  teaserTitle: title
+  teaserText: text
+  points
+  note
+  teaserLink: link {
+    ...linkBlock
+  }
+}

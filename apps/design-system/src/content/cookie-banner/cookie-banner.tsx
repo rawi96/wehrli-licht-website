@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { FC } from 'react';
 
-const buttonBase = 'min-h-11 rounded-md px-4 py-2 text-sm font-bold transition-colors duration-150';
+const buttonBase = 'min-h-11 rounded-md px-4 py-2 text-sm font-bold transition-colors';
 
 type CookieBannerLabels = {
   /** What is tracked and why. */

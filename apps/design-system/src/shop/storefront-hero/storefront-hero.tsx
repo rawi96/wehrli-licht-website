@@ -63,7 +63,7 @@ const CategoryTile: FC<{
   >
     <div className="absolute inset-0">
       {category.image ? (
-        <Image image={category.image} priority={priority} sizes={TILE_STYLES[size].sizes} hoverZoom="calm" />
+        <Image image={category.image} priority={priority} sizes={TILE_STYLES[size].sizes} hoverZoom />
       ) : (
         <div className="bg-wehrli/10 flex size-full items-center justify-center">
           <span className="text-wehrli px-4 text-center text-sm font-bold">{category.name}</span>

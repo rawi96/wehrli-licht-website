@@ -34,6 +34,12 @@ const meta: Meta<typeof ContactFormBlock> = {
     anchorId: 'kontaktformular',
     title: 'Schreiben Sie uns',
     intro: 'Wir melden uns innert zwei Arbeitstagen.\nFür dringende Anliegen rufen Sie uns an.',
+    direct: {
+      phone: '+41 71 000 00 00',
+      email: 'hallo@example.com',
+      address: ['Musterstrasse 1', '9000 St. Gallen'],
+      mapsHref: '#karte',
+    },
     children: <Form />,
   },
   parameters: { layout: 'fullscreen' },
@@ -46,3 +52,5 @@ type Story = StoryObj<typeof ContactFormBlock>;
 export const Default: Story = {};
 
 export const WithoutTitleAndIntro: Story = { args: { title: undefined, intro: undefined } };
+
+export const WithoutDirectContact: Story = { args: { direct: null } };

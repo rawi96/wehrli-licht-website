@@ -44,7 +44,7 @@ export const PartnersBlock: FC<Props> = ({
     <BlockIntro title={title} intro={intro} />
     <ul className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 lg:gap-6">
       {partners.map((partner) => (
-        <li key={partner.id} className="flex flex-col overflow-hidden rounded-md bg-white shadow-sm">
+        <li key={partner.id} className="card-surface flex flex-col overflow-hidden">
           <div className="flex h-32 items-center justify-center border-b border-gray-100 px-10 py-6">
             {/* Logos come in many formats: shown whole, never cropped. */}
             <img

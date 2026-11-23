@@ -39,9 +39,9 @@ type Props = {
 
 const triggerClasses = {
   link: {
-    idle: 'group inline-flex items-center whitespace-nowrap gap-x-1 border-b-2 border-transparent pb-0.5 text-sm leading-none font-bold text-white transition-colors duration-150 hover:border-white',
+    idle: 'group inline-flex items-center whitespace-nowrap gap-x-1 border-b-2 border-transparent pb-0.5 text-sm leading-none font-bold text-white transition-colors hover:border-white',
     active:
-      'group inline-flex items-center gap-x-1 whitespace-nowrap border-b-2 border-white pb-0.5 text-sm leading-none font-bold text-white transition-colors duration-150',
+      'group inline-flex items-center gap-x-1 whitespace-nowrap border-b-2 border-white pb-0.5 text-sm leading-none font-bold text-white transition-colors',
   },
   button: {
     idle: 'group inline-flex items-center whitespace-nowrap gap-x-1 rounded-md border-2 border-white px-3 py-1 text-sm leading-none font-bold text-white transition-colors hover:bg-white hover:text-wehrli',
@@ -67,7 +67,7 @@ export const MegaMenu: FC<Props> = ({ label, columns, overview, feature, footerL
           <PopoverButton className={triggerClasses[trigger][toState(active)]}>
             <span>{label}</span>
             <ChevronDownIcon
-              className="size-4 shrink-0 transition-transform duration-200 group-data-open:rotate-180 motion-reduce:transition-none"
+              className="size-4 shrink-0 transition-transform group-data-open:rotate-180 motion-reduce:transition-none"
               aria-hidden="true"
             />
           </PopoverButton>
@@ -102,7 +102,7 @@ export const MegaMenu: FC<Props> = ({ label, columns, overview, feature, footerL
                     >
                       {overview.label}
                       <ArrowRightIcon
-                        className="size-4 shrink-0 transition-transform duration-200 group-hover:translate-x-1 motion-reduce:transition-none"
+                        className="size-4 shrink-0 transition-transform group-hover:translate-x-1 motion-reduce:transition-none"
                         aria-hidden="true"
                       />
                     </Link>
@@ -127,7 +127,7 @@ export const MegaMenu: FC<Props> = ({ label, columns, overview, feature, footerL
                             >
                               <span>{link.label}</span>
                               <ChevronRightIcon
-                                className="size-4 shrink-0 -translate-x-1 opacity-0 transition duration-200 group-hover:translate-x-0 group-hover:opacity-100 motion-reduce:transition-none"
+                                className="size-4 shrink-0 -translate-x-1 opacity-0 transition group-hover:translate-x-0 group-hover:opacity-100 motion-reduce:transition-none"
                                 aria-hidden="true"
                               />
                             </Link>
@@ -142,7 +142,7 @@ export const MegaMenu: FC<Props> = ({ label, columns, overview, feature, footerL
                         >
                           {column.overview.label}
                           <ArrowRightIcon
-                            className="size-3 shrink-0 transition-transform duration-200 group-hover:translate-x-0.5 motion-reduce:transition-none"
+                            className="size-3 shrink-0 transition-transform group-hover:translate-x-0.5 motion-reduce:transition-none"
                             aria-hidden="true"
                           />
                         </Link>

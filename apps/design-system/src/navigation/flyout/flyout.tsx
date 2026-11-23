@@ -23,7 +23,7 @@ export const Flyout: FC<Props> = ({ label, items, active }) => (
     {({ close }) => (
       <>
         <PopoverButton
-          className={`inline-flex items-center gap-x-1 border-b-2 pb-0.5 text-sm leading-none font-bold text-white transition-colors duration-150 ${
+          className={`inline-flex items-center gap-x-1 border-b-2 pb-0.5 text-sm leading-none font-bold text-white transition-colors ${
             active ? 'border-white' : 'border-transparent'
           } hover:border-white`}
         >

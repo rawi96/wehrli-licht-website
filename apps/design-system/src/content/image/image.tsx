@@ -41,7 +41,7 @@ type Props = {
   /** Space around a cut-out image (`fit="contain"`), e.g. product photos on a white card. */
   inset?: boolean;
   /** Zoom when the enclosing `group` (a card link) is hovered. */
-  hoverZoom?: keyof typeof HOVER_ZOOM;
+  hoverZoom?: boolean;
   /** Darkened, e.g. under a title set on the image. */
   dimmed?: boolean;
   /** Positioned over its (positioned) parent, e.g. a fixed-size tile. */
@@ -52,19 +52,8 @@ const FIT = { cover: 'object-cover', contain: 'object-contain', fill: '' } as co
 
 const ROUNDED = { lg: 'rounded-md', full: 'rounded-full' } as const;
 
-/** Hover zoom presets: duration and scale per card type. Turned off for reduced motion. */
-const HOVER_ZOOM = {
-  /** Shop tiles and product cards */
-  quick: 'transition-transform duration-300 group-hover:scale-105 motion-reduce:transition-none',
-  /** Large shop category tiles */
-  calm: 'transition-transform duration-500 group-hover:scale-105 motion-reduce:transition-none',
-  /** Teaser cards and gallery images */
-  strong: 'transition-transform duration-300 group-hover:scale-110 motion-reduce:transition-none',
-  /** Highlight offer cards */
-  slow: 'transition-transform duration-700 ease-out group-hover:scale-[1.04] motion-reduce:transition-none',
-  /** Highlight project cards */
-  'slow-subtle': 'transition-transform duration-700 ease-out group-hover:scale-[1.03] motion-reduce:transition-none',
-} as const;
+/** The one hover zoom of the site (inside a `group`), with the site-wide hover timing. Off for reduced motion. */
+const HOVER_ZOOM = 'transition-transform group-hover:scale-105 motion-reduce:transition-none';
 
 /** Fills its parent (width and height 100%); the parent decides size and aspect ratio. */
 export const Image: FC<Props> = ({
@@ -93,7 +82,7 @@ export const Image: FC<Props> = ({
         FIT[fit],
         rounded && ROUNDED[rounded],
         inset && 'p-3',
-        hoverZoom && HOVER_ZOOM[hoverZoom],
+        hoverZoom && HOVER_ZOOM,
         dimmed && 'brightness-75',
         absolute && 'absolute',
       )}

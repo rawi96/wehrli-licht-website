@@ -9,7 +9,8 @@ type Props = {
   text?: string;
   /** Short promises, e.g. «In 8 einfachen Schritten». */
   features?: string[];
-  action: { label: string; onClick: () => void };
+  /** Opens the configurator (`onClick`) or links to its page (`href`, e.g. on the home page, where nothing loads). */
+  action: { label: string; onClick?: () => void; href?: string };
   /** Small print beside the button, e.g. «Dauert etwa 3 Minuten». */
   note?: string;
 };
@@ -36,7 +37,7 @@ export const ConfiguratorTeaser: FC<Props> = ({ eyebrow, title, text, features =
         </ul>
       ) : null}
       <div className="flex flex-wrap items-center gap-x-5 gap-y-3 pt-1">
-        <Button variant="primary-white" size="large" onClick={action.onClick}>
+        <Button variant="primary-white" size="large" onClick={action.onClick} href={action.href}>
           {action.label}
           <ArrowRightIcon className="ml-2 size-5 transition-transform group-hover:translate-x-1" aria-hidden="true" />
         </Button>

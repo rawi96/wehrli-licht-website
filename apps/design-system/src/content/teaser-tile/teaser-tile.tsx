@@ -14,7 +14,7 @@ type Props = {
 export const TeaserTile: FC<Props> = ({ title, eyebrow, linkLabel, href, image }) => (
   <NextLink href={href} title={title ?? ''} className="group relative h-64 w-64 overflow-hidden rounded-md bg-white">
     <div className="relative h-full w-full overflow-hidden">
-      {image && <Image image={image} sizes="256px" absolute dimmed hoverZoom="strong" />}
+      {image && <Image image={image} sizes="256px" absolute dimmed hoverZoom />}
       <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40" />
       <div className="absolute inset-0 rounded-md ring-1 ring-black/10 ring-inset" />
       <div className="absolute right-0 bottom-0 left-0 p-4 text-sm leading-6 text-white">

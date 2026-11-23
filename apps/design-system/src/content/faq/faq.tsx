@@ -13,7 +13,7 @@ type FaqLinkProps = { href: string; children: ReactNode };
 export const FaqLink: FC<FaqLinkProps> = ({ href, children }) => (
   <Link
     href={href}
-    className="text-wehrli hover:border-wehrli border-b-2 border-transparent font-bold no-underline transition-colors duration-150"
+    className="text-wehrli hover:border-wehrli border-b-2 border-transparent font-bold no-underline transition-colors"
   >
     {children}
   </Link>
@@ -49,7 +49,7 @@ export const FaqIntro: FC<FaqIntroProps> = ({ title, intro, search, topics, labe
       {title}
     </Heading>
     <p className="max-w-2xl text-sm md:max-w-prose lg:text-base">{intro}</p>
-    <div className="mt-8 rounded-md bg-white p-6 shadow-sm sm:p-8">
+    <div className="card-surface mt-8 p-6 sm:p-8">
       {search}
       {topics.length > 1 && (
         <nav
@@ -62,7 +62,7 @@ export const FaqIntro: FC<FaqIntroProps> = ({ title, intro, search, topics, labe
               <li key={topic.id}>
                 <a
                   href={`#${topicHeadingId(topic.slug)}`}
-                  className="hover:border-wehrli hover:bg-wehrli text-wehrli inline-block rounded-md border border-gray-200 bg-gray-50 px-4 py-2 text-sm font-bold transition-colors duration-150 hover:text-white"
+                  className="hover:border-wehrli hover:bg-wehrli text-wehrli inline-block rounded-md border border-gray-200 bg-gray-50 px-4 py-2 text-sm font-bold transition-colors hover:text-white"
                 >
                   {topic.label}
                 </a>
@@ -155,7 +155,7 @@ export const FaqTopics: FC<FaqTopicsProps> = ({ topics, expanded, labels }) => (
           key={topic.id}
           id={topic.slug}
           aria-labelledby={headingId}
-          className="bg-wehrli-50 grid scroll-mt-28 gap-6 rounded-md p-6 sm:p-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] lg:gap-12 lg:p-12"
+          className="grid scroll-mt-28 gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] lg:gap-12"
         >
           <div className="lg:sticky lg:top-28 lg:self-start">
             <p className="text-wehrli mb-3 text-xs font-bold">{labels?.topic ?? 'Thema'}</p>
@@ -182,7 +182,7 @@ type FaqNoResultsProps = {
 
 /** Shown instead of the topics when the search finds nothing. */
 export const FaqNoResults: FC<FaqNoResultsProps> = ({ title = 'Keine passenden Fragen gefunden', children }) => (
-  <div className="bg-wehrli-50 rounded-md p-8 text-center lg:p-12" role="status" aria-live="polite">
+  <div className="card-surface p-8 text-center lg:p-12" role="status" aria-live="polite">
     <p className="text-wehrli text-base font-bold">{title}</p>
     <p className="mt-2 text-sm text-gray-600">{children}</p>
   </div>
@@ -215,7 +215,7 @@ export const FaqContactCta: FC<FaqContactCtaProps> = ({ title = 'Noch Fragen?', 
       >
         {action.label}
         <ArrowRightIcon
-          className="size-4 transition-transform duration-200 group-hover:translate-x-1 motion-reduce:transition-none"
+          className="size-4 transition-transform group-hover:translate-x-1 motion-reduce:transition-none"
           aria-hidden="true"
         />
       </Link>

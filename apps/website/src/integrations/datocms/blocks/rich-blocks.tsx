@@ -1,6 +1,7 @@
 import {
   AccordionBlockFragment,
   CardsBlockFragment,
+  ConfiguratorTeaserBlockFragment,
   CtaBlockFragment,
   FactsBlockFragment,
   PartnersBlockFragment,
@@ -9,6 +10,7 @@ import {
 import {
   AccordionBlock as AccordionBlockView,
   CardsBlock as CardsBlockView,
+  ConfiguratorTeaser,
   CtaBlock as CtaBlockView,
   FactsBlock as FactsBlockView,
   isCardIconName,
@@ -111,3 +113,19 @@ export const PartnersBlock: FC<{ block: PartnersBlockFragment }> = ({ block }) =
     }))}
   />
 );
+
+/** The invitation to the configurator as a link to its page: nothing of the 3D view loads here. */
+export const ConfiguratorTeaserBlock: FC<{ block: ConfiguratorTeaserBlockFragment }> = ({ block }) =>
+  block.teaserLink ? (
+    <ConfiguratorTeaser
+      eyebrow={optional(block.teaserEyebrow) ?? undefined}
+      title={block.teaserTitle}
+      text={optional(block.teaserText) ?? undefined}
+      features={(block.points ?? '')
+        .split('\n')
+        .map((point) => point.trim())
+        .filter(Boolean)}
+      action={{ label: block.teaserLink.label, href: toLink(block.teaserLink).href }}
+      note={optional(block.note) ?? undefined}
+    />
+  ) : null;

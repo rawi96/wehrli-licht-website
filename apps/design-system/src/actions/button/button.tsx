@@ -92,7 +92,7 @@ export const Button: FC<Props> = ({
 
 const ArrowIcon: FC = () => (
   <svg
-    className="ms-2 h-4 w-4 transition-transform duration-200 ease-in-out group-hover:translate-x-1 rtl:rotate-180"
+    className="ms-2 h-4 w-4 transition-transform group-hover:translate-x-1 rtl:rotate-180"
     aria-hidden="true"
     xmlns="http://www.w3.org/2000/svg"
     fill="none"

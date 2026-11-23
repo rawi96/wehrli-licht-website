@@ -27,7 +27,7 @@ export const HighlightCategoryTile: FC<Props> = ({ name, href, image, size, labe
     href={href}
     className={cn(
       'group relative block min-h-0 min-w-0 overflow-hidden rounded-md bg-black/40 shadow-sm ring-1 ring-white/10',
-      'transition-shadow duration-300 hover:ring-white/25 active:scale-[0.99] motion-reduce:active:scale-100',
+      'transition-shadow hover:ring-white/25 active:scale-[0.99] motion-reduce:active:scale-100',
       '',
       SIZE_CLASSES[size],
     )}
@@ -38,7 +38,7 @@ export const HighlightCategoryTile: FC<Props> = ({ name, href, image, size, labe
           image={image}
           priority={priority}
           sizes={size === 'large' ? HIGHLIGHT_IMAGE_SIZES.shopTileLarge : HIGHLIGHT_IMAGE_SIZES.shopTileSmall}
-          hoverZoom="calm"
+          hoverZoom
         />
       ) : (
         <div className="bg-wehrli/30 flex size-full items-center justify-center">
