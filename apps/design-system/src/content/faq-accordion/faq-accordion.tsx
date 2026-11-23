@@ -43,12 +43,12 @@ export const FaqAccordion: FC<Props> = ({ items, expanded = false }) => {
   const anchor = useHashAnchor();
 
   return (
-    <ul className="flex flex-col gap-3">
+    <ul className="card-surface divide-y divide-gray-200 overflow-hidden">
       {items.map((item) => {
         const open = expanded || (!!item.anchor && item.anchor === anchor);
 
         return (
-          <li key={item.id} id={item.anchor} className="card-surface scroll-mt-32 overflow-hidden">
+          <li key={item.id} id={item.anchor} className="scroll-mt-32">
             {/* The key resets the open state when `expanded` or the linked question change. */}
             <Disclosure key={open ? 'open' : 'closed'} defaultOpen={open}>
               {/* The outline stays inside: the rounded box clips everything outside. */}
@@ -61,7 +61,7 @@ export const FaqAccordion: FC<Props> = ({ items, expanded = false }) => {
                   />
                 </span>
               </DisclosureButton>
-              <DisclosurePanel unmount={false} className="px-5 pb-5 text-sm whitespace-pre-line text-gray-600 sm:px-6">
+              <DisclosurePanel unmount={false} className="px-5 pb-5 text-sm whitespace-pre-line text-black sm:px-6">
                 {item.answer}
               </DisclosurePanel>
             </Disclosure>

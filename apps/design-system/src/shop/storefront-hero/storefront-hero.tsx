@@ -94,14 +94,14 @@ export const StorefrontHero: FC<Props> = ({
   const [primary, secondary, tertiary] = categories;
 
   return (
-    <section aria-labelledby={headingId} className="bg-white">
+    <section aria-labelledby={headingId} className="border-b border-gray-200 bg-white">
       <div className="mx-auto grid w-11/12 max-w-7xl gap-8 py-8 sm:gap-10 sm:py-12 md:gap-12 md:py-16 lg:grid-cols-12 lg:items-center lg:gap-16 lg:py-20">
         <div className="lg:col-span-5 [&_h1]:mb-4 sm:[&_h1]:mb-6 lg:[&_h1]:mb-8">
           <p className="text-wehrli text-xs font-bold sm:text-sm">{eyebrow}</p>
           <Heading level="1" id={headingId}>
             {title}
           </Heading>
-          {intro ? <div className="text-sm leading-relaxed text-gray-600 lg:text-base">{intro}</div> : null}
+          {intro ? <div className="text-sm leading-relaxed text-black lg:text-base">{intro}</div> : null}
 
           <div className="mt-6 hidden flex-wrap gap-3 lg:mt-8 lg:flex">
             {primaryCta && <LinkButton link={primaryCta} variant="primary" />}

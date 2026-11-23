@@ -37,7 +37,7 @@ export const FaqBlock: FC<Props> = ({ title, intro, items, allFaqsLink, labels, 
         <div className="flex flex-col gap-4">
           <p className="text-wehrli text-xs font-bold">{labels?.eyebrow ?? 'FAQ'}</p>
           <h2 className="text-wehrli text-lg font-bold break-words md:text-xl">{title?.trim() ?? 'Häufige Fragen'}</h2>
-          {intro && <p className="text-sm text-gray-600">{intro}</p>}
+          {intro && <p className="text-sm text-black">{intro}</p>}
           {allFaqsLink && (
             <Link
               href={allFaqsLink.href}

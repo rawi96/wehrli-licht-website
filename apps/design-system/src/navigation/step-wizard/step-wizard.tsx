@@ -57,7 +57,7 @@ export const StepWizard: FC<Props> = ({ steps, current, onChange, label, finish,
 
   return (
     <div className="flex min-h-0 flex-1 flex-col">
-      <nav aria-label={label} className="px-5 pt-4 pb-3">
+      <nav aria-label={label} className="border-b border-gray-200 px-5 pt-4 pb-3">
         <ol className="flex items-center">
           {steps.map((item, index) => {
             const done = index < current;
@@ -101,13 +101,13 @@ export const StepWizard: FC<Props> = ({ steps, current, onChange, label, finish,
             <h2 ref={headingRef} tabIndex={-1} className="mt-1 text-lg font-bold text-black outline-none">
               {step.title}
             </h2>
-            {step.description ? <p className="mt-2 text-sm text-gray-600">{step.description}</p> : null}
+            {step.description ? <p className="mt-2 text-sm text-black">{step.description}</p> : null}
           </header>
           {step.content}
         </div>
       </div>
 
-      <div className="flex flex-col gap-3 bg-gray-50 px-5 py-4">
+      <div className="flex flex-col gap-3 border-t border-gray-200 bg-gray-50 px-5 py-4">
         {step.cheer ? (
           <p
             key={step.cheer}
@@ -123,7 +123,7 @@ export const StepWizard: FC<Props> = ({ steps, current, onChange, label, finish,
             <button
               type="button"
               onClick={() => onChange(current - 1)}
-              className="flex shrink-0 items-center gap-0.5 rounded-md py-2.5 pr-3 text-sm font-bold text-gray-600 hover:text-black"
+              className="hover:text-wehrli flex shrink-0 items-center gap-0.5 rounded-md py-2.5 pr-3 text-sm font-bold text-gray-600"
             >
               <ChevronLeftIcon className="size-5" aria-hidden />
               Zurück

@@ -49,12 +49,12 @@ const RowCard: FC<{ item: ShopCategoryGridItem }> = ({ item }) => (
       )}
       <h3 className="text-wehrli mt-1 line-clamp-2 min-h-[2.75rem] text-base font-bold">{item.name}</h3>
       {item.description ? (
-        <div className="mt-2 line-clamp-3 flex-1 text-sm text-gray-600">{item.description}</div>
+        <div className="mt-2 line-clamp-3 flex-1 text-sm text-black">{item.description}</div>
       ) : (
         <div className="flex-1" aria-hidden="true" />
       )}
       {item.linkLabel && (
-        <span className="text-wehrli group-hover:border-wehrli mt-auto inline-block w-fit border-b-2 border-black pt-4 text-sm font-bold transition-colors">
+        <span className="text-wehrli group-hover:text-wehrli-dark group-hover:border-wehrli-dark border-wehrli mt-auto inline-block w-fit border-b-2 pt-4 text-sm font-bold transition-colors">
           {item.linkLabel}
           <span aria-hidden="true"> →</span>
         </span>

@@ -66,7 +66,7 @@ export const HighlightOfferCard: FC<Props> = ({
         </h3>
         <span
           className={cn(
-            'mt-2 inline-block border-b border-white/80 font-bold text-white/90 sm:mt-3',
+            'mt-2 inline-block border-b border-white font-bold text-white sm:mt-3',
             featured ? 'text-xs sm:text-sm' : 'text-xs lg:mt-2',
           )}
         >

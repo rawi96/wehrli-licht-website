@@ -61,7 +61,7 @@ export const HighlightShopTeaserBlock: FC<Props> = ({
           <Heading level="2" id={headingId} color="white">
             <span className="text-balance">{title}</span>
           </Heading>
-          <p className="max-w-md text-sm leading-relaxed text-pretty text-white/85 sm:text-base">{subline}</p>
+          <p className="max-w-md text-sm leading-relaxed text-pretty text-white/80 sm:text-base">{subline}</p>
           <div className="mt-6 flex w-full max-w-[22rem] flex-col gap-3 *:w-full sm:mt-8 lg:max-w-none lg:flex-row lg:flex-nowrap lg:items-center lg:gap-4 lg:*:w-auto">
             <LinkButton link={primaryCta} variant="primary-white" fullWidth />
             <LinkButton link={secondaryCta} variant="secondary-white" fullWidth showArrow />
@@ -74,7 +74,7 @@ export const HighlightShopTeaserBlock: FC<Props> = ({
               <h3 className="text-xs font-bold text-white/80">{popularCategoriesLabel}</h3>
               <NextLink
                 href={secondaryCta.href}
-                className="text-sm font-bold text-white/90 underline-offset-4 hover:text-white hover:underline focus-visible:rounded-md"
+                className="text-sm font-bold text-white underline-offset-4 hover:text-white/80 hover:underline focus-visible:rounded-md"
               >
                 {secondaryCta.label}
               </NextLink>
@@ -103,14 +103,14 @@ export const HighlightShopTeaserBlock: FC<Props> = ({
       </div>
 
       {moreCategories.length > 0 && (
-        <nav aria-label={categoriesNavLabel} className="mt-10 sm:mt-12 md:mt-14">
+        <nav aria-label={categoriesNavLabel} className="mt-10 border-t border-white/15 pt-8 sm:mt-12 md:mt-14">
           <h3 className="text-xs font-bold text-white/80">{categoriesNavLabel}</h3>
           <ul className="mt-4 flex flex-wrap gap-2">
             {moreCategories.map((category) => (
               <li key={category.id}>
                 <NextLink
                   href={category.href}
-                  className="inline-flex min-h-10 items-center rounded-md border border-white/20 bg-white/5 px-3.5 py-2 text-sm font-bold text-white/90 transition-colors hover:border-white/40 hover:bg-white/10 hover:text-white sm:px-4"
+                  className="inline-flex min-h-10 items-center rounded-md border border-white/20 bg-white/5 px-3.5 py-2 text-sm font-bold text-white/80 transition-colors hover:border-white/40 hover:bg-white/10 hover:text-white sm:px-4"
                 >
                   {category.name}
                 </NextLink>

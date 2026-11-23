@@ -30,7 +30,7 @@ export const ShopCategoryCard: FC<Props> = ({ name, href, description, image, li
     </div>
     <div className="p-4 sm:p-5">
       <h3 className="text-wehrli text-base font-bold sm:text-lg">{name}</h3>
-      {description ? <div className="mt-2 line-clamp-2 text-sm text-gray-600">{description}</div> : null}
+      {description ? <div className="mt-2 line-clamp-2 text-sm text-black">{description}</div> : null}
       <p className="text-wehrli mt-3 text-sm font-bold">{linkLabel}</p>
     </div>
   </Link>

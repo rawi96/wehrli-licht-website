@@ -25,7 +25,7 @@ export const ShopCategorySection: FC<Props> = ({ sectionId, headingId, title, bo
         <ShopSectionHeader
           headingId={headingId}
           title={title}
-          description={<p className="text-gray-600">{body}</p>}
+          description={<p className="text-black">{body}</p>}
           action={actionLink}
         />
 

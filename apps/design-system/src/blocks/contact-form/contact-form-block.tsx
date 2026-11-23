@@ -1,4 +1,3 @@
-import { EnvelopeIcon, MapPinIcon, PhoneIcon } from '@heroicons/react/24/outline';
 import { FC, ReactNode } from 'react';
 import { Section } from '../../layout/section/section';
 import { Heading } from '../../typography/heading/heading';
@@ -50,28 +49,25 @@ export const ContactFormBlock: FC<Props> = ({
           {intro && <p className="text-sm whitespace-pre-line text-black">{intro}</p>}
         </div>
         {direct && (direct.phone || direct.email || direct.address?.length) ? (
-          <div className="pt-2">
-            <p className="mb-4 text-sm font-bold text-black">{labels.direct}</p>
-            <ul className="flex flex-col gap-3 text-sm">
+          <div className="border-t border-gray-200 pt-6">
+            <p className="text-wehrli mb-4 text-sm font-bold">{labels.direct}</p>
+            <ul className="flex flex-col gap-2 text-sm">
               {direct.phone ? (
-                <li className="flex items-center gap-3">
-                  <PhoneIcon className="text-wehrli size-5 shrink-0" aria-hidden="true" />
+                <li>
                   <a href={`tel:${direct.phone.replace(/\s/g, '')}`} className={linkClass}>
                     {direct.phone}
                   </a>
                 </li>
               ) : null}
               {direct.email ? (
-                <li className="flex items-center gap-3">
-                  <EnvelopeIcon className="text-wehrli size-5 shrink-0" aria-hidden="true" />
+                <li>
                   <a href={`mailto:${direct.email}`} className={linkClass}>
                     {direct.email}
                   </a>
                 </li>
               ) : null}
               {direct.address?.length ? (
-                <li className="flex items-start gap-3">
-                  <MapPinIcon className="text-wehrli size-5 shrink-0" aria-hidden="true" />
+                <li>
                   {direct.mapsHref ? (
                     <a href={direct.mapsHref} target="_blank" rel="noopener noreferrer" className={linkClass}>
                       {direct.address.join(', ')}

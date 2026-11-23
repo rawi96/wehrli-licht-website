@@ -1,4 +1,4 @@
-import { ArrowTopRightOnSquareIcon, MapPinIcon } from '@heroicons/react/20/solid';
+import { ArrowTopRightOnSquareIcon } from '@heroicons/react/20/solid';
 import { FC } from 'react';
 import { Section } from '../../layout/section/section';
 import type { BlockMargins } from '../block-margins';
@@ -45,7 +45,7 @@ export const PartnersBlock: FC<Props> = ({
     <ul className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 lg:gap-6">
       {partners.map((partner) => (
         <li key={partner.id} className="card-surface flex flex-col overflow-hidden">
-          <div className="flex h-32 items-center justify-center px-10 pt-8">
+          <div className="flex h-32 items-center justify-center border-b border-gray-100 px-10 py-8">
             {/* Logos come in many formats: shown whole, never cropped. */}
             <img
               src={partner.logo.src}
@@ -58,12 +58,7 @@ export const PartnersBlock: FC<Props> = ({
           </div>
           <div className="flex flex-1 flex-col p-6">
             <h3 className="text-wehrli text-base font-bold">{partner.name}</h3>
-            {partner.place ? (
-              <p className="mt-1 flex items-center gap-1 text-xs text-gray-600">
-                <MapPinIcon className="size-4 shrink-0" aria-hidden="true" />
-                {partner.place}
-              </p>
-            ) : null}
+            {partner.place ? <p className="mt-1 text-xs text-gray-600">{partner.place}</p> : null}
             {partner.description ? <p className="mt-3 text-sm text-black">{partner.description}</p> : null}
             {partner.website ? (
               <a

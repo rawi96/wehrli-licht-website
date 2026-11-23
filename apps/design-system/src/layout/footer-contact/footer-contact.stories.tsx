@@ -16,7 +16,7 @@ const meta: Meta<typeof FooterContact> = {
   },
   decorators: [
     (Story) => (
-      <div className="bg-wehrli max-w-sm p-6 text-white/90">
+      <div className="bg-wehrli max-w-sm p-6 text-white/80">
         <Story />
       </div>
     ),

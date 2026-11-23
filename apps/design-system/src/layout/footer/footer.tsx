@@ -53,7 +53,7 @@ export const Footer: FC<Props> = ({
   const labels = { ...DEFAULT_LABELS, ...labelOverrides };
 
   return (
-    <footer className="surface-dark bg-wehrli text-white/90" aria-labelledby="footer-heading">
+    <footer className="surface-dark bg-wehrli text-white" aria-labelledby="footer-heading">
       <h2 id="footer-heading" className="sr-only">
         {labels.heading}
       </h2>
@@ -65,13 +65,13 @@ export const Footer: FC<Props> = ({
           </div>
 
           {navigation.length > 0 && (
-            <div className="min-w-0 flex-1 pt-6 lg:pt-0">
+            <div className="min-w-0 flex-1 border-t border-white/10 pt-6 lg:border-t-0 lg:pt-0">
               <FooterNavigation sections={navigation} />
             </div>
           )}
         </div>
 
-        <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-6 flex flex-col gap-4 border-t border-white/10 pt-5 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-6">
             <p className={FOOTER_BODY_TEXT_CLASS}>
               &copy; {year} {copyrightHolder}. {labels.rightsReserved}

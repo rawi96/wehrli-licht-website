@@ -50,7 +50,9 @@ export const Card: FC<Props> = ({
         {description && <p className="mb-2 lg:mb-4">{description}</p>}
       </div>
       <div>
-        <span className="border-b-2 border-black">{linkLabel}</span>
+        <span className="text-wehrli border-wehrli group-hover:text-wehrli-dark group-hover:border-wehrli-dark border-b-2 font-bold transition-colors">
+          {linkLabel}
+        </span>
       </div>
     </div>
   </NextLink>

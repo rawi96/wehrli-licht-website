@@ -1,4 +1,3 @@
-import { ClockIcon, EnvelopeIcon, MapPinIcon, PhoneIcon } from '@heroicons/react/24/outline';
 import { FC, ReactNode } from 'react';
 import { Heading } from '../../typography/heading/heading';
 import { Section } from '../../layout/section/section';
@@ -30,10 +29,8 @@ type Props = BlockMargins & {
   labels?: { route?: string; map?: string };
 };
 
-const rowClasses = 'flex gap-x-3';
-const iconClasses = 'text-wehrli mt-0.5 size-5 shrink-0';
 const linkClasses = 'text-wehrli hover:text-wehrli-dark font-bold transition-colors';
-const richTextClasses = 'text-sm text-gray-600 [&_li+li]:mt-0.5 [&_p]:m-0 [&_p+p]:mt-1.5 [&_ul]:mt-1';
+const richTextClasses = 'text-sm text-black [&_li+li]:mt-0.5 [&_p]:m-0 [&_p+p]:mt-1.5 [&_ul]:mt-1';
 
 /**
  * Address, phone, e-mail and opening hours of the business (from the CMS settings, maintained once). With a map in
@@ -67,9 +64,8 @@ export const LocationBlock: FC<Props> = ({
     <div className="flex flex-col gap-8">
       <Heading level="2">{title}</Heading>
 
-      <address className="flex flex-col gap-4 text-sm not-italic">
-        <div className={rowClasses}>
-          <MapPinIcon className={iconClasses} aria-hidden="true" />
+      <address className="flex flex-col gap-3 text-sm text-black not-italic">
+        <div>
           <div>
             {companyName && <p className="font-bold text-black">{companyName}</p>}
             {street && <p>{street}</p>}
@@ -82,16 +78,14 @@ export const LocationBlock: FC<Props> = ({
           </div>
         </div>
         {phone && (
-          <div className={rowClasses}>
-            <PhoneIcon className={iconClasses} aria-hidden="true" />
+          <div>
             <a href={`tel:${phone.replace(/\s/g, '')}`} className={linkClasses}>
               {phone}
             </a>
           </div>
         )}
         {email && (
-          <div className={rowClasses}>
-            <EnvelopeIcon className={iconClasses} aria-hidden="true" />
+          <div>
             <a href={`mailto:${email}`} className={linkClasses}>
               {email}
             </a>
@@ -107,10 +101,9 @@ export const LocationBlock: FC<Props> = ({
       )}
 
       {openingHours && (
-        <div className={rowClasses}>
-          <ClockIcon className={iconClasses} aria-hidden="true" />
+        <div>
           <div>
-            <p className="text-sm font-bold text-black">{openingHours.title}</p>
+            <p className="text-wehrli text-sm font-bold">{openingHours.title}</p>
             <div className={`mt-1 ${richTextClasses}`}>{openingHours.text}</div>
           </div>
         </div>

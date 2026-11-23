@@ -24,7 +24,7 @@ export const Tabs: FC<Props> = ({ items, label }) => (
           key={item.id}
           className={cn(
             '-mb-px shrink-0 border-b-2 px-2 py-3 text-sm font-bold transition-colors focus-visible:-outline-offset-4',
-            'data-selected:border-wehrli data-selected:text-wehrli border-transparent text-gray-600 hover:text-black',
+            'data-selected:border-wehrli data-selected:text-wehrli hover:text-wehrli border-transparent text-gray-600',
           )}
         >
           {item.label}

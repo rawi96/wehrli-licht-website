@@ -17,6 +17,6 @@ export const BlockIntro: FC<Props> = ({ title, intro, inverted = false }) =>
           {title}
         </Heading>
       ) : null}
-      {intro ? <p className={inverted ? 'text-sm text-white/85' : 'text-sm text-black'}>{intro}</p> : null}
+      {intro ? <p className={inverted ? 'text-sm text-white/80' : 'text-sm text-black'}>{intro}</p> : null}
     </div>
   ) : null;

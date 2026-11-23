@@ -26,7 +26,7 @@ const meta: Meta<typeof FooterNavigation> = {
   },
   decorators: [
     (Story) => (
-      <div className="bg-wehrli p-6 text-white/90">
+      <div className="bg-wehrli p-6 text-white/80">
         <Story />
       </div>
     ),

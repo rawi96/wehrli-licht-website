@@ -30,9 +30,9 @@ type Props = BlockMargins & {
 export const AccordionBlock: FC<Props> = ({ title, intro, items, openFirst = false, anchorId, marginTop, marginBottom }) => (
   <Section id={anchorId} scrollMargin marginTop={marginTop} marginBottom={marginBottom}>
     <BlockIntro title={title} intro={intro} />
-    <div className="flex flex-col gap-3">
+    <div className="card-surface divide-y divide-gray-200">
       {items.map((item, index) => (
-        <Disclosure key={item.id} as="div" defaultOpen={openFirst && index === 0} className="card-surface">
+        <Disclosure key={item.id} as="div" defaultOpen={openFirst && index === 0}>
           <DisclosureButton className="group flex w-full items-center justify-between gap-6 px-6 py-5 text-left focus-visible:-outline-offset-4 lg:px-8">
             <span className="text-wehrli text-base font-bold">{item.title}</span>
             <span className="bg-wehrli-50 text-wehrli group-data-open:bg-wehrli flex size-9 shrink-0 items-center justify-center rounded-full transition-colors group-data-open:text-white">

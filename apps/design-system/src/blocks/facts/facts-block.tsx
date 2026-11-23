@@ -37,7 +37,7 @@ export const FactsBlock: FC<Props> = ({ title, intro, items, anchorId, marginTop
             <dd className="md:text-xxl order-1 mb-1 text-xl leading-none font-bold tabular-nums md:leading-none">
               {item.value}
             </dd>
-            {item.text ? <dd className="order-3 mt-1 text-xs text-white/75">{item.text}</dd> : null}
+            {item.text ? <dd className="order-3 mt-1 text-xs text-white/80">{item.text}</dd> : null}
           </div>
         ))}
       </dl>

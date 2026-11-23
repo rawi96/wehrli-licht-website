@@ -66,7 +66,7 @@ export const HighlightSection: FC<Props> = ({ id, title, subline, cta, children 
         <Heading level="2" id={headingId}>
           <span className="text-balance">{title}</span>
         </Heading>
-        <p className="mt-3 text-sm leading-relaxed text-pretty text-gray-600 sm:text-base">{subline}</p>
+        <p className="mt-3 text-sm leading-relaxed text-pretty text-black sm:text-base">{subline}</p>
       </header>
 
       {children}

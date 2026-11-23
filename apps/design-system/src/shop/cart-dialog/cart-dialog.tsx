@@ -45,7 +45,7 @@ export const CartDialog: FC<Props> = ({ open, onClose, children, labels = DEFAUL
               <div className="relative flex w-full flex-col overflow-hidden rounded-md bg-white pt-6 pb-8 sm:pb-6 lg:py-8">
                 <div className="flex items-center justify-between px-4 sm:px-6 lg:px-8">
                   <Dialog.Title className="text-lg font-bold">{labels.title}</Dialog.Title>
-                  <button type="button" className="text-gray-400 hover:text-gray-600" onClick={onClose}>
+                  <button type="button" className="hover:text-wehrli text-gray-600" onClick={onClose}>
                     <span className="sr-only">{labels.close}</span>
                     <XMarkIcon className="h-6 w-6" aria-hidden="true" />
                   </button>

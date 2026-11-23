@@ -52,7 +52,10 @@ export const FaqIntro: FC<FaqIntroProps> = ({ title, intro, search, topics, labe
     <div className="card-surface mt-8 p-6 sm:p-8">
       {search}
       {topics.length > 1 && (
-        <nav aria-label={labels?.topicsNavigation ?? 'Themen auf dieser Seite'} className="mt-6">
+        <nav
+          aria-label={labels?.topicsNavigation ?? 'Themen auf dieser Seite'}
+          className="mt-6 border-t border-gray-200 pt-6"
+        >
           <p className="mb-3 text-xs font-bold text-gray-600">{labels?.topics ?? 'Themen'}</p>
           <ul className="flex flex-wrap gap-2">
             {topics.map((topic) => (

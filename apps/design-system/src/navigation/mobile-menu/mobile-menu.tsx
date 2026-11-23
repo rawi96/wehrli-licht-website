@@ -212,7 +212,7 @@ export const MobileMenu: FC<Props> = ({ items, onNavigate, footer, labels }) => 
             )}
 
             {panelItem.footerLinks && panelItem.footerLinks.length > 0 && (
-              <ul className="pt-4">
+              <ul className="border-t border-white/10 pt-4">
                 {panelItem.footerLinks.map((link) => (
                   <li key={`${link.href}-${link.label}`}>
                     <Link href={link.href} className={cn(subLinkClasses, 'font-bold')} onClick={onNavigate}>

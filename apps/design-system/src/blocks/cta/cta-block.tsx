@@ -22,7 +22,7 @@ export const CtaBlock: FC<Props> = ({ title, text, primary, secondary, anchorId,
       />
       <div className="relative max-w-2xl">
         <h2 className="mb-3 text-lg font-bold md:text-xl">{title}</h2>
-        {text ? <p className="text-sm text-white/85">{text}</p> : null}
+        {text ? <p className="text-sm text-white/80">{text}</p> : null}
       </div>
       <div className="relative mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 lg:mt-0 lg:shrink-0">
         <LinkButton link={primary} variant="primary-white" />

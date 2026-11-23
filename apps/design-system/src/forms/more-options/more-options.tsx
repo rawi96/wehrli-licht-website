@@ -17,6 +17,6 @@ export const MoreOptions: FC<Props> = ({ label, children }) => (
       {label}
       <ChevronDownIcon className="size-5 shrink-0 transition-transform group-data-open:rotate-180" aria-hidden />
     </DisclosureButton>
-    <DisclosurePanel className="flex flex-col gap-6 px-4 pb-4">{children}</DisclosurePanel>
+    <DisclosurePanel className="flex flex-col gap-6 border-t border-gray-200 p-4">{children}</DisclosurePanel>
   </Disclosure>
 );

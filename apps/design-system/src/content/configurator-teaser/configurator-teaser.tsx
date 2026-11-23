@@ -1,4 +1,3 @@
-import { CheckIcon } from '@heroicons/react/20/solid';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import { FC } from 'react';
 import { Button } from '../../actions/button/button';
@@ -23,19 +22,14 @@ export const ConfiguratorTeaser: FC<Props> = ({ eyebrow, title, text, features =
   <section className="bg-wehrli my-8 grid overflow-hidden rounded-md text-white shadow-md md:grid-cols-[1.1fr_1fr]">
     <div className="flex flex-col justify-center gap-5 p-6 sm:p-10">
       <div className="flex flex-col gap-3">
-        {eyebrow ? <p className="text-xs font-bold text-white/75">{eyebrow}</p> : null}
+        {eyebrow ? <p className="text-xs font-bold text-white/80">{eyebrow}</p> : null}
         <h2 className="text-lg font-bold sm:text-xl">{title}</h2>
-        {text ? <p className="text-sm text-white/85">{text}</p> : null}
+        {text ? <p className="text-sm text-white/80">{text}</p> : null}
       </div>
       {features.length > 0 ? (
-        <ul className="flex flex-col gap-2 text-sm">
+        <ul className="flex list-disc flex-col gap-1.5 pl-5 text-sm marker:text-white/80">
           {features.map((feature) => (
-            <li key={feature} className="flex items-center gap-2">
-              <span className="text-wehrli flex size-5 shrink-0 items-center justify-center rounded-full bg-white">
-                <CheckIcon className="size-3.5" aria-hidden="true" />
-              </span>
-              {feature}
-            </li>
+            <li key={feature}>{feature}</li>
           ))}
         </ul>
       ) : null}
@@ -44,7 +38,7 @@ export const ConfiguratorTeaser: FC<Props> = ({ eyebrow, title, text, features =
           {action.label}
           <ArrowRightIcon className="ml-2 size-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
         </Button>
-        {note ? <p className="text-xs text-white/75">{note}</p> : null}
+        {note ? <p className="text-xs text-white/80">{note}</p> : null}
       </div>
     </div>
     {image ? (

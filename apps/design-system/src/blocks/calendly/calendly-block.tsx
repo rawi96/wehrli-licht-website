@@ -1,6 +1,5 @@
 'use client';
 
-import { CheckIcon } from '@heroicons/react/20/solid';
 import { FC, useEffect, useRef } from 'react';
 import { Image, ImageData } from '../../content/image/image';
 import { Section } from '../../layout/section/section';
@@ -119,14 +118,9 @@ export const CalendlyBlock: FC<Props> = ({
             {intro ? <p className="text-sm whitespace-pre-line text-black">{intro}</p> : null}
           </div>
           {points.length > 0 ? (
-            <ul className="flex flex-col gap-3 text-sm text-black">
+            <ul className="marker:text-wehrli flex list-disc flex-col gap-2 pl-5 text-sm text-black">
               {points.map((point) => (
-                <li key={point} className="flex items-start gap-3">
-                  <span className="bg-wehrli mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full text-white">
-                    <CheckIcon className="size-3.5" aria-hidden="true" />
-                  </span>
-                  {point}
-                </li>
+                <li key={point}>{point}</li>
               ))}
             </ul>
           ) : null}

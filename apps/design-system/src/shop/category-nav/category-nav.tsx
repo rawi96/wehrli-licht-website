@@ -31,7 +31,7 @@ type Props = {
 const LINK_CLASSES = {
   sidebar: {
     base: 'group relative flex items-center gap-3 py-2 pr-2 pl-3 text-sm transition-colors hover:bg-wehrli-50 hover:text-wehrli',
-    inactive: 'text-gray-600',
+    inactive: 'text-black',
     active: 'bg-wehrli-50 text-wehrli',
   },
   mobile: {
@@ -96,7 +96,7 @@ export const CategoryNav: FC<Props> = ({
 
   if (variant === 'mobile') {
     return (
-      <div className="pt-4">
+      <div className="border-t border-white/20 pt-4">
         <p className="mb-2 px-3 text-xs font-bold text-white/80">{heading}</p>
         <LinkList links={links} variant={variant} onLinkClick={onLinkClick} />
       </div>
@@ -106,7 +106,7 @@ export const CategoryNav: FC<Props> = ({
   return (
     <nav aria-label={label} className="flex flex-col gap-y-5">
       <div>
-        <p className="text-xs font-bold text-gray-400">{heading}</p>
+        <p className="text-xs font-bold text-white/80">{heading}</p>
         <div className="mt-2">
           <LinkList links={links} variant={variant} onLinkClick={onLinkClick} />
         </div>

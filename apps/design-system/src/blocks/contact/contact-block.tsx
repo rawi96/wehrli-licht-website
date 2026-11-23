@@ -15,7 +15,7 @@ type Props = {
 };
 
 const linkClass =
-  'hover:border-wehrli hover:text-wehrli mb-2 border-b-2 border-black text-center font-bold no-underline transition-colors';
+  'text-wehrli border-wehrli hover:border-wehrli-dark hover:text-wehrli-dark mb-2 border-b-2 text-center font-bold no-underline transition-colors';
 
 /** A contact person with portrait, text and links to book an appointment, write an e-mail or call. */
 export const ContactBlock: FC<Props> = ({ text, image, email, phone, appointment }) => (

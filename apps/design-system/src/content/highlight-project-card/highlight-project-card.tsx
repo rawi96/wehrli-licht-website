@@ -50,7 +50,7 @@ export const HighlightProjectCard: FC<Props> = ({
         {title}
       </h3>
       <p className="mt-1.5 text-sm font-bold text-black/70 sm:mt-2">{company}</p>
-      <p className={cn('mt-2.5 text-sm leading-relaxed text-pretty text-gray-600 sm:mt-3', compact ? 'flex-1' : 'max-w-sm')}>
+      <p className={cn('mt-2.5 text-sm leading-relaxed text-pretty text-black sm:mt-3', compact ? 'flex-1' : 'max-w-sm')}>
         {description}
       </p>
       <span
