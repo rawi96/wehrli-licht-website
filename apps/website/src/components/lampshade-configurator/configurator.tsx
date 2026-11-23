@@ -95,9 +95,20 @@ const labelOf = <T extends string>(id: T, options: { id: T; label: string }[]) =
 const UNSUPPORTED =
   'Die 3D-Ansicht läuft in diesem Browser nicht. Sie können Ihren Lampenschirm trotzdem zusammenstellen und anfragen.';
 
+/** Texts of the invitation that opens the configurator, from the CMS. */
+export type ConfiguratorTeaserTexts = {
+  eyebrow?: string;
+  title: string;
+  text?: string;
+  points: string[];
+  startLabel: string;
+  note?: string;
+};
+
 type Props = {
   /** Page with the contact form, for the inquiry. */
   contactPath: string;
+  teaser: ConfiguratorTeaserTexts;
 };
 
 const SILHOUETTES = SHAPES.map((shape) => ({
@@ -112,7 +123,7 @@ const SILHOUETTES = SHAPES.map((shape) => ({
  * form, size, material, colour, lining), extras folded away, praise for each choice, and at the end the light comes
  * on. The camera follows each step. No prices. The design can be shared and sent as an inquiry; closing keeps it.
  */
-export const LampshadeConfigurator: FC<Props> = ({ contactPath }) => {
+export const LampshadeConfigurator: FC<Props> = ({ contactPath, teaser }) => {
   const [design, setDesign] = useState<LampshadeDesign>(DEFAULT_DESIGN);
   const [stepIndex, setStepIndex] = useState(0);
   // The light comes on at the end, as the reveal of the finished shade.
@@ -575,12 +586,12 @@ export const LampshadeConfigurator: FC<Props> = ({ contactPath }) => {
   return (
     <>
       <ConfiguratorTeaser
-        eyebrow="Lampenschirm-Konfigurator"
-        title="Gestalten Sie Ihren eigenen Lampenschirm"
-        text="Wählen Sie Raum, Form, Stoff und Farbe und sehen Sie Ihren Schirm sofort in 3D. Ganz einfach, Schritt für Schritt. Zum Schluss geht das Licht an."
-        features={['In 8 einfachen Schritten', 'Sofort in 3D, in Ihrem Raum', 'Unverbindlich anfragen']}
-        action={{ label: started ? 'Weiter gestalten' : 'Jetzt starten', onClick: start }}
-        note="Dauert etwa 3 Minuten"
+        eyebrow={teaser.eyebrow}
+        title={teaser.title}
+        text={teaser.text}
+        features={teaser.points}
+        action={{ label: started ? 'Weiter gestalten' : teaser.startLabel, onClick: start }}
+        note={teaser.note}
       />
       <FullscreenDialog open={open} onClose={() => setOpen(false)} title="Lampenschirm-Konfigurator">
         <ConfiguratorShell

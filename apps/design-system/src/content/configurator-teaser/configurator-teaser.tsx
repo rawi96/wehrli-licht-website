@@ -6,7 +6,7 @@ import { Button } from '../../actions/button/button';
 type Props = {
   eyebrow?: string;
   title: string;
-  text: string;
+  text?: string;
   /** Short promises, e.g. «In 8 einfachen Schritten». */
   features?: string[];
   action: { label: string; onClick: () => void };
@@ -21,7 +21,7 @@ export const ConfiguratorTeaser: FC<Props> = ({ eyebrow, title, text, features =
       <div className="flex flex-col gap-3">
         {eyebrow ? <p className="text-xs font-bold text-white/75">{eyebrow}</p> : null}
         <h2 className="text-lg font-bold sm:text-xl">{title}</h2>
-        <p className="text-sm text-white/85">{text}</p>
+        {text ? <p className="text-sm text-white/85">{text}</p> : null}
       </div>
       {features.length > 0 ? (
         <ul className="flex flex-col gap-2 text-sm">

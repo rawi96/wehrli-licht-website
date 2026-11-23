@@ -1,4 +1,10 @@
 fragment lampshadeConfiguratorBlock on LampshadeConfiguratorRecord {
   id
   anchorId
+  teaserEyebrow
+  teaserTitle
+  teaserText
+  teaserPoints
+  startLabel
+  teaserNote
 }
