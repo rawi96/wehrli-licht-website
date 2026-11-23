@@ -2,6 +2,7 @@ import { CheckIcon } from '@heroicons/react/20/solid';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import { FC } from 'react';
 import { Button } from '../../actions/button/button';
+import { Image, ImageData } from '../image/image';
 
 type Props = {
   eyebrow?: string;
@@ -13,10 +14,12 @@ type Props = {
   action: { label: string; onClick?: () => void; href?: string };
   /** Small print beside the button, e.g. «Dauert etwa 3 Minuten». */
   note?: string;
+  /** A picture of the configurator (e.g. a screenshot of the 3D view); without it a drawn, glowing lamp. */
+  image?: ImageData | null;
 };
 
 /** Invitation to start a configurator: text and a start button on the brand colour, next to a glowing lamp. */
-export const ConfiguratorTeaser: FC<Props> = ({ eyebrow, title, text, features = [], action, note }) => (
+export const ConfiguratorTeaser: FC<Props> = ({ eyebrow, title, text, features = [], action, note, image }) => (
   <section className="bg-wehrli my-8 grid overflow-hidden rounded-md text-white shadow-md md:grid-cols-[1.1fr_1fr]">
     <div className="flex flex-col justify-center gap-5 p-6 sm:p-10">
       <div className="flex flex-col gap-3">
@@ -37,14 +40,20 @@ export const ConfiguratorTeaser: FC<Props> = ({ eyebrow, title, text, features =
         </ul>
       ) : null}
       <div className="flex flex-wrap items-center gap-x-5 gap-y-3 pt-1">
-        <Button variant="primary-white" size="large" onClick={action.onClick} href={action.href}>
+        <Button variant="primary-white" onClick={action.onClick} href={action.href}>
           {action.label}
-          <ArrowRightIcon className="ml-2 size-5 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+          <ArrowRightIcon className="ml-2 size-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
         </Button>
         {note ? <p className="text-xs text-white/75">{note}</p> : null}
       </div>
     </div>
-    <GlowingLamp />
+    {image ? (
+      <div className="relative min-h-72 md:min-h-104">
+        <Image image={image} sizes="(min-width: 1400px) 640px, (min-width: 768px) 46vw, 92vw" absolute />
+      </div>
+    ) : (
+      <GlowingLamp />
+    )}
   </section>
 );
 

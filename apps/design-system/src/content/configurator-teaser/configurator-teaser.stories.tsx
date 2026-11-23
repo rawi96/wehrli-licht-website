@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
+import { MOCK_IMAGES } from '../../blocks/blocks.mocks';
 import { ConfiguratorTeaser } from './configurator-teaser';
 
 const meta: Meta<typeof ConfiguratorTeaser> = {
@@ -21,3 +22,5 @@ type Story = StoryObj<typeof ConfiguratorTeaser>;
 export const Default: Story = {};
 
 export const AsLink: Story = { args: { action: { label: 'Zum Konfigurator', href: '#' } } };
+
+export const WithImage: Story = { args: { image: MOCK_IMAGES[0] } };

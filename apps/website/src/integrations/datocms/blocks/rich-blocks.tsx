@@ -18,6 +18,7 @@ import {
   StepsBlock as StepsBlockView,
 } from '@wehrli/design-system';
 import { FC } from 'react';
+import { toImage } from '../image';
 import { toLink } from '../links';
 import { StructuredTextRenderer } from './structured-text';
 
@@ -127,5 +128,6 @@ export const ConfiguratorTeaserBlock: FC<{ block: ConfiguratorTeaserBlockFragmen
         .filter(Boolean)}
       action={{ label: block.teaserLink.label, href: toLink(block.teaserLink).href }}
       note={optional(block.note) ?? undefined}
+      image={toImage(block.teaserImage) ?? null}
     />
   ) : null;

@@ -111,18 +111,18 @@ export const MegaMenu: FC<Props> = ({ label, columns, overview, feature, footerL
               )}
 
               <div className="flex flex-col gap-6 p-8">
-                <div className="grid grid-cols-[repeat(auto-fit,minmax(11rem,1fr))] gap-8">
+                <div className="grid grid-cols-[repeat(auto-fit,minmax(11rem,1fr))] gap-3">
                   {columns.map((column, index) => (
                     // Column titles come from the CMS and need not be unique.
                     // eslint-disable-next-line @eslint-react/no-array-index-key
-                    <div key={`${index}-${column.title}`} className="flex flex-col">
-                      <p className="text-wehrli mb-3 border-b border-gray-200 pb-2 text-xs font-bold">{column.title}</p>
+                    <div key={`${index}-${column.title}`} className="flex flex-col rounded-md bg-gray-50 p-4">
+                      <p className="text-wehrli mb-2 px-2 text-sm font-bold">{column.title}</p>
                       <ul className="space-y-0.5">
                         {column.links.map((link) => (
                           <li key={`${link.href}-${link.label}`}>
                             <Link
                               href={link.href}
-                              className="group hover:bg-wehrli-50 hover:text-wehrli -mx-2 flex items-center justify-between gap-x-2 rounded-md px-2 py-1.5 text-sm text-black transition-colors"
+                              className="group hover:text-wehrli flex items-center justify-between gap-x-2 rounded-md px-2 py-1.5 text-sm text-black transition-colors hover:bg-white"
                               onClick={() => close()}
                             >
                               <span>{link.label}</span>
@@ -137,7 +137,7 @@ export const MegaMenu: FC<Props> = ({ label, columns, overview, feature, footerL
                       {column.overview && (
                         <Link
                           href={column.overview.href}
-                          className="group hover:text-wehrli mt-3 inline-flex items-center gap-x-1 text-xs text-gray-600 transition-colors"
+                          className="group hover:text-wehrli mt-auto inline-flex items-center gap-x-1 px-2 pt-3 text-xs text-gray-600 transition-colors"
                           onClick={() => close()}
                         >
                           {column.overview.label}
@@ -151,7 +151,7 @@ export const MegaMenu: FC<Props> = ({ label, columns, overview, feature, footerL
                   ))}
                 </div>
                 {footerLinks.length > 0 && (
-                  <div className="flex flex-wrap gap-x-6 gap-y-2 border-t border-gray-200 pt-4">
+                  <div className="flex flex-wrap gap-x-6 gap-y-2 pt-4">
                     {footerLinks.map((link) => (
                       <Link
                         key={`${link.href}-${link.label}`}

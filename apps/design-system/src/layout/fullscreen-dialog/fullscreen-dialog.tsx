@@ -24,7 +24,7 @@ export const FullscreenDialog: FC<Props> = ({ open, onClose, title, children, cl
       transition
       className="fixed inset-0 flex flex-col bg-white transition duration-300 ease-out data-closed:translate-y-6 data-closed:opacity-0 motion-reduce:transition-none"
     >
-      <div className="flex h-14 shrink-0 items-center justify-between gap-4 border-b border-gray-200 px-4 sm:px-5">
+      <div className="flex h-14 shrink-0 items-center justify-between gap-4 px-4 shadow-sm sm:px-5">
         <DialogTitle className="text-wehrli truncate text-sm font-bold">{title}</DialogTitle>
         <button
           type="button"

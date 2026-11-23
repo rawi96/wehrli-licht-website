@@ -33,5 +33,3 @@ export default meta;
 type Story = StoryObj<typeof HighlightSection>;
 
 export const Default: Story = {};
-
-export const Bordered: Story = { args: { bordered: true } };

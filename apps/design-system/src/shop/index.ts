@@ -29,7 +29,6 @@ export * from './product-specs/product-specs';
 export * from './quantity-select/quantity-select';
 export * from './radio-cards/radio-cards';
 export * from './section-header/section-header';
-export * from './service-section/service-section';
 export * from './sort-menu/sort-menu';
 export * from './storefront-hero/storefront-hero';
 export * from './text-link/text-link';

@@ -67,7 +67,7 @@ const contactButtonClasses =
 const shopButtonClasses =
   'inline-flex items-center rounded-md border-2 border-white px-3 py-1 text-sm font-bold leading-none text-white transition-colors hover:bg-white hover:text-wehrli';
 const contactButtonMobileClasses =
-  'inline-flex w-full items-center justify-center rounded-md bg-white px-5 py-3 text-base font-bold text-wehrli transition-colors hover:bg-gray-100';
+  'inline-flex w-full items-center justify-center rounded-md bg-white px-5 py-2.5 text-sm font-bold text-wehrli transition-colors hover:bg-gray-100';
 
 /** Site header: logo, main navigation, contact link and cart; below `lg` a menu button opens a full-screen menu. */
 export const Header: FC<Props> = ({

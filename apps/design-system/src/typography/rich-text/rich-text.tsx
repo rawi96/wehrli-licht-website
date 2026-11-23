@@ -39,7 +39,8 @@ export const Blockquote: FC<BlockquoteProps> = ({ children, attribution }) => (
   </div>
 );
 
-export const ThematicBreak: FC = () => <hr className="mx-auto my-8 max-w-[75%] border-black lg:my-16" />;
+/** A break in the text: space only, no line. */
+export const ThematicBreak: FC = () => <hr className="my-8 border-0 lg:my-16" />;
 
 /** An embedded block inside rich text, e.g. an image: spaced like a paragraph. */
 export const RichTextEmbed: FC<PropsWithChildren> = ({ children }) => <div className="my-4 lg:my-8">{children}</div>;

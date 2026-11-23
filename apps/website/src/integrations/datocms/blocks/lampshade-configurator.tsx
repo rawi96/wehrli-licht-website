@@ -1,6 +1,7 @@
 import { LampshadeConfigurator } from '@/components/lampshade-configurator/configurator';
 import { LampshadeConfiguratorBlockFragment } from '@/graphql/generated';
 import { FC } from 'react';
+import { toImage } from '../image';
 import { getSiteLayout } from '../site-layout';
 
 type Props = {
@@ -31,6 +32,7 @@ export const LampshadeConfiguratorBlock: FC<Props> = async ({ block }) => {
             .filter(Boolean),
           startLabel: block.startLabel,
           note: optional(block.teaserNote),
+          image: toImage(block.teaserImage) ?? null,
         }}
       />
     </section>

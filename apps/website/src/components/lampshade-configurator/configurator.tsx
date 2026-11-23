@@ -1,6 +1,7 @@
 'use client';
 
 import { CONTACT_FORM_ANCHOR, DESIGN_PREFILL_PARAM } from '@/domain/contact/links';
+import { CONFIGURATOR_START_ANCHOR } from '@/domain/lampshade/links';
 import {
   FABRIC_COLORS,
   FINISHES,
@@ -56,6 +57,7 @@ import {
   StepWizard,
   WizardStep,
 } from '@wehrli/design-system';
+import type { ImageData } from '@wehrli/design-system';
 import dynamic from 'next/dynamic';
 import { FC, useEffect, useMemo, useRef, useState } from 'react';
 import { ColorDot, LampPictogram, LightPictogram, RoomPictogram, SizeOutline } from './pictograms';
@@ -103,6 +105,7 @@ export type ConfiguratorTeaserTexts = {
   points: string[];
   startLabel: string;
   note?: string;
+  image?: ImageData | null;
 };
 
 type Props = {
@@ -143,6 +146,17 @@ export const LampshadeConfigurator: FC<Props> = ({ contactPath, teaser }) => {
   // Browser-only: a shared design comes in the URL hash and opens the configurator right away. WebGL is only checked
   // when the configurator opens, so the page itself creates no GPU context.
   useEffect(() => {
+    // A link from elsewhere (e.g. the home page) can open the configurator right away.
+    if (window.location.hash === `#${CONFIGURATOR_START_ANCHOR}`) {
+      window.history.replaceState(null, '', window.location.pathname);
+      /* eslint-disable @eslint-react/set-state-in-effect */
+      setStarted(true);
+      setOpen(true);
+      setWebGL(supportsWebGL());
+      /* eslint-enable @eslint-react/set-state-in-effect */
+
+      return;
+    }
     const shared = decodeDesign(window.location.hash);
     if (shared) {
       // The hash is only readable after mount. A shared design opens finished, ready to look at and inquire.
@@ -594,6 +608,7 @@ export const LampshadeConfigurator: FC<Props> = ({ contactPath, teaser }) => {
         features={teaser.points}
         action={{ label: started ? 'Weiter gestalten' : teaser.startLabel, onClick: start }}
         note={teaser.note}
+        image={teaser.image}
       />
       <FullscreenDialog open={open} onClose={() => setOpen(false)} title="Lampenschirm-Konfigurator">
         <ConfiguratorShell

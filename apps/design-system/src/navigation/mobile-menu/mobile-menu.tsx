@@ -175,7 +175,7 @@ export const MobileMenu: FC<Props> = ({ items, onNavigate, footer, labels }) => 
               // eslint-disable-next-line @eslint-react/no-array-index-key
               <div key={`${index}-${column.title}`}>
                 <p className="mb-1 px-3 text-sm font-bold text-white/80">{column.title}</p>
-                <ul>
+                <ul className="divide-y divide-white/10">
                   {column.links.map((link) => (
                     <li key={`${link.href}-${link.label}`}>
                       <Link href={link.href} className={subLinkClasses} onClick={onNavigate}>
@@ -200,7 +200,7 @@ export const MobileMenu: FC<Props> = ({ items, onNavigate, footer, labels }) => 
             ))}
 
             {panelItem.children && panelItem.children.length > 0 && (
-              <ul>
+              <ul className="divide-y divide-white/10">
                 {panelItem.children.map((link) => (
                   <li key={`${link.href}-${link.label}`}>
                     <Link href={link.href} className={subLinkClasses} onClick={onNavigate}>
@@ -212,7 +212,7 @@ export const MobileMenu: FC<Props> = ({ items, onNavigate, footer, labels }) => 
             )}
 
             {panelItem.footerLinks && panelItem.footerLinks.length > 0 && (
-              <ul className="border-t border-white/10 pt-4">
+              <ul className="pt-4">
                 {panelItem.footerLinks.map((link) => (
                   <li key={`${link.href}-${link.label}`}>
                     <Link href={link.href} className={cn(subLinkClasses, 'font-bold')} onClick={onNavigate}>

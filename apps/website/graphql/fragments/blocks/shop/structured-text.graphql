@@ -29,19 +29,3 @@ fragment shopFeaturedDescriptionField on ShopSfFeaturedModelDescriptionField {
     }
   }
 }
-
-fragment shopServiceDescriptionField on ShopServiceSectionModelDescriptionField {
-  value
-  links {
-    ... on PageRecord {
-      __typename
-      ...pageRecordLink
-    }
-  }
-  blocks {
-    ... on LinkRecord {
-      _modelApiKey
-      ...linkBlock
-    }
-  }
-}

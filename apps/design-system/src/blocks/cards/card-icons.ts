@@ -1,5 +1,10 @@
 import {
   AdjustmentsHorizontalIcon,
+  CalendarDaysIcon,
+  CreditCardIcon,
+  EnvelopeIcon,
+  EyeIcon,
+  PhoneIcon,
   BuildingOffice2Icon,
   BuildingStorefrontIcon,
   CalculatorIcon,
@@ -47,6 +52,11 @@ export const CARD_ICONS = {
   team: UserGroupIcon,
   qualitaet: CheckBadgeIcon,
   herz: HeartIcon,
+  zahlung: CreditCardIcon,
+  ansehen: EyeIcon,
+  telefon: PhoneIcon,
+  mail: EnvelopeIcon,
+  kalender: CalendarDaysIcon,
 } as const;
 
 export type CardIconName = keyof typeof CARD_ICONS;

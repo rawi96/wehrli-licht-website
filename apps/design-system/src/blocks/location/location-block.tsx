@@ -1,5 +1,4 @@
 import { ClockIcon, EnvelopeIcon, MapPinIcon, PhoneIcon } from '@heroicons/react/24/outline';
-import { cn } from '../../fundamentals/cn';
 import { FC, ReactNode } from 'react';
 import { Heading } from '../../typography/heading/heading';
 import { Section } from '../../layout/section/section';
@@ -33,12 +32,13 @@ type Props = BlockMargins & {
 
 const rowClasses = 'flex gap-x-3';
 const iconClasses = 'text-wehrli mt-0.5 size-5 shrink-0';
-const linkClasses = 'text-wehrli font-bold underline-offset-4 hover:underline';
+const linkClasses = 'text-wehrli hover:text-wehrli-dark font-bold transition-colors';
 const richTextClasses = 'text-sm text-gray-600 [&_li+li]:mt-0.5 [&_p]:m-0 [&_p+p]:mt-1.5 [&_ul]:mt-1';
 
 /**
- * Address, phone, e-mail and opening hours of the business (from the CMS settings, maintained once) with an optional
- * map beside them. Two columns from lg, the map below on small screens.
+ * Address, phone, e-mail and opening hours of the business (from the CMS settings, maintained once). With a map in
+ * two columns like the contact form and the booking widget: details on the left, the map in a card on the right
+ * (below on small screens).
  */
 export const LocationBlock: FC<Props> = ({
   title,
@@ -63,77 +63,79 @@ export const LocationBlock: FC<Props> = ({
     .filter(Boolean)
     .join(' ');
 
-  return (
-    <Section id={anchorId} marginTop={marginTop} marginBottom={marginBottom}>
-      <div className={cn('grid gap-6', mapSrc && 'lg:grid-cols-2')}>
-        <div className="card-surface flex flex-col gap-6 p-6 sm:p-8">
-          <Heading level="2">{title}</Heading>
+  const details = (
+    <div className="flex flex-col gap-8">
+      <Heading level="2">{title}</Heading>
 
-          <address className="flex flex-col gap-4 text-sm not-italic">
-            <div className={rowClasses}>
-              <MapPinIcon className={iconClasses} aria-hidden="true" />
-              <div>
-                {companyName && <p className="font-bold text-black">{companyName}</p>}
-                {street && <p>{street}</p>}
-                {town ? <p>{town}</p> : null}
-                {mapsHref && (
-                  <a
-                    href={mapsHref}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`${linkClasses} mt-1 inline-block`}
-                  >
-                    {labels?.route ?? 'Route planen'}
-                  </a>
-                )}
-              </div>
-            </div>
-            {phone && (
-              <div className={rowClasses}>
-                <PhoneIcon className={iconClasses} aria-hidden="true" />
-                <a href={`tel:${phone.replace(/\s/g, '')}`} className={linkClasses}>
-                  {phone}
-                </a>
-              </div>
+      <address className="flex flex-col gap-4 text-sm not-italic">
+        <div className={rowClasses}>
+          <MapPinIcon className={iconClasses} aria-hidden="true" />
+          <div>
+            {companyName && <p className="font-bold text-black">{companyName}</p>}
+            {street && <p>{street}</p>}
+            {town ? <p>{town}</p> : null}
+            {mapsHref && (
+              <a href={mapsHref} target="_blank" rel="noopener noreferrer" className={`${linkClasses} mt-1 inline-block`}>
+                {labels?.route ?? 'Route planen'}
+              </a>
             )}
-            {email && (
-              <div className={rowClasses}>
-                <EnvelopeIcon className={iconClasses} aria-hidden="true" />
-                <a href={`mailto:${email}`} className={linkClasses}>
-                  {email}
-                </a>
-              </div>
-            )}
-          </address>
-
-          {holiday && (
-            <div className="bg-wehrli-50 rounded-md p-4">
-              <p className="text-wehrli text-sm font-bold">{holiday.title}</p>
-              <div className={`mt-1 ${richTextClasses}`}>{holiday.text}</div>
-            </div>
-          )}
-
-          {openingHours && (
-            <div className={rowClasses}>
-              <ClockIcon className={iconClasses} aria-hidden="true" />
-              <div>
-                <p className="text-sm font-bold text-black">{openingHours.title}</p>
-                <div className={`mt-1 ${richTextClasses}`}>{openingHours.text}</div>
-              </div>
-            </div>
-          )}
+          </div>
         </div>
-
-        {mapSrc && (
-          <iframe
-            title={labels?.map ?? 'Karte'}
-            src={mapSrc}
-            className="h-full min-h-80 w-full rounded-md border-0 shadow-sm"
-            loading="lazy"
-            allowFullScreen
-          />
+        {phone && (
+          <div className={rowClasses}>
+            <PhoneIcon className={iconClasses} aria-hidden="true" />
+            <a href={`tel:${phone.replace(/\s/g, '')}`} className={linkClasses}>
+              {phone}
+            </a>
+          </div>
         )}
-      </div>
+        {email && (
+          <div className={rowClasses}>
+            <EnvelopeIcon className={iconClasses} aria-hidden="true" />
+            <a href={`mailto:${email}`} className={linkClasses}>
+              {email}
+            </a>
+          </div>
+        )}
+      </address>
+
+      {holiday && (
+        <div className="card-surface p-4">
+          <p className="text-wehrli text-sm font-bold">{holiday.title}</p>
+          <div className={`mt-1 ${richTextClasses}`}>{holiday.text}</div>
+        </div>
+      )}
+
+      {openingHours && (
+        <div className={rowClasses}>
+          <ClockIcon className={iconClasses} aria-hidden="true" />
+          <div>
+            <p className="text-sm font-bold text-black">{openingHours.title}</p>
+            <div className={`mt-1 ${richTextClasses}`}>{openingHours.text}</div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+
+  return (
+    <Section id={anchorId} scrollMargin marginTop={marginTop} marginBottom={marginBottom}>
+      {mapSrc ? (
+        <div className="grid gap-8 lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] lg:gap-16">
+          <div className="lg:sticky lg:top-28 lg:self-start">{details}</div>
+          <div className="card-surface min-h-96 overflow-hidden lg:min-h-120">
+            <iframe
+              title={labels?.map ?? 'Karte'}
+              src={mapSrc}
+              className="size-full min-h-96 border-0 lg:min-h-120"
+              loading="lazy"
+              allowFullScreen
+            />
+          </div>
+        </div>
+      ) : (
+        details
+      )}
     </Section>
   );
 };

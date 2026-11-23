@@ -50,7 +50,7 @@ export const ContactFormBlock: FC<Props> = ({
           {intro && <p className="text-sm whitespace-pre-line text-black">{intro}</p>}
         </div>
         {direct && (direct.phone || direct.email || direct.address?.length) ? (
-          <div className="border-t border-gray-200 pt-6">
+          <div className="pt-2">
             <p className="mb-4 text-sm font-bold text-black">{labels.direct}</p>
             <ul className="flex flex-col gap-3 text-sm">
               {direct.phone ? (

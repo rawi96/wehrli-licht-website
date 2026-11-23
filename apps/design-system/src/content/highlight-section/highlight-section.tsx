@@ -14,15 +14,16 @@ export const HIGHLIGHT_IMAGE_SIZES = {
   projectFeatured: '(min-width: 1400px) 750px, (min-width: 1024px) 58vw, 92vw',
   projectCompact: '(min-width: 1400px) 410px, (min-width: 1024px) 30vw, (min-width: 640px) 46vw, 92vw',
   offerFeatured: '(min-width: 1400px) 640px, (min-width: 640px) 46vw, 92vw',
-  offerCompact: '(min-width: 1400px) 310px, (min-width: 1024px) 23vw, 46vw',
+  // The small offer cards are tall: their landscape images are cropped, so they need more width than the card has.
+  offerCompact: '(min-width: 1400px) 640px, (min-width: 1024px) 46vw, 92vw',
   shopTileLarge: '(min-width: 1400px) 420px, (min-width: 1024px) 32vw, 92vw',
-  shopTileSmall: '(min-width: 1400px) 300px, (min-width: 1024px) 22vw, 46vw',
+  shopTileSmall: '(min-width: 1400px) 300px, (min-width: 1024px) 22vw, 70vw',
 } as const;
 
 type BreakoutProps = {
   headingId: string;
   /** Background of the full-width band. */
-  surface: 'light' | 'light-bordered' | 'brand';
+  surface: 'light' | 'brand';
   children: ReactNode;
 };
 
@@ -36,8 +37,8 @@ export const HighlightBreakout: FC<BreakoutProps> = ({ headingId, surface, child
       aria-labelledby={headingId}
       className={cn(
         'relative left-1/2 w-screen max-w-[100vw] -translate-x-1/2',
-        surface === 'brand' ? 'surface-dark bg-wehrli text-white' : 'bg-gray-50',
-        surface === 'light-bordered' && 'border-b border-black/5',
+        // Light bands are transparent: the page background (a soft gradient) runs through.
+        surface === 'brand' && 'surface-dark bg-wehrli text-white',
       )}
     >
       <div className="mx-auto w-full max-w-7xl px-5 py-12 sm:w-11/12 sm:px-0 sm:py-16 md:py-24">{children}</div>
@@ -50,19 +51,17 @@ type Props = {
   id: string;
   title: string;
   subline: string;
-  /** Hairline at the bottom, to separate it from a following band of the same color. */
-  bordered?: boolean;
   /** Call to action below the content, full width on mobile. */
   cta: LinkData;
   children: ReactNode;
 };
 
 /** Light full-width band with heading, subline, content (cards) and a call to action. */
-export const HighlightSection: FC<Props> = ({ id, title, subline, bordered, cta, children }) => {
+export const HighlightSection: FC<Props> = ({ id, title, subline, cta, children }) => {
   const headingId = `highlight-teaser-${id}`;
 
   return (
-    <HighlightBreakout headingId={headingId} surface={bordered ? 'light-bordered' : 'light'}>
+    <HighlightBreakout headingId={headingId} surface="light">
       <header className="mb-8 max-w-xl sm:mb-10 md:mb-12">
         <Heading level="2" id={headingId}>
           <span className="text-balance">{title}</span>

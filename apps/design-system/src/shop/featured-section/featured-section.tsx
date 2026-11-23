@@ -20,10 +20,7 @@ export const ShopFeaturedSection: FC<Props> = ({ headingId, title, intro, action
   }
 
   return (
-    <section
-      aria-labelledby={headingId}
-      className="surface-dark bg-wehrli border-wehrli overflow-hidden border-t py-10 sm:py-16 md:py-24"
-    >
+    <section aria-labelledby={headingId} className="surface-dark bg-wehrli overflow-hidden py-10 sm:py-16 md:py-24">
       <div className="mx-auto w-11/12 max-w-7xl">
         <ShopSectionHeader
           headingId={headingId}

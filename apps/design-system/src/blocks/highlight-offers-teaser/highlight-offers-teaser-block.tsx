@@ -35,7 +35,7 @@ export const HighlightOffersTeaserBlock: FC<Props> = ({ id, title, subline, cta,
   const [featuredOffers, moreOffers] = [offers.slice(0, 2), offers.slice(2)];
 
   return (
-    <HighlightSection id={id} title={title} subline={subline} bordered cta={cta}>
+    <HighlightSection id={id} title={title} subline={subline} cta={cta}>
       <div className="flex flex-col gap-4 sm:gap-5">
         <ul className="grid list-none grid-cols-1 gap-4 p-0 sm:grid-cols-2 sm:gap-4">
           {featuredOffers.map((offer, index) => (

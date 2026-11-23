@@ -52,7 +52,7 @@ const RootLayout = async ({ children }: { children: ReactNode }) => {
         <link rel="dns-prefetch" href={content.assetOrigin} />
         <analytics.HeadScripts />
       </head>
-      <body className={cn(jost.className, 'h-full bg-gray-50 antialiased')}>
+      <body className={cn(jost.className, 'page-background h-full antialiased')}>
         {isEnabled && <DraftModeBanner />}
         <SiteJsonLd />
         <ShopContextProvider>

@@ -52,10 +52,7 @@ export const FaqIntro: FC<FaqIntroProps> = ({ title, intro, search, topics, labe
     <div className="card-surface mt-8 p-6 sm:p-8">
       {search}
       {topics.length > 1 && (
-        <nav
-          aria-label={labels?.topicsNavigation ?? 'Themen auf dieser Seite'}
-          className="mt-6 border-t border-gray-200 pt-6"
-        >
+        <nav aria-label={labels?.topicsNavigation ?? 'Themen auf dieser Seite'} className="mt-6">
           <p className="mb-3 text-xs font-bold text-gray-600">{labels?.topics ?? 'Themen'}</p>
           <ul className="flex flex-wrap gap-2">
             {topics.map((topic) => (
@@ -211,7 +208,7 @@ export const FaqContactCta: FC<FaqContactCtaProps> = ({ title = 'Noch Fragen?', 
     {action && (
       <Link
         href={action.href}
-        className="group text-wehrli inline-flex shrink-0 items-center gap-x-2 self-start rounded-md bg-white px-5 py-3 text-sm font-bold transition-colors hover:bg-gray-100 lg:self-auto"
+        className="group text-wehrli inline-flex shrink-0 items-center gap-x-2 self-start rounded-md bg-white px-5 py-2.5 text-sm font-bold transition-colors hover:bg-gray-100 lg:self-auto"
       >
         {action.label}
         <ArrowRightIcon

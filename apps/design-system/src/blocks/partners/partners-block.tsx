@@ -45,7 +45,7 @@ export const PartnersBlock: FC<Props> = ({
     <ul className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 lg:gap-6">
       {partners.map((partner) => (
         <li key={partner.id} className="card-surface flex flex-col overflow-hidden">
-          <div className="flex h-32 items-center justify-center border-b border-gray-100 px-10 py-6">
+          <div className="flex h-32 items-center justify-center px-10 pt-8">
             {/* Logos come in many formats: shown whole, never cropped. */}
             <img
               src={partner.logo.src}
@@ -53,7 +53,7 @@ export const PartnersBlock: FC<Props> = ({
               height={partner.logo.height ?? undefined}
               alt={`Logo ${partner.name}`}
               loading="lazy"
-              className="max-h-full w-auto max-w-full object-contain"
+              className="max-h-full w-auto max-w-48 object-contain"
             />
           </div>
           <div className="flex flex-1 flex-col p-6">

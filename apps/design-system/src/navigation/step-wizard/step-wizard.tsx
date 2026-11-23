@@ -57,7 +57,7 @@ export const StepWizard: FC<Props> = ({ steps, current, onChange, label, finish,
 
   return (
     <div className="flex min-h-0 flex-1 flex-col">
-      <nav aria-label={label} className="border-b border-gray-200 px-5 pt-4 pb-3">
+      <nav aria-label={label} className="px-5 pt-4 pb-3">
         <ol className="flex items-center">
           {steps.map((item, index) => {
             const done = index < current;
@@ -107,7 +107,7 @@ export const StepWizard: FC<Props> = ({ steps, current, onChange, label, finish,
         </div>
       </div>
 
-      <div className="flex flex-col gap-3 border-t border-gray-200 bg-gray-50 px-5 py-4">
+      <div className="flex flex-col gap-3 bg-gray-50 px-5 py-4">
         {step.cheer ? (
           <p
             key={step.cheer}

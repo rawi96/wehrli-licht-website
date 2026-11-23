@@ -5,7 +5,8 @@ import { ShopCategorySectionBlock } from './category-section-block';
 import { ShopFeaturedSectionBlock } from './featured-section-block';
 import { ShopHeroBlock } from './hero-block';
 import { ShopPageSection } from './sections';
-import { ShopServiceSectionBlock } from './service-section-block';
+import { Container } from '@wehrli/design-system';
+import { CardsBlock } from '../rich-blocks';
 
 type Props = {
   sections: ShopPageSection[];
@@ -24,8 +25,13 @@ export const ShopSections: FC<Props> = ({ sections, categories, featuredProducts
           return <ShopCategorySectionBlock key={section.id} block={section} categories={categories} />;
         case 'ShopSfFeaturedRecord':
           return <ShopFeaturedSectionBlock key={section.id} block={section} products={featuredProducts} />;
-        case 'ShopServiceSectionRecord':
-          return <ShopServiceSectionBlock key={section.id} block={section} />;
+        case 'CardsBlockRecord':
+          // The same tiles as on every page; shop sections are full width, so the tiles get the page container.
+          return (
+            <Container key={section.id}>
+              <CardsBlock block={section} />
+            </Container>
+          );
         default:
           return null;
       }

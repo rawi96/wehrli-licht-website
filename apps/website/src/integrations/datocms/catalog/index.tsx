@@ -6,7 +6,7 @@ import { queryDatoCMS } from '@/integrations/datocms/client';
 import { draftMode } from 'next/headers';
 import { toNextMetadata } from 'react-datocms/seo';
 import { ShopSections } from '../blocks/shop/shop-sections';
-import { findShopServiceSection } from '../blocks/shop/sections';
+import { findShopCardsSection } from '../blocks/shop/sections';
 import { toCategory, toProduct, toProductSummary } from './mapping';
 import {
   getAllCategories,
@@ -92,12 +92,12 @@ export const datocmsCatalog: Catalog = {
       return null;
     }
 
-    const serviceSection = findShopServiceSection(shopPage.sections);
+    const serviceSection = findShopCardsSection(shopPage.sections);
 
     return {
       metadata: shopPage.seo.length ? toNextMetadata([...site.favicon, ...shopPage.seo]) : null,
       content: <ShopSections sections={shopPage.sections} categories={categories} featuredProducts={featuredProducts} />,
-      faq: (serviceSection?.items ?? []).map((item) => ({ question: item.title, answer: item.description })),
+      faq: (serviceSection?.items ?? []).map((item) => ({ question: item.title, answer: item.text ?? '' })),
     };
   },
 

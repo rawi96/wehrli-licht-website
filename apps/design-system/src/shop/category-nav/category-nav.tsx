@@ -96,7 +96,7 @@ export const CategoryNav: FC<Props> = ({
 
   if (variant === 'mobile') {
     return (
-      <div className="border-t border-white/20 pt-4">
+      <div className="pt-4">
         <p className="mb-2 px-3 text-xs font-bold text-white/80">{heading}</p>
         <LinkList links={links} variant={variant} onLinkClick={onLinkClick} />
       </div>

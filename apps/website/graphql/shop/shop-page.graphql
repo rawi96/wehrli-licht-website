@@ -23,8 +23,8 @@ query ShopPage {
       ... on ShopSfFeaturedRecord {
         ...shopFeaturedSection
       }
-      ... on ShopServiceSectionRecord {
-        ...shopServiceSection
+      ... on CardsBlockRecord {
+        ...cardsBlock
       }
     }
   }

@@ -103,7 +103,7 @@ export const HighlightShopTeaserBlock: FC<Props> = ({
       </div>
 
       {moreCategories.length > 0 && (
-        <nav aria-label={categoriesNavLabel} className="mt-10 border-t border-white/15 pt-8 sm:mt-12 md:mt-14">
+        <nav aria-label={categoriesNavLabel} className="mt-10 sm:mt-12 md:mt-14">
           <h3 className="text-xs font-bold text-white/80">{categoriesNavLabel}</h3>
           <ul className="mt-4 flex flex-wrap gap-2">
             {moreCategories.map((category) => (

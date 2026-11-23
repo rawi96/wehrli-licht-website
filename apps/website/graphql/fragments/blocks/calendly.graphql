@@ -1,6 +1,20 @@
 fragment calendlyBlock on CalendlyRecord {
   id
   url
+  calendlyTitle: title
+  calendlyIntro: intro
+  points
+  anchorId
   disableMarginTop
   disableMarginBottom
+  calendlyEmployee: employee {
+    firstname
+    lastname
+    function
+    image {
+      responsiveImage(imgixParams: { fit: crop, w: 160, h: 160, auto: format }) {
+        ...responsiveImageFragment
+      }
+    }
+  }
 }
