@@ -9,6 +9,8 @@ export type ProjectArea = {
   intro: string | null;
   image: ResponsiveImage | null;
   lastModified?: string;
+  /** Hidden from search engines (sitemap, robots, llms.txt). */
+  noIndex?: boolean;
 };
 
 /** A link to a service page a project belongs to. */
@@ -32,6 +34,8 @@ export type ProjectSummary = {
   area: { id: string; name: string; slug: string } | null;
   services: ProjectService[];
   lastModified?: string;
+  /** Hidden from search engines (sitemap, robots, llms.txt). */
+  noIndex?: boolean;
 };
 
 /** URLs of the projects section. */

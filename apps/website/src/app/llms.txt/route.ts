@@ -1,6 +1,7 @@
 import { SITE_NAME } from '@/lib/site';
 import { SHOP_HOME_PATH, getShopCategoryPath } from '@/domain/shop/paths';
-import { DEDICATED_ROUTES, isDedicatedRoute } from '@/domain/content/dedicated-routes';
+import { DEDICATED_ROUTES } from '@/domain/content/dedicated-routes';
+import { getProjectPath } from '@/domain/content/project';
 import { catalog, content } from '@/integrations';
 import { getSiteUrl } from '@/lib/site-url';
 
@@ -24,8 +25,9 @@ const section = (title: string, items: LinkItem[]) =>
 
 export const GET = async (): Promise<Response> => {
   const siteUrl = getSiteUrl();
-  const [allPages, categories, { contact: company }, profile] = await Promise.all([
+  const [allPages, projects, categories, { contact: company }, profile] = await Promise.all([
     content.listPages(),
+    content.listProjects(),
     catalog.listCategories(),
     content.getSiteLayout(),
     content.getCompanyProfile(),
@@ -33,7 +35,9 @@ export const GET = async (): Promise<Response> => {
 
   const pages = allPages
     // the home page is the site itself, dedicated routes (shop, FAQ) are listed separately below
-    .filter((page) => !page.noIndex && !isDedicatedRoute(page.path))
+    .filter((page) => !page.noIndex && page.path !== '/' && !DEDICATED_ROUTES.some((route) => route.path === page.path))
+    // a project record wins over a CMS page at the same path
+    .filter((page) => !projects.some((project) => getProjectPath(project.slug) === page.path))
     .map((page) => ({
       parent: page.parent,
       item: {
@@ -42,6 +46,24 @@ export const GET = async (): Promise<Response> => {
         url: `${siteUrl}${page.path}`,
       },
     }));
+
+  // Projects join the section of the pages below «Projekte» (or get one of their own).
+  const projectsParent = pages.find(({ item }) => item.url.startsWith(`${siteUrl}${getProjectPath('')}`))?.parent ?? {
+    id: 'projects',
+    title: 'Projekte',
+  };
+  pages.push(
+    ...projects
+      .filter((project) => !project.noIndex)
+      .map((project) => ({
+        parent: projectsParent,
+        item: {
+          title: clean(project.title),
+          description: project.description ? clean(project.description) : undefined,
+          url: `${siteUrl}${getProjectPath(project.slug)}`,
+        },
+      })),
+  );
 
   // Parent pages (e.g. «Angebot», «Projekte», «Blog») become sections listing their child pages.
   const parents = new Map<string, { id: string; title: string }>();

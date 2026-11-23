@@ -37,7 +37,7 @@ const LINK_CLASSES = {
   mobile: {
     base: 'group -mx-3 flex gap-x-3 px-3 py-2 text-sm font-bold text-white transition-colors hover:bg-white/10',
     inactive: '',
-    active: 'bg-wehrli',
+    active: 'bg-white/15',
   },
 } as const;
 
@@ -106,7 +106,7 @@ export const CategoryNav: FC<Props> = ({
   return (
     <nav aria-label={label} className="flex flex-col gap-y-5">
       <div>
-        <p className="text-xs font-bold text-white/80">{heading}</p>
+        <p className="text-wehrli text-xs font-bold">{heading}</p>
         <div className="mt-2">
           <LinkList links={links} variant={variant} onLinkClick={onLinkClick} />
         </div>

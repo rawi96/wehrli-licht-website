@@ -19,7 +19,7 @@ type Props = {
 
 /** Invitation to start a configurator: text and a start button on the brand colour, next to a glowing lamp. */
 export const ConfiguratorTeaser: FC<Props> = ({ eyebrow, title, text, features = [], action, note, image }) => (
-  <section className="bg-wehrli my-8 grid overflow-hidden rounded-md text-white shadow-md md:grid-cols-[1.1fr_1fr]">
+  <section className="bg-wehrli surface-dark my-8 grid overflow-hidden rounded-md text-white shadow-md md:grid-cols-[1.1fr_1fr]">
     <div className="flex flex-col justify-center gap-5 p-6 sm:p-10">
       <div className="flex flex-col gap-3">
         {eyebrow ? <p className="text-xs font-bold text-white/80">{eyebrow}</p> : null}

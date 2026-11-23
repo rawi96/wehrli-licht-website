@@ -60,30 +60,43 @@ const StaticRow: FC<{ logos: Logo[] }> = ({ logos }) => (
   </ul>
 );
 
-/** One endless row: the logos twice in a row, moved by half its width, so the loop has no seam. */
-const Row: FC<{ logos: Logo[]; reverse?: boolean }> = ({ logos, reverse = false }) => (
-  <div className="group/row overflow-hidden mask-x-from-90% mask-x-to-100% py-2 motion-reduce:mask-none">
-    <ul
-      className={cn(
-        'flex w-max gap-4 group-hover/row:[animation-play-state:paused] motion-reduce:w-auto motion-reduce:flex-wrap motion-reduce:justify-center',
-        reverse ? 'animate-marquee-reverse' : 'animate-marquee',
-      )}
-      // The duration depends on the number of logos, a value from the content.
-      style={{ animationDuration: `${logos.length * SECONDS_PER_LOGO}s` }}
-    >
-      {logos.map((logo) => (
-        <li key={logo.id}>
-          <LogoTile logo={logo} />
-        </li>
-      ))}
-      {logos.map((logo) => (
-        <li key={`copy-${logo.id}`} className="motion-reduce:hidden">
-          <LogoTile logo={logo} hidden />
-        </li>
-      ))}
-    </ul>
-  </div>
-);
+/** Logos per copy of a row: wider than the widest band (8 × 224px), so a short row never shows an empty stretch. */
+const MIN_PER_COPY = 8;
+
+/**
+ * One endless row: the logos twice in a row, moved by half its width, so the loop has no seam. Each tile carries its
+ * own spacing (no flex gap), so half the width is exactly one copy. Short rows repeat their logos within a copy.
+ */
+const Row: FC<{ logos: Logo[]; reverse?: boolean }> = ({ logos, reverse = false }) => {
+  const repeats = Math.max(1, Math.ceil(MIN_PER_COPY / logos.length));
+  const copy = Array.from({ length: repeats }, (_, round) => logos.map((logo) => ({ logo, round }))).flat();
+
+  return (
+    <div className="group/row overflow-hidden mask-x-from-90% mask-x-to-100% py-2 motion-reduce:mask-none">
+      <ul
+        className={cn(
+          'flex w-max group-focus-within/row:[animation-play-state:paused] group-hover/row:[animation-play-state:paused] motion-reduce:w-auto motion-reduce:flex-wrap motion-reduce:justify-center motion-reduce:gap-y-4',
+          reverse ? 'animate-marquee-reverse' : 'animate-marquee',
+        )}
+        // The duration depends on the number of logos, a value from the content.
+        style={{ animationDuration: `${copy.length * SECONDS_PER_LOGO}s` }}
+      >
+        {[0, 1].map((half) =>
+          copy.map(({ logo, round }) => {
+            // Only the first appearance of each logo is real; repeats are decoration for the loop.
+            const hidden = half > 0 || round > 0;
+
+            return (
+              <li key={`${half}-${round}-${logo.id}`} className={cn('pr-4', hidden && 'motion-reduce:hidden')}>
+                <LogoTile logo={logo} hidden={hidden} />
+              </li>
+            );
+          }),
+        )}
+      </ul>
+    </div>
+  );
+};
 
 /**
  * Partner logos as an endless band: two rows that drift slowly in opposite directions and stop on hover. Logos are

@@ -97,7 +97,10 @@ export const datocmsCatalog: Catalog = {
     return {
       metadata: shopPage.seo.length ? toNextMetadata([...site.favicon, ...shopPage.seo]) : null,
       content: <ShopSections sections={shopPage.sections} categories={categories} featuredProducts={featuredProducts} />,
-      faq: (serviceSection?.items ?? []).map((item) => ({ question: item.title, answer: item.text ?? '' })),
+      // Only tiles with a text are questions with an answer; an empty answer is invalid structured data.
+      faq: (serviceSection?.items ?? []).flatMap((item) =>
+        item.text?.trim() ? [{ question: item.title, answer: item.text.trim() }] : [],
+      ),
     };
   },
 

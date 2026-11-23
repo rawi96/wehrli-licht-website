@@ -15,7 +15,7 @@ type Props = BlockMargins & {
 /** A call to action on the brand colour: a short title, a sentence and one or two buttons. */
 export const CtaBlock: FC<Props> = ({ title, text, primary, secondary, anchorId, marginTop, marginBottom }) => (
   <Section id={anchorId} scrollMargin marginTop={marginTop} marginBottom={marginBottom}>
-    <div className="bg-wehrli relative overflow-hidden rounded-md px-8 py-10 text-white md:px-12 lg:flex lg:items-center lg:justify-between lg:gap-12 lg:px-16 lg:py-14">
+    <div className="bg-wehrli surface-dark relative overflow-hidden rounded-md px-8 py-10 text-white md:px-12 lg:flex lg:items-center lg:justify-between lg:gap-12 lg:px-16 lg:py-14">
       <span
         aria-hidden="true"
         className="bg-wehrli-dark pointer-events-none absolute -top-24 -right-24 size-72 rounded-full opacity-60"

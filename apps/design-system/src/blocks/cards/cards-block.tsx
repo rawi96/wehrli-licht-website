@@ -69,6 +69,7 @@ const CardBody: FC<{ item: CardItem }> = ({ item }) => {
     <NextLink
       href={item.link.href}
       target={item.link.newTab ? '_blank' : undefined}
+      rel={item.link.newTab ? 'noopener noreferrer' : undefined}
       className={cn(
         className,
         'group shadow-sm transition-[transform,box-shadow] hover:-translate-y-1 hover:shadow-md motion-reduce:transition-none motion-reduce:hover:translate-y-0',

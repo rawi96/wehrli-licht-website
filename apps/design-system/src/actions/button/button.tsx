@@ -33,10 +33,13 @@ const buttonClasses = (variant: Variant, fullWidth: boolean | undefined, isDisab
   if (isPrimary(variant)) {
     return cn(
       base,
-      variant === 'primary-white' ? 'text-wehrli bg-white hover:bg-gray-200' : 'text-white bg-wehrli hover:bg-wehrli-dark',
+      // `cn` does not merge classes: a disabled button gets its grey instead of the brand colour, not on top of it.
+      isDisabled && 'bg-gray-400 text-white cursor-not-allowed',
+      !isDisabled &&
+        (variant === 'primary-white'
+          ? 'text-wehrli bg-white hover:bg-gray-200 shadow-sm'
+          : 'text-white bg-wehrli hover:bg-wehrli-dark shadow-sm'),
       fullWidth && 'w-full',
-      !isDisabled && 'shadow-sm',
-      isDisabled && 'bg-gray-400 cursor-not-allowed',
     );
   }
 

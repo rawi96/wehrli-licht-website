@@ -2,7 +2,8 @@
 
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react';
 import { PlusIcon } from '@heroicons/react/24/outline';
-import { FC, useEffect, useState } from 'react';
+import { FC } from 'react';
+import { useLocationHash } from '../../fundamentals/use-location-hash';
 
 export type FaqAccordionItem = {
   id: string;
@@ -19,28 +20,12 @@ type Props = {
   expanded?: boolean;
 };
 
-/** The anchor in the URL (/faq#lieferzeit), so a linked question opens. */
-const useHashAnchor = (): string => {
-  const [anchor, setAnchor] = useState('');
-
-  useEffect(() => {
-    const update = () => setAnchor(decodeURIComponent(window.location.hash.slice(1)));
-    // eslint-disable-next-line @eslint-react/set-state-in-effect -- the URL hash is only readable in the browser
-    update();
-    window.addEventListener('hashchange', update);
-
-    return () => window.removeEventListener('hashchange', update);
-  }, []);
-
-  return anchor;
-};
-
 /**
  * Questions as an accordion in a white box. Answers stay in the document when closed, so search engines see them.
  * A question linked with its anchor (#…) opens.
  */
 export const FaqAccordion: FC<Props> = ({ items, expanded = false }) => {
-  const anchor = useHashAnchor();
+  const anchor = useLocationHash();
 
   return (
     <ul className="card-surface divide-y divide-gray-200 overflow-hidden">

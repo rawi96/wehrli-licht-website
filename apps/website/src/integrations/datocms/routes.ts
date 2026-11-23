@@ -23,8 +23,8 @@ export const listRoutes = async (): Promise<PageRoute[]> => {
 
   return [
     ...pages.map(({ path, lastModified, noIndex }) => ({ path, lastModified, noIndex })),
-    ...projects.map(({ slug, lastModified }) => ({ path: getProjectPath(slug), lastModified })),
-    ...areas.map(({ slug, lastModified }) => ({ path: getProjectAreaPath(slug), lastModified })),
+    ...projects.map(({ slug, lastModified, noIndex }) => ({ path: getProjectPath(slug), lastModified, noIndex })),
+    ...areas.map(({ slug, lastModified, noIndex }) => ({ path: getProjectAreaPath(slug), lastModified, noIndex })),
   ];
 };
 

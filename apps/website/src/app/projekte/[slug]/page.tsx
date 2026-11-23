@@ -1,7 +1,8 @@
 import { Breadcrumbs } from '@/components/breadcrumbs';
+import { ArticleJsonLd } from '@/components/seo/article-json-ld';
 import { SitePage } from '@/components/layout/site-page';
 import { ProjectCards } from '@/components/projects/project-cards';
-import { projectBreadcrumbs, relatedProjects } from '@/domain/content/project';
+import { getProjectPath, projectBreadcrumbs, relatedProjects } from '@/domain/content/project';
 import { content } from '@/integrations';
 import { Container, Heading, ProjectFacts, Section } from '@wehrli/design-system';
 import type { Metadata } from 'next';
@@ -24,7 +25,8 @@ export const dynamicParams = true;
 
 /** A reference project, or the overview of a project area. */
 export default async function ProjectPage({ params }: Params) {
-  const page = await content.getProjectPage((await params).slug);
+  const { slug } = await params;
+  const page = await content.getProjectPage(slug);
 
   if (!page) {
     notFound();
@@ -33,6 +35,7 @@ export default async function ProjectPage({ params }: Params) {
   if (page.kind === 'page') {
     return (
       <SitePage>
+        {page.page.article && <ArticleJsonLd article={page.page.article} path={getProjectPath(slug)} />}
         <Container>
           <Breadcrumbs customBreadcrumbs={page.page.breadcrumbs} />
           {page.page.content}

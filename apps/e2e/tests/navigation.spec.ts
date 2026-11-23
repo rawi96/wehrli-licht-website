@@ -30,9 +30,13 @@ test('a missing page shows the 404 page with links back', async ({ page, smoke }
   const response = await page.goto('/diese-seite-gibt-es-nicht');
 
   expect(response?.status()).toBe(404);
-  await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
-  // The link text is maintained in DatoCMS («Texte & Beschriftungen»).
-  await expect(page.locator('a[href="/"]:visible').first()).toBeVisible();
+  const heading = page.getByRole('heading', { level: 1 });
+  await expect(heading).toBeVisible();
+  // The home link of the 404 text itself (not the logo); its text is maintained in DatoCMS («Texte & Beschriftungen»).
+  const view = page.locator('div').filter({ has: heading }).last();
+  const home = view.locator('a[href="/"]');
+  await expect(home).toBeVisible();
+  await expect(home).not.toHaveText('');
   // The 404 response of the page itself is expected.
   smoke.issues = smoke.issues.filter((issue) => !issue.text.includes('diese-seite-gibt-es-nicht'));
 });

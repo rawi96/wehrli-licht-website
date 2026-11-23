@@ -32,6 +32,7 @@ const toArea = (area: ProjectAreaFragment): ProjectArea => ({
   intro: area.intro?.trim() ? area.intro.trim() : null,
   image: toImage(area.image?.responsiveImage),
   lastModified: area._updatedAt,
+  noIndex: area.seoSettings?.noIndex ?? false,
 });
 
 const toSummary = (project: ProjectSummaryFragment): ProjectSummary => ({
@@ -51,6 +52,7 @@ const toSummary = (project: ProjectSummaryFragment): ProjectSummary => ({
     return href ? [{ id: service.id, title: service.title, href }] : [];
   }),
   lastModified: project._updatedAt,
+  noIndex: project.seoSettings?.noIndex ?? false,
 });
 
 const loadProjects = cache(async (includeDrafts: boolean): Promise<ProjectSummary[]> => {
@@ -104,9 +106,10 @@ export const getProjectPage = async (slug: string): Promise<ProjectPage | null> 
     };
   }
 
-  const { projectArea } = await getAreaBySlug(slug, includeDrafts);
+  const [{ projectArea }, projects] = await Promise.all([getAreaBySlug(slug, includeDrafts), getRequestProjects()]);
 
-  if (!projectArea) {
+  // An area without projects has no page (like in the chips and the sitemap): an empty grid would be a soft 404.
+  if (!projectArea || !projects.some((project) => project.area?.id === projectArea.id)) {
     // Pages below «Projekte» that are not (yet) project records stay reachable.
     const page = await getPage(getProjectPath(slug));
 

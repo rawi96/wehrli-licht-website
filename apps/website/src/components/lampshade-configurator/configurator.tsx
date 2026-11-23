@@ -56,6 +56,7 @@ import {
   StageMessage,
   StepWizard,
   WizardStep,
+  useLocationHash,
 } from '@wehrli/design-system';
 import type { ImageData } from '@wehrli/design-system';
 import dynamic from 'next/dynamic';
@@ -146,17 +147,6 @@ export const LampshadeConfigurator: FC<Props> = ({ contactPath, teaser }) => {
   // Browser-only: a shared design comes in the URL hash and opens the configurator right away. WebGL is only checked
   // when the configurator opens, so the page itself creates no GPU context.
   useEffect(() => {
-    // A link from elsewhere (e.g. the home page) can open the configurator right away.
-    if (window.location.hash === `#${CONFIGURATOR_START_ANCHOR}`) {
-      window.history.replaceState(null, '', window.location.pathname);
-      /* eslint-disable @eslint-react/set-state-in-effect */
-      setStarted(true);
-      setOpen(true);
-      setWebGL(supportsWebGL());
-      /* eslint-enable @eslint-react/set-state-in-effect */
-
-      return;
-    }
     const shared = decodeDesign(window.location.hash);
     if (shared) {
       // The hash is only readable after mount. A shared design opens finished, ready to look at and inquire.
@@ -169,6 +159,21 @@ export const LampshadeConfigurator: FC<Props> = ({ contactPath, teaser }) => {
       /* eslint-enable @eslint-react/set-state-in-effect */
     }
   }, []);
+
+  // A link to #starten (e.g. from the home page, or from the menu on this very page) opens the configurator. The query
+  // stays in the URL: the analytics tag reads the campaign parameters (gclid, utm_…) from it.
+  const hash = useLocationHash();
+  useEffect(() => {
+    if (hash !== CONFIGURATOR_START_ANCHOR) {
+      return;
+    }
+    window.history.replaceState(null, '', window.location.pathname + window.location.search);
+    /* eslint-disable @eslint-react/set-state-in-effect */
+    setStarted(true);
+    setOpen(true);
+    setWebGL(supportsWebGL());
+    /* eslint-enable @eslint-react/set-state-in-effect */
+  }, [hash]);
 
   // The design goes into the URL once the visitor has started, so a reload or a shared link brings it back.
   useEffect(() => {

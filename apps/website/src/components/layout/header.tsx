@@ -59,7 +59,16 @@ const toNavigationItem = (
 export const Header: FC<Props> = ({ navigation, contactLink, shopMenu, labels, variant = 'solid' }) => {
   const pathname = usePathname();
 
-  const isActive = (path: string) => pathname?.startsWith(path.split('#')[0]) ?? false;
+  // The page part of a link (without anchor or query) is active on itself and below it. «/» (also «/#…») would match
+  // every page: the home page never marks a section.
+  const isActive = (href: string) => {
+    const path = href.split(/[#?]/)[0].replace(/(.)\/+$/, '$1');
+    if (!pathname || !path || path === '/') {
+      return false;
+    }
+
+    return pathname === path || pathname.startsWith(`${path}/`);
+  };
 
   const shop = shopMenu
     ? {
