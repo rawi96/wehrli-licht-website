@@ -24,19 +24,18 @@ type Props = {
   onChange: (index: number) => void;
   /** Accessible name of the progress navigation. */
   label: string;
-  /** In place of the «Weiter» button on the last step (full width, above «Zurück»), e.g. an inquiry. */
+  /** In place of the «Weiter» button on the last step, e.g. an inquiry. */
   finish?: ReactNode;
-  /** Small print beside «Zurück» on the last step. */
+  /** Small print below the buttons on the last step. */
   note?: string;
 };
 
 /**
  * Guides through a choice step by step, made for people who rarely use such tools: numbered steps that tick off
- * (each can be opened directly), one big question per step, a friendly confirmation of the choice, and large
- * «Zurück» / «Weiter» buttons at the bottom (sticky on phones, so they stay within reach).
+ * (each can be opened directly), one question per step, a friendly confirmation of the choice, and «Zurück» /
+ * «Weiter» at the bottom. Fills its container; only the step content scrolls.
  */
 export const StepWizard: FC<Props> = ({ steps, current, onChange, label, finish, note }) => {
-  const rootRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const shownRef = useRef(current);
@@ -44,8 +43,7 @@ export const StepWizard: FC<Props> = ({ steps, current, onChange, label, finish,
   const next = steps[current + 1];
   const previous = current > 0 ? steps[current - 1] : undefined;
 
-  // After a step change: the new step starts at its top, focus moves to its question (screen readers announce it),
-  // and the progress bar comes into view.
+  // After a step change the new step starts at its top and focus moves to its question (screen readers announce it).
   useEffect(() => {
     if (shownRef.current === current) {
       return;
@@ -55,16 +53,10 @@ export const StepWizard: FC<Props> = ({ steps, current, onChange, label, finish,
       contentRef.current.scrollTop = 0;
     }
     headingRef.current?.focus({ preventScroll: true });
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const root = rootRef.current;
-    // Only scroll up when the progress bar is hidden (e.g. under the sticky view on phones).
-    if (root && root.getBoundingClientRect().top < Number.parseFloat(getComputedStyle(root).scrollMarginTop)) {
-      root.scrollIntoView({ block: 'start', behavior: reduce ? 'auto' : 'smooth' });
-    }
   }, [current]);
 
   return (
-    <div ref={rootRef} className="flex min-h-0 flex-1 scroll-mt-[max(42svh,16rem)] flex-col lg:scroll-mt-5">
+    <div className="flex min-h-0 flex-1 flex-col">
       <nav aria-label={label} className="border-b border-gray-200 px-5 pt-4 pb-3">
         <ol className="flex items-center">
           {steps.map((item, index) => {
@@ -80,13 +72,13 @@ export const StepWizard: FC<Props> = ({ steps, current, onChange, label, finish,
                   aria-label={`Schritt ${index + 1}: ${item.label}`}
                   title={item.label}
                   className={cn(
-                    'flex size-8 shrink-0 items-center justify-center rounded-full text-sm font-bold transition-colors',
+                    'flex size-7 shrink-0 items-center justify-center rounded-full text-xs font-bold transition-colors',
                     done && 'bg-wehrli hover:bg-wehrli-dark text-white',
                     active && 'border-wehrli text-wehrli bg-wehrli-50 border-2',
                     !done && !active && 'hover:border-wehrli border-2 border-gray-200 text-gray-600',
                   )}
                 >
-                  {done ? <CheckIcon key="done" className="animate-pop-in size-5" aria-hidden /> : index + 1}
+                  {done ? <CheckIcon key="done" className="animate-pop-in size-4" aria-hidden /> : index + 1}
                 </button>
                 {index < steps.length - 1 ? (
                   <span
@@ -115,7 +107,7 @@ export const StepWizard: FC<Props> = ({ steps, current, onChange, label, finish,
         </div>
       </div>
 
-      <div className="sticky bottom-0 flex flex-col gap-3 border-t border-gray-200 bg-gray-50 p-4 sm:p-5">
+      <div className="flex flex-col gap-3 border-t border-gray-200 bg-gray-50 px-5 py-4">
         {step.cheer ? (
           <p
             key={step.cheer}
@@ -126,28 +118,29 @@ export const StepWizard: FC<Props> = ({ steps, current, onChange, label, finish,
             {step.cheer}
           </p>
         ) : null}
-        {next ? null : finish}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center justify-between gap-3">
           {previous ? (
             <button
               type="button"
               onClick={() => onChange(current - 1)}
-              className="hover:border-wehrli flex shrink-0 items-center gap-1 rounded-md border-2 border-gray-200 bg-white py-3 pr-4 pl-2.5 text-sm font-bold text-black"
+              className="flex shrink-0 items-center gap-0.5 rounded-md py-2.5 pr-3 text-sm font-bold text-gray-600 hover:text-black"
             >
-              <ChevronLeftIcon className="size-6" aria-hidden />
+              <ChevronLeftIcon className="size-5" aria-hidden />
               Zurück
             </button>
-          ) : null}
+          ) : (
+            <span />
+          )}
           {next ? (
-            <div className="min-w-0 flex-1">
-              <Button variant="primary" size="large" fullWidth onClick={() => onChange(current + 1)}>
-                Weiter
-                <ChevronRightIcon className="-mr-1 ml-1 size-6" aria-hidden />
-              </Button>
-            </div>
-          ) : null}
-          {!next && note ? <p className="text-sm text-gray-600">{note}</p> : null}
+            <Button variant="primary" onClick={() => onChange(current + 1)}>
+              Weiter
+              <ChevronRightIcon className="-mr-1.5 ml-1 size-5" aria-hidden />
+            </Button>
+          ) : (
+            finish
+          )}
         </div>
+        {!next && note ? <p className="text-xxs text-right text-gray-600">{note}</p> : null}
       </div>
     </div>
   );

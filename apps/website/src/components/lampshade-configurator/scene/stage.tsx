@@ -29,8 +29,6 @@ type Props = {
   motif: HTMLImageElement | null;
   showSizes: boolean;
   focus: CameraFocus;
-  /** Pauses rendering, e.g. while the configurator is scrolled out of view. */
-  paused: boolean;
   handle: RefObject<StageHandle | null>;
   onInteract?: () => void;
 };
@@ -222,18 +220,7 @@ const Capture: FC<{ handle: RefObject<StageHandle | null> }> = ({ handle }) => {
   return null;
 };
 
-export const Stage: FC<Props> = ({
-  design,
-  lightOn,
-  dimmer,
-  kelvin,
-  motif,
-  showSizes,
-  focus,
-  paused,
-  handle,
-  onInteract,
-}) => {
+export const Stage: FC<Props> = ({ design, lightOn, dimmer, kelvin, motif, showSizes, focus, handle, onInteract }) => {
   const [dpr, setDpr] = useState(1.75);
   const lightRef = useRef<LightState>({ level: 0, target: 0, kelvin });
   lightRef.current.target = lightOn ? dimmer : 0;
@@ -245,7 +232,6 @@ export const Stage: FC<Props> = ({
     <Canvas
       shadows="percentage"
       dpr={dpr}
-      frameloop={paused ? 'never' : 'always'}
       camera={{ fov: 38, near: 0.05, far: 30, position: [0, 1.6, 3] }}
       gl={{ antialias: true, powerPreference: 'high-performance' }}
       aria-hidden

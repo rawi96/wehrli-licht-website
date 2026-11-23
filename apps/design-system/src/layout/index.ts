@@ -6,3 +6,4 @@ export * from './footer-contact/footer-contact';
 export * from './header/header';
 export * from './not-found/not-found';
 export * from './configurator-shell/configurator-shell';
+export * from './fullscreen-dialog/fullscreen-dialog';

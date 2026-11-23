@@ -19,7 +19,7 @@ const LAMP_PATHS: Record<LampId, string> = {
 const Pictogram: FC<{ path: string }> = ({ path }) => (
   <svg
     viewBox="0 0 48 48"
-    className="size-12"
+    className="size-10"
     fill="none"
     stroke="currentColor"
     strokeWidth={2.5}
@@ -38,12 +38,12 @@ export const LampPictogram: FC<{ lamp: LampId }> = ({ lamp }) => <Pictogram path
 /** A round colour sample, e.g. for a material or lining card. */
 export const ColorDot: FC<{ hex: string }> = ({ hex }) => (
   // The colour comes from the catalogue or the visitor's choice.
-  <span className="block size-11 rounded-full border border-black/10 shadow-sm" style={{ backgroundColor: hex }} />
+  <span className="block size-9 rounded-full border border-black/10 shadow-sm" style={{ backgroundColor: hex }} />
 );
 
 /** A shade outline (path in a 100 × 100 box) drawn at a share of the full size, for the size cards. */
 export const SizeOutline: FC<{ path: string; scale: number }> = ({ path, scale }) => (
-  <svg viewBox="0 0 100 100" className="size-14" aria-hidden="true">
+  <svg viewBox="0 0 100 100" className="size-11" aria-hidden="true">
     <path d={path} className="fill-current" transform={`translate(50 90) scale(${scale}) translate(-50 -90)`} />
   </svg>
 );

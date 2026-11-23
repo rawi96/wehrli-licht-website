@@ -39,23 +39,23 @@ export const ChoiceCards = <T extends string>({ options, value, onChange, label,
         key={option.id}
         value={option.id}
         className={cn(
-          'group hover:border-wehrli relative flex cursor-pointer rounded-md border-2 border-gray-200 bg-white transition-colors',
-          'data-checked:border-wehrli data-checked:bg-wehrli-50 focus-visible:outline-offset-2',
-          layout === 'tile' ? 'flex-col items-center gap-2 px-3 py-4 text-center' : 'items-center gap-4 p-4 text-left',
+          'group hover:border-wehrli relative flex cursor-pointer rounded-md border border-gray-200 bg-white transition-colors',
+          'data-checked:border-wehrli data-checked:bg-wehrli-50 data-checked:ring-wehrli focus-visible:outline-offset-2 data-checked:ring-1',
+          layout === 'tile' ? 'flex-col items-center gap-1.5 p-3 text-center' : 'items-center gap-3 px-3 py-2.5 text-left',
         )}
       >
         {option.visual ? (
           <span className="text-wehrli flex shrink-0 items-center justify-center">{option.visual}</span>
         ) : null}
         <span className="min-w-0 flex-1">
-          <span className="block text-base font-bold text-black">{option.label}</span>
-          {option.description ? <span className="mt-0.5 block text-sm text-gray-600">{option.description}</span> : null}
+          <span className="block text-sm font-bold text-black">{option.label}</span>
+          {option.description ? <span className="block text-xs text-gray-600">{option.description}</span> : null}
         </span>
         <CheckCircleIcon
           aria-hidden
           className={cn(
-            'text-wehrli group-data-checked:animate-pop-in hidden size-7 shrink-0 group-data-checked:block',
-            layout === 'tile' && 'absolute top-2 right-2 size-6',
+            'text-wehrli group-data-checked:animate-pop-in hidden size-6 shrink-0 group-data-checked:block',
+            layout === 'tile' && 'absolute top-2 right-2 size-5',
           )}
         />
       </Radio>

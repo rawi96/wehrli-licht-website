@@ -28,7 +28,7 @@ export const ColorSwatches: FC<Props> = ({ colors, value, onChange, custom = tru
           aria-pressed={color.hex === value}
           onClick={() => onChange(color.hex)}
           className={cn(
-            'size-11 rounded-full border border-black/10 shadow-sm transition-transform hover:scale-110 motion-reduce:transition-none',
+            'size-10 rounded-full border border-black/10 shadow-sm transition-transform hover:scale-110 motion-reduce:transition-none',
             color.hex === value && 'ring-wehrli ring-2 ring-offset-2',
           )}
           // The swatch is the colour itself, a value from the content.
@@ -39,7 +39,7 @@ export const ColorSwatches: FC<Props> = ({ colors, value, onChange, custom = tru
         <label
           title={labels?.custom ?? 'Eigene Farbe'}
           className={cn(
-            'relative size-11 cursor-pointer overflow-hidden rounded-full border border-black/10 shadow-sm',
+            'relative size-10 cursor-pointer overflow-hidden rounded-full border border-black/10 shadow-sm',
             isCustom && 'ring-wehrli ring-2 ring-offset-2',
           )}
           style={{

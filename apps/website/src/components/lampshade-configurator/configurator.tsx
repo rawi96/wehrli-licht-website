@@ -43,7 +43,9 @@ import {
   ChoiceChips,
   ColorSwatches,
   ConfiguratorShell,
+  ConfiguratorTeaser,
   FileButton,
+  FullscreenDialog,
   IconButton,
   MoreOptions,
   OptionGroup,
@@ -105,10 +107,10 @@ const SILHOUETTES = SHAPES.map((shape) => ({
 }));
 
 /**
- * 3D lampshade configurator as a small game, simple enough for people who rarely use such tools: one question per
- * step with big picture cards (room, lamp, form, size, material, colour, lining), extras folded away, praise for
- * each choice, and at the end the light comes on. The camera follows each step. No prices. The design can be shared
- * and sent as an inquiry.
+ * 3D lampshade configurator as a small game, simple enough for people who rarely use such tools. The page shows a
+ * teaser; «Jetzt starten» opens the configurator full screen: one question per step with picture cards (room, lamp,
+ * form, size, material, colour, lining), extras folded away, praise for each choice, and at the end the light comes
+ * on. The camera follows each step. No prices. The design can be shared and sent as an inquiry; closing keeps it.
  */
 export const LampshadeConfigurator: FC<Props> = ({ contactPath }) => {
   const [design, setDesign] = useState<LampshadeDesign>(DEFAULT_DESIGN);
@@ -121,44 +123,38 @@ export const LampshadeConfigurator: FC<Props> = ({ contactPath }) => {
   const [motif, setMotif] = useState<HTMLImageElement | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
   const [interacted, setInteracted] = useState(false);
-  const [visible, setVisible] = useState(true);
+  const [open, setOpen] = useState(false);
+  const [started, setStarted] = useState(false);
   const [webGL, setWebGL] = useState<boolean | null>(null);
   const stageRef = useRef<StageHandle | null>(null);
-  const rootRef = useRef<HTMLDivElement>(null);
   const motifUrlRef = useRef<string | null>(null);
 
   // Browser-only: a shared design comes in the URL hash; WebGL decides whether the 3D view can run.
   useEffect(() => {
     const shared = decodeDesign(window.location.hash);
     if (shared) {
-      // eslint-disable-next-line @eslint-react/set-state-in-effect -- the hash is only readable after mount
+      // The hash is only readable after mount. A shared design opens finished, ready to look at and inquire.
+      /* eslint-disable @eslint-react/set-state-in-effect */
       setDesign(shared);
-      // A shared design opens finished, ready to look at and inquire.
       setStepIndex(LAST_STEP);
+      setStarted(true);
+      setOpen(true);
+      /* eslint-enable @eslint-react/set-state-in-effect */
     }
     setWebGL(supportsWebGL());
   }, []);
 
+  // The design goes into the URL once the visitor has started, so a reload or a shared link brings it back.
   useEffect(() => {
+    if (!started) {
+      return;
+    }
     const timeout = window.setTimeout(() => {
       window.history.replaceState(null, '', `#${encodeDesign(design)}`);
     }, 300);
 
     return () => window.clearTimeout(timeout);
-  }, [design]);
-
-  // Render only while visible: saves battery when scrolled away or in a background tab.
-  useEffect(() => {
-    const element = rootRef.current;
-    if (!element) {
-      return;
-    }
-    // The last entry is the current state when several arrive at once.
-    const observer = new IntersectionObserver((entries) => setVisible(entries.at(-1)?.isIntersecting ?? true));
-    observer.observe(element);
-
-    return () => observer.disconnect();
-  }, []);
+  }, [design, started]);
 
   useEffect(() => {
     if (!notice) {
@@ -571,79 +567,96 @@ export const LampshadeConfigurator: FC<Props> = ({ contactPath }) => {
 
   const unsupported = <StageMessage>{UNSUPPORTED}</StageMessage>;
 
+  const start = () => {
+    setStarted(true);
+    setOpen(true);
+  };
+
   return (
-    <ConfiguratorShell
-      ref={rootRef}
-      stage={
-        webGL === false ? (
-          unsupported
-        ) : stageReady ? (
-          <StageBoundary fallback={unsupported}>
-            <Stage
-              design={design}
-              lightOn={lightOn}
-              dimmer={dimmer}
-              kelvin={kelvin}
-              motif={motif}
-              showSizes={showSizes || step.id === 'groesse'}
-              focus={step.focus}
-              paused={!visible}
-              handle={stageRef}
-              onInteract={() => setInteracted(true)}
-            />
-          </StageBoundary>
-        ) : (
-          <StageMessage>3D-Ansicht wird geladen…</StageMessage>
-        )
-      }
-      stageTopLeft={
-        stageReady && (
-          <SegmentedControl
-            label="Tageszeit"
-            value={lightOn ? 'abend' : 'tag'}
-            onChange={(time) => setLightOn(time === 'abend')}
-            options={[
-              { id: 'tag', label: 'Tag', icon: 'sun' },
-              { id: 'abend', label: 'Abend', icon: 'moon' },
-            ]}
-          />
-        )
-      }
-      stageTopRight={
-        stageReady && (
-          <>
-            <IconButton
-              icon="sparkles"
-              label="Überraschen Sie mich"
-              onClick={() => setDesign((current) => randomDesign(current))}
-            />
-            {step.id !== 'groesse' && (
-              <IconButton
-                icon="measure"
-                label="Masse anzeigen"
-                pressed={showSizes}
-                onClick={() => setShowSizes((current) => !current)}
-              />
-            )}
-          </>
-        )
-      }
-      hint={stageReady && !interacted ? 'Mit Finger oder Maus ziehen, um den Schirm von allen Seiten zu sehen' : undefined}
-      notice={notice}
-      options={
-        <StepWizard
-          label="Schritte des Konfigurators"
-          steps={steps}
-          current={stepIndex}
-          onChange={setStepIndex}
-          finish={
-            <Button variant="primary" size="large" fullWidth onClick={inquire}>
-              Entwurf an Wehrli senden
-            </Button>
+    <>
+      <ConfiguratorTeaser
+        eyebrow="Lampenschirm-Konfigurator"
+        title="Gestalten Sie Ihren eigenen Lampenschirm"
+        text="Wählen Sie Raum, Form, Stoff und Farbe und sehen Sie Ihren Schirm sofort in 3D. Ganz einfach, Schritt für Schritt. Zum Schluss geht das Licht an."
+        features={['In 8 einfachen Schritten', 'Sofort in 3D, in Ihrem Raum', 'Unverbindlich anfragen']}
+        action={{ label: started ? 'Weiter gestalten' : 'Jetzt starten', onClick: start }}
+        note="Dauert etwa 3 Minuten"
+      />
+      <FullscreenDialog open={open} onClose={() => setOpen(false)} title="Lampenschirm-Konfigurator">
+        <ConfiguratorShell
+          stage={
+            webGL === false ? (
+              unsupported
+            ) : stageReady ? (
+              <StageBoundary fallback={unsupported}>
+                <Stage
+                  design={design}
+                  lightOn={lightOn}
+                  dimmer={dimmer}
+                  kelvin={kelvin}
+                  motif={motif}
+                  showSizes={showSizes || step.id === 'groesse'}
+                  focus={step.focus}
+                  handle={stageRef}
+                  onInteract={() => setInteracted(true)}
+                />
+              </StageBoundary>
+            ) : (
+              <StageMessage>3D-Ansicht wird geladen…</StageMessage>
+            )
           }
-          note="Unverbindlich. Wir melden uns persönlich bei Ihnen."
+          stageTopLeft={
+            stageReady && (
+              <SegmentedControl
+                label="Tageszeit"
+                value={lightOn ? 'abend' : 'tag'}
+                onChange={(time) => setLightOn(time === 'abend')}
+                options={[
+                  { id: 'tag', label: 'Tag', icon: 'sun' },
+                  { id: 'abend', label: 'Abend', icon: 'moon' },
+                ]}
+              />
+            )
+          }
+          stageTopRight={
+            stageReady && (
+              <>
+                <IconButton
+                  icon="sparkles"
+                  label="Überraschen Sie mich"
+                  onClick={() => setDesign((current) => randomDesign(current))}
+                />
+                {step.id !== 'groesse' && (
+                  <IconButton
+                    icon="measure"
+                    label="Masse anzeigen"
+                    pressed={showSizes}
+                    onClick={() => setShowSizes((current) => !current)}
+                  />
+                )}
+              </>
+            )
+          }
+          hint={
+            stageReady && !interacted ? 'Mit Finger oder Maus ziehen, um den Schirm von allen Seiten zu sehen' : undefined
+          }
+          notice={notice}
+          options={
+            <StepWizard
+              label="Schritte des Konfigurators"
+              steps={steps}
+              current={stepIndex}
+              onChange={setStepIndex}
+              finish={
+                <Button variant="primary" onClick={inquire}>
+                  Entwurf senden
+                </Button>
+              }
+              note="Unverbindlich. Wir melden uns persönlich bei Ihnen."
+            />
+          }
         />
-      }
-    />
+      </FullscreenDialog>
+    </>
   );
 };
