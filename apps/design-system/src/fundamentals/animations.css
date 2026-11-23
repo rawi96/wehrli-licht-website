@@ -4,6 +4,7 @@
   --animate-hero-reveal: hero-reveal 0.9s var(--ease-reveal) forwards; /* hero text fades in from below */
   --animate-scroll-hint: scroll-hint 2s ease-in-out infinite; /* bouncing "scroll down" hint */
   --animate-light-beam: light-beam 4s ease-in-out infinite; /* pulsing light cone */
+  --animate-pop-in: pop-in 0.4s var(--ease-reveal) both; /* a check mark or praise pops up */
   --animate-step-in: step-in 0.35s var(--ease-reveal) both; /* content of a new wizard step slides in */
 
   @keyframes ken-burns {
@@ -35,6 +36,21 @@
     50% {
       opacity: 1;
       transform: translateY(6px);
+    }
+  }
+
+  @keyframes pop-in {
+    0% {
+      opacity: 0;
+      transform: scale(0.6);
+    }
+    60% {
+      opacity: 1;
+      transform: scale(1.08);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
     }
   }
 

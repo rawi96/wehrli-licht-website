@@ -20,7 +20,7 @@ export const OptionGroup: FC<Props> = ({ title, children, hint, hintTone, hideTi
 
   return (
     <fieldset className="flex min-w-0 flex-col gap-3">
-      <legend className={hideTitle ? 'sr-only' : 'mb-3 text-sm font-bold text-black'}>{title}</legend>
+      <legend className={hideTitle ? 'sr-only' : 'mb-3 text-base font-bold text-black'}>{title}</legend>
       {children}
       {hint ? (
         <p className="flex items-start gap-2 text-sm text-gray-600">

@@ -4,6 +4,7 @@ const ANIMATIONS = [
   { className: 'animate-hero-reveal', usage: 'Hero text fades in from below' },
   { className: 'animate-scroll-hint', usage: 'Bouncing “scroll down” hint' },
   { className: 'animate-light-beam', usage: 'Pulsing light cone' },
+  { className: 'animate-pop-in', usage: 'A check mark or praise pops up' },
   { className: 'animate-step-in', usage: 'Content of a new wizard step slides in' },
   { className: 'animate-ken-burns', usage: 'Slow zoom of the home stage image' },
 ];

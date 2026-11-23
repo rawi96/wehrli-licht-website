@@ -45,7 +45,7 @@ export const ConfiguratorShell: FC<Props> = ({
   ref,
 }) => (
   <div ref={ref} className="my-8 overflow-clip rounded-md bg-white shadow-md lg:grid lg:grid-cols-[minmax(0,1fr)_420px]">
-    <div className="sticky top-0 z-10 h-[50svh] min-h-72 bg-gray-200 lg:relative lg:h-[min(80svh,760px)]">
+    <div className="sticky top-0 z-10 h-[42svh] min-h-64 bg-gray-200 lg:relative lg:h-[min(80svh,760px)]">
       {stage}
       {stageTopLeft ? <div className="absolute top-3 left-3 flex flex-col items-start gap-2">{stageTopLeft}</div> : null}
       {stageTopRight ? <div className="absolute top-3 right-3 flex flex-col gap-2">{stageTopRight}</div> : null}

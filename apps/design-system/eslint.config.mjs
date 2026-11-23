@@ -17,7 +17,7 @@ const eslintConfig = [
             {
               propName: 'className',
               allowedFor: ['NextImage'],
-              allowedForPatterns: ['*Link', '*Icon', 'Dialog*', 'Disclosure*', 'Menu*', 'Popover*', 'Transition*', 'Tab*'],
+              allowedForPatterns: ['*Link', '*Icon', 'Dialog*', 'Disclosure*', 'Menu*', 'Popover*', 'Radio*', 'Transition*', 'Tab*'],
             },
           ],
         },

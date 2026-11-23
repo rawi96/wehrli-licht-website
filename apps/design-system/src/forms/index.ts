@@ -7,3 +7,5 @@ export * from './option-group/option-group';
 export * from './range-field/range-field';
 export * from './segmented-control/segmented-control';
 export * from './silhouette-picker/silhouette-picker';
+export * from './choice-cards/choice-cards';
+export * from './more-options/more-options';

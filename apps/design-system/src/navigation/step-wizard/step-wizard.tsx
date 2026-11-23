@@ -1,6 +1,6 @@
 'use client';
 
-import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid';
+import { CheckIcon, ChevronLeftIcon, ChevronRightIcon, SparklesIcon } from '@heroicons/react/20/solid';
 import { FC, ReactNode, useEffect, useRef } from 'react';
 import { Button } from '../../actions/button/button';
 import { cn } from '../../fundamentals/cn';
@@ -13,6 +13,8 @@ export type WizardStep = {
   title: string;
   description?: ReactNode;
   content: ReactNode;
+  /** A short, friendly confirmation of the choice, e.g. «Schöne Wahl: Pagode». */
+  cheer?: string;
 };
 
 type Props = {
@@ -22,15 +24,16 @@ type Props = {
   onChange: (index: number) => void;
   /** Accessible name of the progress navigation. */
   label: string;
-  /** In place of the «Weiter» button on the last step, e.g. an inquiry. */
+  /** In place of the «Weiter» button on the last step (full width, above «Zurück»), e.g. an inquiry. */
   finish?: ReactNode;
-  /** Small print below the buttons on the last step. */
+  /** Small print beside «Zurück» on the last step. */
   note?: string;
 };
 
 /**
- * Guides through a choice step by step: a progress bar (every step can be opened directly), the question of the
- * step, its options and «Zurück» / «Weiter» at the bottom (sticky on phones, so they stay within reach).
+ * Guides through a choice step by step, made for people who rarely use such tools: numbered steps that tick off
+ * (each can be opened directly), one big question per step, a friendly confirmation of the choice, and large
+ * «Zurück» / «Weiter» buttons at the bottom (sticky on phones, so they stay within reach).
  */
 export const StepWizard: FC<Props> = ({ steps, current, onChange, label, finish, note }) => {
   const rootRef = useRef<HTMLDivElement>(null);
@@ -61,35 +64,39 @@ export const StepWizard: FC<Props> = ({ steps, current, onChange, label, finish,
   }, [current]);
 
   return (
-    <div ref={rootRef} className="flex min-h-0 flex-1 scroll-mt-[max(50svh,18rem)] flex-col lg:scroll-mt-5">
+    <div ref={rootRef} className="flex min-h-0 flex-1 scroll-mt-[max(42svh,16rem)] flex-col lg:scroll-mt-5">
       <nav aria-label={label} className="border-b border-gray-200 px-5 pt-4 pb-3">
-        <ol className="flex gap-1">
-          {steps.map((item, index) => (
-            <li key={item.id} className="min-w-0 flex-1">
-              <button
-                type="button"
-                onClick={() => onChange(index)}
-                aria-current={index === current ? 'step' : undefined}
-                className="group flex w-full flex-col gap-1.5 py-1 text-left"
-              >
-                <span
-                  aria-hidden
+        <ol className="flex items-center">
+          {steps.map((item, index) => {
+            const done = index < current;
+            const active = index === current;
+
+            return (
+              <li key={item.id} className="flex flex-1 items-center last:flex-none">
+                <button
+                  type="button"
+                  onClick={() => onChange(index)}
+                  aria-current={active ? 'step' : undefined}
+                  aria-label={`Schritt ${index + 1}: ${item.label}`}
+                  title={item.label}
                   className={cn(
-                    'h-1 w-full rounded-full transition-colors duration-300',
-                    index <= current ? 'bg-wehrli' : 'bg-gray-200 group-hover:bg-gray-400',
-                  )}
-                />
-                <span
-                  className={cn(
-                    'text-xxxs truncate font-bold',
-                    index === current ? 'text-wehrli' : index < current ? 'text-black' : 'text-gray-600',
+                    'flex size-8 shrink-0 items-center justify-center rounded-full text-sm font-bold transition-colors',
+                    done && 'bg-wehrli hover:bg-wehrli-dark text-white',
+                    active && 'border-wehrli text-wehrli bg-wehrli-50 border-2',
+                    !done && !active && 'hover:border-wehrli border-2 border-gray-200 text-gray-600',
                   )}
                 >
-                  {item.label}
-                </span>
-              </button>
-            </li>
-          ))}
+                  {done ? <CheckIcon key="done" className="animate-pop-in size-5" aria-hidden /> : index + 1}
+                </button>
+                {index < steps.length - 1 ? (
+                  <span
+                    aria-hidden
+                    className={cn('mx-0.5 h-0.5 flex-1 transition-colors duration-300', done ? 'bg-wehrli' : 'bg-gray-200')}
+                  />
+                ) : null}
+              </li>
+            );
+          })}
         </ol>
       </nav>
 
@@ -97,9 +104,9 @@ export const StepWizard: FC<Props> = ({ steps, current, onChange, label, finish,
         <div key={step.id} className="animate-step-in flex flex-col gap-6 p-5">
           <header>
             <p className="text-xs font-bold text-gray-600">
-              Schritt {current + 1} von {steps.length}
+              Schritt {current + 1} von {steps.length} · {step.label}
             </p>
-            <h2 ref={headingRef} tabIndex={-1} className="mt-1 text-xl font-bold text-black outline-none">
+            <h2 ref={headingRef} tabIndex={-1} className="mt-1 text-lg font-bold text-black outline-none">
               {step.title}
             </h2>
             {step.description ? <p className="mt-2 text-sm text-gray-600">{step.description}</p> : null}
@@ -109,29 +116,38 @@ export const StepWizard: FC<Props> = ({ steps, current, onChange, label, finish,
       </div>
 
       <div className="sticky bottom-0 flex flex-col gap-3 border-t border-gray-200 bg-gray-50 p-4 sm:p-5">
+        {step.cheer ? (
+          <p
+            key={step.cheer}
+            aria-live="polite"
+            className="animate-pop-in text-wehrli flex items-center gap-2 text-sm font-bold"
+          >
+            <SparklesIcon className="size-5 shrink-0" aria-hidden />
+            {step.cheer}
+          </p>
+        ) : null}
+        {next ? null : finish}
         <div className="flex items-center gap-3">
           {previous ? (
             <button
               type="button"
               onClick={() => onChange(current - 1)}
-              className="flex shrink-0 items-center gap-1 rounded-md px-2 py-2.5 text-sm font-bold text-gray-600 hover:text-black"
+              className="hover:border-wehrli flex shrink-0 items-center gap-1 rounded-md border-2 border-gray-200 bg-white py-3 pr-4 pl-2.5 text-sm font-bold text-black"
             >
-              <ChevronLeftIcon className="size-5" aria-hidden />
+              <ChevronLeftIcon className="size-6" aria-hidden />
               Zurück
             </button>
           ) : null}
-          <div className="min-w-0 flex-1">
-            {next ? (
-              <Button variant="primary" fullWidth onClick={() => onChange(current + 1)}>
-                Weiter: {next.label}
-                <ChevronRightIcon className="-mr-1 ml-1 size-5" aria-hidden />
+          {next ? (
+            <div className="min-w-0 flex-1">
+              <Button variant="primary" size="large" fullWidth onClick={() => onChange(current + 1)}>
+                Weiter
+                <ChevronRightIcon className="-mr-1 ml-1 size-6" aria-hidden />
               </Button>
-            ) : (
-              finish
-            )}
-          </div>
+            </div>
+          ) : null}
+          {!next && note ? <p className="text-sm text-gray-600">{note}</p> : null}
         </div>
-        {!next && note ? <p className="text-xxs text-gray-600">{note}</p> : null}
       </div>
     </div>
   );

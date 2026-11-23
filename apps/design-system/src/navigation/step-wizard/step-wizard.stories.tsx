@@ -11,6 +11,7 @@ const STEPS: WizardStep[] = [
     title: 'Was gefällt Ihnen?',
     description: 'Eine kurze Erklärung zum Schritt.',
     content: <p className="text-sm">Optionen</p>,
+    cheer: 'Schöne Wahl!',
   },
   { id: 'drei', label: 'Details', title: 'Der letzte Schliff', content: <p className="text-sm">Optionen</p> },
   { id: 'vier', label: 'Fertig', title: 'Ihre Auswahl', content: <p className="text-sm">Zusammenfassung</p> },

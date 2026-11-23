@@ -22,12 +22,22 @@ type Props = {
   fullWidth?: boolean;
   /** Arrow after the label of secondary buttons. */
   showArrow?: boolean;
+  /** `large`: taller with bigger text, e.g. the main step of a guided flow. */
+  size?: 'default' | 'large';
 };
 
 const isPrimary = (variant: Variant) => variant === 'primary' || variant === 'primary-white';
 
-const buttonClasses = (variant: Variant, fullWidth: boolean | undefined, isDisabled: boolean | undefined) => {
-  const base = 'px-5 py-2.5 rounded-md text-center inline-flex items-center justify-center text-sm font-bold group';
+const buttonClasses = (
+  variant: Variant,
+  fullWidth: boolean | undefined,
+  isDisabled: boolean | undefined,
+  size: 'default' | 'large',
+) => {
+  const base = cn(
+    'rounded-md text-center inline-flex items-center justify-center font-bold group',
+    size === 'large' ? 'px-6 py-3.5 text-base' : 'px-5 py-2.5 text-sm',
+  );
 
   if (isPrimary(variant)) {
     return cn(
@@ -53,10 +63,11 @@ export const Button: FC<Props> = ({
   loading,
   fullWidth,
   showArrow = true,
+  size = 'default',
 }) => {
   // A loading button is always disabled, so an action (e.g. placing an order) cannot run twice.
   const isDisabled = !!disabled || !!loading;
-  const className = buttonClasses(variant, fullWidth, isDisabled);
+  const className = buttonClasses(variant, fullWidth, isDisabled, size);
   const arrow = !isPrimary(variant) && showArrow && <ArrowIcon />;
 
   return href ? (

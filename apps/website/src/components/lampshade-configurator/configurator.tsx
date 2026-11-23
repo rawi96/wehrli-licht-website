@@ -16,7 +16,9 @@ import {
   SIZE_LIMITS,
   TRIMS,
 } from '@/domain/lampshade/catalog';
+import type { LampId, RoomId } from '@/domain/lampshade/catalog';
 import {
+  colorName,
   colorsOf,
   decodeDesign,
   DEFAULT_DESIGN,
@@ -26,18 +28,24 @@ import {
   plainLabel,
   PRESETS,
   randomDesign,
+  SIZE_CHOICES,
   sizeAdvice,
+  sizeChoiceOf,
+  sizeWidth,
   withMaterial,
   withShape,
+  withSize,
 } from '@/domain/lampshade/design';
 import { silhouettePath, toShapeParams } from '@/domain/lampshade/shape';
 import {
   Button,
+  ChoiceCards,
   ChoiceChips,
   ColorSwatches,
   ConfiguratorShell,
   FileButton,
   IconButton,
+  MoreOptions,
   OptionGroup,
   RangeField,
   SegmentedControl,
@@ -48,6 +56,7 @@ import {
 } from '@wehrli/design-system';
 import dynamic from 'next/dynamic';
 import { FC, useEffect, useMemo, useRef, useState } from 'react';
+import { ColorDot, LampPictogram, LightPictogram, RoomPictogram, SizeOutline } from './pictograms';
 import type { CameraFocus, StageHandle } from './scene/stage';
 import { StageBoundary, supportsWebGL } from './stage-boundary';
 
@@ -56,8 +65,30 @@ const Stage = dynamic(() => import('./scene/stage').then((module) => module.Stag
   loading: () => <StageMessage>3D-Ansicht wird geladen…</StageMessage>,
 });
 
-/** Index of the last step («Entwurf»). */
-const LAST_STEP = 6;
+/** Index of the last step («Licht an»). */
+const LAST_STEP = 7;
+
+/** Friendly words for the choice of each step, so choosing feels like a small game. */
+const PRAISE = ['Schöne Wahl', 'Sehr gut', 'Wunderbar', 'Passt', 'Herrlich', 'Prächtig', 'Fein'];
+
+const ROOM_HINTS: Record<RoomId, string> = {
+  atelier: 'Schlicht, ohne Möbel',
+  wohnen: 'Beim Sofa',
+  essen: 'Am Esstisch',
+  schlafen: 'Am Bett',
+};
+
+const LAMP_HINTS: Record<LampId, string> = {
+  tisch: 'Auf Kommode oder Nachttisch',
+  steh: 'Neben Sofa oder Sessel',
+  pendel: 'Hängt von der Decke',
+  wand: 'An der Wand',
+};
+
+const firstSentence = (text: string) => text.split('. ')[0].replace(/\.?$/, '.');
+
+const labelOf = <T extends string>(id: T, options: { id: T; label: string }[]) =>
+  options.find((option) => option.id === id)?.label ?? id;
 
 const UNSUPPORTED =
   'Die 3D-Ansicht läuft in diesem Browser nicht. Sie können Ihren Lampenschirm trotzdem zusammenstellen und anfragen.';
@@ -74,14 +105,16 @@ const SILHOUETTES = SHAPES.map((shape) => ({
 }));
 
 /**
- * 3D lampshade configurator, guided step by step: room and lamp, form, size, material, colour, details, and finally
- * the light. The camera follows each step. Shows what the atelier can make; no prices. The design can be shared and
- * sent as an inquiry.
+ * 3D lampshade configurator as a small game, simple enough for people who rarely use such tools: one question per
+ * step with big picture cards (room, lamp, form, size, material, colour, lining), extras folded away, praise for
+ * each choice, and at the end the light comes on. The camera follows each step. No prices. The design can be shared
+ * and sent as an inquiry.
  */
 export const LampshadeConfigurator: FC<Props> = ({ contactPath }) => {
   const [design, setDesign] = useState<LampshadeDesign>(DEFAULT_DESIGN);
   const [stepIndex, setStepIndex] = useState(0);
-  const [lightOn, setLightOn] = useState(true);
+  // The light comes on at the end, as the reveal of the finished shade.
+  const [lightOn, setLightOn] = useState(false);
   const [dimmer, setDimmer] = useState(0.85);
   const [kelvin, setKelvin] = useState(2700);
   const [showSizes, setShowSizes] = useState(false);
@@ -151,6 +184,22 @@ export const LampshadeConfigurator: FC<Props> = ({ contactPath }) => {
   const lining = LININGS.find(({ id }) => id === design.lining) ?? LININGS[0];
   const advice = sizeAdvice(design);
   const round = shape.corners === 2 && design.depth === 100;
+  const lightOnRef = useRef(lightOn);
+  lightOnRef.current = lightOn;
+
+  // Last step: switch the light on, the moment the shade glows for the first time.
+  useEffect(() => {
+    if (stepIndex !== LAST_STEP || lightOnRef.current) {
+      return;
+    }
+    const timeout = window.setTimeout(() => {
+      setLightOn(true);
+      setNotice('Licht an!');
+    }, 500);
+
+    return () => window.clearTimeout(timeout);
+  }, [stepIndex]);
+
   const lamps = useMemo(() => (shape.half ? LAMPS.filter(({ id }) => id === 'wand') : LAMPS), [shape.half]);
 
   const stageReady = webGL === true;
@@ -209,76 +258,76 @@ export const LampshadeConfigurator: FC<Props> = ({ contactPath }) => {
     image.src = url;
   };
 
-  const lightControls = (
-    <OptionGroup title="Licht">
-      <SegmentedControl
-        label="Tageszeit"
-        value={lightOn ? 'abend' : 'tag'}
-        onChange={(time) => setLightOn(time === 'abend')}
-        options={[
-          { id: 'tag', label: 'Tag', icon: 'sun' },
-          { id: 'abend', label: 'Abend, Licht an', icon: 'moon' },
-        ]}
-      />
-      {lightOn && (
-        <>
-          <RangeField
-            label="Helligkeit"
-            unit="%"
-            value={Math.round(dimmer * 100)}
-            min={10}
-            max={100}
-            onChange={(value) => setDimmer(value / 100)}
-          />
-          <SegmentedControl<number>
-            label="Lichtfarbe"
-            size="small"
-            value={kelvin}
-            onChange={setKelvin}
-            options={LIGHT_TEMPERATURES.map((option) => ({
-              id: option.kelvin,
-              label: `${option.kelvin} K`,
-              title: option.label,
-            }))}
-          />
-        </>
-      )}
-    </OptionGroup>
-  );
+  const praise = (index: number, choice: string) => `${PRAISE[index % PRAISE.length]}: ${choice}`;
+  const colorLabel = colorName(design.color, design.material);
+  const sizeChoice = sizeChoiceOf(design);
+  const width = Math.max(design.bottom, design.top);
+  const outline = SILHOUETTES.find(({ id }) => id === design.shape)?.path ?? '';
 
   const steps: (WizardStep & { focus: CameraFocus })[] = [
     {
       id: 'raum',
       label: 'Raum',
-      title: 'Wo soll Ihr Lampenschirm leuchten?',
-      description: 'Wählen Sie Raum und Leuchte. Oder starten Sie mit einer unserer Ideen und passen Sie sie an.',
+      title: 'In welchem Raum soll Ihr Lampenschirm leuchten?',
+      description: 'Tippen Sie einfach an, was Ihnen gefällt. Sie können jederzeit zurück und alles ändern.',
       focus: 'room',
+      cheer: praise(0, ROOMS.find(({ id }) => id === design.room)?.label ?? ''),
       content: (
         <>
-          <OptionGroup title="Raum">
-            <ChoiceChips label="Raum" options={ROOMS} value={design.room} onChange={(room) => update({ room })} />
-          </OptionGroup>
-          <OptionGroup title="Leuchte" hint={shape.half ? 'Ein Halbschild gehört an die Wand.' : undefined}>
-            <ChoiceChips label="Leuchte" options={lamps} value={design.lamp} onChange={(lamp) => update({ lamp })} />
-          </OptionGroup>
-          <OptionGroup title="Oder mit einer Idee starten">
+          <ChoiceCards
+            label="Raum"
+            layout="tile"
+            value={design.room}
+            onChange={(room) => update({ room })}
+            options={ROOMS.map((room) => ({
+              ...room,
+              description: ROOM_HINTS[room.id],
+              visual: <RoomPictogram room={room.id} />,
+            }))}
+          />
+          <MoreOptions label="Lieber mit einer fertigen Idee starten?">
             <ChoiceChips
               label="Ideen"
               options={PRESETS.map(({ label }) => ({ id: label, label }))}
-              onChange={(label) => setDesign(PRESETS.find((preset) => preset.label === label)?.design ?? DEFAULT_DESIGN)}
+              onChange={(label) => {
+                setDesign(PRESETS.find((preset) => preset.label === label)?.design ?? DEFAULT_DESIGN);
+                setNotice(`Idee «${label}» übernommen`);
+              }}
             />
-          </OptionGroup>
+          </MoreOptions>
         </>
+      ),
+    },
+    {
+      id: 'leuchte',
+      label: 'Leuchte',
+      title: 'Für welche Leuchte ist der Schirm?',
+      description: shape.half ? 'Ein Halbschild gehört an die Wand.' : 'Die Leuchte erscheint sofort im Raum.',
+      focus: 'room',
+      cheer: praise(1, LAMPS.find(({ id }) => id === design.lamp)?.label ?? ''),
+      content: (
+        <ChoiceCards
+          label="Leuchte"
+          layout="tile"
+          value={design.lamp}
+          onChange={(lamp) => update({ lamp })}
+          options={lamps.map((lamp) => ({
+            ...lamp,
+            description: LAMP_HINTS[lamp.id],
+            visual: <LampPictogram lamp={lamp.id} />,
+          }))}
+        />
       ),
     },
     {
       id: 'form',
       label: 'Form',
       title: 'Welche Form gefällt Ihnen?',
-      description: `Form ${shape.form} · ${plainLabel(shape.label)}. Jede unserer 21 Grundformen fertigen wir in jeder Grösse.`,
+      description: 'Tippen Sie auf eine Form. Oben sehen Sie gleich, wie sie aussieht.',
       focus: 'shade',
+      cheer: praise(2, plainLabel(shape.label)),
       content: (
-        <OptionGroup title="Grundform" hideTitle>
+        <OptionGroup title="Form" hideTitle>
           <SilhouettePicker
             options={SILHOUETTES}
             value={design.shape}
@@ -290,71 +339,90 @@ export const LampshadeConfigurator: FC<Props> = ({ contactPath }) => {
     {
       id: 'groesse',
       label: 'Grösse',
-      title: 'Wie gross soll er werden?',
-      description: 'Wir fertigen auf den Zentimeter genau. Die Masse sehen Sie direkt in der Ansicht.',
+      title: 'Wie gross soll er sein?',
+      description: 'Wählen Sie einfach klein, mittel oder gross. Wir fertigen aber auch auf den Zentimeter genau.',
       focus: 'shade',
+      cheer: praise(3, `${sizeChoice ? labelOf(sizeChoice, SIZE_CHOICES) : 'Nach Mass'}, ${width} cm breit`),
       content: (
-        <OptionGroup title="Masse" hideTitle hint={advice.text} hintTone={advice.fits ? 'ok' : 'tip'}>
-          <RangeField
-            label="Höhe"
-            unit="cm"
-            value={design.height}
-            {...SIZE_LIMITS.height}
-            onChange={(height) => update({ height })}
+        <>
+          <ChoiceCards
+            label="Grösse"
+            value={sizeChoice}
+            onChange={(size) => setDesign((current) => withSize(current, size))}
+            options={SIZE_CHOICES.map((size, index) => ({
+              ...size,
+              description: `Rund ${sizeWidth(design.lamp, size.id)} cm breit`,
+              visual: <SizeOutline path={outline} scale={0.6 + index * 0.2} />,
+            }))}
           />
-          <RangeField
-            label={round ? 'Durchmesser unten' : 'Breite unten'}
-            unit="cm"
-            value={design.bottom}
-            {...SIZE_LIMITS.bottom}
-            onChange={(bottom) => update({ bottom })}
-          />
-          <RangeField
-            label={round ? 'Durchmesser oben' : 'Breite oben'}
-            unit="cm"
-            value={design.top}
-            {...SIZE_LIMITS.top}
-            onChange={(top) => update({ top })}
-          />
-          <RangeField
-            label={shape.corners === 2 ? 'Tiefe (oval)' : 'Tiefe'}
-            unit="%"
-            value={design.depth}
-            {...SIZE_LIMITS.depth}
-            onChange={(depth) => update({ depth })}
-          />
-        </OptionGroup>
+          <MoreOptions label="Genau einstellen (in cm)">
+            <OptionGroup title="Masse" hideTitle hint={advice.text} hintTone={advice.fits ? 'ok' : 'tip'}>
+              <RangeField
+                label="Höhe"
+                unit="cm"
+                value={design.height}
+                {...SIZE_LIMITS.height}
+                onChange={(height) => update({ height })}
+              />
+              <RangeField
+                label={round ? 'Durchmesser unten' : 'Breite unten'}
+                unit="cm"
+                value={design.bottom}
+                {...SIZE_LIMITS.bottom}
+                onChange={(bottom) => update({ bottom })}
+              />
+              <RangeField
+                label={round ? 'Durchmesser oben' : 'Breite oben'}
+                unit="cm"
+                value={design.top}
+                {...SIZE_LIMITS.top}
+                onChange={(top) => update({ top })}
+              />
+              <RangeField
+                label={shape.corners === 2 ? 'Tiefe (für ovale Schirme)' : 'Tiefe'}
+                unit="%"
+                value={design.depth}
+                {...SIZE_LIMITS.depth}
+                onChange={(depth) => update({ depth })}
+              />
+            </OptionGroup>
+          </MoreOptions>
+        </>
       ),
     },
     {
       id: 'material',
       label: 'Material',
       title: 'Aus welchem Material?',
-      description:
-        'Das Material bestimmt, wie das Licht durch den Schirm fällt. Schalten Sie oben zwischen Tag und Abend um.',
+      description: 'Das Material bestimmt, wie schön das Licht durchscheint.',
       focus: 'close',
+      cheer: praise(4, material.label),
       content: (
-        <OptionGroup title="Material" hideTitle hint={material.effect}>
-          <ChoiceChips
-            label="Material"
-            options={MATERIALS}
-            value={design.material}
-            onChange={(id) => setDesign((current) => withMaterial(current, id))}
-          />
-        </OptionGroup>
+        <ChoiceCards
+          label="Material"
+          value={design.material}
+          onChange={(id) => setDesign((current) => withMaterial(current, id))}
+          options={MATERIALS.map((item) => ({
+            id: item.id,
+            label: item.label,
+            description: firstSentence(item.effect),
+            visual: <ColorDot hex={item.colors?.[0]?.hex ?? design.color} />,
+          }))}
+        />
       ),
     },
     {
       id: 'farbe',
       label: 'Farbe',
-      title: material.colors ? 'Welcher Ton?' : 'Farbe und Muster',
+      title: material.colors ? 'Welcher Farbton?' : 'Welche Farbe?',
       description: material.colors
         ? `${material.label} gibt es in diesen natürlichen Tönen.`
-        : 'Jede Farbe ist möglich, auch Ihr eigenes Bild als Motiv.',
+        : 'Tippen Sie auf eine Farbe. Mit dem bunten Kreis am Schluss wählen Sie jede beliebige Farbe.',
       focus: 'close',
+      cheer: praise(5, colorLabel.startsWith('#') ? 'Ihre eigene Farbe' : colorLabel),
       content: (
         <>
-          <OptionGroup title={material.colors ? 'Ton' : 'Farbe'}>
+          <OptionGroup title="Farbe" hideTitle>
             <ColorSwatches
               colors={colorsOf(design.material)}
               value={design.color}
@@ -363,84 +431,121 @@ export const LampshadeConfigurator: FC<Props> = ({ contactPath }) => {
             />
           </OptionGroup>
           {material.patterns && (
-            <OptionGroup
-              title="Muster"
-              hint={
-                design.pattern === 'motiv'
-                  ? 'Ihr Bild bleibt auf Ihrem Gerät. Wir bedrucken Stoffe und Pergament mit Fotos und Motiven.'
-                  : undefined
-              }
-            >
-              <ChoiceChips
-                label="Muster"
-                options={PATTERNS.filter(({ id }) => id !== 'motiv')}
-                value={design.pattern}
-                onChange={(pattern) => update({ pattern })}
-              />
-              {design.pattern !== 'uni' && design.pattern !== 'motiv' && (
-                <ColorSwatches
-                  colors={FABRIC_COLORS}
-                  value={design.patternColor}
-                  onChange={(patternColor) => update({ patternColor })}
+            <MoreOptions label="Muster oder eigenes Foto">
+              <OptionGroup
+                title="Muster"
+                hint={
+                  design.pattern === 'motiv'
+                    ? 'Ihr Bild bleibt auf Ihrem Gerät. Wir bedrucken Stoffe und Pergament mit Fotos und Motiven.'
+                    : undefined
+                }
+              >
+                <ChoiceChips
+                  label="Muster"
+                  options={PATTERNS.filter(({ id }) => id !== 'motiv')}
+                  value={design.pattern}
+                  onChange={(pattern) => update({ pattern })}
                 />
-              )}
-              <FileButton
-                label={design.pattern === 'motiv' ? 'Anderes Bild wählen' : 'Eigenes Bild als Motiv'}
-                accept="image/*"
-                active={design.pattern === 'motiv'}
-                onFile={chooseMotif}
-              />
-            </OptionGroup>
+                {design.pattern !== 'uni' && design.pattern !== 'motiv' && (
+                  <ColorSwatches
+                    colors={FABRIC_COLORS}
+                    value={design.patternColor}
+                    onChange={(patternColor) => update({ patternColor })}
+                  />
+                )}
+                <FileButton
+                  label={design.pattern === 'motiv' ? 'Anderes Foto wählen' : 'Eigenes Foto aufdrucken'}
+                  accept="image/*"
+                  active={design.pattern === 'motiv'}
+                  onFile={chooseMotif}
+                />
+              </OptionGroup>
+            </MoreOptions>
           )}
         </>
       ),
     },
     {
-      id: 'details',
-      label: 'Details',
-      title: 'Der letzte Schliff',
-      description: 'Futter, Kante und Gestell machen den Schirm zu Ihrem.',
+      id: 'futter',
+      label: 'Futter',
+      title: 'Und innen?',
+      description: 'Das Futter innen färbt das Licht, das nach unten fällt.',
       focus: 'close',
+      cheer: praise(6, `Futter ${lining.label}`),
       content: (
         <>
-          <OptionGroup title="Futter innen" hint={lining.effect}>
-            <ColorSwatches
-              colors={LININGS}
-              value={lining.hex}
-              onChange={(hex) => update({ lining: LININGS.find((item) => item.hex === hex)?.id ?? 'weiss' })}
-              custom={false}
-            />
-          </OptionGroup>
-          <OptionGroup title="Kante oben und unten">
-            <ChoiceChips label="Kante" options={TRIMS} value={design.trim} onChange={(trim) => update({ trim })} />
-            {design.trim !== 'keine' && (
-              <ColorSwatches
-                colors={FABRIC_COLORS}
-                value={design.trimColor}
-                onChange={(trimColor) => update({ trimColor })}
+          <ChoiceCards
+            label="Futter innen"
+            value={design.lining}
+            onChange={(id) => update({ lining: id })}
+            options={LININGS.map((item) => ({
+              id: item.id,
+              label: item.label,
+              description: item.effect,
+              visual: <ColorDot hex={item.hex} />,
+            }))}
+          />
+          <MoreOptions label="Kante und Gestell">
+            <OptionGroup title="Kante oben und unten">
+              <ChoiceChips label="Kante" options={TRIMS} value={design.trim} onChange={(trim) => update({ trim })} />
+              {design.trim !== 'keine' && (
+                <ColorSwatches
+                  colors={FABRIC_COLORS}
+                  value={design.trimColor}
+                  onChange={(trimColor) => update({ trimColor })}
+                />
+              )}
+            </OptionGroup>
+            <OptionGroup title="Gestell">
+              <ChoiceChips
+                label="Gestell"
+                options={FINISHES}
+                value={design.finish}
+                onChange={(finish) => update({ finish })}
               />
-            )}
-          </OptionGroup>
-          <OptionGroup title="Gestell">
-            <ChoiceChips
-              label="Gestell"
-              options={FINISHES}
-              value={design.finish}
-              onChange={(finish) => update({ finish })}
-            />
-          </OptionGroup>
+            </OptionGroup>
+          </MoreOptions>
         </>
       ),
     },
     {
-      id: 'entwurf',
-      label: 'Entwurf',
-      title: 'Ihr Lampenschirm',
-      description: 'Dimmen Sie das Licht, speichern oder teilen Sie den Entwurf und fragen Sie ihn unverbindlich an.',
+      id: 'licht',
+      label: 'Licht an',
+      title: lightOn ? 'Ihr Lampenschirm leuchtet!' : 'Fertig! Jetzt das Licht an?',
+      description: 'Bravo, Ihr Entwurf ist fertig. Gefällt er Ihnen? Dann schicken Sie ihn uns, ganz unverbindlich.',
       focus: 'shade',
       content: (
         <>
-          {lightControls}
+          <ChoiceCards
+            label="Licht"
+            layout="tile"
+            value={lightOn ? 'an' : 'aus'}
+            onChange={(state) => setLightOn(state === 'an')}
+            options={[
+              { id: 'an', label: 'Licht an', visual: <LightPictogram on /> },
+              { id: 'aus', label: 'Licht aus', visual: <LightPictogram on={false} /> },
+            ]}
+          />
+          {lightOn && (
+            <MoreOptions label="Helligkeit und Lichtfarbe">
+              <RangeField
+                label="Helligkeit"
+                unit="%"
+                value={Math.round(dimmer * 100)}
+                min={10}
+                max={100}
+                onChange={(value) => setDimmer(value / 100)}
+              />
+              <OptionGroup title="Lichtfarbe">
+                <ChoiceChips
+                  label="Lichtfarbe"
+                  value={String(kelvin)}
+                  onChange={(value) => setKelvin(Number(value))}
+                  options={LIGHT_TEMPERATURES.map((option) => ({ id: String(option.kelvin), label: option.label }))}
+                />
+              </OptionGroup>
+            </MoreOptions>
+          )}
           <OptionGroup title="Ihr Entwurf">
             <ul className="flex flex-col gap-1 text-sm text-gray-600">
               {describeDesign(design).map((line) => (
@@ -523,7 +628,7 @@ export const LampshadeConfigurator: FC<Props> = ({ contactPath }) => {
           </>
         )
       }
-      hint={stageReady && !interacted ? 'Ziehen oder wischen zum Drehen, scrollen oder mit zwei Fingern zoomen' : undefined}
+      hint={stageReady && !interacted ? 'Mit Finger oder Maus ziehen, um den Schirm von allen Seiten zu sehen' : undefined}
       notice={notice}
       options={
         <StepWizard
@@ -532,11 +637,11 @@ export const LampshadeConfigurator: FC<Props> = ({ contactPath }) => {
           current={stepIndex}
           onChange={setStepIndex}
           finish={
-            <Button variant="primary" fullWidth onClick={inquire}>
-              Diesen Entwurf anfragen
+            <Button variant="primary" size="large" fullWidth onClick={inquire}>
+              Entwurf an Wehrli senden
             </Button>
           }
-          note="Unverbindlich: Wir melden uns mit Ideen, Stoffmustern und einer Offerte."
+          note="Unverbindlich. Wir melden uns persönlich bei Ihnen."
         />
       }
     />

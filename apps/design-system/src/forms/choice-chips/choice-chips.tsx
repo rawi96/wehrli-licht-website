@@ -27,7 +27,7 @@ export const ChoiceChips = <T extends string>({ options, value, onChange, scroll
         aria-pressed={value === undefined ? undefined : option.id === value}
         onClick={() => onChange(option.id)}
         className={cn(
-          'shrink-0 rounded-full border px-3.5 py-1.5 text-sm font-bold transition-colors',
+          'shrink-0 rounded-full border-2 px-4 py-2 text-sm font-bold transition-colors',
           option.id === value
             ? 'border-wehrli bg-wehrli text-white'
             : 'hover:border-wehrli border-gray-200 bg-white text-black',

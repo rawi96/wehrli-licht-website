@@ -84,7 +84,8 @@ html {
     }
 
     .animate-hero-reveal,
-    .animate-step-in {
+    .animate-step-in,
+    .animate-pop-in {
       animation: none;
       opacity: 1;
       transform: none;

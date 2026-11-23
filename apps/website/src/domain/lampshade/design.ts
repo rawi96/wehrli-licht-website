@@ -292,7 +292,7 @@ export const decodeDesign = (query: string): LampshadeDesign | null => {
 const labelOf = <T extends string>(id: T, items: readonly { id: T; label: string }[]) =>
   items.find((item) => item.id === id)?.label ?? id;
 
-const colorName = (hex: string, material: MaterialId) =>
+export const colorName = (hex: string, material: MaterialId) =>
   [...colorsOf(material), ...FABRIC_COLORS].find((color) => color.hex === hex)?.label ?? hex.toUpperCase();
 
 /** Label without soft hyphens (they only help breaking in narrow buttons). */
@@ -318,22 +318,24 @@ export const describeDesign = (design: LampshadeDesign): string[] => {
   ];
 };
 
+/** Widths in cm that suit each lamp, with the rule of thumb of the atelier. */
+const LAMP_WIDTHS: Record<LampId, { min: number; max: number; text: string }> = {
+  tisch: { min: 30, max: 48, text: 'Auf einem Fuss von rund 40 cm wirkt ein Schirm mit 30 bis 48 cm Breite ruhig.' },
+  steh: { min: 38, max: 60, text: 'Stehleuchten tragen gut einen Schirm von 38 bis 60 cm Breite.' },
+  pendel: {
+    min: 35,
+    max: 75,
+    text: 'Über einem Esstisch passt ein Schirm von etwa einem Drittel der Tischlänge, 35 bis 75 cm.',
+  },
+  wand: { min: 18, max: 38, text: 'Wandleuchten wirken mit 18 bis 38 cm Breite leicht und tragen nicht auf.' },
+};
+
 export type SizeAdvice = { fits: boolean; text: string };
 
 /** Rules of thumb of the atelier: does the size suit the lamp? */
 export const sizeAdvice = (design: LampshadeDesign): SizeAdvice => {
   const width = Math.max(design.bottom, design.top);
-  const ranges: Record<LampId, { min: number; max: number; text: string }> = {
-    tisch: { min: 30, max: 48, text: 'Auf einem Fuss von rund 40 cm wirkt ein Schirm mit 30 bis 48 cm Breite ruhig.' },
-    steh: { min: 38, max: 60, text: 'Stehleuchten tragen gut einen Schirm von 38 bis 60 cm Breite.' },
-    pendel: {
-      min: 35,
-      max: 75,
-      text: 'Über einem Esstisch passt ein Schirm von etwa einem Drittel der Tischlänge, 35 bis 75 cm.',
-    },
-    wand: { min: 18, max: 38, text: 'Wandleuchten wirken mit 18 bis 38 cm Breite leicht und tragen nicht auf.' },
-  };
-  const range = ranges[design.lamp];
+  const range = LAMP_WIDTHS[design.lamp];
   const fits = width >= range.min && width <= range.max && design.height <= width * 1.2;
 
   return {
@@ -345,3 +347,36 @@ export const sizeAdvice = (design: LampshadeDesign): SizeAdvice => {
         : `Tipp: ${range.text}`,
   };
 };
+
+export type SizeId = 'klein' | 'mittel' | 'gross';
+
+export const SIZE_CHOICES: { id: SizeId; label: string }[] = [
+  { id: 'klein', label: 'Klein' },
+  { id: 'mittel', label: 'Mittel' },
+  { id: 'gross', label: 'Gross' },
+];
+
+const SIZE_SHARE: Record<SizeId, number> = { klein: 0.15, mittel: 0.5, gross: 0.85 };
+
+/** Width in cm of a small, medium or large shade for the lamp. */
+export const sizeWidth = (lamp: LampId, size: SizeId): number => {
+  const { min, max } = LAMP_WIDTHS[lamp];
+
+  return Math.round(min + (max - min) * SIZE_SHARE[size]);
+};
+
+/** Scales the shade to a small, medium or large width for its lamp; the proportions stay. */
+export const withSize = (design: LampshadeDesign, size: SizeId): LampshadeDesign => {
+  const factor = sizeWidth(design.lamp, size) / Math.max(design.bottom, design.top);
+
+  return {
+    ...design,
+    height: clampSize('height', design.height * factor),
+    bottom: clampSize('bottom', design.bottom * factor),
+    top: clampSize('top', design.top * factor),
+  };
+};
+
+/** The size choice the design matches, if any (after fine-tuning in cm it may match none). */
+export const sizeChoiceOf = (design: LampshadeDesign): SizeId | undefined =>
+  SIZE_CHOICES.find(({ id }) => Math.abs(sizeWidth(design.lamp, id) - Math.max(design.bottom, design.top)) <= 1)?.id;

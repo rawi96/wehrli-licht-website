@@ -38,7 +38,7 @@ export const RangeField: FC<Props> = ({ label, value, min, max, step = 1, unit, 
         step={step}
         value={value}
         onChange={(event) => onChange(Number(event.target.value))}
-        className="accent-wehrli h-2 w-full cursor-pointer"
+        className="accent-wehrli h-6 w-full cursor-pointer"
       />
     </div>
   );
