@@ -1,0 +1,17 @@
+fragment stepsBlock on StepsBlockRecord {
+  id
+  anchorId
+  disableMarginTop
+  disableMarginBottom
+  stepsTitle: title
+  stepsIntro: intro
+  items {
+    id
+    marker
+    title
+    text
+  }
+  link {
+    ...linkBlock
+  }
+}

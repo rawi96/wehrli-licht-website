@@ -1,0 +1,17 @@
+fragment cardsBlock on CardsBlockRecord {
+  id
+  anchorId
+  disableMarginTop
+  disableMarginBottom
+  cardsTitle: title
+  cardsIntro: intro
+  items {
+    id
+    icon
+    title
+    text
+    link {
+      ...linkBlock
+    }
+  }
+}

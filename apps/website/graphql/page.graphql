@@ -55,6 +55,21 @@ query Page($id: ItemId!) {
       ... on LampshadeConfiguratorRecord {
         ...lampshadeConfiguratorBlock
       }
+      ... on CardsBlockRecord {
+        ...cardsBlock
+      }
+      ... on FactsBlockRecord {
+        ...factsBlock
+      }
+      ... on StepsBlockRecord {
+        ...stepsBlock
+      }
+      ... on AccordionBlockRecord {
+        ...accordionBlock
+      }
+      ... on CtaBlockRecord {
+        ...ctaBlock
+      }
       ... on QuoteRecord {
         ...quoteBlock
       }

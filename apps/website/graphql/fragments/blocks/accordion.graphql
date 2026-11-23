@@ -1,0 +1,28 @@
+fragment accordionBlock on AccordionBlockRecord {
+  id
+  anchorId
+  disableMarginTop
+  disableMarginBottom
+  accordionTitle: title
+  accordionIntro: intro
+  openFirst
+  items {
+    id
+    title
+    content {
+      value
+      blocks {
+        ... on LinkRecord {
+          _modelApiKey
+          ...linkBlock
+        }
+      }
+      links {
+        ... on PageRecord {
+          __typename
+          ...pageRecordLink
+        }
+      }
+    }
+  }
+}

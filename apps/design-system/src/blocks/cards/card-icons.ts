@@ -1,0 +1,55 @@
+import {
+  AdjustmentsHorizontalIcon,
+  BuildingOffice2Icon,
+  BuildingStorefrontIcon,
+  CalculatorIcon,
+  CameraIcon,
+  ChatBubbleLeftRightIcon,
+  CheckBadgeIcon,
+  ClockIcon,
+  CubeIcon,
+  HeartIcon,
+  HomeModernIcon,
+  LightBulbIcon,
+  MapPinIcon,
+  PaintBrushIcon,
+  QuestionMarkCircleIcon,
+  ScissorsIcon,
+  SparklesIcon,
+  SunIcon,
+  SwatchIcon,
+  TruckIcon,
+  UserGroupIcon,
+  WrenchScrewdriverIcon,
+} from '@heroicons/react/24/outline';
+
+/** Symbols editors can choose for a card (the CMS offers the same names). */
+export const CARD_ICONS = {
+  licht: LightBulbIcon,
+  funkeln: SparklesIcon,
+  sonne: SunIcon,
+  stoff: SwatchIcon,
+  schere: ScissorsIcon,
+  pinsel: PaintBrushIcon,
+  werkzeug: WrenchScrewdriverIcon,
+  steuerung: AdjustmentsHorizontalIcon,
+  berechnung: CalculatorIcon,
+  form: CubeIcon,
+  zuhause: HomeModernIcon,
+  buero: BuildingOffice2Icon,
+  laden: BuildingStorefrontIcon,
+  gespraech: ChatBubbleLeftRightIcon,
+  foto: CameraIcon,
+  frage: QuestionMarkCircleIcon,
+  zeit: ClockIcon,
+  ort: MapPinIcon,
+  lieferung: TruckIcon,
+  team: UserGroupIcon,
+  qualitaet: CheckBadgeIcon,
+  herz: HeartIcon,
+} as const;
+
+export type CardIconName = keyof typeof CARD_ICONS;
+
+export const isCardIconName = (name: string | null | undefined): name is CardIconName =>
+  !!name && Object.hasOwn(CARD_ICONS, name);
