@@ -77,6 +77,8 @@ html {
 @layer utilities {
   /* Respect the OS setting for reduced motion: decorative animations stop, reveals show their end state. */
   @media (prefers-reduced-motion: reduce) {
+    .animate-marquee,
+    .animate-marquee-reverse,
     .animate-ken-burns,
     .animate-scroll-hint,
     .animate-light-beam {

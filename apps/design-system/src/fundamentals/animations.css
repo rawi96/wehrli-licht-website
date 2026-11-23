@@ -4,6 +4,8 @@
   --animate-hero-reveal: hero-reveal 0.9s var(--ease-reveal) forwards; /* hero text fades in from below */
   --animate-scroll-hint: scroll-hint 2s ease-in-out infinite; /* bouncing "scroll down" hint */
   --animate-light-beam: light-beam 4s ease-in-out infinite; /* pulsing light cone */
+  --animate-marquee: marquee 60s linear infinite; /* logo band, endless; duration set per band */
+  --animate-marquee-reverse: marquee 60s linear infinite reverse; /* second row runs the other way */
   --animate-pop-in: pop-in 0.4s var(--ease-reveal) both; /* a check mark or praise pops up */
   --animate-step-in: step-in 0.35s var(--ease-reveal) both; /* content of a new wizard step slides in */
 
@@ -36,6 +38,15 @@
     50% {
       opacity: 1;
       transform: translateY(6px);
+    }
+  }
+
+  @keyframes marquee {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
     }
   }
 
