@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import { cn } from '../../fundamentals/cn';
 import { HighlightOfferCard } from '../../content/highlight-offer-card/highlight-offer-card';
 import { HighlightSection } from '../../content/highlight-section/highlight-section';
 import { LinkData } from '../../typography/text-link/text-link';
@@ -19,7 +20,7 @@ type Props = {
   title: string;
   subline: string;
   cta?: LinkData | null;
-  /** The first two offers are large cards, the others small cards (2 per row, 4 from lg). */
+  /** The first two offers are large cards, the others small cards (2 per row; from lg 3 when there are 3, else 4). */
   offers: Offer[];
   /** Loads the image of the first offer with priority (LCP). */
   priority?: boolean;
@@ -46,7 +47,13 @@ export const HighlightOffersTeaserBlock: FC<Props> = ({ id, title, subline, cta,
           ))}
         </ul>
         {moreOffers.length > 0 && (
-          <ul className="grid list-none grid-cols-2 gap-2.5 p-0 min-[400px]:gap-3 sm:gap-3 lg:grid-cols-4 lg:gap-4">
+          <ul
+            className={cn(
+              'grid list-none grid-cols-2 gap-2.5 p-0 min-[400px]:gap-3 sm:gap-3 lg:gap-4',
+              // Three small offers fill one row; otherwise 4 per row.
+              moreOffers.length === 3 ? 'lg:grid-cols-3' : 'lg:grid-cols-4',
+            )}
+          >
             {moreOffers.map((offer) => (
               <li key={offer.id}>{offer.href && <HighlightOfferCard variant="compact" {...offer} href={offer.href} />}</li>
             ))}
