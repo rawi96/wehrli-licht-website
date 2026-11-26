@@ -2,8 +2,10 @@ import { Header } from '@/components/layout/header';
 import { HomeStageBlockFragment } from '@/graphql/generated';
 import { HomeStageBlock as HomeStageBlockView, HomeStageSlide } from '@wehrli/design-system';
 import { FC } from 'react';
+import { creditOf } from '../image';
 import { toLink } from '../links';
 import { getSiteLayout } from '../site-layout';
+import { getSiteTexts } from '../site-texts';
 
 type Props = {
   block: HomeStageBlockFragment;
@@ -11,19 +13,21 @@ type Props = {
 
 type ResponsiveImage = NonNullable<HomeStageBlockFragment['image']>['responsiveImage'] | null | undefined;
 
-const toSlide = (id: string, responsiveImage: ResponsiveImage): HomeStageSlide[] =>
-  responsiveImage?.src ? [{ id, src: responsiveImage.src, blurDataURL: responsiveImage.base64 }] : [];
+const toSlide = (id: string, responsiveImage: ResponsiveImage, copyright?: string | null): HomeStageSlide[] =>
+  responsiveImage?.src
+    ? [{ id, src: responsiveImage.src, blurDataURL: responsiveImage.base64, credit: creditOf(copyright) }]
+    : [];
 
 /** The block's image first, then the slideshow images. */
 const buildSlides = (block: HomeStageBlockFragment): HomeStageSlide[] => [
-  ...toSlide('primary-image', block.image?.responsiveImage),
+  ...toSlide('primary-image', block.image?.responsiveImage, block.image?.copyright),
   ...(block.slideshowImages ?? []).flatMap((image) =>
-    image?.responsiveImage ? toSlide(image.id ?? image.responsiveImage.src, image.responsiveImage) : [],
+    image?.responsiveImage ? toSlide(image.id ?? image.responsiveImage.src, image.responsiveImage, image.copyright) : [],
   ),
 ];
 
 export const HomeStageBlock: FC<Props> = async ({ block }) => {
-  const { navigation, contactLink } = await getSiteLayout();
+  const [{ navigation, contactLink, shopMenu }, texts] = await Promise.all([getSiteLayout(), getSiteTexts()]);
 
   return (
     <HomeStageBlockView
@@ -31,7 +35,15 @@ export const HomeStageBlock: FC<Props> = async ({ block }) => {
       intro={block.intro}
       ctas={block.callToActions.slice(0, 2).map(toLink)}
       slides={buildSlides(block)}
-      header={<Header navigation={navigation} contactLink={contactLink} variant="overlay" />}
+      header={
+        <Header
+          navigation={navigation}
+          contactLink={contactLink}
+          shopMenu={shopMenu}
+          labels={{ overview: texts.menuOverviewLabel, shopOverview: texts.menuShopOverviewLabel }}
+          variant="overlay"
+        />
+      }
     />
   );
 };

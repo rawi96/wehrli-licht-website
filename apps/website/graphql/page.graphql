@@ -1,15 +1,67 @@
-query Page($slug: String!) {
-  page(filter: { slug: { eq: $slug } }) {
+query Page($id: ItemId!) {
+  page(filter: { id: { eq: $id } }) {
     id
     slug
     title
     isArticle
+    headline
+    intro
+    plainHeader
+    heroImage {
+      focalPoint {
+        x
+        y
+      }
+      # Not cropped here: the page head crops it to its own shape at the focal point (one crop, not two).
+      copyright
+      responsiveImage(imgixParams: { w: 1600, auto: format }) {
+        ...responsiveImageFragment
+      }
+    }
+    teaserImage {
+      focalPoint {
+        x
+        y
+      }
+      # Not cropped here: the page head crops it to its own shape at the focal point (one crop, not two).
+      copyright
+      responsiveImage(imgixParams: { w: 1600, auto: format }) {
+        ...responsiveImageFragment
+      }
+    }
+    children {
+      ...childPage
+      children {
+        id
+        title
+        teaserTitle
+        ...pageRecordLink
+      }
+    }
     _firstPublishedAt
     _updatedAt
     parent {
       id
       slug
       title
+      children {
+        ...childPage
+      }
+      parent {
+        id
+        slug
+        title
+        parent {
+          id
+          slug
+          title
+          parent {
+            id
+            slug
+            title
+          }
+        }
+      }
     }
     content {
       __typename
@@ -34,11 +86,41 @@ query Page($slug: String!) {
       ... on IframeRecord {
         ...iframeBlock
       }
+      ... on LocationRecord {
+        ...locationBlock
+      }
+      ... on LampshadeConfiguratorRecord {
+        ...lampshadeConfiguratorBlock
+      }
+      ... on CardsBlockRecord {
+        ...cardsBlock
+      }
+      ... on FactsBlockRecord {
+        ...factsBlock
+      }
+      ... on StepsBlockRecord {
+        ...stepsBlock
+      }
+      ... on AccordionBlockRecord {
+        ...accordionBlock
+      }
+      ... on CtaBlockRecord {
+        ...ctaBlock
+      }
+      ... on PartnersBlockRecord {
+        ...partnersBlock
+      }
+      ... on ConfiguratorTeaserRecord {
+        ...configuratorTeaserBlock
+      }
       ... on QuoteRecord {
         ...quoteBlock
       }
       ... on GalleryRecord {
         ...galleryBlock
+      }
+      ... on ShapeCatalogRecord {
+        ...shapeCatalogBlock
       }
       ... on LogoGridRecord {
         ...logoGridBlock
@@ -64,6 +146,15 @@ query Page($slug: String!) {
       ... on ContactFormRecord {
         ...contactFormBlock
       }
+      ... on FaqBlockRecord {
+        ...faqBlock
+      }
+      ... on ProjectsBlockRecord {
+        ...projectsBlock
+      }
+      ... on ProjectsOverviewRecord {
+        ...projectsOverviewBlock
+      }
       ... on HighlightProjectsTeaserRecord {
         ...highlightProjectsTeaser
       }
@@ -78,6 +169,26 @@ query Page($slug: String!) {
       attributes
       content
       tag
+    }
+  }
+  headerFooter {
+    detailContact {
+      firstname
+      lastname
+      function
+      phone
+      email
+      appointmentText
+      appointmentAnchorLink
+      appointmentLink {
+        ...pageRecordLink
+      }
+      image {
+        copyright
+        responsiveImage(imgixParams: { fit: crop, w: 160, h: 160, auto: format }) {
+          ...responsiveImageFragment
+        }
+      }
     }
   }
   site: _site {

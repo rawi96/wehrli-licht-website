@@ -1,5 +1,6 @@
 const path = require('node:path');
 const { withBotId } = require('botid/next/config');
+const { getCmsRedirects } = require('./cms-redirects');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -16,8 +17,17 @@ const nextConfig = {
       },
     ],
   },
-  async redirects() {
+  async headers() {
     return [
+      {
+        // Loop videos carry a version in their file name (…-v1.mp4): cache them for a year.
+        source: '/videos/:file*',
+        headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }],
+      },
+    ];
+  },
+  async redirects() {
+    const own = [
       {
         // DatoCMS requires a slug for each page and we use "home" for the home page.
         // We redirect it here, because its prettier to have / instead of /home for the home page.
@@ -26,11 +36,14 @@ const nextConfig = {
         permanent: true,
       },
       {
-        source: '/ueber-uns',
-        destination: '/atelier',
+        // URLs of the website before the current one.
+        source: '/index.php/:path*',
+        destination: '/:path*',
         permanent: true,
       },
     ];
+
+    return [...own, ...(await getCmsRedirects(own))];
   },
 };
 

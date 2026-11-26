@@ -5,41 +5,18 @@ import { cssVar } from '../token-table';
 // Mirrors src/fundamentals/tokens.css. Swatches read the CSS variables, so values never drift from the tokens.
 const GROUPS: Record<string, { tokens: string[]; usage: string }> = {
   Brand: {
-    tokens: [
-      'wehrli',
-      'wehrli-50',
-      'wehrli-100',
-      'wehrli-200',
-      'wehrli-300',
-      'wehrli-400',
-      'wehrli-500',
-      'wehrli-600',
-      'wehrli-700',
-    ],
-    usage: '`wehrli` (= 500) for links, buttons and the header. Lighter steps for hover, darker for overlays on photos.',
-  },
-  Surfaces: {
-    tokens: ['white-200', 'white', 'white-100', 'white-300', 'black'],
-    usage: '`white-200` is the page background, `white` raised surfaces such as cards and dialogs, `black` the text color.',
+    tokens: ['wehrli', 'wehrli-dark', 'wehrli-100', 'wehrli-50'],
+    usage:
+      '`wehrli` is the primary color: buttons, links, headings, the header. `wehrli-dark` for hover of primary buttons and dark overlays, `wehrli-100` for selected states, `wehrli-50` for tinted surfaces and hover of list items.',
   },
   Neutral: {
-    tokens: [
-      'gray-50',
-      'gray-100',
-      'gray-200',
-      'gray-300',
-      'gray-400',
-      'gray-500',
-      'gray-600',
-      'gray-700',
-      'gray-800',
-      'gray-900',
-    ],
-    usage: 'Secondary text (`gray-600`), borders and dividers (`gray-200`).',
+    tokens: ['black', 'white', 'gray-50', 'gray-100', 'gray-200', 'gray-400', 'gray-600'],
+    usage:
+      '`black` text, `white` cards, panels and inputs, `gray-50` the page background, `gray-100` subtle fills, `gray-200` borders and dividers, `gray-400` input borders and icons, `gray-600` secondary text.',
   },
   Status: {
-    tokens: ['success', 'warning', 'error', 'error-50', 'error-700'],
-    usage: 'Form validation, alerts and order states.',
+    tokens: ['success', 'error', 'error-50', 'error-700'],
+    usage: 'Form validation, alerts and order states. No other accent colors.',
   },
 };
 
@@ -53,7 +30,7 @@ const Swatches: FC = () => (
           {tokens.map((token) => (
             <div className="flex flex-col gap-2" key={token}>
               <div
-                className="h-20 w-full rounded-sm border border-gray-200"
+                className="h-20 w-full rounded-md border border-gray-200"
                 style={{ background: `var(--color-${token})` }}
               />
               <span className="text-xs font-bold">{token}</span>

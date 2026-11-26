@@ -1,0 +1,17 @@
+fragment projectsBlock on ProjectsBlockRecord {
+  id
+  projectsTitle: title
+  area {
+    id
+    name
+    slug
+  }
+  service {
+    id
+  }
+}
+
+fragment projectsOverviewBlock on ProjectsOverviewRecord {
+  id
+  allLabel
+}

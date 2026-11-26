@@ -6,19 +6,22 @@ fragment teaserGridBlock on TeaserGridRecord {
     __typename
     ... on PageRecord {
       id
+      title
       teaserDescription
       teaserEyebrow
       teaserTitle
       teaserLinkText
       teaserImage {
-        responsiveImage(imgixParams: { fit: crop, w: 460, h: 240, auto: format }) {
+        focalPoint {
+          x
+          y
+        }
+        copyright
+        responsiveImage(imgixParams: { fit: crop, w: 920, h: 480, auto: format }) {
           ...responsiveImageFragment
         }
       }
-      slug
-      parent {
-        slug
-      }
+      ...pageRecordLink
     }
   }
 }

@@ -4,7 +4,7 @@ import { cn } from '../../fundamentals/cn';
 // Form controls shared by the contact form, the FAQ search and the checkout. Values come out as strings (not events).
 
 const INPUT_CLASS =
-  'block w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm focus:border-wehrli focus:ring-1 focus:ring-wehrli focus:outline-none';
+  'field-focus-plain block w-full rounded-md border border-gray-400 bg-white px-3 py-2 text-sm shadow-sm focus:border-wehrli focus:ring-1 focus:ring-wehrli focus:outline-none';
 
 type LabelProps = { htmlFor: string; children: ReactNode };
 
@@ -69,7 +69,7 @@ export const TextInput: FC<TextInputProps> = ({
     inputMode={inputMode}
     maxLength={maxLength}
     placeholder={placeholder}
-    className={cn(INPUT_CLASS, withIcon && 'pl-10', readOnly && 'cursor-default text-gray-700')}
+    className={cn(INPUT_CLASS, withIcon && 'pl-10', readOnly && 'cursor-default text-gray-600')}
   />
 );
 
@@ -122,7 +122,7 @@ export const FieldError: FC<FieldErrorProps> = ({ id, message }) =>
 
 /** An error for the whole form, e.g. when sending failed. */
 export const FormError: FC<{ children: ReactNode }> = ({ children }) => (
-  <p role="alert" className="border-error bg-error-50 text-error-700 rounded-lg border-2 px-3 py-2 text-sm">
+  <p role="alert" className="border-error bg-error-50 text-error-700 rounded-md border-2 px-3 py-2 text-sm">
     {children}
   </p>
 );

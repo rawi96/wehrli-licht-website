@@ -21,7 +21,7 @@ export const RadioCards = <T extends string>({ name, legend, options, value, onC
     {options.map((option) => (
       <label
         key={option.value}
-        className="has-checked:border-wehrli has-checked:ring-wehrli flex cursor-pointer items-start gap-3 rounded-lg border border-gray-200 p-4 has-checked:ring-1"
+        className="has-checked:border-wehrli has-checked:ring-wehrli flex cursor-pointer items-start gap-3 rounded-md border border-gray-200 p-4 has-checked:ring-1"
       >
         <input
           type="radio"

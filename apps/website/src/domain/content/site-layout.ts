@@ -4,10 +4,26 @@ export type MenuLink = {
   href: string;
 };
 
-/** An entry of the main navigation: a link, or a section with sub pages (`children`). */
+import type { ResponsiveImage } from '../shop/image';
+
+/** A titled group of links in a mega menu section. */
+export type MenuColumn = {
+  title: string;
+  links: MenuLink[];
+  /** Link to the group's overview below its links («Alle Leistungen»), null if none. */
+  overview: MenuLink | null;
+};
+
+/** An entry of the main navigation: a link, a section with sub pages (`children`) or a mega menu (`columns`). */
 export type MenuItem = MenuLink & {
   /** Sub pages of a section; `href` is then the section's path (to mark it active), not a link. */
   children?: MenuLink[];
+  /** Titled groups of links of a mega menu section; `href` is its overview page. */
+  columns?: MenuColumn[];
+  /** Links below the columns of a mega menu section. */
+  footerLinks?: MenuLink[];
+  /** Image and short text of the section's overview page, shown in its mega menu. */
+  teaser?: { description: string | null; image: ResponsiveImage | null };
 };
 
 /** A group of links in the footer. */
@@ -45,6 +61,8 @@ export type SiteLayout = {
   navigation: MenuItem[];
   /** The contact entry of the main navigation, shown as a button in the header. */
   contactLink: MenuLink | null;
+  /** The shop as a mega menu, set apart on the right of the header; null: the header links /shop. */
+  shopMenu: MenuItem | null;
   contact: SiteContact;
   socialProfiles: SocialProfiles;
   /** Null when none is set or the holiday notice is switched off. */
@@ -53,6 +71,8 @@ export type SiteLayout = {
   footerNavigation: FooterLinkGroup[];
   /** Path of the privacy policy, or null if none is set. */
   privacyPath: string | null;
+  /** Legal pages at the bottom of the footer (Impressum, Datenschutz, AGB …), in order. */
+  legalLinks: { label: string; href: string }[];
   /** Path of the contact page, with a fallback when none is set. */
   contactPath: string;
 };

@@ -9,7 +9,7 @@ const meta: Meta<typeof HighlightSection> = {
     title: 'Ausgewählte Projekte',
     subline: 'Licht für Wohnungen, Büros und Läden: ein Einblick in unsere Arbeit.',
     cta: { label: 'Alle Projekte', href: '#' },
-    children: <div className="bg-white-100 rounded-lg p-8 text-sm">Inhalt (Karten)</div>,
+    children: <div className="rounded-md bg-white p-8 text-sm">Inhalt (Karten)</div>,
   },
   parameters: {
     layout: 'fullscreen',
@@ -33,5 +33,3 @@ export default meta;
 type Story = StoryObj<typeof HighlightSection>;
 
 export const Default: Story = {};
-
-export const Bordered: Story = { args: { bordered: true } };

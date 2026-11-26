@@ -3,7 +3,7 @@ import { mockLogo } from '../blocks.mocks';
 import { inContainer } from '../block-decorator';
 import { LogoGridBlock } from './logo-grid-block';
 
-const logos = Array.from({ length: 8 }, (_, index) => ({
+const logos = Array.from({ length: 16 }, (_, index) => ({
   id: String(index),
   ...mockLogo(`Partner ${index + 1}`),
   alt: `Partner ${index + 1}`,
@@ -24,3 +24,9 @@ type Story = StoryObj<typeof LogoGridBlock>;
 export const Default: Story = {};
 
 export const FewLogos: Story = { args: { logos: logos.slice(0, 2) } };
+
+export const OneRow: Story = { args: { logos: logos.slice(0, 7) } };
+
+export const WithLink: Story = {
+  args: { link: { label: 'Alle Partner ansehen', href: '#' } },
+};

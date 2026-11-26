@@ -19,6 +19,8 @@
     "knip": "knip"
   },
   "dependencies": {
+    "@react-three/drei": "^10.7.9",
+    "@react-three/fiber": "^9.8.2",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "@wehrli/design-system": "workspace:*",
@@ -32,7 +34,8 @@
     "react-dom": "^19.3.1",
     "resend": "^6.39.0",
     "server-only": "^0.0.1",
-    "stripe": "^22.6.2"
+    "stripe": "^22.6.2",
+    "three": "^0.187.0"
   },
   "devDependencies": {
     "@datocms/cli": "^4.0.29",
@@ -47,6 +50,7 @@
     "@tailwindcss/postcss": "^4.3.5",
     "@types/canvas-confetti": "^1.9.0",
     "@types/node": "^24.19.2",
+    "@types/three": "^0.187.0",
     "eslint": "^10.15.0",
     "knip": "^6.46.1",
     "postcss": "^8.5.33",

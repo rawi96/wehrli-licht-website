@@ -20,12 +20,12 @@ export const ShopCategorySection: FC<Props> = ({ sectionId, headingId, title, bo
   }
 
   return (
-    <section id={sectionId} aria-labelledby={headingId} className="bg-white-200">
+    <section id={sectionId} aria-labelledby={headingId} className="bg-gray-50">
       <div className="mx-auto w-11/12 max-w-7xl pt-8 pb-12 sm:pt-12 sm:pb-16 md:pt-16 md:pb-24">
         <ShopSectionHeader
           headingId={headingId}
           title={title}
-          description={<p className="text-gray-600">{body}</p>}
+          description={<p className="text-black">{body}</p>}
           action={actionLink}
         />
 

@@ -1,27 +1,52 @@
+fragment menuLink on MenuLinkRecord {
+  label
+  path
+  page {
+    ...pageRecordLink
+  }
+  shopCategory {
+    slug
+  }
+}
+
 query HeaderFooter {
   headerFooter {
-    menu {
-      ... on DirectoryRecord {
+    mainMenu {
+      ... on MenuSectionRecord {
         label
-        slug
-        navigationItems {
-          label
-          id
-          link {
-            ... on PageRecord {
-              slug
+        path
+        isShop
+        page {
+          ...pageRecordLink
+          teaserDescription
+          teaserImage {
+            copyright
+            responsiveImage(imgixParams: { fit: crop, w: 576, h: 432, auto: format }) {
+              ...responsiveImageFragment
             }
           }
         }
-      }
-      ... on NavigationItemRecord {
-        label
-        link {
-          ... on PageRecord {
-            slug
+        columns {
+          ... on MenuColumnRecord {
+            title
+            overviewLabel
+            overviewPath
+            page {
+              ...pageRecordLink
+            }
+            links {
+              ...menuLink
+            }
           }
         }
+        footerLinks {
+          ...menuLink
+        }
       }
+    }
+    appointmentLabel
+    appointmentPage {
+      ...pageRecordLink
     }
     facebookUrl
     instagramUrl
@@ -31,6 +56,10 @@ query HeaderFooter {
       ...pageRecordLink
     }
     privacyPage {
+      ...pageRecordLink
+    }
+    legalPages {
+      title
       ...pageRecordLink
     }
     street

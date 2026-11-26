@@ -14,7 +14,7 @@ const meta: Meta<typeof Container> = {
     },
   },
   args: {
-    children: <div className="bg-wehrli-50 rounded-sm p-6 text-sm text-white">Seiteninhalt</div>,
+    children: <div className="bg-wehrli-50 rounded-md p-6 text-sm text-white">Seiteninhalt</div>,
   },
 };
 

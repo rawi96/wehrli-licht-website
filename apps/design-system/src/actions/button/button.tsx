@@ -26,20 +26,30 @@ type Props = {
 
 const isPrimary = (variant: Variant) => variant === 'primary' || variant === 'primary-white';
 
+/** One size for every button of the site. */
 const buttonClasses = (variant: Variant, fullWidth: boolean | undefined, isDisabled: boolean | undefined) => {
-  const base = 'px-5 py-2.5 rounded-lg text-center inline-flex items-center justify-center text-sm font-bold group';
+  const base = 'px-5 py-2.5 rounded-md text-center inline-flex items-center justify-center text-sm font-bold group';
 
   if (isPrimary(variant)) {
     return cn(
       base,
-      variant === 'primary-white' ? 'text-wehrli bg-white hover:bg-gray-300' : 'text-white bg-wehrli hover:bg-wehrli-600',
+      // `cn` does not merge classes: a disabled button gets its grey instead of the brand colour, not on top of it.
+      isDisabled && 'bg-gray-400 text-white cursor-not-allowed',
+      !isDisabled &&
+        (variant === 'primary-white'
+          ? 'text-wehrli bg-white hover:bg-gray-200 shadow-sm'
+          : 'text-white bg-wehrli hover:bg-wehrli-dark shadow-sm'),
       fullWidth && 'w-full',
-      !isDisabled && 'shadow-sm',
-      isDisabled && 'bg-gray-400 cursor-not-allowed',
     );
   }
 
-  return cn(base, variant === 'secondary-white' && 'text-white', fullWidth && 'w-full', isDisabled && 'cursor-not-allowed');
+  return cn(
+    base,
+    // Text buttons in the brand blue (like all text links), white on dark surfaces.
+    variant === 'secondary-white' ? 'text-white' : 'text-wehrli hover:text-wehrli-dark',
+    fullWidth && 'w-full',
+    isDisabled && 'cursor-not-allowed',
+  );
 };
 
 export const Button: FC<Props> = ({
@@ -81,7 +91,7 @@ export const Button: FC<Props> = ({
 
 const ArrowIcon: FC = () => (
   <svg
-    className="ms-2 h-4 w-4 transition-transform duration-200 ease-in-out group-hover:translate-x-1 rtl:rotate-180"
+    className="ms-2 h-4 w-4 transition-transform group-hover:translate-x-1 rtl:rotate-180"
     aria-hidden="true"
     xmlns="http://www.w3.org/2000/svg"
     fill="none"

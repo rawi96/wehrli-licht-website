@@ -29,19 +29,11 @@ const CATALOG_IMAGE_SIZES = '(min-width: 1024px) 300px, (min-width: 640px) 46vw,
 export const ProductCard: FC<Props> = ({ name, href, price, image, variant = 'catalog', priority = false }) => {
   if (variant === 'compact') {
     return (
-      <article className="group relative flex h-full w-56 shrink-0 flex-col overflow-hidden rounded-lg bg-white shadow-sm transition-shadow hover:shadow-md sm:w-64">
+      <article className="group surface-light card-surface relative flex h-full w-56 shrink-0 flex-col overflow-hidden transition-shadow hover:shadow-md sm:w-64">
         <div className="relative h-52 w-full shrink-0 overflow-hidden bg-white">
           {image?.src ? (
             <div className="absolute inset-0">
-              <Image
-                image={image}
-                sizes="256px"
-                priority={priority}
-                placeholder={false}
-                fit="contain"
-                inset
-                hoverZoom="quick"
-              />
+              <Image image={image} sizes="256px" priority={priority} placeholder={false} fit="contain" inset hoverZoom />
             </div>
           ) : null}
         </div>
@@ -59,7 +51,7 @@ export const ProductCard: FC<Props> = ({ name, href, price, image, variant = 'ca
   }
 
   return (
-    <article className="group relative flex h-full flex-col overflow-hidden bg-white shadow-sm">
+    <article className="group surface-light card-surface relative flex h-full flex-col overflow-hidden transition-shadow hover:shadow-md">
       {image?.src && (
         <div className="relative w-full shrink-0 overflow-hidden bg-white pt-[100%]">
           <div className="absolute inset-0">
@@ -70,7 +62,7 @@ export const ProductCard: FC<Props> = ({ name, href, price, image, variant = 'ca
               placeholder={false}
               fit="contain"
               inset
-              hoverZoom="quick"
+              hoverZoom
             />
           </div>
         </div>

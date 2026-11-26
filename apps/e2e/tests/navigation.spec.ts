@@ -5,13 +5,21 @@ import { expect, test } from './support/fixtures';
 test('the main navigation leads to the shop', async ({ page, isMobile }) => {
   await page.goto('/');
 
+  // The shop is the last main entry. Its label comes from DatoCMS; with columns it opens a panel that links /shop.
   if (isMobile) {
     await page.getByRole('button', { name: 'Menu öffnen' }).click();
     const menu = page.getByRole('dialog');
     await expect(menu.getByRole('button', { name: 'Menu schliessen' })).toBeVisible();
-    await menu.getByRole('link', { name: 'Shop', exact: true }).click();
+    if ((await menu.locator('a[href="/shop"]:visible').count()) === 0) {
+      await menu.getByRole('button', { expanded: false }).last().click();
+    }
+    await menu.locator('a[href="/shop"]:visible').first().click();
   } else {
-    await page.getByRole('navigation', { name: 'Hauptnavigation' }).getByRole('link', { name: 'Shop', exact: true }).click();
+    const navigation = page.getByRole('navigation', { name: 'Hauptnavigation' });
+    if ((await navigation.locator('a[href="/shop"]:visible').count()) === 0) {
+      await navigation.getByRole('button', { expanded: false }).last().click();
+    }
+    await navigation.locator('a[href="/shop"]:visible').first().click();
   }
 
   await expect(page).toHaveURL(/\/shop$/);
@@ -22,8 +30,13 @@ test('a missing page shows the 404 page with links back', async ({ page, smoke }
   const response = await page.goto('/diese-seite-gibt-es-nicht');
 
   expect(response?.status()).toBe(404);
-  await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
-  await expect(page.getByRole('link', { name: 'Zur Startseite' })).toHaveAttribute('href', '/');
+  const heading = page.getByRole('heading', { level: 1 });
+  await expect(heading).toBeVisible();
+  // The home link of the 404 text itself (not the logo); its text is maintained in DatoCMS («Texte & Beschriftungen»).
+  const view = page.locator('div').filter({ has: heading }).last();
+  const home = view.locator('a[href="/"]');
+  await expect(home).toBeVisible();
+  await expect(home).not.toHaveText('');
   // The 404 response of the page itself is expected.
   smoke.issues = smoke.issues.filter((issue) => !issue.text.includes('diese-seite-gibt-es-nicht'));
 });

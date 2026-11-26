@@ -23,7 +23,7 @@ export const Flyout: FC<Props> = ({ label, items, active }) => (
     {({ close }) => (
       <>
         <PopoverButton
-          className={`inline-flex items-center gap-x-1 border-b-2 pb-0.5 text-sm leading-none font-bold text-white transition-colors duration-150 ${
+          className={`inline-flex items-center gap-x-1 border-b-2 pb-0.5 text-sm leading-none font-bold text-white transition-colors ${
             active ? 'border-white' : 'border-transparent'
           } hover:border-white`}
         >
@@ -41,7 +41,7 @@ export const Flyout: FC<Props> = ({ label, items, active }) => (
           leaveTo="opacity-0 translate-y-1"
         >
           <PopoverPanel className="absolute left-1/2 z-10 mt-5 flex w-screen max-w-min -translate-x-1/2 px-4">
-            <div className="w-56 shrink rounded-lg bg-white p-4 text-sm font-bold">
+            <div className="surface-light w-56 shrink rounded-md bg-white p-4 text-sm font-bold">
               {items.map((item) => (
                 <Link key={item.label} href={item.href} className="hover:text-wehrli block p-2" onClick={() => close()}>
                   {item.label}

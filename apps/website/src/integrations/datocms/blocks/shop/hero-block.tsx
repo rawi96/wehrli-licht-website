@@ -15,8 +15,12 @@ type Props = {
   fallbackCategories: Category[];
 };
 
+/** The categories shown as picture tiles in the hero: the chosen ones, else the first three. */
+export const getHeroCategories = (block: ShopStorefrontHeroFragment, fallbackCategories: Category[]): Category[] =>
+  block.heroCategories.length > 0 ? block.heroCategories.map(toCategory) : fallbackCategories.slice(0, 3);
+
 export const ShopHeroBlock: FC<Props> = ({ block, fallbackCategories }) => {
-  const categories = block.heroCategories.length > 0 ? block.heroCategories.map(toCategory) : fallbackCategories.slice(0, 3);
+  const categories = getHeroCategories(block, fallbackCategories);
   const intro = toStructuredTextValue(block.intro);
 
   return (

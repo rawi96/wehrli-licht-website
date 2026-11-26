@@ -16,46 +16,31 @@
   --color-transparent: transparent;
   --color-current: currentColor;
 
-  /* Text and dark surfaces */
-  --color-black: #252525;
+  /*
+   * One brand blue with a few steps, black, white and cool grays. No warm or yellow tones.
+   * Text on white or gray-50: black, gray-600 or wehrli (all AA). On wehrli or wehrli-dark: white.
+   */
+  --color-black: #1b2232; /* text */
+  --color-white: #ffffff; /* cards, panels, dialogs, inputs */
 
-  /* Light surfaces. `white-200` is the page background, `white` raised surfaces (cards, dialogs). */
-  --color-white: #f9fafb;
-  --color-white-100: #ffffff;
-  --color-white-200: #f8f7f5;
-  --color-white-300: #f1f0ec;
+  /* Brand blue */
+  --color-wehrli-dark: #142847; /* hover of primary buttons, dark overlays on photos */
+  --color-wehrli: #214073; /* primary: buttons, links, header, headings */
+  --color-wehrli-100: #dbe4f1; /* selected or pressed states on light surfaces */
+  --color-wehrli-50: #eef3f9; /* tinted surfaces (FAQ, facts) and hover of list items */
 
-  /* Brand blue. `wehrli` (= 500) for links, buttons, the header; lighter steps for hover, darker for overlays. */
-  --color-wehrli: #214073;
-  --color-wehrli-50: #749ad7;
-  --color-wehrli-100: #658ed3;
-  --color-wehrli-200: #4577ca;
-  --color-wehrli-300: #3363b2;
-  --color-wehrli-400: #2a5293;
-  --color-wehrli-500: #214073;
-  --color-wehrli-600: #142847;
-  --color-wehrli-700: #080f1c;
-  --color-wehrli-800: #000000;
-  --color-wehrli-900: #000000;
-
-  /* Neutral gray for secondary text, borders and dividers */
-  --color-gray-50: #f9fafb;
-  --color-gray-100: #f3f4f6;
-  --color-gray-200: #e5e7eb;
-  --color-gray-300: #d1d5db;
-  --color-gray-400: #9ca3af;
-  --color-gray-500: #6b7280;
-  --color-gray-600: #4b5563;
-  --color-gray-700: #374151;
-  --color-gray-800: #1f2937;
-  --color-gray-900: #111827;
+  /* Cool grays */
+  --color-gray-50: #f6f7f9; /* page background */
+  --color-gray-100: #eceef2; /* subtle fills, disabled backgrounds */
+  --color-gray-200: #dde1e7; /* borders and dividers */
+  --color-gray-400: #8a93a3; /* input borders, icons, placeholders (3:1 on white) */
+  --color-gray-600: #4f5868; /* secondary text (AA on white and gray-50) */
 
   /* Status */
-  --color-success: #16a34a;
-  --color-error: #ef4444; /* borders of invalid fields and alerts */
+  --color-success: #15803d; /* success text and icons, AA on white */
+  --color-error: #dc2626; /* borders of invalid fields and alerts */
   --color-error-50: #fdecec; /* background of error alerts */
-  --color-error-700: #b91c1c; /* error text, readable on white and error-50 */
-  --color-warning: #ffab00;
+  --color-error-700: #b91c1c; /* error text, AA on white and error-50 */
 
   /* Typography ------------------------------------------------------------------------------------------------ */
   --font-*: initial;
@@ -81,6 +66,8 @@
   --text-lg--line-height: 125%;
   --text-xl: 2rem; /* 32px: headings h1/h2 */
   --text-xl--line-height: 125%;
+  --text-title: 2.75rem; /* 44px: page titles (H1 in the page head) */
+  --text-title--line-height: 1.2;
   --text-xxl: 4rem; /* 64px: hero */
   --text-xxl--line-height: 5rem;
   /* Without a line height of their own (they keep the inherited one): */
@@ -95,24 +82,15 @@
   --leading-normal: 1.5;
   --leading-relaxed: 1.625;
 
-  /* Letter spacing, mainly for small uppercase labels ("eyebrows") */
+  /* Letter spacing: only slightly tighter for large headings. No uppercase labels: hierarchy comes from size and weight. */
   --tracking-*: initial;
-  --tracking-tight: -0.025em;
-  --tracking-wide: 0.025em;
-  --tracking-widest: 0.1em;
-  --tracking-label-tight: 0.12em; /* small uppercase labels on tiles */
-  --tracking-label: 0.14em;
-  --tracking-label-wide: 0.16em;
-  --tracking-eyebrow: 0.18em; /* eyebrows above section titles */
-  --tracking-eyebrow-wide: 0.2em;
-  --tracking-eyebrow-wider: 0.22em;
+  --tracking-tight: -0.015em;
 
   /* Radii ----------------------------------------------------------------------------------------------------- */
+  /* One radius for every box (cards, images, buttons, inputs, chips, panels); full only for circles (avatars, icon dots). */
   --radius-*: initial;
-  --radius-none: 0px;
-  --radius-sm: 0.5rem; /* inputs, small tiles */
-  --radius-lg: 1rem; /* cards, images, dialogs */
-  --radius-full: 9999px; /* buttons, pills, avatars */
+  --radius-md: 0.75rem;
+  --radius-full: 9999px;
 
   /* Shadows --------------------------------------------------------------------------------------------------- */
   --shadow-*: initial;
@@ -145,4 +123,7 @@
   --ease-out: cubic-bezier(0, 0, 0.2, 1);
   --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
   --ease-reveal: cubic-bezier(0.16, 1, 0.3, 1);
+  /* Every hover effect (colours, shadows, arrows, image zoom) uses this one timing: no duration-* on hover. */
+  --default-transition-duration: 300ms;
+  --default-transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
 }

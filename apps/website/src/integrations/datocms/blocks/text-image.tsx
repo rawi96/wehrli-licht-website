@@ -12,7 +12,7 @@ type Props = {
 };
 
 export const TextImageBlock: FC<Props> = ({
-  block: { content, image, layout, anchorId, disableMarginBottom, disableMarginTop },
+  block: { content, image, anchorId, disableMarginBottom, disableMarginTop },
   aboveFold = false,
 }) => (
   <TextImageBlockView
@@ -20,7 +20,8 @@ export const TextImageBlock: FC<Props> = ({
     marginTop={!disableMarginTop}
     marginBottom={!disableMarginBottom}
     image={toImage(image)}
-    layout={layout === 'image_right' ? 'image-right' : 'image-left'}
+    // Always on the right, so pages read calmly; the block's «layout» field is ignored.
+    layout="image-right"
     priority={aboveFold}
     content={isEmptyDocument(content) ? null : <StructuredTextRenderer data={content} />}
   />

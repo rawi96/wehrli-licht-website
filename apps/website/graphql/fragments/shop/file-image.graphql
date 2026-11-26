@@ -2,6 +2,7 @@ fragment shopFileImage on FileField {
   url
   alt
   title
+  copyright
   responsiveImage(imgixParams: { w: 1000, q: 75, auto: format }) {
     ...responsiveImageFragment
   }
@@ -12,6 +13,7 @@ fragment shopPriorityFileImage on FileField {
   url
   alt
   title
+  copyright
   responsiveImage(imgixParams: { w: 1000, q: 75, auto: format }) {
     ...priorityResponsiveImageFragment
   }
@@ -23,6 +25,7 @@ fragment shopListFileImage on FileField {
   url
   alt
   title
+  copyright
   responsiveImage(imgixParams: { w: 1000, q: 75, auto: format }) {
     ...responsiveImageBaseFragment
   }

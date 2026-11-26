@@ -27,21 +27,23 @@ export const ProductGallery: FC<Props> = ({ images, label }) => (
   <Tab.Group as="div" className="flex flex-col-reverse">
     <div className="mx-auto mt-6 w-full max-w-2xl lg:max-w-none">
       <Tab.List className="grid grid-cols-2 gap-6 sm:grid-cols-4">
-        {images.map(({ id, image }) => (
+        {images.map(({ id, image }, index) => (
           <Tab
-            key={id}
-            className="relative flex h-24 cursor-pointer items-center justify-center rounded-lg bg-white text-sm uppercase hover:bg-gray-50 focus:ring focus:ring-offset-4 focus:outline-none"
+            // A product can show the same image twice.
+            // eslint-disable-next-line @eslint-react/no-array-index-key
+            key={`${index}-${id}`}
+            className="relative flex h-24 cursor-pointer items-center justify-center rounded-md bg-white text-sm font-bold hover:bg-gray-50"
           >
             {({ selected }) => (
               <>
                 <span className="sr-only">{label}</span>
-                <span className="absolute inset-0 overflow-hidden rounded-lg">
+                <span className="absolute inset-0 overflow-hidden rounded-md">
                   {image && <Image image={image} sizes={PRODUCT_THUMB_SIZES} />}
                 </span>
                 <span
                   className={cn(
-                    selected ? 'ring-wehrli-500' : 'ring-transparent',
-                    'pointer-events-none absolute inset-0 rounded-lg ring-2 ring-offset-2',
+                    selected ? 'ring-wehrli' : 'ring-transparent',
+                    'pointer-events-none absolute inset-0 rounded-md ring-2 ring-offset-2',
                   )}
                   aria-hidden="true"
                 />
@@ -54,7 +56,8 @@ export const ProductGallery: FC<Props> = ({ images, label }) => (
 
     <Tab.Panels>
       {images.map(({ id, image }, index) => (
-        <Tab.Panel key={id}>
+        // eslint-disable-next-line @eslint-react/no-array-index-key
+        <Tab.Panel key={`${index}-${id}`}>
           {image && (
             // The first product image is the LCP element on product pages.
             <Image image={image} priority={index === 0} sizes={PRODUCT_IMAGE_SIZES} fit="fill" rounded="lg" />

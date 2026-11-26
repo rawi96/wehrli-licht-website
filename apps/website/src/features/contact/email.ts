@@ -1,5 +1,6 @@
 import { EMAIL_BRAND } from '@/features/mail/brand';
 import { emailLayout } from '@/features/mail/layout';
+import type { EmailSender } from '@/features/mail/sender';
 import { escapeHtml } from '@/lib/text';
 import { ContactFormValues } from './schema';
 
@@ -11,7 +12,7 @@ const row = (label: string, value: string) => `
     <td style="padding:6px 0;">${value}</td>
   </tr>`;
 
-export const buildContactRequestEmail = (values: ContactFormValues, pageUrl: string | undefined) => {
+export const buildContactRequestEmail = (values: ContactFormValues, pageUrl: string | undefined, sender: EmailSender) => {
   const topic = values.topic.trim();
   const email = escapeHtml(values.email.trim());
   const phone = values.phone.trim();
@@ -32,6 +33,6 @@ export const buildContactRequestEmail = (values: ContactFormValues, pageUrl: str
     subject: (topic ? `Kontaktanfrage: ${topic} – ${values.name}` : `Kontaktanfrage – ${values.name}`)
       .replace(/\s+/g, ' ')
       .trim(),
-    html: emailLayout('Neue Kontaktanfrage', body),
+    html: emailLayout('Neue Kontaktanfrage', body, sender),
   };
 };

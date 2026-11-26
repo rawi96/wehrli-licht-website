@@ -7,5 +7,10 @@ export const DEDICATED_ROUTES = [
   { path: '/faq', title: 'Häufige Fragen (FAQ)' },
 ] as const;
 
+/** Path prefixes served by dedicated Next.js routes: projects and project areas (/projekte/<slug>). */
+const DEDICATED_PREFIXES = ['/projekte/'] as const;
+
 export const isDedicatedRoute = (path: string): boolean =>
-  path === '/' || DEDICATED_ROUTES.some((route) => route.path === path);
+  path === '/' ||
+  DEDICATED_ROUTES.some((route) => route.path === path) ||
+  DEDICATED_PREFIXES.some((prefix) => path.startsWith(prefix));

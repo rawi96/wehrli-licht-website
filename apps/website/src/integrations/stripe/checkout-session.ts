@@ -1,5 +1,4 @@
 import 'server-only';
-import { CHECKOUT_SHIPPING_LABELS } from '@/domain/checkout/labels';
 import { formatShippingAddress } from '@/domain/checkout/shipping-address';
 import type { PaymentLineItem, PaymentSessionRequest } from '@/ports/payment-provider';
 import type Stripe from 'stripe';
@@ -7,7 +6,8 @@ import { getStripe } from './client';
 import { STRIPE_CHECKOUT_PAYMENT_METHODS } from './payment-methods';
 
 /** Name of the Stripe line item that carries the shipping cost (told apart from products by it). */
-export const STRIPE_SHIPPING_LINE_NAME = CHECKOUT_SHIPPING_LABELS.post;
+/** Name of the shipping line in Stripe; also identifies it when the order is read back, so it is fixed. */
+export const STRIPE_SHIPPING_LINE_NAME = 'Versand per Post';
 
 /** Marks sessions started by the shop, so the webhook ignores other Checkout sessions of the account. */
 export const SHOP_CHECKOUT_SOURCE = 'shop';

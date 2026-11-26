@@ -23,7 +23,7 @@ export const Scale: StoryObj = {
         <div key={step} className="flex items-center gap-4 text-xs">
           <code className="w-16">{step}</code>
           <span className="w-16 text-gray-600">{step * 4}px</span>
-          <div className="bg-wehrli h-4 rounded-sm" style={{ width: `calc(var(--spacing) * ${step})` }} />
+          <div className="bg-wehrli h-4 rounded-md" style={{ width: `calc(var(--spacing) * ${step})` }} />
         </div>
       ))}
     </div>
@@ -48,7 +48,7 @@ export const ContentWidths: StoryObj = {
       {WIDTHS.map(({ className, value }) => (
         <div key={className} className="text-xs">
           <code>{className}</code> <span className="text-gray-600">{value}</span>
-          <div className="bg-wehrli-50 h-3 rounded-sm" style={{ maxWidth: value }} />
+          <div className="bg-wehrli-50 h-3 rounded-md" style={{ maxWidth: value }} />
         </div>
       ))}
     </div>

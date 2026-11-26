@@ -4,8 +4,9 @@ import { SitePage } from '@/components/layout/site-page';
 import { buildFaqPageJsonLd } from '@/components/seo/faq-json-ld';
 import { JsonLd } from '@/components/seo/json-ld';
 import { groupFaqsByTopic } from '@/domain/content/faq';
+import { pickFaqTexts } from '@/domain/content/site-texts';
 import { content } from '@/integrations';
-import { Container } from '@wehrli/design-system';
+import { Container, PageHeadBreadcrumbs } from '@wehrli/design-system';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
@@ -22,18 +23,21 @@ export default async function FaqPage() {
     notFound();
   }
 
-  const pageTitle = title?.trim() ?? 'Häufig gestellte Fragen';
+  const pageTitle = title?.trim() ? title.trim() : 'Häufig gestellte Fragen';
 
   return (
     <SitePage>
       <JsonLd data={buildFaqPageJsonLd(faqs)} />
       <Container>
-        <Breadcrumbs customBreadcrumbs={[{ name: pageTitle, href: '/faq' }]} />
+        <PageHeadBreadcrumbs>
+          <Breadcrumbs customBreadcrumbs={[{ name: pageTitle, href: '/faq' }]} />
+        </PageHeadBreadcrumbs>
         <FaqPageContent
           title={pageTitle}
           intro={intro}
           groups={groupFaqsByTopic(faqs)}
           contactHref={await content.getContactPath()}
+          texts={pickFaqTexts(await content.getSiteTexts())}
         />
       </Container>
     </SitePage>

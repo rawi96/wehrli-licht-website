@@ -1,3 +1,4 @@
+import { toCheckoutLabels } from '@/domain/checkout/labels';
 import { content } from '@/integrations';
 import { SitePage } from '@/components/layout/site-page';
 import { CheckoutLoading, Container } from '@wehrli/design-system';
@@ -15,7 +16,10 @@ export default async function CheckoutPage() {
     <SitePage>
       <Container>
         <Suspense fallback={<CheckoutLoading text="Kasse wird geladen…" />}>
-          <CheckoutPageContent contactHref={await content.getContactPath()} />
+          <CheckoutPageContent
+            contactHref={await content.getContactPath()}
+            labels={toCheckoutLabels(await content.getSiteTexts())}
+          />
         </Suspense>
       </Container>
     </SitePage>

@@ -14,7 +14,7 @@ type Props = BlockMargins & {
 /** Three rich text columns: 1 on mobile, 2 from md, 3 from lg. */
 export const TextThreeColumnsBlock: FC<Props> = ({ left, middle, right, anchorId, marginTop, marginBottom }) => (
   <Section lead id={anchorId} marginTop={marginTop} marginBottom={marginBottom}>
-    <Grid cols={3}>
+    <Grid cols={3} exact>
       {left}
       {middle}
       {right}

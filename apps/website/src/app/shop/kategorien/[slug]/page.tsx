@@ -1,8 +1,7 @@
 import { SitePage } from '@/components/layout/site-page';
 import { Breadcrumbs } from '@/components/breadcrumbs';
-import { CatalogHeader, Container } from '@wehrli/design-system';
+import { CatalogHeader, Container, PageHeadBreadcrumbs } from '@wehrli/design-system';
 import { CmsHtml } from '@/components/cms-html';
-import NotFound from '@/components/not-found';
 import { ShopProductCatalog } from '@/components/shop/shop-product-catalog';
 import { ShopBrowseLayout } from '@/components/shop/shop-browse-layout';
 import { JsonLd } from '@/components/seo/json-ld';
@@ -10,6 +9,7 @@ import { buildCategoryJsonLd } from '@/features/shop-seo/json-ld';
 import { buildCategoryMetadata } from '@/features/shop-seo/metadata';
 import { catalog } from '@/integrations';
 import { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 
 export const revalidate = 3600;
 
@@ -41,7 +41,7 @@ export default async function ShopCategoryPage({ params }: Props) {
   const found = await catalog.getCategory(slug);
 
   if (!found) {
-    return <NotFound />;
+    notFound();
   }
 
   const { category, products } = found;
@@ -50,13 +50,15 @@ export default async function ShopCategoryPage({ params }: Props) {
     <SitePage>
       <JsonLd data={buildCategoryJsonLd(category, products)} />
       <Container>
-        <Breadcrumbs
-          spacing="tight"
-          customBreadcrumbs={[
-            { name: 'Shop', href: '/shop' },
-            { name: category.name, href: `/shop/kategorien/${slug}` },
-          ]}
-        />
+        <PageHeadBreadcrumbs>
+          <Breadcrumbs
+            spacing="tight"
+            customBreadcrumbs={[
+              { name: 'Shop', href: '/shop' },
+              { name: category.name, href: `/shop/kategorien/${slug}` },
+            ]}
+          />
+        </PageHeadBreadcrumbs>
         <ShopBrowseLayout activeCategorySlug={slug}>
           <CatalogHeader
             title={category.name}

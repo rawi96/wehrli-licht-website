@@ -1,4 +1,6 @@
+import { getProjectPath } from '@/domain/content/project';
 import { HighlightProjectsTeaserFragment } from '@/graphql/generated';
+import { toImage } from '../../image';
 import { getCmsLinkHref, toLink } from '../../links';
 import { highlightLinkedImage } from './highlight-teaser';
 import { HighlightProjectsTeaserBlock as HighlightProjectsTeaserBlockView } from '@wehrli/design-system';
@@ -23,8 +25,13 @@ export const HighlightProjectsTeaserBlock: FC<Props> = ({ block, aboveFold = fal
       title: project.title,
       company: project.company,
       description: project.description,
-      href: project.projectLink && getCmsLinkHref(project.projectLink),
-      image: highlightLinkedImage(project.projectLink, `${project.title} – ${project.company}`),
+      // The project record if set (its page and picture), else the link to a page.
+      href: project.project
+        ? getProjectPath(project.project.slug)
+        : project.projectLink && getCmsLinkHref(project.projectLink),
+      image: project.project
+        ? toImage(project.project.teaserImage, { fallbackAlt: `${project.title} – ${project.company}` })
+        : highlightLinkedImage(project.projectLink, `${project.title} – ${project.company}`),
     }))}
   />
 );

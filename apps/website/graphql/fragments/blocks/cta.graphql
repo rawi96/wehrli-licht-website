@@ -1,0 +1,14 @@
+fragment ctaBlock on CtaBlockRecord {
+  id
+  anchorId
+  disableMarginTop
+  disableMarginBottom
+  ctaTitle: title
+  ctaText: text
+  primary {
+    ...linkBlock
+  }
+  secondary {
+    ...linkBlock
+  }
+}

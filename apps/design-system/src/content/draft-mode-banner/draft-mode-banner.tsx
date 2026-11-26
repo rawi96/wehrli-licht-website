@@ -12,7 +12,7 @@ export const DraftModeBanner: FC<Props> = ({ disableHref, labels }) => (
     <span>{labels?.text ?? 'Draft Mode is enabled'}</span>
     <a
       href={disableHref}
-      className="bg-wehrli-200 hover:bg-wehrli-300 rounded-lg px-2 transition-colors"
+      className="bg-wehrli-100 hover:bg-wehrli rounded-md px-2 transition-colors"
       title={labels?.disableTitle ?? 'Disable Draft Mode'}
     >
       {labels?.disable ?? 'Disable'}

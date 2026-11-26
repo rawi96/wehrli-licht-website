@@ -4,6 +4,9 @@ const ANIMATIONS = [
   { className: 'animate-hero-reveal', usage: 'Hero text fades in from below' },
   { className: 'animate-scroll-hint', usage: 'Bouncing “scroll down” hint' },
   { className: 'animate-light-beam', usage: 'Pulsing light cone' },
+  { className: 'animate-marquee', usage: 'Endless logo band (reverse: animate-marquee-reverse)' },
+  { className: 'animate-pop-in', usage: 'A check mark or praise pops up' },
+  { className: 'animate-step-in', usage: 'Content of a new wizard step slides in' },
   { className: 'animate-ken-burns', usage: 'Slow zoom of the home stage image' },
 ];
 
@@ -26,7 +29,7 @@ export const Animations: StoryObj = {
     <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
       {ANIMATIONS.map(({ className, usage }) => (
         <div key={className} className="flex flex-col gap-2 text-xs">
-          <div className="bg-white-300 flex h-24 items-center justify-center overflow-hidden rounded-lg">
+          <div className="bg-wehrli-50 flex h-24 items-center justify-center overflow-hidden rounded-md">
             <div className={`${className} bg-wehrli size-10 rounded-full`} />
           </div>
           <code className="font-bold">{className}</code>

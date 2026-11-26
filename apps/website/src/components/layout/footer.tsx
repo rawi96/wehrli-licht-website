@@ -8,6 +8,8 @@ import { FC } from 'react';
 
 type Props = {
   layout: SiteLayout;
+  /** Text after the copyright, e.g. «Alle Rechte vorbehalten.» (CMS). */
+  rightsReserved: string;
 };
 
 const SOCIAL_NETWORKS: (SocialLink['network'] & keyof SocialProfiles)[] = ['linkedin', 'instagram', 'facebook'];
@@ -16,7 +18,7 @@ const SOCIAL_NETWORKS: (SocialLink['network'] & keyof SocialProfiles)[] = ['link
 const toNotice = (notice: SiteNotice | null): FooterNotice | null =>
   notice && { title: notice.title, text: <CmsHtml html={notice.html} as="div" /> };
 
-export const Footer: FC<Props> = ({ layout }) => {
+export const Footer: FC<Props> = ({ layout, rightsReserved }) => {
   const { contact, socialProfiles } = layout;
   const socialLinks: SocialLink[] = SOCIAL_NETWORKS.flatMap((network) => {
     const href = socialProfiles[network];
@@ -35,8 +37,10 @@ export const Footer: FC<Props> = ({ layout }) => {
       copyrightHolder={contact.companyName ?? SITE_NAME}
       year={new Date().getFullYear()}
       privacyHref={layout.privacyPath}
+      legalLinks={layout.legalLinks}
       legalExtra={analytics.isEnabled && <CookieSettingsButton />}
       socialLinks={socialLinks}
+      labels={{ rightsReserved }}
     />
   );
 };

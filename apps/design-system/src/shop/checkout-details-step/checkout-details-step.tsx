@@ -182,12 +182,12 @@ export const CheckoutDetailsStep: FC<Props> = ({
             <Popover className="relative">
               <Popover.Button
                 type="button"
-                className="focus-visible:ring-wehrli rounded-lg text-gray-400 hover:text-gray-600 focus:outline-none focus-visible:ring-1"
+                className="rounded-md text-gray-400 hover:text-gray-600"
                 aria-label={labels.countryHint}
               >
                 <InformationCircleIcon className="size-4" aria-hidden />
               </Popover.Button>
-              <Popover.Panel className="absolute top-full left-0 z-20 mt-1 w-64 rounded-lg border border-gray-200 bg-white p-3 text-sm text-gray-600 shadow-lg">
+              <Popover.Panel className="absolute top-full left-0 z-20 mt-1 w-64 rounded-md border border-gray-200 bg-white p-3 text-sm text-gray-600 shadow-lg">
                 {labels.countryHintBefore}{' '}
                 <Link href={contactHref} className="text-wehrli font-bold underline">
                   {labels.countryHintLink}

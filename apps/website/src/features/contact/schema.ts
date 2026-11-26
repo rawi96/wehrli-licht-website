@@ -19,7 +19,8 @@ const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const PHONE_PATTERN = /^[+\d\s()/.-]{6,30}$/;
 const MAX_LINKS = 2;
 
-const countLinks = (text: string): number => (text.match(/https?:\/\/|www\./gi) ?? []).length;
+/** «https://www.…» is one link. */
+const countLinks = (text: string): number => (text.match(/https?:\/\/(?:www\.)?|www\./gi) ?? []).length;
 
 type ValidationOptions = {
   /** The block offers topics, so one must be chosen (only known on the client). */

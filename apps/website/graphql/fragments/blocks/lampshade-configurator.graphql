@@ -1,0 +1,18 @@
+fragment lampshadeConfiguratorBlock on LampshadeConfiguratorRecord {
+  id
+  anchorId
+  teaserEyebrow
+  teaserTitle
+  teaserText
+  teaserPoints
+  startLabel
+  teaserNote
+  teaserImage {
+    copyright
+    responsiveImage(imgixParams: { w: 1400, q: 75, auto: format }) {
+      ...responsiveImageFragment
+    }
+    alt
+    title
+  }
+}

@@ -1,7 +1,8 @@
 import 'server-only';
 import type { CheckoutOrder } from '@/domain/checkout/order';
 import { getShopNotificationEmails } from '@/features/mail/recipients';
-import { mailer, payments } from '@/integrations';
+import { getEmailSender } from '@/features/mail/sender';
+import { content, mailer, payments } from '@/integrations';
 import { buildCustomerOrderEmail, buildShopOrderEmail } from './email/build-emails';
 
 export type SendCheckoutEmailsResult = {
@@ -45,8 +46,18 @@ export const sendCheckoutOrderEmails = async (order: CheckoutOrder): Promise<Sen
     };
   }
 
-  const customerEmail = buildCustomerOrderEmail(order);
-  const shopEmail = buildShopOrderEmail(order);
+  const context = { texts: await content.getSiteTexts(), sender: await getEmailSender() };
+
+  // A prepayment confirmation without the account would leave the customer unable to pay: fail instead, so the
+  // checkout reports the error and nothing incomplete goes out.
+  if (order.paymentMethod === 'prepayment' && !context.texts.bankDetails) {
+    const message = 'Bankverbindung fehlt (DatoCMS «Firmendaten» › «Bankverbindung» oder DatoCMS nicht erreichbar).';
+    logCheckoutEmailFailure('sendCheckoutOrderEmails', message, order);
+
+    return { ok: false, message };
+  }
+  const customerEmail = buildCustomerOrderEmail(order, context);
+  const shopEmail = buildShopOrderEmail(order, context);
   const idempotencyPrefix = `checkout-${order.orderId}`;
 
   try {

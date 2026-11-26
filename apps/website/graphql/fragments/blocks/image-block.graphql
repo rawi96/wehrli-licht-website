@@ -6,7 +6,12 @@ fragment imageBlock on ImageRecord {
   images {
     id
     title
-    responsiveImage(imgixParams: { w: 900, q: 55, auto: format }) {
+    focalPoint {
+      x
+      y
+    }
+    copyright
+    responsiveImage(imgixParams: { w: 1600, q: 70, auto: format }) {
       ...priorityResponsiveImageFragment
     }
     url

@@ -17,7 +17,7 @@ export const Emphasis: FC<PropsWithChildren> = ({ children }) => (
 export const Strong: FC<PropsWithChildren> = ({ children }) => <strong className="font-bold">{children}</strong>;
 
 export const InlineCode: FC<PropsWithChildren> = ({ children }) => (
-  <code className="text-code rounded-sm p-1">{children}</code>
+  <code className="text-code rounded-md p-1">{children}</code>
 );
 
 export const UnorderedList: FC<PropsWithChildren> = ({ children }) => (
@@ -33,7 +33,7 @@ export const ListItem: FC<PropsWithChildren> = ({ children }) => <li className="
 type BlockquoteProps = PropsWithChildren<{ attribution?: string | null }>;
 
 export const Blockquote: FC<BlockquoteProps> = ({ children, attribution }) => (
-  <div className="bg-white-100 my-4 rounded-lg px-8 py-1 md:max-w-prose lg:my-8">
+  <div className="my-4 rounded-md bg-white px-8 py-1 md:max-w-prose lg:my-8">
     {children}
     {attribution && <p className="my-4 text-sm italic opacity-50 lg:my-8">{attribution}</p>}
   </div>

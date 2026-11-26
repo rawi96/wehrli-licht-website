@@ -1,0 +1,86 @@
+query ProjectBySlug($slug: String!) {
+  project(filter: { slug: { eq: $slug } }) {
+    ...projectSummary
+    testimonial {
+      id
+    }
+    content {
+      __typename
+      ... on TextRecord {
+        ...textBlock
+      }
+      ... on TextTwoColumnRecord {
+        ...textTwoColsBlock
+      }
+      ... on TextThreeColumnRecord {
+        ...textThreeColsBlock
+      }
+      ... on TextImageRecord {
+        ...textImageBlock
+      }
+      ... on ImageRecord {
+        ...imageBlock
+      }
+      ... on TeamRecord {
+        ...teamBlock
+      }
+      ... on IframeRecord {
+        ...iframeBlock
+      }
+      ... on QuoteRecord {
+        ...quoteBlock
+      }
+      ... on GalleryRecord {
+        ...galleryBlock
+      }
+      ... on LogoGridRecord {
+        ...logoGridBlock
+      }
+      ... on HomeStageRecord {
+        ...homeStageBlock
+      }
+      ... on TeaserGridRecord {
+        ...teaserGridBlock
+      }
+      ... on TeaserRowRecord {
+        ...teaserRowBlock
+      }
+      ... on AllCategoriesBlockRecord {
+        ...allCategoriesBlock
+      }
+      ... on ContactRecord {
+        ...contactBlock
+      }
+      ... on CalendlyRecord {
+        ...calendlyBlock
+      }
+      ... on ContactFormRecord {
+        ...contactFormBlock
+      }
+      ... on FaqBlockRecord {
+        ...faqBlock
+      }
+      ... on HighlightProjectsTeaserRecord {
+        ...highlightProjectsTeaser
+      }
+      ... on HighlightOffersTeaserRecord {
+        ...highlightOffersTeaser
+      }
+      ... on HighlightShopTeaserRecord {
+        ...highlightShopTeaser
+      }
+    }
+    seo: _seoMetaTags {
+      attributes
+      content
+      tag
+    }
+  }
+  site: _site {
+    favicon: faviconMetaTags {
+      attributes
+      content
+      tag
+    }
+  }
+}

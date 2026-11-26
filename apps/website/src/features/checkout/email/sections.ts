@@ -1,4 +1,4 @@
-import { CHECKOUT_PAYMENT_LABELS, CHECKOUT_SHIPPING_LABELS } from '@/domain/checkout/labels';
+import type { CheckoutLabels } from '@/domain/checkout/labels';
 import { CheckoutOrder, formatOrderReference } from '@/domain/checkout/order';
 import { formatShippingAddress } from '@/domain/checkout/shipping-address';
 import { EMAIL_BRAND } from '@/features/mail/brand';
@@ -26,9 +26,9 @@ export const renderLineItems = (order: CheckoutOrder): string => {
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;font-size:14px;">
       <thead>
         <tr>
-          <th align="left" style="padding:8px 0;border-bottom:2px solid ${brandColor};font-size:12px;text-transform:uppercase;letter-spacing:0.05em;color:${brandColor};">Artikel</th>
-          <th align="center" style="padding:8px 0;border-bottom:2px solid ${brandColor};font-size:12px;text-transform:uppercase;letter-spacing:0.05em;color:${brandColor};">Anz.</th>
-          <th align="right" style="padding:8px 0;border-bottom:2px solid ${brandColor};font-size:12px;text-transform:uppercase;letter-spacing:0.05em;color:${brandColor};">Preis</th>
+          <th align="left" style="padding:8px 0;border-bottom:2px solid ${brandColor};font-size:12px;font-weight:600;color:${brandColor};">Artikel</th>
+          <th align="center" style="padding:8px 0;border-bottom:2px solid ${brandColor};font-size:12px;font-weight:600;color:${brandColor};">Anz.</th>
+          <th align="right" style="padding:8px 0;border-bottom:2px solid ${brandColor};font-size:12px;font-weight:600;color:${brandColor};">Preis</th>
         </tr>
       </thead>
       <tbody>
@@ -49,7 +49,7 @@ export const renderLineItems = (order: CheckoutOrder): string => {
     </table>`;
 };
 
-export const renderOrderDetails = (order: CheckoutOrder): string => {
+export const renderOrderDetails = (order: CheckoutOrder, labels: CheckoutLabels): string => {
   const customerName = `${order.customer.firstName} ${order.customer.lastName}`.trim();
 
   return `
@@ -58,7 +58,7 @@ export const renderOrderDetails = (order: CheckoutOrder): string => {
       <tr><td style="padding:4px 0;color:#666;">Name</td><td style="padding:4px 0;">${escapeHtml(customerName)}</td></tr>
       <tr><td style="padding:4px 0;color:#666;">E-Mail</td><td style="padding:4px 0;"><a href="mailto:${escapeHtml(order.customer.email)}">${escapeHtml(order.customer.email)}</a></td></tr>
       <tr><td style="padding:4px 0;color:#666;">Telefon</td><td style="padding:4px 0;">${escapeHtml(order.customer.phone)}</td></tr>
-      <tr><td style="padding:4px 0;color:#666;">Versand</td><td style="padding:4px 0;">${escapeHtml(CHECKOUT_SHIPPING_LABELS[order.shipping])}</td></tr>
+      <tr><td style="padding:4px 0;color:#666;">Versand</td><td style="padding:4px 0;">${escapeHtml(labels.shipping[order.shipping])}</td></tr>
       ${
         order.deliveryTimeSummary
           ? `<tr><td style="padding:4px 0;color:#666;">Lieferzeit</td><td style="padding:4px 0;">${escapeHtml(order.deliveryTimeSummary)}</td></tr>`
@@ -69,7 +69,7 @@ export const renderOrderDetails = (order: CheckoutOrder): string => {
           ? `<tr><td style="padding:4px 0;color:#666;">Adresse</td><td style="padding:4px 0;">${escapeHtml(formatShippingAddress(order.shippingAddress))}</td></tr>`
           : ''
       }
-      <tr><td style="padding:4px 0;color:#666;">Zahlung</td><td style="padding:4px 0;">${escapeHtml(CHECKOUT_PAYMENT_LABELS[order.paymentMethod].title)}</td></tr>
+      <tr><td style="padding:4px 0;color:#666;">Zahlung</td><td style="padding:4px 0;">${escapeHtml(labels.payment[order.paymentMethod].title)}</td></tr>
       ${
         order.comment
           ? `<tr><td style="padding:4px 0;color:#666;vertical-align:top;">Kommentar</td><td style="padding:4px 0;white-space:pre-wrap;">${escapeHtml(order.comment)}</td></tr>`

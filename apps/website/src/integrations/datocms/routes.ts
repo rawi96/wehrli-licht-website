@@ -3,18 +3,30 @@ import { AllRoutesDocument, LlmsPagesDocument } from '@/graphql/generated';
 import type { PageRoute, PageSummary, PreviewLink } from '@/domain/content/page';
 import { queryDatoCMS } from './client';
 import { getPublicPagePath } from './paths';
+import { getProjectAreaPath, getProjectPath } from '@/domain/content/project';
+import { listProjectAreas, listProjects } from './projects';
 
-const getPageRoutes = async (includeDrafts: boolean): Promise<PageRoute[]> => {
+const getPageRoutes = async (includeDrafts: boolean): Promise<(PageRoute & { id: string })[]> => {
   const { allPages } = await queryDatoCMS({ document: AllRoutesDocument, includeDrafts });
 
-  return allPages.map(({ slug, lastModified, seometatags, parent }) => ({
+  return allPages.map(({ id, slug, lastModified, seometatags, parent }) => ({
+    id,
     path: getPublicPagePath({ slug, parent }),
     lastModified,
     noIndex: seometatags?.noIndex ?? undefined,
   }));
 };
 
-export const listRoutes = (): Promise<PageRoute[]> => getPageRoutes(false);
+/** Published pages, projects and project areas. */
+export const listRoutes = async (): Promise<PageRoute[]> => {
+  const [pages, projects, areas] = await Promise.all([getPageRoutes(false), listProjects(), listProjectAreas()]);
+
+  return [
+    ...pages.map(({ path, lastModified, noIndex }) => ({ path, lastModified, noIndex })),
+    ...projects.map(({ slug, lastModified, noIndex }) => ({ path: getProjectPath(slug), lastModified, noIndex })),
+    ...areas.map(({ slug, lastModified, noIndex }) => ({ path: getProjectAreaPath(slug), lastModified, noIndex })),
+  ];
+};
 
 export const listPages = async (): Promise<PageSummary[]> => {
   const { allPages } = await queryDatoCMS({ document: LlmsPagesDocument });
@@ -30,22 +42,26 @@ export const listPages = async (): Promise<PageSummary[]> => {
 
 /** Request of the DatoCMS «Web Previews» plugin. */
 type PreviewLinksRequest = {
-  item: { attributes: { slug: string; parent_id: string }; meta: { status: string } };
+  item: { id: string; attributes: { slug: string; parent_id: string | null }; meta: { status: string } };
   itemType: { attributes: { api_key: string } };
 };
 
 const getPreviewPath = async ({ item, itemType }: PreviewLinksRequest): Promise<string | null> => {
   switch (itemType.attributes.api_key) {
-    case 'page':
-      if (item.attributes.parent_id) {
-        // page is a child of another page, so let's find the full slug (e.g. /agentur/lohnrechner)
-        const routes = await getPageRoutes(true);
-        const route = routes.find(({ path }) => path.endsWith(`/${item.attributes.slug}`));
-
-        return route?.path ?? null;
+    case 'page': {
+      if (!item.attributes.parent_id) {
+        return getPublicPagePath({ slug: item.attributes.slug });
       }
 
-      return `/${item.attributes.slug}`;
+      // Slugs are only unique below the same parent: the record's own id gives its full path.
+      const routes = await getPageRoutes(true);
+
+      return routes.find(({ id }) => id === item.id)?.path ?? null;
+    }
+    case 'project':
+      return item.attributes.slug ? getProjectPath(item.attributes.slug) : null;
+    case 'project_area':
+      return item.attributes.slug ? getProjectAreaPath(item.attributes.slug) : null;
     default:
       return null;
   }

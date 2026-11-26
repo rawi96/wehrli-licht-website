@@ -41,25 +41,25 @@ export const HomeStageBlock: FC<Props> = ({ title, intro, ctas, slides, header, 
   const [primaryCta, secondaryCta] = ctas;
 
   return (
-    <section aria-labelledby="home-stage-heading" className="bg-wehrli-700">
-      <div className="relative isolate min-h-[100svh] overflow-hidden">
+    <section aria-labelledby="home-stage-heading" className="surface-dark bg-wehrli-dark">
+      {/* Clipped sideways only: the mega menu of the header inside may reach below the stage. */}
+      <div className="relative isolate min-h-[100svh] overflow-x-clip">
         <HomeStageSlideshow slides={slides} labels={labels} />
 
-        <div className="from-wehrli-700/75 via-wehrli-700/50 to-wehrli-700/90 pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b" />
-        <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_90%_70%_at_50%_45%,color-mix(in_srgb,var(--color-wehrli-700)_55%,transparent),transparent_65%)]" />
+        <div className="from-wehrli-dark/75 via-wehrli-dark/50 to-wehrli-dark/90 pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b" />
+        <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_90%_70%_at_50%_45%,color-mix(in_srgb,var(--color-wehrli-dark)_55%,transparent),transparent_65%)]" />
         <div className="animate-light-beam pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_80%_60%_at_50%_0%,color-mix(in_srgb,var(--color-wehrli-100)_20%,transparent),transparent_70%)] motion-reduce:animate-none" />
 
-        <div className="from-wehrli-700/85 via-wehrli-700/45 pointer-events-none absolute inset-x-0 top-0 z-0 h-40 bg-gradient-to-b to-transparent" />
+        <div className="from-wehrli-dark/85 via-wehrli-dark/45 pointer-events-none absolute inset-x-0 top-0 z-0 h-40 bg-gradient-to-b to-transparent" />
 
         <div className="relative z-10">{header}</div>
 
         <div className="mx-auto flex min-h-[calc(100svh-5rem)] max-w-7xl items-center px-6 lg:px-8">
           <div className="hero-text-shadow relative mx-auto w-full max-w-3xl py-24 text-center sm:py-32">
-            <Reveal>
-              <Heading color="white" level="1" id="home-stage-heading">
-                <span className="tracking-tight text-balance">{title}</span>
-              </Heading>
-            </Reveal>
+            {/* Shown at once, not faded in: the title is the page's largest content (LCP). */}
+            <Heading color="white" level="1" id="home-stage-heading">
+              <span className="tracking-tight text-balance">{title}</span>
+            </Heading>
 
             <Reveal delay={150}>
               <p className="mx-auto mt-6 max-w-xl text-sm leading-relaxed text-balance text-white md:text-base lg:mt-8 lg:text-lg">
@@ -78,8 +78,8 @@ export const HomeStageBlock: FC<Props> = ({ title, intro, ctas, slides, header, 
 
         <div className="pointer-events-none absolute bottom-8 left-1/2 -translate-x-1/2" aria-hidden="true">
           <div className="animate-scroll-hint flex flex-col items-center gap-2 motion-reduce:animate-none">
-            <span className="text-xxs tracking-widest text-white/50 uppercase">{labels.scroll}</span>
-            <svg className="h-5 w-5 text-white/60" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <span className="text-xs font-bold text-white/80">{labels.scroll}</span>
+            <svg className="h-5 w-5 text-white/80" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 9l-7 7-7-7" />
             </svg>
           </div>

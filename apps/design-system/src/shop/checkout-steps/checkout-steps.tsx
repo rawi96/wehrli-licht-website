@@ -37,7 +37,7 @@ export const CheckoutSteps: FC<Props> = ({ steps, currentStep, label = 'Checkout
                         ? 'bg-wehrli text-white'
                         : isCurrent
                           ? 'border-wehrli text-wehrli border-2'
-                          : 'border border-gray-300 text-gray-400',
+                          : 'border border-gray-200 text-gray-400',
                     )}
                   >
                     {isComplete ? <CheckIcon className="size-4" aria-hidden /> : index + 1}
@@ -51,7 +51,7 @@ export const CheckoutSteps: FC<Props> = ({ steps, currentStep, label = 'Checkout
                 <span
                   className={cn(
                     'mt-2 text-center text-xs sm:text-sm',
-                    isCurrent ? 'text-wehrli font-bold' : isComplete ? 'text-gray-900' : 'text-gray-400',
+                    isCurrent ? 'text-wehrli font-bold' : isComplete ? 'text-black' : 'text-gray-400',
                   )}
                 >
                   {step.title}

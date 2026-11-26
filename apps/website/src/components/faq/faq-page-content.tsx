@@ -3,6 +3,7 @@
 import { countFaqsInGroups, filterFaqGroups, type FaqTopicGroup } from '@/domain/content/faq';
 import { formatFaqCount, formatFaqSearchStatus } from './format-faq-count';
 import { FaqContactCta, FaqIntro, FaqLink, FaqNoResults, FaqSearch, FaqTopics } from '@wehrli/design-system';
+import type { FaqTexts } from '@/domain/content/site-texts';
 import { FC, useMemo, useState } from 'react';
 
 type Props = {
@@ -11,6 +12,7 @@ type Props = {
   groups: FaqTopicGroup[];
   /** Contact page (from the CMS). */
   contactHref: string;
+  texts: FaqTexts;
 };
 
 const DefaultIntro: FC<{ contactHref: string }> = ({ contactHref }) => (
@@ -20,7 +22,7 @@ const DefaultIntro: FC<{ contactHref: string }> = ({ contactHref }) => (
   </>
 );
 
-export const FaqPageContent: FC<Props> = ({ title, intro, groups, contactHref }) => {
+export const FaqPageContent: FC<Props> = ({ title, intro, groups, contactHref, texts }) => {
   const [query, setQuery] = useState('');
   const totalCount = useMemo(() => countFaqsInGroups(groups), [groups]);
 
@@ -34,6 +36,7 @@ export const FaqPageContent: FC<Props> = ({ title, intro, groups, contactHref })
     <>
       <FaqIntro
         title={title}
+        labels={{ eyebrow: texts.faqBlockEyebrow }}
         intro={intro ?? <DefaultIntro contactHref={contactHref} />}
         topics={topicNavGroups.map(({ topic }) => ({
           id: topic.id,
@@ -43,6 +46,7 @@ export const FaqPageContent: FC<Props> = ({ title, intro, groups, contactHref })
         search={
           <FaqSearch
             id="faq-search"
+            placeholder={texts.faqSearchPlaceholder}
             value={query}
             onChange={setQuery}
             status={formatFaqSearchStatus(resultCount, totalCount, hasQuery)}
@@ -51,11 +55,12 @@ export const FaqPageContent: FC<Props> = ({ title, intro, groups, contactHref })
       />
 
       {hasQuery && filteredGroups.length === 0 ? (
-        <FaqNoResults>
-          Versuchen Sie ein anderes Stichwort oder <FaqLink href={contactHref}>kontaktieren Sie uns</FaqLink>.
+        <FaqNoResults title={texts.faqNoResultsTitle}>
+          {texts.faqNoResultsText} <FaqLink href={contactHref}>{texts.faqContactLink}</FaqLink>
         </FaqNoResults>
       ) : (
         <FaqTopics
+          expanded={hasQuery}
           topics={filteredGroups.map(({ topic, faqs }) => ({
             id: topic.id,
             slug: topic.slug,
@@ -66,9 +71,8 @@ export const FaqPageContent: FC<Props> = ({ title, intro, groups, contactHref })
         />
       )}
 
-      <FaqContactCta>
-        Ihre Frage ist nicht dabei? Auf unserer <FaqLink href={contactHref}>Kontaktseite</FaqLink> finden Sie alle Wege, uns
-        zu erreichen – per Telefon, E-Mail oder Termin im Atelier Goldach.
+      <FaqContactCta title={texts.faqContactTitle} action={{ label: texts.faqContactLink, href: contactHref }}>
+        {texts.faqContactText}
       </FaqContactCta>
     </>
   );

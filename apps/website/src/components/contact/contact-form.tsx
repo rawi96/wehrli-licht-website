@@ -1,13 +1,26 @@
 'use client';
 
-import { ContactFieldErrors, ContactFormValues, HONEYPOT_FIELD, validateContactForm } from '@/features/contact/schema';
-import { PRODUCT_PREFILL_PARAM } from '@/domain/contact/links';
+import {
+  ContactFieldErrors,
+  ContactFormValues,
+  HONEYPOT_FIELD,
+  MIN_FILL_TIME_MS,
+  validateContactForm,
+} from '@/features/contact/schema';
+import { DESIGN_PREFILL_PARAM, PRODUCT_PREFILL_PARAM } from '@/domain/contact/links';
 import { analytics } from '@/integrations/client';
 import { ContactForm as ContactFormView, ContactFormStatus } from '@wehrli/design-system';
 import { FC, useEffect, useRef, useState } from 'react';
 
-const readProductPrefill = (): Partial<ContactFormValues> => {
-  const product = new URLSearchParams(window.location.search).get(PRODUCT_PREFILL_PARAM)?.slice(0, 200);
+/** Message prefilled by links: a question about a product, or a design from the lampshade configurator. */
+const readPrefill = (): Partial<ContactFormValues> => {
+  const params = new URLSearchParams(window.location.search);
+  const product = params.get(PRODUCT_PREFILL_PARAM)?.slice(0, 200);
+  const design = params.get(DESIGN_PREFILL_PARAM)?.slice(0, 1500);
+
+  if (design) {
+    return { message: `${design}\n\n` };
+  }
 
   return product ? { message: `Ich habe eine Frage zur Leuchte «${product}»:\n\n` } : {};
 };
@@ -29,10 +42,12 @@ type Props = {
   topics: string[];
   /** Privacy page from DatoCMS («Header & Footer»), link omitted if not set. */
   privacyHref: string | null;
+  /** Button, success message and privacy note (CMS «Texte & Beschriftungen»). */
+  labels: { submit: string; successTitle: string; successText: string; privacyNote: string };
 };
 
 /** Connects the design system's ContactForm with validation, the contact API and lead tracking. */
-export const ContactForm: FC<Props> = ({ formId, topics, privacyHref }) => {
+export const ContactForm: FC<Props> = ({ formId, topics, privacyHref, labels }) => {
   const [values, setValues] = useState<ContactFormValues>({
     name: '',
     email: '',
@@ -48,7 +63,7 @@ export const ContactForm: FC<Props> = ({ formId, topics, privacyHref }) => {
 
   useEffect(() => {
     shownAtRef.current = Date.now();
-    const prefill = readProductPrefill();
+    const prefill = readPrefill();
     if (Object.keys(prefill).length > 0) {
       // eslint-disable-next-line @eslint-react/set-state-in-effect -- URL params are only readable after mount
       setValues((current) => ({ ...current, ...prefill }));
@@ -69,6 +84,13 @@ export const ContactForm: FC<Props> = ({ formId, topics, privacyHref }) => {
 
     setStatus('sending');
     setErrorMessage(undefined);
+
+    // The server treats very fast submissions as bots and drops them silently. With a prefilled message (product,
+    // configurator) and autofill a person can be that fast: wait out the rest of the minimum time instead.
+    const remaining = MIN_FILL_TIME_MS + 200 - (Date.now() - shownAtRef.current);
+    if (remaining > 0) {
+      await new Promise((resolve) => setTimeout(resolve, remaining));
+    }
 
     try {
       const response = await fetch('/api/contact', {
@@ -114,6 +136,7 @@ export const ContactForm: FC<Props> = ({ formId, topics, privacyHref }) => {
       errorMessage={errorMessage}
       topics={topics}
       privacyHref={privacyHref}
+      labels={labels}
       honeypot={{ name: HONEYPOT_FIELD, ref: honeypotRef }}
     />
   );

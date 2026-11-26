@@ -4,12 +4,15 @@ fragment teamBlock on TeamRecord {
   disableMarginTop
   disableMarginBottom
   employees {
+    id
     firstname
     lastname
     function
     bio
     image {
-      responsiveImage(imgixParams: { fit: crop, w: 400, h: 400, auto: format }) {
+      # Portrait like the team cards (4:5), sharp on retina screens, cropped around the face.
+      copyright
+      responsiveImage(imgixParams: { fit: crop, crop: [faces, focalpoint, edges], w: 900, h: 1125, auto: format }) {
         ...priorityResponsiveImageFragment
       }
     }

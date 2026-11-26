@@ -1,0 +1,230 @@
+{
+  "$comment": "Texts of the website that are not part of a page: one source for the DatoCMS singleton «Texte & Beschriftungen» (migration 1795330000) and the defaults of the website. Keys are the DatoCMS api keys.",
+  "groups": [
+    {
+      "title": "🧭 Menü & Navigation",
+      "fields": [
+        { "key": "menu_overview_label", "label": "Link zur Übersicht im aufgeklappten Menü", "default": "Zur Übersicht" },
+        {
+          "key": "menu_shop_overview_label",
+          "label": "Link zur Shop-Startseite im Shop-Menü",
+          "default": "Zum Online-Shop"
+        },
+        {
+          "key": "breadcrumb_home_label",
+          "label": "Erster Punkt im Pfad oben (Breadcrumb)",
+          "hint": "Führt zur Startseite.",
+          "default": "Home"
+        }
+      ]
+    },
+    {
+      "title": "🏗️ Projekte",
+      "fields": [
+        {
+          "key": "projects_block_title",
+          "label": "Überschrift «Passende Projekte»",
+          "hint": "Gilt, wenn im Block keine Überschrift steht.",
+          "default": "Projekte zu diesem Thema"
+        },
+        { "key": "projects_all_link", "label": "Link zu allen Projekten", "default": "Alle Projekte ansehen" },
+        { "key": "projects_card_link", "label": "Link auf einer Projekt-Kachel", "default": "Projekt ansehen" },
+        { "key": "projects_related_title", "label": "Überschrift unter einem Projekt", "default": "Weitere Projekte" },
+        { "key": "project_fact_client", "label": "Fakten: Kunde", "default": "Kunde" },
+        { "key": "project_fact_location", "label": "Fakten: Ort", "default": "Ort" },
+        { "key": "project_fact_year", "label": "Fakten: Jahr", "default": "Jahr" },
+        { "key": "project_fact_area", "label": "Fakten: Bereich", "default": "Bereich" },
+        { "key": "project_fact_services", "label": "Fakten: Leistungen", "default": "Leistungen" }
+      ]
+    },
+    {
+      "title": "❓ Häufige Fragen",
+      "fields": [
+        { "key": "faq_block_eyebrow", "label": "Dachzeile «FAQ» (Block und Seite «Häufige Fragen»)", "default": "FAQ" },
+        {
+          "key": "faq_block_title",
+          "label": "Überschrift im Block «Häufige Fragen»",
+          "hint": "Gilt, wenn im Block keine Überschrift steht.",
+          "default": "Häufige Fragen"
+        },
+        {
+          "key": "faq_all_link",
+          "label": "Link zu allen Fragen",
+          "hint": "Gilt, wenn im Block kein Link-Text steht.",
+          "default": "Alle Fragen ansehen"
+        },
+        {
+          "key": "faq_search_placeholder",
+          "label": "Suchfeld auf der Seite «FAQ»",
+          "default": "Stichwort, z. B. Lampenschirm, Lieferung, Lichtplanung…"
+        },
+        {
+          "key": "faq_no_results_title",
+          "label": "Keine Treffer: Überschrift",
+          "default": "Keine passenden Fragen gefunden"
+        },
+        {
+          "key": "faq_no_results_text",
+          "label": "Keine Treffer: Text",
+          "default": "Versuchen Sie ein anderes Stichwort oder kontaktieren Sie uns."
+        },
+        { "key": "faq_contact_title", "label": "Kasten unten: Überschrift", "default": "Noch Fragen?" },
+        {
+          "key": "faq_contact_text",
+          "label": "Kasten unten: Text",
+          "multiline": true,
+          "default": "Ihre Frage ist nicht dabei? Rufen Sie uns an, schreiben Sie uns oder vereinbaren Sie einen Termin im Showroom in Goldach."
+        },
+        { "key": "faq_contact_link", "label": "Kasten unten: Knopf", "default": "Zum Kontakt" }
+      ]
+    },
+    {
+      "title": "🛒 Shop",
+      "fields": [
+        { "key": "all_lights_title", "label": "Seite «Alle Leuchten»: Titel", "default": "Alle Leuchten" },
+        {
+          "key": "all_lights_intro",
+          "label": "Seite «Alle Leuchten»: Einleitung",
+          "multiline": true,
+          "default": "Entdecken Sie unser gesamtes Sortiment an Pendel-, Decken-, Wand- und Tischleuchten. Gerne beraten wir Sie persönlich in unserem Showroom in Goldach."
+        },
+        {
+          "key": "all_lights_seo_title",
+          "label": "Seite «Alle Leuchten»: Titel bei Google",
+          "default": "Alle Leuchten – Leuchten Shop | Wehrli Licht"
+        },
+        {
+          "key": "all_lights_seo_description",
+          "label": "Seite «Alle Leuchten»: Beschreibung bei Google",
+          "multiline": true,
+          "default": "Alle Leuchten im Online-Shop von Wehrli Licht: Pendel-, Decken-, Wand- und Tischleuchten. Beratung im Showroom in Goldach, Lieferung in die ganze Schweiz."
+        },
+        { "key": "category_card_link", "label": "Link auf einer Kategorie-Kachel", "default": "Produkte ansehen" },
+        {
+          "key": "product_add_to_cart",
+          "label": "Produkt: Knopf «In den Warenkorb»",
+          "default": "Zum Warenkorb hinzufügen"
+        },
+        {
+          "key": "product_viewing_link",
+          "label": "Produkt: Link zur Besichtigung",
+          "default": "Besichtigungstermin vereinbaren"
+        },
+        {
+          "key": "product_question_title",
+          "label": "Produkt: Frage-Kasten Überschrift",
+          "default": "Fragen zu dieser Leuchte?"
+        },
+        { "key": "product_question_link", "label": "Produkt: Frage-Kasten Link", "default": "Schreiben Sie uns" }
+      ]
+    },
+    {
+      "title": "🚚 Versand & Zahlung",
+      "fields": [
+        { "key": "shipping_pickup_label", "label": "Abholung: Bezeichnung", "default": "Abholung in Goldach" },
+        { "key": "shipping_pickup_text", "label": "Abholung: Beschreibung", "default": "Gratis während den Öffnungszeiten" },
+        { "key": "shipping_post_label", "label": "Versand: Bezeichnung", "default": "Versand per Post" },
+        { "key": "payment_prepayment_label", "label": "Vorauskasse: Bezeichnung", "default": "Vorauskasse" },
+        {
+          "key": "payment_prepayment_text",
+          "label": "Vorauskasse: Beschreibung",
+          "default": "Überweisung vor Lieferung oder Abholung"
+        },
+        { "key": "payment_cash_label", "label": "Bezahlung vor Ort: Bezeichnung", "default": "Bezahlung vor Ort" },
+        {
+          "key": "payment_cash_text",
+          "label": "Bezahlung vor Ort: Beschreibung",
+          "default": "Bar oder mit Karte bei Abholung in Goldach"
+        },
+        { "key": "payment_online_label", "label": "Online bezahlen: Bezeichnung", "default": "Online bezahlen" },
+        {
+          "key": "payment_online_text",
+          "label": "Online bezahlen: Beschreibung",
+          "default": "Karte, TWINT, Apple Pay und weitere Methoden"
+        }
+      ]
+    },
+    {
+      "title": "✉️ Bestätigung per E-Mail",
+      "hint": "Texte der E-Mail, die Kundinnen und Kunden nach einer Bestellung erhalten.",
+      "fields": [
+        {
+          "key": "order_email_intro",
+          "label": "Einleitung",
+          "multiline": true,
+          "default": "vielen Dank für Ihre Bestellung. Wir haben diese erhalten und melden uns bei Rückfragen."
+        },
+        {
+          "key": "order_email_prepayment",
+          "label": "Bei Vorauskasse",
+          "hint": "Darunter folgt die Bankverbindung aus «Firmendaten».",
+          "default": "Bitte überweisen Sie den Betrag vor Lieferung oder Abholung:"
+        },
+        {
+          "key": "order_email_cash",
+          "label": "Bei Bezahlung vor Ort",
+          "default": "Bezahlung bei Abholung in Goldach (bar oder mit Karte)."
+        },
+        {
+          "key": "order_email_online",
+          "label": "Bei Online-Zahlung",
+          "default": "Ihre Zahlung wurde erfolgreich entgegengenommen."
+        }
+      ]
+    },
+    {
+      "title": "📝 Kontaktformular",
+      "fields": [
+        { "key": "contact_submit", "label": "Knopf", "default": "Anfrage senden" },
+        {
+          "key": "contact_success_title",
+          "label": "Nach dem Senden: Überschrift",
+          "default": "Vielen Dank für Ihre Anfrage!"
+        },
+        {
+          "key": "contact_success_text",
+          "label": "Nach dem Senden: Text",
+          "multiline": true,
+          "default": "Wir haben Ihre Nachricht erhalten und melden uns so rasch wie möglich bei Ihnen."
+        },
+        {
+          "key": "contact_privacy_note",
+          "label": "Hinweis zum Datenschutz",
+          "hint": "Danach folgt der Link zur Datenschutzseite.",
+          "default": "Ihre Angaben verwenden wir nur zur Beantwortung Ihrer Anfrage."
+        }
+      ]
+    },
+    {
+      "title": "🍪 Cookie-Hinweis",
+      "fields": [
+        {
+          "key": "cookie_text",
+          "label": "Text",
+          "multiline": true,
+          "hint": "Rechtlich relevant: bei Änderungen am Tracking anpassen.",
+          "default": "Wir nutzen Google Analytics, um die Website zu verbessern, und mit Ihrer Zustimmung Google Ads für passende Werbung."
+        },
+        { "key": "cookie_accept", "label": "Knopf «Annehmen»", "default": "Akzeptieren" },
+        { "key": "cookie_decline", "label": "Knopf «Ablehnen»", "default": "Ablehnen" }
+      ]
+    },
+    {
+      "title": "🚫 Seite nicht gefunden",
+      "fields": [
+        { "key": "not_found_title", "label": "Überschrift", "default": "Seite nicht gefunden" },
+        {
+          "key": "not_found_text",
+          "label": "Text",
+          "multiline": true,
+          "default": "Die von Ihnen aufgerufene Seite konnte leider nicht gefunden werden."
+        },
+        { "key": "not_found_home_link", "label": "Knopf zur Startseite", "default": "Zur Startseite" }
+      ]
+    },
+    {
+      "title": "🦶 Fusszeile",
+      "fields": [{ "key": "footer_rights", "label": "Text nach dem Copyright", "default": "Alle Rechte vorbehalten." }]
+    }
+  ]
+}

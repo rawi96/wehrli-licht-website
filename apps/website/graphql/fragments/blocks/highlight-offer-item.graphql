@@ -2,6 +2,22 @@ fragment highlightOfferItem on HighlightOfferItemRecord {
   id
   title
   eyebrow
+  # Optional file field (FileField, not ImageFileField), so it takes the same crops spelled out.
+  image {
+    focalPoint {
+      x
+      y
+    }
+    copyright
+    responsiveImage(imgixParams: { fit: crop, w: 1600, h: 1000, q: 75, auto: format }) {
+      ...priorityResponsiveImageFragment
+    }
+    portraitImage: responsiveImage(imgixParams: { fit: crop, w: 960, h: 1200, q: 75, auto: format }) {
+      ...responsiveImageFragment
+    }
+    alt
+    title
+  }
   offerLink {
     ...highlightItemLink
   }

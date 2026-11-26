@@ -1,0 +1,14 @@
+fragment factsBlock on FactsBlockRecord {
+  id
+  anchorId
+  disableMarginTop
+  disableMarginBottom
+  factsTitle: title
+  factsIntro: intro
+  items {
+    id
+    value
+    label
+    text
+  }
+}

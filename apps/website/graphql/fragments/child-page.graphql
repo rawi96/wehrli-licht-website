@@ -1,0 +1,21 @@
+fragment childPage on PageRecord {
+  id
+  title
+  position
+  isArticle
+  teaserTitle
+  teaserEyebrow
+  teaserDescription
+  teaserLinkText
+  teaserImage {
+    focalPoint {
+      x
+      y
+    }
+    copyright
+    responsiveImage(imgixParams: { fit: crop, w: 1280, h: 720, auto: format }) {
+      ...responsiveImageFragment
+    }
+  }
+  ...pageRecordLink
+}

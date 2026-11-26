@@ -2,6 +2,7 @@ import 'server-only';
 import { getContactRecipients } from '@/features/mail/recipients';
 import { botProtection, mailer } from '@/integrations';
 import { getSiteUrl } from '@/lib/site-url';
+import { getEmailSender } from '@/features/mail/sender';
 import { buildContactRequestEmail } from './email';
 import { ContactFieldErrors, ContactFormValues, HONEYPOT_FIELD, MIN_FILL_TIME_MS, validateContactForm } from './schema';
 
@@ -73,7 +74,7 @@ export const submitContactRequest = async (parsed: unknown): Promise<ContactRequ
 
   const pagePath = asString(body.pagePath);
   const pageUrl = pagePath.startsWith('/') && pagePath.length <= 300 ? `${getSiteUrl()}${pagePath}` : undefined;
-  const email = buildContactRequestEmail(values, pageUrl);
+  const email = buildContactRequestEmail(values, pageUrl, await getEmailSender());
 
   const result = await mailer.send({
     to: recipients,

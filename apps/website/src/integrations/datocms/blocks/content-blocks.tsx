@@ -3,14 +3,28 @@ import { FC } from 'react';
 import { CalendlyBlock } from './calendly';
 import { ContactBlock } from './contact';
 import { ContactFormBlock } from './contact-form';
+import { FaqBlock } from './faq';
+import { ProjectsBlock, ProjectsOverviewBlock } from './projects';
 import { GalleryBlock } from './gallery';
 import { HighlightOffersTeaserBlock } from './highlight/highlight-offers-teaser';
 import { HighlightProjectsTeaserBlock } from './highlight/highlight-projects-teaser';
 import { HighlightShopTeaserBlock } from './highlight/highlight-shop-teaser';
 import { IframeBlock } from './iframe';
+import { LampshadeConfiguratorBlock } from './lampshade-configurator';
+import { LocationBlock } from './location';
 import { ImageBlock } from './image';
 import { LogoGridBlock } from './logo-grid';
+import { ShapeCatalogBlock } from './shape-catalog';
 import { QuoteBlock } from './quote';
+import {
+  AccordionBlock,
+  CardsBlock,
+  ConfiguratorTeaserBlock,
+  CtaBlock,
+  FactsBlock,
+  PartnersBlock,
+  StepsBlock,
+} from './rich-blocks';
 import { AllCategoriesBlock } from '@/integrations/datocms/blocks/shop/all-categories';
 import { TeamBlock } from './team';
 import { TeaserGridBlock } from './teaser-grid';
@@ -68,10 +82,30 @@ export const ContentBlocks: FC<Props> = ({ blocks, eagerBlockCount = 2 }) => {
             return <TeamBlock key={block.id} block={block} aboveFold={aboveFold} />;
           case 'IframeRecord':
             return <IframeBlock key={block.id} block={block} />;
+          case 'LocationRecord':
+            return <LocationBlock key={block.id} block={block} />;
+          case 'LampshadeConfiguratorRecord':
+            return <LampshadeConfiguratorBlock key={block.id} block={block} />;
+          case 'CardsBlockRecord':
+            return <CardsBlock key={block.id} block={block} />;
+          case 'FactsBlockRecord':
+            return <FactsBlock key={block.id} block={block} />;
+          case 'StepsBlockRecord':
+            return <StepsBlock key={block.id} block={block} />;
+          case 'AccordionBlockRecord':
+            return <AccordionBlock key={block.id} block={block} />;
+          case 'CtaBlockRecord':
+            return <CtaBlock key={block.id} block={block} />;
+          case 'PartnersBlockRecord':
+            return <PartnersBlock key={block.id} block={block} />;
+          case 'ConfiguratorTeaserRecord':
+            return <ConfiguratorTeaserBlock key={block.id} block={block} />;
           case 'QuoteRecord':
             return <QuoteBlock key={block.id} block={block} />;
           case 'GalleryRecord':
             return <GalleryBlock key={block.id} block={block} aboveFold={aboveFold} />;
+          case 'ShapeCatalogRecord':
+            return <ShapeCatalogBlock key={block.id} block={block} />;
           case 'LogoGridRecord':
             return <LogoGridBlock key={block.id} block={block} />;
           case 'TeaserGridRecord':
@@ -86,6 +120,12 @@ export const ContentBlocks: FC<Props> = ({ blocks, eagerBlockCount = 2 }) => {
             return <CalendlyBlock key={block.id} block={block} />;
           case 'ContactFormRecord':
             return <ContactFormBlock key={block.id} block={block} />;
+          case 'FaqBlockRecord':
+            return <FaqBlock key={block.id} block={block} />;
+          case 'ProjectsBlockRecord':
+            return <ProjectsBlock key={block.id} block={block} />;
+          case 'ProjectsOverviewRecord':
+            return <ProjectsOverviewBlock key={block.id} block={block} />;
           case 'HighlightProjectsTeaserRecord':
             return <HighlightProjectsTeaserBlock key={block.id} block={block} aboveFold={aboveFold} />;
           case 'HighlightOffersTeaserRecord':

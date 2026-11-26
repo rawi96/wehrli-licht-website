@@ -60,7 +60,7 @@ export type PageSummary = {
   title: string;
   description: string | null;
   noIndex: boolean;
-  /** The parent page (sections of the site such as «Angebot» or «Blog»), null for top-level pages. */
+  /** The parent page (sections of the site such as «Lampenschirme» or «Über uns»), null for top-level pages. */
   parent: { id: string; title: string } | null;
 };
 

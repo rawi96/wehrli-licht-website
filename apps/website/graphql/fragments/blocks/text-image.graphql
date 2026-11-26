@@ -9,16 +9,17 @@ fragment textImageBlock on TextImageRecord {
     links {
       ... on PageRecord {
         __typename
-        id
-        slug
-        parent {
-          slug
-        }
+        ...pageRecordLink
       }
     }
   }
   image {
-    responsiveImage(imgixParams: { w: 672 }) {
+    focalPoint {
+      x
+      y
+    }
+    copyright
+    responsiveImage(imgixParams: { w: 1200, auto: format }) {
       ...priorityResponsiveImageFragment
     }
   }

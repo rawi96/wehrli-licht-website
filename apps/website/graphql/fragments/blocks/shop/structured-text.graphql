@@ -3,11 +3,7 @@ fragment shopStructuredTextField on ShopStorefrontHeroModelIntroField {
   links {
     ... on PageRecord {
       __typename
-      id
-      slug
-      parent {
-        slug
-      }
+      ...pageRecordLink
     }
   }
   blocks {
@@ -23,31 +19,7 @@ fragment shopFeaturedDescriptionField on ShopSfFeaturedModelDescriptionField {
   links {
     ... on PageRecord {
       __typename
-      id
-      slug
-      parent {
-        slug
-      }
-    }
-  }
-  blocks {
-    ... on LinkRecord {
-      _modelApiKey
-      ...linkBlock
-    }
-  }
-}
-
-fragment shopServiceDescriptionField on ShopServiceSectionModelDescriptionField {
-  value
-  links {
-    ... on PageRecord {
-      __typename
-      id
-      slug
-      parent {
-        slug
-      }
+      ...pageRecordLink
     }
   }
   blocks {

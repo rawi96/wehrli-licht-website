@@ -62,7 +62,7 @@ const Search = () => {
 
 export const Page: Story = {
   render: () => (
-    <div className="bg-white-200 p-4">
+    <div className="bg-gray-50 p-4">
       <FaqIntro
         title="Häufig gestellte Fragen"
         intro={
@@ -74,8 +74,8 @@ export const Page: Story = {
         topics={TOPICS.map((topic) => ({ id: topic.id, label: topic.title, slug: topic.slug }))}
       />
       <FaqTopics topics={TOPICS} />
-      <FaqContactCta>
-        Auf unserer <FaqLink href="#">Kontaktseite</FaqLink> finden Sie alle Wege, uns zu erreichen.
+      <FaqContactCta action={{ label: 'Zum Kontakt', href: '#' }}>
+        Rufen Sie uns an, schreiben Sie uns oder buchen Sie einen Termin.
       </FaqContactCta>
     </div>
   ),
@@ -85,7 +85,7 @@ export const SearchField: Story = { render: () => <Search /> };
 
 export const NoResults: Story = {
   render: () => (
-    <div className="bg-white-200 p-4">
+    <div className="bg-gray-50 p-4">
       <FaqNoResults>
         Versuchen Sie ein anderes Stichwort oder <FaqLink href="#">kontaktieren Sie uns</FaqLink>.
       </FaqNoResults>
@@ -95,7 +95,7 @@ export const NoResults: Story = {
 
 export const OneTopic: Story = {
   render: () => (
-    <div className="bg-white-200 p-4">
+    <div className="bg-gray-50 p-4">
       <FaqTopics topics={TOPICS.slice(1)} />
     </div>
   ),

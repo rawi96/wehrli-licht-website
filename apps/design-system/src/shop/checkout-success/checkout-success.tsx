@@ -88,7 +88,7 @@ const Actions: FC<{ shopHref: string; websiteHref: string; labels: typeof DEFAUL
 
 const InlineRow: FC<{ label: string; children: ReactNode; small?: boolean }> = ({ label, children, small }) => (
   <div className="flex justify-between gap-4">
-    <dt className="text-gray-500">{label}</dt>
+    <dt className="text-gray-600">{label}</dt>
     <dd className={small ? 'text-xs' : undefined}>{children}</dd>
   </div>
 );
@@ -145,7 +145,7 @@ export const CheckoutSuccess: FC<Props> = ({ status, shopHref, websiteHref, cont
           <InlineRow label={labels.shipping}>{order.shipping}</InlineRow>
           {order.address && (
             <div>
-              <dt className="text-gray-500">{labels.address}</dt>
+              <dt className="text-gray-600">{labels.address}</dt>
               <dd className="mt-1">{order.address}</dd>
             </div>
           )}
@@ -156,7 +156,7 @@ export const CheckoutSuccess: FC<Props> = ({ status, shopHref, websiteHref, cont
           </div>
           {order.comment && (
             <div>
-              <dt className="text-gray-500">{labels.comment}</dt>
+              <dt className="text-gray-600">{labels.comment}</dt>
               <dd className="mt-1 whitespace-pre-wrap">{order.comment}</dd>
             </div>
           )}

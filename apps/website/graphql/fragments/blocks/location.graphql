@@ -1,0 +1,6 @@
+fragment locationBlock on LocationRecord {
+  id
+  locationTitle: title
+  mapUrl
+  anchorId
+}

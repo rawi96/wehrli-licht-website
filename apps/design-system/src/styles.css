@@ -26,18 +26,31 @@ html {
   }
 
   body {
-    @apply bg-white-200 text-black antialiased;
+    @apply page-background text-black antialiased;
     text-rendering: optimizeLegibility;
   }
 
-  /* One keyboard focus style for every interactive element. Inputs that show focus with their border opt out with field-focus-plain. */
+  /*
+   * One keyboard focus style for every interactive element: a 2px outline in the brand blue, offset by 2px, following
+   * the element's rounded corners. Dark surfaces (class `surface-dark`) switch it to white. Inputs that show focus
+   * with their border opt out with field-focus-plain.
+   */
+  :root {
+    --focus-color: var(--color-wehrli);
+  }
+
   a,
   button,
+  summary,
   [role='button'],
+  [tabindex]:not([tabindex='-1']),
   input:not(.field-focus-plain),
-  textarea,
-  select {
-    @apply focus-visible:ring-wehrli focus-visible:ring-offset-white-200 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none;
+  textarea:not(.field-focus-plain),
+  select:not(.field-focus-plain) {
+    &:focus-visible {
+      outline: 2px solid var(--focus-color);
+      outline-offset: 2px;
+    }
   }
 
   .field-focus-plain:focus,
@@ -47,21 +60,52 @@ html {
   }
 
   ::selection {
-    @apply bg-wehrli-500;
-    @apply text-white;
+    @apply bg-wehrli text-white;
   }
+}
+
+/* Dark brand or photo surfaces: focus outlines inside turn white. */
+@utility surface-dark {
+  --focus-color: var(--color-white);
+}
+
+/*
+ * Light blue band across the full viewport width while its content stays in the page column: the background reaches
+ * the edges through a spread shadow, clipped to the band's height (no horizontal scrolling).
+ */
+@utility band-wehrli-50 {
+  background-color: var(--color-wehrli-50);
+  box-shadow: 0 0 0 100vmax var(--color-wehrli-50);
+  clip-path: inset(0 -100vmax);
+}
+
+/* The same band in the brand blue, as the stage of area pages right below the (blue) header. */
+@utility band-wehrli {
+  background-color: var(--color-wehrli);
+  box-shadow: 0 0 0 100vmax var(--color-wehrli);
+  clip-path: inset(0 -100vmax);
+}
+
+/* White panels inside a dark surface (menus, cards): focus outlines back in the brand colour. */
+@utility surface-light {
+  --focus-color: var(--color-wehrli);
 }
 
 @layer utilities {
   /* Respect the OS setting for reduced motion: decorative animations stop, reveals show their end state. */
   @media (prefers-reduced-motion: reduce) {
+    .animate-marquee,
+    .animate-marquee-reverse,
     .animate-ken-burns,
+    .animate-head-settle,
     .animate-scroll-hint,
     .animate-light-beam {
       animation: none;
     }
 
-    .animate-hero-reveal {
+    .animate-hero-reveal,
+    .animate-step-in,
+    .animate-pop-in {
       animation: none;
       opacity: 1;
       transform: none;
@@ -70,10 +114,56 @@ html {
 }
 
 /* Legible white text on photos */
+/*
+ * Background of every page: a soft light-blue glow top left, a fainter one on the right, over white fading into the
+ * page grey. It stays in place while scrolling, so every page looks the same.
+ */
+@utility page-background {
+  background-color: var(--color-gray-50);
+  background-image:
+    radial-gradient(70rem 45rem at -10% -10%, color-mix(in srgb, var(--color-wehrli-100) 80%, transparent), transparent 70%),
+    radial-gradient(55rem 45rem at 110% 35%, color-mix(in srgb, var(--color-wehrli-50) 90%, transparent), transparent 70%),
+    linear-gradient(180deg, var(--color-white) 0%, var(--color-gray-50) 60%);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+}
+
+/*
+ * Blocks glide in as they scroll into view: from a little below and transparent to their place over the first 180px
+ * of scrolling. Pure CSS (scroll-driven animation), no script: browsers without it, crawlers and visitors who reduce
+ * motion simply see everything in place. Only transform and opacity, so nothing shifts the layout.
+ */
+@keyframes scroll-reveal {
+  /* Never fully transparent: a block that sits at the bottom of the first screen is part-way through on load. */
+  from {
+    opacity: 0.5;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@utility reveal-on-scroll {
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      animation: scroll-reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 0px entry 180px;
+    }
+  }
+}
+
+/* The one tile of the site: every card, box and panel on the page background looks like this. */
+@utility card-surface {
+  @apply rounded-md bg-white shadow-sm;
+}
+
 @utility hero-text-shadow {
   text-shadow:
-    0 2px 24px --theme(--color-wehrli-700 / 65%),
-    0 1px 4px --theme(--color-wehrli-700 / 50%);
+    0 2px 24px --theme(--color-wehrli-dark / 65%),
+    0 1px 4px --theme(--color-wehrli-dark / 50%);
 }
 
 /* Cookie banner: hidden before first paint when a choice is already stored (set by the website's Google tag script). */

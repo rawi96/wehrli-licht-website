@@ -65,7 +65,7 @@ const DEFAULT_LABELS = {
 
 const Row: FC<{ label: string; children: ReactNode }> = ({ label, children }) => (
   <div className="flex justify-between gap-4">
-    <dt className="text-gray-500">{label}</dt>
+    <dt className="text-gray-600">{label}</dt>
     <dd className="text-right">{children}</dd>
   </div>
 );
@@ -127,14 +127,14 @@ export const CheckoutReview: FC<Props> = ({
 
     <section className="space-y-3 border-t border-gray-200 pt-6">
       <h2 className="text-sm font-bold">{labels.items}</h2>
-      {checking && <p className="text-sm text-gray-500">{labels.checking}</p>}
+      {checking && <p className="text-sm text-gray-600">{labels.checking}</p>}
       <ul className="space-y-3 text-sm">
         {!checking &&
           lines.map((line) => (
             <li key={line.id} className="flex justify-between gap-4">
               <span>
                 {line.quantity}× {line.name}
-                {line.selectionsLabel && <span className="block text-gray-500">{line.selectionsLabel}</span>}
+                {line.selectionsLabel && <span className="block text-gray-600">{line.selectionsLabel}</span>}
               </span>
               <span className="shrink-0">{line.total}</span>
             </li>
@@ -142,11 +142,11 @@ export const CheckoutReview: FC<Props> = ({
       </ul>
       <dl className="space-y-1 border-t border-gray-100 pt-3 text-sm">
         <div className="flex justify-between gap-4">
-          <dt className="text-gray-500">{labels.subtotal}</dt>
+          <dt className="text-gray-600">{labels.subtotal}</dt>
           <dd>{subtotal}</dd>
         </div>
         <div className="flex justify-between gap-4">
-          <dt className="text-gray-500">{labels.shippingCost}</dt>
+          <dt className="text-gray-600">{labels.shippingCost}</dt>
           <dd>{shippingCost}</dd>
         </div>
         <div className="flex justify-between gap-4 font-bold">

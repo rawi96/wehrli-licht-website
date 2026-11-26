@@ -42,7 +42,7 @@ export const CheckoutLoading: FC<LoadingProps> = ({ title, text }) =>
   title ? (
     <div>
       <h1 className="font-bold">{title}</h1>
-      <p className="mt-4 text-sm text-gray-500">{text}</p>
+      <p className="mt-4 text-sm text-gray-600">{text}</p>
     </div>
   ) : (
     <p className="text-gray-600">{text}</p>

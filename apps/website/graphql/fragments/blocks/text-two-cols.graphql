@@ -8,11 +8,7 @@ fragment textTwoColsBlock on TextTwoColumnRecord {
     links {
       ... on PageRecord {
         __typename
-        id
-        slug
-        parent {
-          slug
-        }
+        ...pageRecordLink
       }
     }
   }
@@ -21,11 +17,7 @@ fragment textTwoColsBlock on TextTwoColumnRecord {
     links {
       ... on PageRecord {
         __typename
-        id
-        slug
-        parent {
-          slug
-        }
+        ...pageRecordLink
       }
     }
   }

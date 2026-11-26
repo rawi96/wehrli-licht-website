@@ -5,12 +5,12 @@ import type { FooterLinkGroup, MenuItem, MenuLink, SiteLayout, SiteNotice } from
 import { cache } from 'react';
 import { queryDatoCMS } from './client';
 import { isDraftMode } from './draft';
+import { getShopCategoryPath } from '@/domain/shop/paths';
 import { getCmsPagePath } from './paths';
 import { toLines } from './text';
 
 // The «Header & Footer» singleton always exists.
 type HeaderFooter = NonNullable<HeaderFooterQuery['headerFooter']>;
-type HeaderMenuItem = HeaderFooter['menu'][number];
 
 /** «Header & Footer» settings, deduplicated per request. */
 export const getHeaderFooter = cache(async (includeDrafts: boolean): Promise<HeaderFooter> => {
@@ -19,31 +19,71 @@ export const getHeaderFooter = cache(async (includeDrafts: boolean): Promise<Hea
   return headerFooter!;
 });
 
-const normalize = (value: string) => value.trim().toLowerCase();
+type MainMenuSection = HeaderFooter['mainMenu'][number];
+type MainMenuLink = MainMenuSection['footerLinks'][number];
 
-/** Menu entries named or linked like the shop and the contact page are shown separately in the header. */
-const isMenuLinkTo = (item: HeaderMenuItem, name: string): boolean =>
-  !('navigationItems' in item) && (normalize(item.label) === name || (item.link?.slug ?? '') === name);
+/** Target of a menu link: a page wins over a shop category, a category over a path. Null if none is set. */
+const toMenuLinkHref = (link: {
+  page?: MainMenuLink['page'];
+  shopCategory?: MainMenuLink['shopCategory'];
+  path?: string | null;
+}): string | null =>
+  getCmsPagePath(link.page) ??
+  (link.shopCategory?.slug ? getShopCategoryPath(link.shopCategory.slug) : null) ??
+  (hasText(link.path) ? link.path.trim() : null);
 
-const toMenuItem = (item: HeaderMenuItem): MenuItem =>
-  'navigationItems' in item
-    ? {
-        label: item.label,
-        href: `/${item.slug}`,
-        children: item.navigationItems.map((child) => ({
-          label: child.label,
-          href: child.link?.slug ? `/${item.slug}/${child.link.slug}` : '/',
-        })),
-      }
-    : { label: item.label, href: `/${item.link?.slug}` };
+const toMenuLinks = (links: MainMenuLink[]): MenuLink[] =>
+  links.flatMap((link) => {
+    const href = toMenuLinkHref(link);
 
-/** The last contact entry of the menu, as a link if it links a page. */
-const toContactLink = (menu: HeaderMenuItem[]): MenuLink | null => {
-  const contact = menu.filter((item) => !isMenuLinkTo(item, 'shop') && isMenuLinkTo(item, 'kontakt')).at(-1);
+    return href && hasText(link.label) ? [{ label: link.label.trim(), href }] : [];
+  });
 
-  return contact && !('navigationItems' in contact) && contact.link?.slug
-    ? { label: contact.label, href: `/${contact.link.slug}` }
-    : null;
+type MainMenuColumn = MainMenuSection['columns'][number];
+
+/** The link below a column's links («Alle Leistungen»): needs a text and a page or path. */
+const toColumnOverview = (column: MainMenuColumn): MenuLink | null => {
+  const href = toMenuLinkHref({ page: column.page, path: column.overviewPath });
+
+  return href && hasText(column.overviewLabel) ? { label: column.overviewLabel.trim(), href } : null;
+};
+
+/** A section of the new main menu: a mega menu with columns, or a plain link without. */
+const toMainMenuItem = (section: MainMenuSection): MenuItem | null => {
+  const href = toMenuLinkHref(section);
+  const columns = section.columns
+    .map((column) => ({
+      title: column.title.trim(),
+      links: toMenuLinks(column.links),
+      overview: toColumnOverview(column),
+    }))
+    .filter((column) => column.title && column.links.length > 0);
+
+  if (!href && columns.length === 0) {
+    return null;
+  }
+
+  const image = section.page?.teaserImage?.responsiveImage;
+
+  return {
+    label: section.label,
+    href: href ?? '/',
+    ...(columns.length > 0 && {
+      columns,
+      footerLinks: toMenuLinks(section.footerLinks),
+      teaser: {
+        description: section.page?.teaserDescription?.trim() ?? null,
+        image: image?.src ? { ...image, alt: image.alt ?? '' } : null,
+      },
+    }),
+  };
+};
+
+/** The appointment button of the header, null if not set. */
+const toAppointmentLink = (headerFooter: HeaderFooter): MenuLink | null => {
+  const href = getCmsPagePath(headerFooter.appointmentPage);
+
+  return href && hasText(headerFooter.appointmentLabel) ? { label: headerFooter.appointmentLabel.trim(), href } : null;
 };
 
 const toFooterNavigation = (headerFooter: HeaderFooter): FooterLinkGroup[] =>
@@ -70,13 +110,25 @@ const toNotice = (title?: string | null, html?: string | null): SiteNotice | nul
   hasText(title) && hasText(html) ? { title, html } : null;
 
 /** Used when no contact page is set in Header & Footer. */
-const FALLBACK_CONTACT_PATH = '/kontakt';
+const FALLBACK_CONTACT_PATH = '/ueber-uns/kontakt';
+
+/** Navigation from «Hauptmenü»: the entry marked as shop comes last, the contact button stands on the right. */
+const toNavigation = (headerFooter: HeaderFooter): Pick<SiteLayout, 'navigation' | 'contactLink' | 'shopMenu'> => {
+  const sections = headerFooter.mainMenu.flatMap((section) => {
+    const item = toMainMenuItem(section);
+
+    return item ? [{ item, isShop: section.isShop }] : [];
+  });
+
+  return {
+    navigation: sections.filter(({ isShop }) => !isShop).map(({ item }) => item),
+    shopMenu: sections.find(({ isShop }) => isShop)?.item ?? null,
+    contactLink: toAppointmentLink(headerFooter),
+  };
+};
 
 const toSiteLayout = (headerFooter: HeaderFooter): SiteLayout => ({
-  navigation: headerFooter.menu
-    .filter((item) => !isMenuLinkTo(item, 'shop') && !isMenuLinkTo(item, 'kontakt'))
-    .map(toMenuItem),
-  contactLink: toContactLink(headerFooter.menu),
+  ...toNavigation(headerFooter),
   contact: {
     companyName: headerFooter.companyName ?? null,
     street: headerFooter.street ?? null,
@@ -95,6 +147,11 @@ const toSiteLayout = (headerFooter: HeaderFooter): SiteLayout => ({
   openingHours: toNotice(headerFooter.openingHoursTitle, headerFooter.openingHoursText),
   footerNavigation: toFooterNavigation(headerFooter),
   privacyPath: getCmsPagePath(headerFooter.privacyPage),
+  legalLinks: headerFooter.legalPages.flatMap((legalPage) => {
+    const href = getCmsPagePath(legalPage);
+
+    return href ? [{ label: legalPage.title, href }] : [];
+  }),
   contactPath: getCmsPagePath(headerFooter.contactPage) ?? FALLBACK_CONTACT_PATH,
 });
 

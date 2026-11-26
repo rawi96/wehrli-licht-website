@@ -1,6 +1,8 @@
+import type { SiteTexts } from '@/domain/content/site-texts';
 import type { CompanyProfile } from '@/domain/content/company-profile';
 import type { FaqEntry } from '@/domain/content/faq';
 import type { ArticleInfo, Breadcrumb, PageMetadata, PageRoute, PageSummary, PreviewLink } from '@/domain/content/page';
+import type { ProjectArea, ProjectSummary } from '@/domain/content/project';
 import type { SiteLayout } from '@/domain/content/site-layout';
 import type { ReactNode } from 'react';
 
@@ -10,7 +12,11 @@ export type ContentPage = {
   breadcrumbs: Breadcrumb[];
   /** Set for blog articles. */
   article: ArticleInfo | null;
-  content: ReactNode;
+  /**
+   * The whole page with the given breadcrumbs in its head, laid out by the page's level (ADR 0002): areas and
+   * overviews get a full-width head and their sub-pages as cards, detail pages a reading layout with a sidebar.
+   */
+  render: (breadcrumbs: ReactNode) => ReactNode;
 };
 
 export type HomePage = {
@@ -18,6 +24,14 @@ export type HomePage = {
   stage: ReactNode;
   content: ReactNode;
 };
+
+/** A page under /projekte/<slug>: a project with its rendered content, or an area: the overview page with its chip active. */
+export type ProjectPage =
+  | { kind: 'project'; project: ProjectSummary; intro: ReactNode; content: ReactNode; projects: ProjectSummary[] }
+  /** The projects overview page with the area's chip active, laid out like the overview page itself. */
+  | { kind: 'area'; area: ProjectArea; render: (breadcrumbs: ReactNode) => ReactNode }
+  /** A CMS page below «Projekte» that is not a project record. */
+  | { kind: 'page'; page: ContentPage };
 
 export type FaqPage = {
   /** Title and intro of the FAQ page, null if not set. */
@@ -48,12 +62,21 @@ export type ContentSource = {
   getSiteLayout(): Promise<SiteLayout>;
   /** Business facts for structured data and llms.txt, null if not maintained. */
   getCompanyProfile(): Promise<CompanyProfile | null>;
+  /** Labels, notices and e-mail texts of «Texte & Beschriftungen», defaults for empty ones. */
+  getSiteTexts(): Promise<SiteTexts>;
   /** Metadata of the page at `path` (`/` for the home page); site-wide defaults if there is no such page. */
   getPageMetadata(path: string): Promise<PageMetadata>;
   /** The content page at `path` (not the home page), null if there is none at exactly this path. */
   getPage(path: string): Promise<ContentPage | null>;
   getHomePage(): Promise<HomePage | null>;
   getFaqPage(): Promise<FaqPage>;
+  /** All projects, featured first. */
+  listProjects(): Promise<ProjectSummary[]>;
+  /** Project areas that have projects, in their order. */
+  listProjectAreas(): Promise<ProjectArea[]>;
+  /** The project or project area at /projekte/<slug>, null if there is none. */
+  getProjectPage(slug: string): Promise<ProjectPage | null>;
+  getProjectPageMetadata(slug: string): Promise<PageMetadata>;
   /** Published pages with their path, for sitemap, robots.txt and prerendering. */
   listRoutes(): Promise<PageRoute[]>;
   /** Published pages with title and description, for llms.txt. */

@@ -20,7 +20,7 @@ export const ProductSpecs: FC<Props> = ({ rows, title = 'Technische Daten' }) =>
         {rows.map((row) => (
           <div key={row.label} className="grid grid-cols-2 gap-x-4 py-3 text-sm">
             <dt className="text-gray-600">{row.label}</dt>
-            <dd className="text-gray-900">{row.value}</dd>
+            <dd className="text-black">{row.value}</dd>
           </div>
         ))}
       </dl>

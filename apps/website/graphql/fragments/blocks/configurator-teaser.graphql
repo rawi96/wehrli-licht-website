@@ -1,0 +1,19 @@
+fragment configuratorTeaserBlock on ConfiguratorTeaserRecord {
+  id
+  teaserEyebrow: eyebrow
+  teaserTitle: title
+  teaserText: text
+  points
+  note
+  teaserImage: image {
+    copyright
+    responsiveImage(imgixParams: { w: 1400, q: 75, auto: format }) {
+      ...responsiveImageFragment
+    }
+    alt
+    title
+  }
+  teaserLink: link {
+    ...linkBlock
+  }
+}

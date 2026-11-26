@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { Container } from '../container/container';
 import { Section } from './section';
 
-const Box = ({ label }: { label: string }) => <div className="bg-wehrli-50 rounded-sm p-6 text-sm text-white">{label}</div>;
+const Box = ({ label }: { label: string }) => <div className="bg-wehrli-50 rounded-md p-6 text-sm text-white">{label}</div>;
 
 const meta: Meta<typeof Section> = {
   title: 'Layout/Section',

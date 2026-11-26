@@ -1,14 +1,14 @@
 import { catalog, content } from '@/integrations';
 import { SitePage } from '@/components/layout/site-page';
 import { Breadcrumbs } from '@/components/breadcrumbs';
-import { Container } from '@wehrli/design-system';
-import NotFound from '@/components/not-found';
+import { Container, PageHeadBreadcrumbs } from '@wehrli/design-system';
 import { ProductDetail } from '@/components/shop/product-detail';
 import { ShopBrowseLayout } from '@/components/shop/shop-browse-layout';
 import { JsonLd } from '@/components/seo/json-ld';
 import { buildProductJsonLd } from '@/features/shop-seo/json-ld';
 import { buildProductMetadata } from '@/features/shop-seo/metadata';
 import { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 
 export const revalidate = 3600;
 
@@ -40,30 +40,38 @@ export default async function ShopProductPage({ params }: Props) {
   const found = await catalog.getProduct(slug);
 
   if (!found) {
-    return <NotFound />;
+    notFound();
   }
 
   const { product, description } = found;
 
-  const contactPath = await content.getContactPath();
+  const [contactPath, texts] = await Promise.all([content.getContactPath(), content.getSiteTexts()]);
 
   return (
     <SitePage>
       <JsonLd data={buildProductJsonLd(product)} />
       <Container>
-        <Breadcrumbs
-          spacing="loose"
-          customBreadcrumbs={[
-            { name: 'Shop', href: '/shop' },
-            { name: product.name, href: `/shop/produkte/${slug}` },
-          ]}
-        />
+        <PageHeadBreadcrumbs>
+          <Breadcrumbs
+            spacing="loose"
+            customBreadcrumbs={[
+              { name: 'Shop', href: '/shop' },
+              { name: product.name, href: `/shop/produkte/${slug}` },
+            ]}
+          />
+        </PageHeadBreadcrumbs>
         <ShopBrowseLayout>
           <ProductDetail
             product={product}
             description={description}
             contactHref={contactPath}
             viewingHref={`${contactPath}#termin`}
+            labels={{
+              addToCart: texts.productAddToCart,
+              viewing: texts.productViewingLink,
+              question: texts.productQuestionTitle,
+              questionLink: texts.productQuestionLink,
+            }}
           />
         </ShopBrowseLayout>
       </Container>

@@ -25,7 +25,7 @@ export const Rounded: Story = { args: { rounded: 'lg' } };
 export const Contain: Story = { args: { image: PLACEHOLDER_PORTRAIT, fit: 'contain', placeholder: false } };
 
 export const HoverZoom: Story = {
-  args: { hoverZoom: 'strong' },
+  args: { hoverZoom: true },
   decorators: [
     (Story) => (
       <a href="#" className="group block">

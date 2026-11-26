@@ -13,7 +13,7 @@ export const QuoteBlock: FC<Props> = ({ block: { testimonials, disableMarginBott
     marginBottom={!disableMarginBottom}
     testimonials={testimonials.map(({ text, authorImage, authorName, authorFunction, companyName, companyUrl }) => ({
       quote: text,
-      image: toImage({ responsiveImage: authorImage?.responsiveImage }),
+      image: toImage(authorImage),
       authorName,
       authorDescription: authorFunction,
       companyName,

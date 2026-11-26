@@ -18,6 +18,13 @@ export type ImageData = {
   aspectRatio?: number;
   base64?: string | null;
   bgColor?: string | null;
+  /**
+   * The part of the picture that must stay visible (0…1 from the top left), e.g. a face. Where the box crops the
+   * picture (`fit="cover"`), the crop keeps this point in view instead of the centre.
+   */
+  focalPoint?: { x: number; y: number } | null;
+  /** Who the picture is from (the asset's copyright), shown small in its corner, e.g. «Neuco». */
+  credit?: string | null;
 };
 
 type Props = {
@@ -41,7 +48,7 @@ type Props = {
   /** Space around a cut-out image (`fit="contain"`), e.g. product photos on a white card. */
   inset?: boolean;
   /** Zoom when the enclosing `group` (a card link) is hovered. */
-  hoverZoom?: keyof typeof HOVER_ZOOM;
+  hoverZoom?: boolean;
   /** Darkened, e.g. under a title set on the image. */
   dimmed?: boolean;
   /** Positioned over its (positioned) parent, e.g. a fixed-size tile. */
@@ -50,21 +57,31 @@ type Props = {
 
 const FIT = { cover: 'object-cover', contain: 'object-contain', fill: '' } as const;
 
-const ROUNDED = { lg: 'rounded-lg', full: 'rounded-full' } as const;
+const ROUNDED = { lg: 'rounded-md', full: 'rounded-full' } as const;
 
-/** Hover zoom presets: duration and scale per card type. Turned off for reduced motion. */
-const HOVER_ZOOM = {
-  /** Shop tiles and product cards */
-  quick: 'transition-transform duration-300 group-hover:scale-105 motion-reduce:transition-none',
-  /** Large shop category tiles */
-  calm: 'transition-transform duration-500 group-hover:scale-105 motion-reduce:transition-none',
-  /** Teaser cards and gallery images */
-  strong: 'transition-transform duration-300 group-hover:scale-110 motion-reduce:transition-none',
-  /** Highlight offer cards */
-  slow: 'transition-transform duration-700 ease-out group-hover:scale-[1.04] motion-reduce:transition-none',
-  /** Highlight project cards */
-  'slow-subtle': 'transition-transform duration-700 ease-out group-hover:scale-[1.03] motion-reduce:transition-none',
-} as const;
+/** The one hover zoom of the site (inside a `group`), with the site-wide hover timing. Off for reduced motion. */
+const HOVER_ZOOM = 'transition-transform group-hover:scale-105 motion-reduce:transition-none';
+
+/** The image data for react-datocms, which knows neither the focal point nor the credit. */
+const forDatoImage = (image: ImageData): Omit<ImageData, 'focalPoint' | 'credit'> => {
+  const data = { ...image };
+  delete data.focalPoint;
+  delete data.credit;
+
+  return data;
+};
+
+/** Picture credit in the bottom right corner of its (positioned) parent; `stage` sits further in, above the overlays. */
+export const ImageCredit: FC<{ credit: string; placement?: 'image' | 'stage' }> = ({ credit, placement = 'image' }) => (
+  <span
+    className={cn(
+      'text-xxxs pointer-events-none absolute rounded-md bg-black/50 px-1.5 py-0.5 leading-tight text-white',
+      placement === 'stage' ? 'right-4 bottom-4 z-10' : 'right-2 bottom-2 z-[1]',
+    )}
+  >
+    Bild: {credit}
+  </span>
+);
 
 /** Fills its parent (width and height 100%); the parent decides size and aspect ratio. */
 export const Image: FC<Props> = ({
@@ -83,9 +100,9 @@ export const Image: FC<Props> = ({
     return null;
   }
 
-  return (
+  const picture = (
     <SRCImage
-      data={{ ...image, alt: image.alt ?? '' }}
+      data={{ ...forDatoImage(image), alt: image.alt ?? '' }}
       sizes={sizes}
       priority={priority}
       usePlaceholder={placeholder}
@@ -93,11 +110,36 @@ export const Image: FC<Props> = ({
         FIT[fit],
         rounded && ROUNDED[rounded],
         inset && 'p-3',
-        hoverZoom && HOVER_ZOOM[hoverZoom],
+        hoverZoom && HOVER_ZOOM,
         dimmed && 'brightness-75',
         absolute && 'absolute',
       )}
-      imgStyle={{ width: '100%', maxWidth: '100%', height: '100%' }}
+      imgStyle={{
+        width: '100%',
+        maxWidth: '100%',
+        height: '100%',
+        ...(fit === 'cover' && image.focalPoint
+          ? { objectPosition: `${image.focalPoint.x * 100}% ${image.focalPoint.y * 100}%` }
+          : {}),
+      }}
     />
+  );
+  const credit = image.credit?.trim();
+
+  if (!credit) {
+    return picture;
+  }
+
+  // An absolute image lies over its positioned parent, which then holds the credit too; else a box of its own does.
+  return absolute ? (
+    <>
+      {picture}
+      <ImageCredit credit={credit} />
+    </>
+  ) : (
+    <span className="relative block size-full">
+      {picture}
+      <ImageCredit credit={credit} />
+    </span>
   );
 };

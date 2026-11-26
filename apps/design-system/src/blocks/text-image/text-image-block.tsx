@@ -30,7 +30,8 @@ export const TextImageBlock: FC<Props> = ({
     <div
       className={cn(
         'flex flex-col items-center gap-8 md:flex-row xl:gap-16',
-        layout === 'image-right' && 'flex-col-reverse md:flex-row-reverse',
+        // Without a picture the text stays on the left, where every other text of the page starts.
+        image && layout === 'image-right' && 'flex-col-reverse md:flex-row-reverse',
       )}
     >
       {image && (

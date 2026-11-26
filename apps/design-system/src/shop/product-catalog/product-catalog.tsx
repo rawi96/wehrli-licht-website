@@ -52,7 +52,7 @@ export const ProductCatalog = ({
       </h2>
       <Section marginTop={false}>
         <search className="mb-6 flex items-center gap-3">
-          <div className="flex min-w-0 flex-1 items-center gap-2 rounded-full border border-gray-300 px-4 py-2 transition-colors focus-within:border-gray-400">
+          <div className="flex min-w-0 flex-1 items-center gap-2 rounded-md border border-gray-200 px-4 py-2 transition-colors focus-within:border-gray-400">
             <label htmlFor={searchId} className="sr-only">
               {labels.search}
             </label>
@@ -64,7 +64,7 @@ export const ProductCatalog = ({
               onChange={(event) => onQueryChange(event.target.value)}
               placeholder={labels.searchPlaceholder}
               autoComplete="off"
-              className="field-focus-plain min-w-0 flex-1 border-0 bg-transparent text-sm text-gray-900 placeholder:text-gray-400 [&::-webkit-search-cancel-button]:hidden"
+              className="field-focus-plain min-w-0 flex-1 border-0 bg-transparent text-sm text-black placeholder:text-gray-400 [&::-webkit-search-cancel-button]:hidden"
             />
           </div>
           {sort}

@@ -1,5 +1,6 @@
 query FaqPageMeta($slug: String!) {
-  page(filter: { slug: { eq: $slug } }) {
+  # Top-level page only: slugs are unique per parent, a child page may also be called «faq».
+  page(filter: { slug: { eq: $slug }, parent: { exists: false } }) {
     title
     teaserEyebrow
     teaserDescription

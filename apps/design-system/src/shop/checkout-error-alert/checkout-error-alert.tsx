@@ -12,7 +12,7 @@ const DEFAULT_LABELS = { title: 'Etwas ist schiefgelaufen', contactLink: 'Zur Ko
 
 /** An order that could not be completed: what happened and a link to the contact page. */
 export const CheckoutErrorAlert: FC<Props> = ({ message, contactHref, labels = DEFAULT_LABELS }) => (
-  <div role="alert" className="border-error bg-error-50 text-error-700 rounded-lg border-2 p-4">
+  <div role="alert" className="border-error bg-error-50 text-error-700 rounded-md border-2 p-4">
     <p className="text-base leading-snug font-bold">{labels.title}</p>
     <p className="mt-2 text-sm leading-relaxed">{message}</p>
     <p className="mt-3 text-sm">

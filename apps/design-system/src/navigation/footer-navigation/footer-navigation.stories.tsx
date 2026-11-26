@@ -7,7 +7,7 @@ const meta: Meta<typeof FooterNavigation> = {
   args: {
     sections: [
       {
-        title: 'Angebot',
+        title: 'Leistungen',
         links: [
           { label: 'Lichtplanung', href: '#planung' },
           { label: 'Leuchtenbau', href: '#bau' },
@@ -26,7 +26,7 @@ const meta: Meta<typeof FooterNavigation> = {
   },
   decorators: [
     (Story) => (
-      <div className="bg-wehrli p-6 text-white/90">
+      <div className="bg-wehrli p-6 text-white/80">
         <Story />
       </div>
     ),
@@ -38,4 +38,4 @@ type Story = StoryObj<typeof FooterNavigation>;
 
 export const Default: Story = {};
 
-export const OneSection: Story = { args: { sections: [{ title: 'Service', links: [{ label: 'FAQ', href: '#faq' }] }] } };
+export const OneSection: Story = { args: { sections: [{ title: 'Beratung', links: [{ label: 'FAQ', href: '#faq' }] }] } };

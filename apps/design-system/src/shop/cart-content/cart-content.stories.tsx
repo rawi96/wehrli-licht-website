@@ -17,7 +17,7 @@ const meta: Meta<typeof CartContent> = {
   },
   decorators: [
     (Story) => (
-      <div className="flex max-w-3xl flex-col rounded-lg bg-white py-8">
+      <div className="flex max-w-3xl flex-col rounded-md bg-white py-8">
         <Story />
       </div>
     ),

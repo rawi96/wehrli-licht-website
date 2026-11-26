@@ -1,37 +1,40 @@
 import { SitePage } from '@/components/layout/site-page';
 import { Breadcrumbs } from '@/components/breadcrumbs';
-import { CatalogHeader, Container } from '@wehrli/design-system';
+import { CatalogHeader, Container, PageHeadBreadcrumbs } from '@wehrli/design-system';
 import { ShopProductCatalog } from '@/components/shop/shop-product-catalog';
 import { ShopBrowseLayout } from '@/components/shop/shop-browse-layout';
 import { SHOP_ALL_PRODUCTS_PATH } from '@/domain/shop/paths';
 import { buildAllProductsJsonLd } from '@/features/shop-seo/json-ld';
 import { shopAllProductsMetadata } from '@/features/shop-seo/metadata';
-import { catalog } from '@/integrations';
+import { catalog, content } from '@/integrations';
 import { JsonLd } from '@/components/seo/json-ld';
 
 export const revalidate = 3600;
 
-export const metadata = shopAllProductsMetadata;
+export async function generateMetadata() {
+  const texts = await content.getSiteTexts();
+
+  return shopAllProductsMetadata({ title: texts.allLightsSeoTitle, description: texts.allLightsSeoDescription });
+}
 
 export default async function ShopAllProductsPage() {
-  const products = await catalog.listProducts();
+  const [products, texts] = await Promise.all([catalog.listProducts(), content.getSiteTexts()]);
 
   return (
     <SitePage>
       <JsonLd data={buildAllProductsJsonLd(products)} />
       <Container>
-        <Breadcrumbs
-          spacing="tight"
-          customBreadcrumbs={[
-            { name: 'Shop', href: '/shop' },
-            { name: 'Alle Leuchten', href: SHOP_ALL_PRODUCTS_PATH },
-          ]}
-        />
-        <ShopBrowseLayout showAllProductsActive>
-          <CatalogHeader
-            title="Alle Leuchten"
-            description="Entdecken Sie unser gesamtes Sortiment an Pendel-, Decken-, Wand- und Tischleuchten – oder wählen Sie eine Kategorie in der Navigation."
+        <PageHeadBreadcrumbs>
+          <Breadcrumbs
+            spacing="tight"
+            customBreadcrumbs={[
+              { name: 'Shop', href: '/shop' },
+              { name: texts.allLightsTitle, href: SHOP_ALL_PRODUCTS_PATH },
+            ]}
           />
+        </PageHeadBreadcrumbs>
+        <ShopBrowseLayout showAllProductsActive>
+          <CatalogHeader title={texts.allLightsTitle} description={texts.allLightsIntro} />
           {products.length > 0 && (
             <ShopProductCatalog
               products={products}

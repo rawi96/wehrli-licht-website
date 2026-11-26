@@ -22,7 +22,7 @@ export const ShopFeaturedSection: FC<Props> = ({ headingId, title, intro, action
   return (
     <section
       aria-labelledby={headingId}
-      className="bg-wehrli border-wehrli-400 overflow-hidden border-t py-10 sm:py-16 md:py-24"
+      className="surface-dark bg-wehrli border-wehrli overflow-hidden border-t py-10 sm:py-16 md:py-24"
     >
       <div className="mx-auto w-11/12 max-w-7xl">
         <ShopSectionHeader
@@ -31,7 +31,7 @@ export const ShopFeaturedSection: FC<Props> = ({ headingId, title, intro, action
           inverted
           description={
             intro ? (
-              <div className="text-sm md:text-base [&_a]:text-white [&_a:hover]:text-white/80 [&_p]:text-white/90 [&_strong]:text-white">
+              <div className="text-sm md:text-base [&_a]:text-white [&_a:hover]:text-white/80 [&_p]:text-white [&_strong]:text-white">
                 {intro}
               </div>
             ) : null
