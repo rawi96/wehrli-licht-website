@@ -1,6 +1,7 @@
 import { HighlightOffersTeaserFragment } from '@/graphql/generated';
 import { getCmsLinkHref, toLink } from '../../links';
-import { highlightLinkedImage, highlightLinkedPortrait } from './highlight-teaser';
+import { toImage } from '../../image';
+import { highlightLinkedImage, highlightLinkedPortrait, highlightPortrait } from './highlight-teaser';
 import { HighlightOffersTeaserBlock as HighlightOffersTeaserBlockView } from '@wehrli/design-system';
 import { FC } from 'react';
 
@@ -22,8 +23,13 @@ export const HighlightOffersTeaserBlock: FC<Props> = ({ block, aboveFold = false
       eyebrow: offer.eyebrow,
       title: offer.title,
       href: offer.offerLink && getCmsLinkHref(offer.offerLink),
-      image: highlightLinkedImage(offer.offerLink, offer.title),
-      portraitImage: highlightLinkedPortrait(offer.offerLink, offer.title),
+      // The tile's own picture, else the teaser image of the linked page.
+      image: offer.image
+        ? toImage(offer.image, { fallbackAlt: offer.title })
+        : highlightLinkedImage(offer.offerLink, offer.title),
+      portraitImage: offer.image
+        ? highlightPortrait(offer.image, offer.title)
+        : highlightLinkedPortrait(offer.offerLink, offer.title),
     }))}
   />
 );
