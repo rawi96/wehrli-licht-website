@@ -15,6 +15,7 @@ import { ProjectsOverviewBlock } from './blocks/projects';
 import { getPage, getPageMetadata } from './pages';
 import type { ProjectPage } from '@/ports/content-source';
 import { cache } from 'react';
+import { PageHero } from '@wehrli/design-system';
 import { ContentBlocks } from './blocks/content-blocks';
 import { queryDatoCMS } from './client';
 import { isDraftMode } from './draft';
@@ -129,7 +130,8 @@ export const getProjectPage = async (slug: string): Promise<ProjectPage | null> 
     render: (breadcrumbs) =>
       overview?.render(breadcrumbs) ?? (
         <>
-          {breadcrumbs}
+          {/* Without the CMS overview page: a head of its own, so the page still has its H1. */}
+          <PageHero level="overview" breadcrumbs={breadcrumbs} title={area.name} image={area.image} />
           <ProjectsOverviewBlock
             block={{ __typename: 'ProjectsOverviewRecord', id: `projects-overview-${slug}`, allLabel: null }}
           />
