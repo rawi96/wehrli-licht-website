@@ -1,5 +1,5 @@
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/20/solid';
-import { FC } from 'react';
+import { createElement, FC } from 'react';
 import { CARD_COLUMNS, GRID_COLUMN_CLASSES } from '../../layout/grid/grid';
 import { cn } from '../../fundamentals/cn';
 import { Section } from '../../layout/section/section';
@@ -59,7 +59,8 @@ export const PartnersBlock: FC<Props> = ({
             />
           </div>
           <div className="flex flex-1 flex-col p-6">
-            <h3 className="text-wehrli text-base font-bold">{partner.name}</h3>
+            {/* h3 below the block title, h2 when the block has none. */}
+            {createElement(title ? 'h3' : 'h2', { className: 'text-wehrli text-base font-bold' }, partner.name)}
             {partner.place ? <p className="mt-1 text-xs text-gray-600">{partner.place}</p> : null}
             {partner.description ? <p className="mt-3 text-sm text-black">{partner.description}</p> : null}
             {partner.website ? (
