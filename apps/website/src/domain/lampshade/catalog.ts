@@ -263,11 +263,10 @@ export const SHAPES: Shape[] = [
 
 export type SurfaceKind = 'fabric' | 'stiff' | 'metal';
 
-export type MaterialId =
-  'leinen' | 'seide' | 'polyester' | 'smocking' | 'pergament' | 'schweinsblase' | 'leder' | 'blattmetall';
+export type MaterialId = 'leinen' | 'seide' | 'polyester' | 'smocking' | 'pergament' | 'leder' | 'blattmetall';
 
 /** Procedural surface of a material (see the textures of the configurator). */
-export type GrainId = 'linen' | 'silk' | 'fine' | 'smock' | 'parchment' | 'bladder' | 'leather' | 'leaf';
+export type GrainId = 'linen' | 'silk' | 'fine' | 'smock' | 'parchment' | 'leather' | 'leaf';
 
 export type Material = {
   id: MaterialId;
@@ -299,11 +298,6 @@ const PARCHMENT_COLORS: Color[] = [
   { id: 'natur', label: 'Natur', hex: '#ead9b5' },
   { id: 'elfenbein', label: 'Elfenbein', hex: '#f3ead6' },
   { id: 'honig', label: 'Honig', hex: '#d9a960' },
-];
-
-const BLADDER_COLORS: Color[] = [
-  { id: 'bernstein', label: 'Bernstein', hex: '#d39a54' },
-  { id: 'hell', label: 'Hell', hex: '#e7c79a' },
 ];
 
 export const MATERIALS: Material[] = [
@@ -366,19 +360,6 @@ export const MATERIALS: Material[] = [
     bump: 0.6,
     effect: 'Gibt ein warmes, gleichmässiges Licht und eine klare Form.',
     colors: PARCHMENT_COLORS,
-    patterns: false,
-  },
-  {
-    id: 'schweinsblase',
-    label: 'Schweinsblase',
-    kind: 'stiff',
-    grain: 'bladder',
-    translucency: 0.7,
-    roughness: 0.45,
-    sheen: 0,
-    bump: 0.8,
-    effect: 'Die Maserung gibt ein warmes, lebendiges Licht. Ein Klassiker für rustikale Räume.',
-    colors: BLADDER_COLORS,
     patterns: false,
   },
   {

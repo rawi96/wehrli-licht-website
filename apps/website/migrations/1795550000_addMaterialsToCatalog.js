@@ -8,7 +8,7 @@
  * @param client { import("@datocms/cli/lib/cma-client-node").Client }
  */
 module.exports = async (client) => {
-  const materials = ['leinen', 'seide', 'polyester', 'smocking', 'pergament', 'schweinsblase', 'leder', 'blattmetall'];
+  const materials = ['leinen', 'seide', 'polyester', 'smocking', 'pergament', 'leder', 'blattmetall'];
 
   const item = await client.itemTypes.find('shape_item');
   await client.itemTypes.update(item.id, {

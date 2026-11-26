@@ -91,14 +91,6 @@ const GRAINS: Record<GrainId, Grain> = {
     contrast: 0.42,
     height: (u, v) => 0.75 * fbm(u, v, 3, 5, 11) + 0.25 * noise(u, v, 128, 12, 12),
   },
-  bladder: {
-    contrast: 0.8,
-    height: (u, v) => {
-      const veins = ridge(fbm(u, v, 3, 4, 21)) ** 7;
-
-      return 0.55 * fbm(u, v, 2, 4, 22) + 0.45 * (1 - veins);
-    },
-  },
   leather: {
     contrast: 0.3,
     height: (u, v) => 0.55 * ridge(noise(u, v, 72, 72, 31)) ** 0.6 + 0.45 * fbm(u, v, 4, 4, 32),
