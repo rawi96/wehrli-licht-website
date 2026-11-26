@@ -107,28 +107,22 @@ export const ShapeCatalogBlock: FC<Props> = ({ groups, configuratorLabel, navLab
         </ul>
       </nav>
     </Section>
-    {groups.map((group) => (
-      <Section key={group.id} id={group.anchor} scrollMargin>
-        <Heading level="2">{group.title}</Heading>
-        {group.intro && <p className="-mt-2 mb-8 max-w-2xl text-base text-black">{group.intro}</p>}
-        <ul
-          className={cn(
-            'grid list-none grid-cols-2 gap-4 p-0 lg:gap-6',
-            GRID_COLUMN_CLASSES[columnsFor(group.shapes.length)],
-          )}
-        >
-          {group.shapes.map((shape) => (
-            <li key={shape.id}>
-              <ShapeCard
-                shape={shape}
-                configuratorLabel={configuratorLabel}
-                imageFit={imageFit}
-                columns={columnsFor(group.shapes.length)}
-              />
-            </li>
-          ))}
-        </ul>
-      </Section>
-    ))}
+    {groups.map((group) => {
+      const columns = columnsFor(group.shapes.length);
+
+      return (
+        <Section key={group.id} id={group.anchor} scrollMargin>
+          <Heading level="2">{group.title}</Heading>
+          {group.intro && <p className="-mt-2 mb-8 max-w-2xl text-base text-black">{group.intro}</p>}
+          <ul className={cn('grid list-none grid-cols-2 gap-4 p-0 lg:gap-6', GRID_COLUMN_CLASSES[columns])}>
+            {group.shapes.map((shape) => (
+              <li key={shape.id}>
+                <ShapeCard shape={shape} configuratorLabel={configuratorLabel} imageFit={imageFit} columns={columns} />
+              </li>
+            ))}
+          </ul>
+        </Section>
+      );
+    })}
   </>
 );
