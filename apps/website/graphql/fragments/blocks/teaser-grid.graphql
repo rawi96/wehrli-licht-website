@@ -12,6 +12,10 @@ fragment teaserGridBlock on TeaserGridRecord {
       teaserTitle
       teaserLinkText
       teaserImage {
+        focalPoint {
+          x
+          y
+        }
         responsiveImage(imgixParams: { fit: crop, w: 920, h: 480, auto: format }) {
           ...responsiveImageFragment
         }

@@ -4,6 +4,19 @@ fragment highlightProjectItem on HighlightProjectItemRecord {
   title
   company
   description
+  project {
+    slug
+    title
+    teaserImage {
+      focalPoint {
+        x
+        y
+      }
+      responsiveImage(imgixParams: { w: 1600, q: 75, auto: format }) {
+        ...priorityResponsiveImageFragment
+      }
+    }
+  }
   projectLink {
     ...highlightItemLink
   }

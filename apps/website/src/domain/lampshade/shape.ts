@@ -17,6 +17,10 @@ export type ShapeParams = {
   half: number;
   /** 0 or 1: waved bottom rim. */
   wave: number;
+  /** 0 or 1: a second, finer wave on the bottom rim. */
+  wave2: number;
+  /** 0 or 1: pointed ends of the cross-section (an ellipse turns into a lens). */
+  pointed: number;
   profile: Record<ProfileId, number>;
 };
 
@@ -33,6 +37,8 @@ export const toShapeParams = (design: LampshadeDesign): ShapeParams => {
     corners: shape.corners,
     half: shape.half ? 1 : 0,
     wave: shape.wave ? 1 : 0,
+    wave2: shape.doubleWave ? 1 : 0,
+    pointed: shape.pointed ? 1 : 0,
     profile: { straight: 0, pagoda: 0, doublePagoda: 0, tiers: 0, [shape.profile]: 1 },
   };
 };
@@ -58,6 +64,8 @@ export const dampShapeParams = (current: ShapeParams, target: ShapeParams, facto
   current.corners = step(current.corners, target.corners);
   current.half = step(current.half, target.half);
   current.wave = step(current.wave, target.wave);
+  current.wave2 = step(current.wave2, target.wave2);
+  current.pointed = step(current.pointed, target.pointed);
   for (const profile of PROFILES) {
     current.profile[profile] = step(current.profile[profile], target.profile[profile]);
   }
@@ -118,8 +126,14 @@ export const surfacePoint = (params: ShapeParams, t: number, angle: number, out:
   const cos = Math.cos(angle);
   const sin = Math.sin(angle);
   const exponent = 2 / params.corners;
-  let x = Math.sign(cos) * Math.abs(cos) ** exponent * radius;
-  let z = Math.sign(sin) * Math.abs(sin) ** exponent * radius * params.depth;
+  const across = Math.sign(cos) * Math.abs(cos) ** exponent;
+  let depth = Math.sign(sin) * Math.abs(sin) ** exponent;
+  if (params.pointed > 0) {
+    // A lens instead of an ellipse: the sides meet at the ends in a point.
+    depth = depth * (1 - params.pointed) + Math.sign(sin) * (1 - across * across) * params.pointed;
+  }
+  let x = across * radius;
+  let z = depth * radius * params.depth;
   if (z < 0) {
     z *= 1 - params.half * 0.985;
   }
@@ -128,6 +142,9 @@ export const surfacePoint = (params: ShapeParams, t: number, angle: number, out:
   let y = t * params.height;
   if (params.wave > 0) {
     y += params.wave * (1 - t) ** 4 * params.height * 0.09 * (0.5 + 0.5 * Math.cos(angle * 10));
+  }
+  if (params.wave2 > 0) {
+    y += params.wave2 * (1 - t) ** 4 * params.height * 0.05 * (0.5 + 0.5 * Math.cos(angle * 20));
   }
   x = Number.isFinite(x) ? x : 0;
   out[0] = x;

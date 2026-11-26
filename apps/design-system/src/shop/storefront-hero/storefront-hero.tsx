@@ -55,7 +55,6 @@ const CategoryTile: FC<{
 }> = ({ category, size, priority, label }) => (
   <Link
     href={category.href}
-    aria-label={`${category.name} – ${label}`}
     className={cn(
       'group relative block min-h-0 overflow-hidden rounded-md bg-gray-100 shadow-sm',
       TILE_STYLES[size].className,

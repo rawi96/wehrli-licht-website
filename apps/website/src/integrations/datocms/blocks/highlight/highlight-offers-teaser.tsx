@@ -1,6 +1,6 @@
 import { HighlightOffersTeaserFragment } from '@/graphql/generated';
 import { getCmsLinkHref, toLink } from '../../links';
-import { highlightLinkedImage } from './highlight-teaser';
+import { highlightLinkedImage, highlightLinkedPortrait } from './highlight-teaser';
 import { HighlightOffersTeaserBlock as HighlightOffersTeaserBlockView } from '@wehrli/design-system';
 import { FC } from 'react';
 
@@ -23,6 +23,7 @@ export const HighlightOffersTeaserBlock: FC<Props> = ({ block, aboveFold = false
       title: offer.title,
       href: offer.offerLink && getCmsLinkHref(offer.offerLink),
       image: highlightLinkedImage(offer.offerLink, offer.title),
+      portraitImage: highlightLinkedPortrait(offer.offerLink, offer.title),
     }))}
   />
 );

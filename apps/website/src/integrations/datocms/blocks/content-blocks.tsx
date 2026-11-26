@@ -14,6 +14,7 @@ import { LampshadeConfiguratorBlock } from './lampshade-configurator';
 import { LocationBlock } from './location';
 import { ImageBlock } from './image';
 import { LogoGridBlock } from './logo-grid';
+import { ShapeCatalogBlock } from './shape-catalog';
 import { QuoteBlock } from './quote';
 import {
   AccordionBlock,
@@ -103,6 +104,8 @@ export const ContentBlocks: FC<Props> = ({ blocks, eagerBlockCount = 2 }) => {
             return <QuoteBlock key={block.id} block={block} />;
           case 'GalleryRecord':
             return <GalleryBlock key={block.id} block={block} aboveFold={aboveFold} />;
+          case 'ShapeCatalogRecord':
+            return <ShapeCatalogBlock key={block.id} block={block} />;
           case 'LogoGridRecord':
             return <LogoGridBlock key={block.id} block={block} />;
           case 'TeaserGridRecord':

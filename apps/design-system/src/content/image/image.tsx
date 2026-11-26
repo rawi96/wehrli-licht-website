@@ -18,6 +18,11 @@ export type ImageData = {
   aspectRatio?: number;
   base64?: string | null;
   bgColor?: string | null;
+  /**
+   * The part of the picture that must stay visible (0…1 from the top left), e.g. a face. Where the box crops the
+   * picture (`fit="cover"`), the crop keeps this point in view instead of the centre.
+   */
+  focalPoint?: { x: number; y: number } | null;
 };
 
 type Props = {
@@ -55,6 +60,14 @@ const ROUNDED = { lg: 'rounded-md', full: 'rounded-full' } as const;
 /** The one hover zoom of the site (inside a `group`), with the site-wide hover timing. Off for reduced motion. */
 const HOVER_ZOOM = 'transition-transform group-hover:scale-105 motion-reduce:transition-none';
 
+/** The image data for react-datocms, which does not know the focal point. */
+const withoutFocalPoint = (image: ImageData): Omit<ImageData, 'focalPoint'> => {
+  const data = { ...image };
+  delete data.focalPoint;
+
+  return data;
+};
+
 /** Fills its parent (width and height 100%); the parent decides size and aspect ratio. */
 export const Image: FC<Props> = ({
   image,
@@ -74,7 +87,7 @@ export const Image: FC<Props> = ({
 
   return (
     <SRCImage
-      data={{ ...image, alt: image.alt ?? '' }}
+      data={{ ...withoutFocalPoint(image), alt: image.alt ?? '' }}
       sizes={sizes}
       priority={priority}
       usePlaceholder={placeholder}
@@ -86,7 +99,14 @@ export const Image: FC<Props> = ({
         dimmed && 'brightness-75',
         absolute && 'absolute',
       )}
-      imgStyle={{ width: '100%', maxWidth: '100%', height: '100%' }}
+      imgStyle={{
+        width: '100%',
+        maxWidth: '100%',
+        height: '100%',
+        ...(fit === 'cover' && image.focalPoint
+          ? { objectPosition: `${image.focalPoint.x * 100}% ${image.focalPoint.y * 100}%` }
+          : {}),
+      }}
     />
   );
 };

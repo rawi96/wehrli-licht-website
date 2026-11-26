@@ -18,6 +18,7 @@ import {
   StepsBlock as StepsBlockView,
 } from '@wehrli/design-system';
 import { FC } from 'react';
+import { CONFIGURATOR_LOOP_VIDEO } from '@/components/lampshade-configurator/loop-video';
 import { toImage } from '../image';
 import { toLink } from '../links';
 import { StructuredTextRenderer } from './structured-text';
@@ -46,6 +47,10 @@ export const CardsBlock: FC<{ block: CardsBlockFragment }> = ({ block }) => (
       title: item.title,
       text: optional(item.text),
       link: item.link ? toLink(item.link) : null,
+      swatch: item.color?.hex ?? null,
+      preview: item.preview?.url
+        ? { src: item.preview.url, alt: optional(item.preview.alt) ?? item.title, dark: item.previewDark }
+        : null,
     }))}
   />
 );
@@ -129,5 +134,6 @@ export const ConfiguratorTeaserBlock: FC<{ block: ConfiguratorTeaserBlockFragmen
       action={{ label: block.teaserLink.label, href: toLink(block.teaserLink).href }}
       note={optional(block.note) ?? undefined}
       image={toImage(block.teaserImage) ?? null}
+      video={CONFIGURATOR_LOOP_VIDEO}
     />
   ) : null;

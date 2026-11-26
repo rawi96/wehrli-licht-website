@@ -58,6 +58,7 @@ import {
   WizardStep,
   useLocationHash,
 } from '@wehrli/design-system';
+import { CONFIGURATOR_LOOP_VIDEO } from './loop-video';
 import type { ImageData } from '@wehrli/design-system';
 import dynamic from 'next/dynamic';
 import { FC, useEffect, useMemo, useRef, useState } from 'react';
@@ -72,6 +73,28 @@ const Stage = dynamic(() => import('./scene/stage').then((module) => module.Stag
 
 /** Index of the last step («Licht an»). */
 const LAST_STEP = 7;
+
+/** Index of the step after the form («Grösse»), where a link that only names a form starts. */
+const STEP_AFTER_FORM = 3;
+
+/** Index of the colour step, where a link that names a material starts. */
+const STEP_COLOR = 5;
+
+/** Params of a link that only picks a starting point (from the shapes or materials page), not a whole design. */
+const ENTRY_PARAMS = new Set(['form', 'material', 'farbe']);
+
+/**
+ * Where to open a design from the URL: a shared design opens finished (last step); a link that only names a form
+ * (`#form=pagode`) continues after the form, one that names a material (`#material=seide&farbe=…`) at the colour.
+ */
+const entryStep = (hash: string) => {
+  const params = new URLSearchParams(hash.replace(/^#/, ''));
+  if (![...params.keys()].every((key) => ENTRY_PARAMS.has(key))) {
+    return LAST_STEP;
+  }
+
+  return params.has('material') ? STEP_COLOR : STEP_AFTER_FORM;
+};
 
 /** Friendly words for the choice of each step, so choosing feels like a small game. */
 const PRAISE = ['Schöne Wahl', 'Sehr gut', 'Wunderbar', 'Passt', 'Herrlich', 'Prächtig', 'Fein'];
@@ -149,10 +172,11 @@ export const LampshadeConfigurator: FC<Props> = ({ contactPath, teaser }) => {
   useEffect(() => {
     const shared = decodeDesign(window.location.hash);
     if (shared) {
-      // The hash is only readable after mount. A shared design opens finished, ready to look at and inquire.
+      // The hash is only readable after mount. A shared design opens finished, ready to look at and inquire; a link
+      // that only names a form or a material (from the shapes or materials page) continues from there.
       /* eslint-disable @eslint-react/set-state-in-effect */
       setDesign(shared);
-      setStepIndex(LAST_STEP);
+      setStepIndex(entryStep(window.location.hash));
       setStarted(true);
       setOpen(true);
       setWebGL(supportsWebGL());
@@ -614,6 +638,7 @@ export const LampshadeConfigurator: FC<Props> = ({ contactPath, teaser }) => {
         action={{ label: started ? 'Weiter gestalten' : teaser.startLabel, onClick: start }}
         note={teaser.note}
         image={teaser.image}
+        video={CONFIGURATOR_LOOP_VIDEO}
       />
       <FullscreenDialog open={open} onClose={() => setOpen(false)} title="Lampenschirm-Konfigurator">
         <ConfiguratorShell

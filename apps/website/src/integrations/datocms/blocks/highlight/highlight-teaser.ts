@@ -26,7 +26,11 @@ export const pickHighlightShopCategories = (
   return [...featured, ...fallbackCategories.filter((category) => !used.has(category.id))].slice(0, 3);
 };
 
-type HighlightTeaserImage = NonNullable<Parameters<typeof toImage>[0]> | null;
+type HighlightTeaserImage =
+  | (NonNullable<Parameters<typeof toImage>[0]> & {
+      portraitImage?: NonNullable<Parameters<typeof toImage>[0]>['responsiveImage'];
+    })
+  | null;
 
 type HighlightItemLink =
   | {
@@ -36,6 +40,13 @@ type HighlightItemLink =
     }
   | null
   | undefined;
+
+/** The portrait crop (4:5) of the linked page's teaser image, for the small upright cards. */
+export const highlightLinkedPortrait = (link: HighlightItemLink, fallbackAlt: string): ImageData | undefined => {
+  const teaserImage = link?.link?.teaserImage;
+
+  return toImage(teaserImage && { ...teaserImage, responsiveImage: teaserImage.portraitImage }, { fallbackAlt });
+};
 
 /** Teaser image of the page a highlight item links to, with `fallbackAlt` when the image has no alt text. */
 export const highlightLinkedImage = (link: HighlightItemLink, fallbackAlt: string): ImageData | undefined => {

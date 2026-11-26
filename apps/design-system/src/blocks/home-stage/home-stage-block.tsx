@@ -56,11 +56,10 @@ export const HomeStageBlock: FC<Props> = ({ title, intro, ctas, slides, header, 
 
         <div className="mx-auto flex min-h-[calc(100svh-5rem)] max-w-7xl items-center px-6 lg:px-8">
           <div className="hero-text-shadow relative mx-auto w-full max-w-3xl py-24 text-center sm:py-32">
-            <Reveal>
-              <Heading color="white" level="1" id="home-stage-heading">
-                <span className="tracking-tight text-balance">{title}</span>
-              </Heading>
-            </Reveal>
+            {/* Shown at once, not faded in: the title is the page's largest content (LCP). */}
+            <Heading color="white" level="1" id="home-stage-heading">
+              <span className="tracking-tight text-balance">{title}</span>
+            </Heading>
 
             <Reveal delay={150}>
               <p className="mx-auto mt-6 max-w-xl text-sm leading-relaxed text-balance text-white md:text-base lg:mt-8 lg:text-lg">

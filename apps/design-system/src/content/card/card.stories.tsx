@@ -13,7 +13,7 @@ const meta: Meta<typeof Card> = {
     href: '#',
     linkLabel: 'Anschauen',
     image: PLACEHOLDER_LANDSCAPE,
-    imageSizes: gridImageSizes(3),
+    imageSizes: gridImageSizes(),
   },
   decorators: [
     (Story) => (

@@ -43,7 +43,13 @@ const buttonClasses = (variant: Variant, fullWidth: boolean | undefined, isDisab
     );
   }
 
-  return cn(base, variant === 'secondary-white' && 'text-white', fullWidth && 'w-full', isDisabled && 'cursor-not-allowed');
+  return cn(
+    base,
+    // Text buttons in the brand blue (like all text links), white on dark surfaces.
+    variant === 'secondary-white' ? 'text-white' : 'text-wehrli hover:text-wehrli-dark',
+    fullWidth && 'w-full',
+    isDisabled && 'cursor-not-allowed',
+  );
 };
 
 export const Button: FC<Props> = ({

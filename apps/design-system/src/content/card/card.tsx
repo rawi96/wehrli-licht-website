@@ -13,7 +13,7 @@ type Props = {
   /** Turns off Next.js prefetching, e.g. for long lists of rarely visited pages. */
   prefetch?: false;
   image?: ImageData | null;
-  /** Rendered image width, e.g. `gridImageSizes(cols)`. */
+  /** Rendered image width, e.g. `gridImageSizes()`. */
   imageSizes: string;
 };
 
@@ -44,7 +44,7 @@ export const Card: FC<Props> = ({
       {/* Always three rows (eyebrow, text, link), so the link sits at the bottom of equal-height cards. */}
       {eyebrow ? <p>{eyebrow}</p> : <span aria-hidden="true" />}
       <div>
-        <h2 className="text-wehrli my-4 text-lg font-bold peer-[p&]:mt-6 md:text-base lg:text-lg lg:peer-[p&]:mt-8">
+        <h2 className="text-wehrli my-4 text-lg font-bold break-words hyphens-auto peer-[p&]:mt-6 md:text-base lg:text-lg lg:peer-[p&]:mt-8">
           {title}
         </h2>
         {description && <p className="mb-2 lg:mb-4">{description}</p>}

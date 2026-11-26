@@ -86,6 +86,7 @@ export const HomeStageSlideshow: FC<Props> = ({ slides, labels, intervalMs = 700
                 fill
                 priority={index === 0}
                 loading={index === 0 ? 'eager' : 'lazy'}
+                fetchPriority={index === 0 ? 'high' : undefined}
                 sizes="100vw"
                 placeholder={slide.blurDataURL ? 'blur' : undefined}
                 blurDataURL={slide.blurDataURL ?? undefined}

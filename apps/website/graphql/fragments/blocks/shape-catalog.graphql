@@ -1,0 +1,27 @@
+fragment shapeCatalogBlock on ShapeCatalogRecord {
+  id
+  kind
+  configuratorPage {
+    ...pageRecordLink
+  }
+  groups {
+    id
+    title
+    intro
+    shapes {
+      id
+      name
+      description
+      configuratorShape
+      configuratorMaterial
+      configuratorColor
+      image {
+        responsiveImage(imgixParams: { w: 600, h: 600, fit: fill, bg: "eeeeee", auto: format }) {
+          ...responsiveImageBaseFragment
+        }
+        alt
+        title
+      }
+    }
+  }
+}

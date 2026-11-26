@@ -8,6 +8,16 @@
   --animate-marquee-reverse: marquee 60s linear infinite reverse; /* second row runs the other way */
   --animate-pop-in: pop-in 0.4s var(--ease-reveal) both; /* a check mark or praise pops up */
   --animate-step-in: step-in 0.35s var(--ease-reveal) both; /* content of a new wizard step slides in */
+  --animate-head-settle: head-settle 1.8s var(--ease-reveal) both; /* page head picture settles in once */
+
+  @keyframes head-settle {
+    0% {
+      transform: scale(1.06);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
 
   @keyframes ken-burns {
     0% {

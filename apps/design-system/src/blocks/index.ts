@@ -26,3 +26,7 @@ export * from './cta/cta-block';
 export * from './facts/facts-block';
 export * from './steps/steps-block';
 export * from './partners/partners-block';
+export * from './child-pages/child-pages-block';
+export * from './article-index/article-index-block';
+export * from './related-pages/related-pages-block';
+export * from './shape-catalog/shape-catalog-block';

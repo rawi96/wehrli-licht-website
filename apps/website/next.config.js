@@ -17,6 +17,15 @@ const nextConfig = {
       },
     ],
   },
+  async headers() {
+    return [
+      {
+        // Loop videos carry a version in their file name (…-v1.mp4): cache them for a year.
+        source: '/videos/:file*',
+        headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }],
+      },
+    ];
+  },
   async redirects() {
     const own = [
       {

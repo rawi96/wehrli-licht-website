@@ -10,6 +10,16 @@ fragment cardsBlock on CardsBlockRecord {
     icon
     title
     text
+    color {
+      hex
+    }
+    preview {
+      url
+      alt
+      width
+      height
+    }
+    previewDark
     link {
       ...linkBlock
     }

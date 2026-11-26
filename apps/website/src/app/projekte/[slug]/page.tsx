@@ -4,7 +4,7 @@ import { SitePage } from '@/components/layout/site-page';
 import { ProjectCards } from '@/components/projects/project-cards';
 import { getProjectPath, projectBreadcrumbs, relatedProjects } from '@/domain/content/project';
 import { content } from '@/integrations';
-import { Container, Heading, ProjectFacts, Section } from '@wehrli/design-system';
+import { Container, Heading, ProjectFacts, Section, PageHeadBreadcrumbs } from '@wehrli/design-system';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
@@ -36,10 +36,7 @@ export default async function ProjectPage({ params }: Params) {
     return (
       <SitePage>
         {page.page.article && <ArticleJsonLd article={page.page.article} path={getProjectPath(slug)} />}
-        <Container>
-          <Breadcrumbs customBreadcrumbs={page.page.breadcrumbs} />
-          {page.page.content}
-        </Container>
+        <Container>{page.page.render(<Breadcrumbs customBreadcrumbs={page.page.breadcrumbs} spacing="tight" />)}</Container>
       </SitePage>
     );
   }
@@ -48,8 +45,7 @@ export default async function ProjectPage({ params }: Params) {
     return (
       <SitePage>
         <Container>
-          <Breadcrumbs customBreadcrumbs={projectBreadcrumbs(page.area)} />
-          {page.content}
+          {page.render(<Breadcrumbs customBreadcrumbs={projectBreadcrumbs(page.area)} spacing="tight" />)}
         </Container>
       </SitePage>
     );
@@ -68,7 +64,9 @@ export default async function ProjectPage({ params }: Params) {
   return (
     <SitePage>
       <Container>
-        <Breadcrumbs customBreadcrumbs={projectBreadcrumbs(project.area, project)} />
+        <PageHeadBreadcrumbs>
+          <Breadcrumbs customBreadcrumbs={projectBreadcrumbs(project.area, project)} spacing="tight" />
+        </PageHeadBreadcrumbs>
         {page.intro}
         <ProjectFacts
           facts={facts}

@@ -2,21 +2,35 @@ import { ProjectCards } from '@/components/projects/project-cards';
 import { ProjectsOverview } from '@/components/projects/projects-overview';
 import { filterProjects, getProjectAreaPath, PROJECTS_PATH } from '@/domain/content/project';
 import { ProjectsBlockFragment, ProjectsOverviewBlockFragment } from '@/graphql/generated';
-import { CtaLink, Heading, Section } from '@wehrli/design-system';
+import { SectionHeading, Section } from '@wehrli/design-system';
 import { FC } from 'react';
 import { getActiveProjectArea } from '../active-project-area';
 import { getRequestProjectAreas, getRequestProjects } from '../projects';
 import { getSiteTexts } from '../site-texts';
 
-const MAX_PROJECTS = 3;
+/** Fills one row of the 4-column card grid. */
+const MAX_PROJECTS = 4;
 
-/** Projects of an area or a service page; the featured projects when nothing matches. Renders nothing without projects. */
-export const ProjectsBlock: FC<{ block: ProjectsBlockFragment }> = async ({ block }) => {
+type Props = {
+  block: ProjectsBlockFragment;
+};
+
+/**
+ * Projects of an area or a service page, topped up with the featured and then the other projects so the row is full.
+ * Renders nothing without projects.
+ */
+export const ProjectsBlock: FC<Props> = async ({ block }) => {
   const [projects, texts] = await Promise.all([getRequestProjects(), getSiteTexts()]);
   // Without area and service, the block shows the featured projects (as its hint in DatoCMS says).
   const matching =
     block.area || block.service ? filterProjects(projects, { areaId: block.area?.id, serviceId: block.service?.id }) : [];
-  const shown = (matching.length > 0 ? matching : projects.filter(({ featured }) => featured)).slice(0, MAX_PROJECTS);
+  const featuredFirst = [
+    ...projects.filter((project) => project.featured),
+    ...projects.filter((project) => !project.featured),
+  ];
+  const matchingIds = new Set(matching.map((project) => project.id));
+  // The matching projects first, then featured and other projects, so the row is always full.
+  const shown = [...matching, ...featuredFirst.filter((project) => !matchingIds.has(project.id))].slice(0, MAX_PROJECTS);
 
   if (shown.length === 0) {
     return null;
@@ -26,9 +40,11 @@ export const ProjectsBlock: FC<{ block: ProjectsBlockFragment }> = async ({ bloc
 
   return (
     <Section>
-      <Heading level="2">{block.projectsTitle?.trim() ? block.projectsTitle.trim() : texts.projectsBlockTitle}</Heading>
+      <SectionHeading
+        title={block.projectsTitle?.trim() ? block.projectsTitle.trim() : texts.projectsBlockTitle}
+        link={{ label: texts.projectsAllLink, href: moreHref }}
+      />
       <ProjectCards projects={shown} linkLabel={texts.projectsCardLink} />
-      <CtaLink href={moreHref}>{texts.projectsAllLink}</CtaLink>
     </Section>
   );
 };

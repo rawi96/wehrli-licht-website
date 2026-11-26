@@ -23,14 +23,15 @@ import { getCmsPagePath } from './paths';
 
 type ResponsiveImageData = NonNullable<NonNullable<ProjectSummaryFragment['teaserImage']>['responsiveImage']>;
 
-const toImage = (image?: ResponsiveImageData | null) => (image?.src ? { ...image, alt: image.alt ?? '' } : null);
+const toImage = (image?: ResponsiveImageData | null, focalPoint?: { x: number; y: number } | null) =>
+  image?.src ? { ...image, alt: image.alt ?? '', focalPoint: focalPoint ?? null } : null;
 
 const toArea = (area: ProjectAreaFragment): ProjectArea => ({
   id: area.id,
   name: area.name,
   slug: area.slug,
   intro: area.intro?.trim() ? area.intro.trim() : null,
-  image: toImage(area.image?.responsiveImage),
+  image: toImage(area.image?.responsiveImage, area.image?.focalPoint),
   lastModified: area._updatedAt,
   noIndex: area.seoSettings?.noIndex ?? false,
 });
@@ -44,7 +45,7 @@ const toSummary = (project: ProjectSummaryFragment): ProjectSummary => ({
   year: project.year ?? null,
   featured: project.featured,
   description: project.teaserDescription ?? null,
-  image: toImage(project.teaserImage?.responsiveImage),
+  image: toImage(project.teaserImage?.responsiveImage, project.teaserImage?.focalPoint),
   area: project.area ? { id: project.area.id, name: project.area.name, slug: project.area.slug } : null,
   services: project.services.flatMap((service) => {
     const href = getCmsPagePath(service);
@@ -125,11 +126,15 @@ export const getProjectPage = async (slug: string): Promise<ProjectPage | null> 
   return {
     kind: 'area',
     area,
-    content: overview?.content ?? (
-      <ProjectsOverviewBlock
-        block={{ __typename: 'ProjectsOverviewRecord', id: `projects-overview-${slug}`, allLabel: null }}
-      />
-    ),
+    render: (breadcrumbs) =>
+      overview?.render(breadcrumbs) ?? (
+        <>
+          {breadcrumbs}
+          <ProjectsOverviewBlock
+            block={{ __typename: 'ProjectsOverviewRecord', id: `projects-overview-${slug}`, allLabel: null }}
+          />
+        </>
+      ),
   };
 };
 

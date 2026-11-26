@@ -1,7 +1,7 @@
 import { catalog, content } from '@/integrations';
 import { SitePage } from '@/components/layout/site-page';
 import { Breadcrumbs } from '@/components/breadcrumbs';
-import { Container } from '@wehrli/design-system';
+import { Container, PageHeadBreadcrumbs } from '@wehrli/design-system';
 import { ProductDetail } from '@/components/shop/product-detail';
 import { ShopBrowseLayout } from '@/components/shop/shop-browse-layout';
 import { JsonLd } from '@/components/seo/json-ld';
@@ -51,13 +51,15 @@ export default async function ShopProductPage({ params }: Props) {
     <SitePage>
       <JsonLd data={buildProductJsonLd(product)} />
       <Container>
-        <Breadcrumbs
-          spacing="loose"
-          customBreadcrumbs={[
-            { name: 'Shop', href: '/shop' },
-            { name: product.name, href: `/shop/produkte/${slug}` },
-          ]}
-        />
+        <PageHeadBreadcrumbs>
+          <Breadcrumbs
+            spacing="loose"
+            customBreadcrumbs={[
+              { name: 'Shop', href: '/shop' },
+              { name: product.name, href: `/shop/produkte/${slug}` },
+            ]}
+          />
+        </PageHeadBreadcrumbs>
         <ShopBrowseLayout>
           <ProductDetail
             product={product}

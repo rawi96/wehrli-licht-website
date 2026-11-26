@@ -8,14 +8,23 @@ export type ShapeId =
   | 'trommel'
   | 'konisch'
   | 'konisch-flach'
+  | 'quadratisch-zylindrisch'
+  | 'rechteckig-zylindrisch'
   | 'quadratisch'
   | 'rechteckig'
   | 'oval'
+  | 'elliptisch'
+  | 'elliptisch-flach'
+  | 'spitzoval'
+  | 'halbschild-zylindrisch'
+  | 'halbschild'
+  | 'halbschild-eckig'
+  | 'halbschild-oval'
   | 'mehrfach'
   | 'pagode'
   | 'doppelpagode'
   | 'wellenpagode'
-  | 'halbschild';
+  | 'doppelwellenpagode';
 
 export type Shape = {
   id: ShapeId;
@@ -29,6 +38,10 @@ export type Shape = {
   wave: boolean;
   /** Flat back for wall lamps. */
   half: boolean;
+  /** Pointed ends of the cross-section (Spitzoval). */
+  pointed?: boolean;
+  /** A second, finer wave on the bottom rim. */
+  doubleWave?: boolean;
   /** Default size in cm, depth in % of the width. */
   size: { height: number; bottom: number; top: number; depth: number };
 };
@@ -75,9 +88,29 @@ export const SHAPES: Shape[] = [
     size: { height: 20, bottom: 50, top: 22, depth: 100 },
   },
   {
+    id: 'quadratisch-zylindrisch',
+    form: '05',
+    label: 'Quadratisch zylindrisch',
+    profile: 'straight',
+    corners: 9,
+    wave: false,
+    half: false,
+    size: { height: 28, bottom: 30, top: 30, depth: 100 },
+  },
+  {
+    id: 'rechteckig-zylindrisch',
+    form: '06',
+    label: 'Rechteckig zylindrisch',
+    profile: 'straight',
+    corners: 9,
+    wave: false,
+    half: false,
+    size: { height: 24, bottom: 46, top: 46, depth: 52 },
+  },
+  {
     id: 'quadratisch',
     form: '07',
-    label: 'Quadratisch',
+    label: 'Quadratisch konisch',
     profile: 'straight',
     corners: 9,
     wave: false,
@@ -87,7 +120,7 @@ export const SHAPES: Shape[] = [
   {
     id: 'rechteckig',
     form: '08',
-    label: 'Rechteckig',
+    label: 'Rechteckig konisch',
     profile: 'straight',
     corners: 9,
     wave: false,
@@ -102,7 +135,78 @@ export const SHAPES: Shape[] = [
     corners: 2,
     wave: false,
     half: false,
-    size: { height: 26, bottom: 46, top: 38, depth: 62 },
+    size: { height: 26, bottom: 44, top: 44, depth: 64 },
+  },
+  {
+    id: 'elliptisch',
+    form: '10',
+    label: 'Elliptisch',
+    profile: 'straight',
+    corners: 2,
+    wave: false,
+    half: false,
+    size: { height: 24, bottom: 52, top: 52, depth: 42 },
+  },
+  {
+    id: 'elliptisch-flach',
+    form: '11',
+    label: 'Elliptisch flach',
+    profile: 'straight',
+    corners: 3.4,
+    wave: false,
+    half: false,
+    size: { height: 24, bottom: 50, top: 50, depth: 50 },
+  },
+  {
+    id: 'spitzoval',
+    form: '12',
+    label: 'Spitzoval',
+    profile: 'straight',
+    corners: 2,
+    wave: false,
+    half: false,
+    pointed: true,
+    size: { height: 24, bottom: 50, top: 50, depth: 50 },
+  },
+  {
+    id: 'halbschild-zylindrisch',
+    form: '13',
+    label: 'Halbschild zylindrisch',
+    profile: 'straight',
+    corners: 2,
+    wave: false,
+    half: true,
+    size: { height: 20, bottom: 26, top: 26, depth: 100 },
+  },
+  {
+    id: 'halbschild',
+    form: '14',
+    label: 'Halbschild konisch',
+    profile: 'straight',
+    corners: 2,
+    wave: false,
+    half: true,
+    size: { height: 20, bottom: 30, top: 20, depth: 100 },
+  },
+  {
+    id: 'halbschild-eckig',
+    form: '15',
+    label: 'Halbschild eckig',
+    profile: 'straight',
+    corners: 9,
+    wave: false,
+    half: true,
+    size: { height: 20, bottom: 28, top: 22, depth: 100 },
+  },
+  {
+    id: 'halbschild-oval',
+    form: '16',
+    label: 'Halbschild oval',
+    profile: 'straight',
+    corners: 2,
+    wave: false,
+    half: true,
+    size: { height: 20, bottom: 32, top: 26, depth: 60 },
   },
   {
     id: 'mehrfach',
@@ -145,14 +249,15 @@ export const SHAPES: Shape[] = [
     size: { height: 30, bottom: 46, top: 16, depth: 100 },
   },
   {
-    id: 'halbschild',
-    form: '14',
-    label: 'Halbschild',
-    profile: 'straight',
+    id: 'doppelwellenpagode',
+    form: '21',
+    label: 'Doppelwellen\u00adpagode',
+    profile: 'pagoda',
     corners: 2,
-    wave: false,
-    half: true,
-    size: { height: 20, bottom: 30, top: 20, depth: 100 },
+    wave: true,
+    half: false,
+    doubleWave: true,
+    size: { height: 30, bottom: 46, top: 16, depth: 100 },
   },
 ];
 

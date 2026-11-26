@@ -1,6 +1,6 @@
 import { SitePage } from '@/components/layout/site-page';
 import { Breadcrumbs } from '@/components/breadcrumbs';
-import { CatalogHeader, Container } from '@wehrli/design-system';
+import { CatalogHeader, Container, PageHeadBreadcrumbs } from '@wehrli/design-system';
 import { CmsHtml } from '@/components/cms-html';
 import { ShopProductCatalog } from '@/components/shop/shop-product-catalog';
 import { ShopBrowseLayout } from '@/components/shop/shop-browse-layout';
@@ -50,13 +50,15 @@ export default async function ShopCategoryPage({ params }: Props) {
     <SitePage>
       <JsonLd data={buildCategoryJsonLd(category, products)} />
       <Container>
-        <Breadcrumbs
-          spacing="tight"
-          customBreadcrumbs={[
-            { name: 'Shop', href: '/shop' },
-            { name: category.name, href: `/shop/kategorien/${slug}` },
-          ]}
-        />
+        <PageHeadBreadcrumbs>
+          <Breadcrumbs
+            spacing="tight"
+            customBreadcrumbs={[
+              { name: 'Shop', href: '/shop' },
+              { name: category.name, href: `/shop/kategorien/${slug}` },
+            ]}
+          />
+        </PageHeadBreadcrumbs>
         <ShopBrowseLayout activeCategorySlug={slug}>
           <CatalogHeader
             title={category.name}

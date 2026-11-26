@@ -37,13 +37,13 @@ export const TeamMemberCard: FC<Props> = ({
         {image ? (
           <Image
             image={image}
-            sizes={featured ? CONTENT_IMAGE_SIZES.twoFifths : CONTENT_IMAGE_SIZES.thirds}
+            sizes={featured ? CONTENT_IMAGE_SIZES.twoFifths : CONTENT_IMAGE_SIZES.quarters}
             priority={priority}
             absolute
           />
         ) : null}
       </div>
-      <div className={cn('flex flex-1 flex-col p-6 lg:p-8', featured && 'justify-center md:p-12 lg:p-16')}>
+      <div className={cn('flex flex-1 flex-col p-5 lg:p-6', featured && 'justify-center md:p-12 lg:p-16')}>
         {role ? <p className="text-wehrli mb-2 text-xs font-bold">{role}</p> : null}
         {createElement(
           headingLevel,

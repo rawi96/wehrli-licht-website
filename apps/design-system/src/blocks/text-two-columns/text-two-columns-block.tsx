@@ -13,7 +13,7 @@ type Props = BlockMargins & {
 /** Two rich text columns side by side from md, stacked on mobile. */
 export const TextTwoColumnsBlock: FC<Props> = ({ left, right, anchorId, marginTop, marginBottom }) => (
   <Section lead id={anchorId} marginTop={marginTop} marginBottom={marginBottom}>
-    <Grid cols={2}>
+    <Grid cols={2} exact>
       {left}
       {right}
     </Grid>

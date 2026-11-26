@@ -1,5 +1,7 @@
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/20/solid';
 import { FC } from 'react';
+import { CARD_COLUMNS, GRID_COLUMN_CLASSES } from '../../layout/grid/grid';
+import { cn } from '../../fundamentals/cn';
 import { Section } from '../../layout/section/section';
 import type { BlockMargins } from '../block-margins';
 import { BlockIntro } from '../block-intro';
@@ -42,7 +44,7 @@ export const PartnersBlock: FC<Props> = ({
 }) => (
   <Section id={anchorId} scrollMargin marginTop={marginTop} marginBottom={marginBottom}>
     <BlockIntro title={title} intro={intro} />
-    <ul className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 lg:gap-6">
+    <ul className={cn('grid grid-cols-1 gap-4 lg:gap-6', GRID_COLUMN_CLASSES[CARD_COLUMNS])}>
       {partners.map((partner) => (
         <li key={partner.id} className="card-surface flex flex-col overflow-hidden">
           <div className="flex h-32 items-center justify-center border-b border-gray-100 px-10 py-8">

@@ -12,6 +12,8 @@ type Offer = {
   /** Without a link the offer is left out (its grid cell stays empty). */
   href?: string | null;
   image?: ImageData | null;
+  /** The same picture cropped upright (4:5), for the small cards. */
+  portraitImage?: ImageData | null;
 };
 
 type Props = {
@@ -73,6 +75,7 @@ export const HighlightOffersTeaserBlock: FC<Props> = ({ id, title, subline, cta,
                       variant={fillsRow ? 'compactWide' : 'compact'}
                       wideUntil={threeInARow ? 'sm' : 'lg'}
                       {...offer}
+                      image={offer.portraitImage ?? offer.image}
                       href={offer.href}
                     />
                   )}

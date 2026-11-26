@@ -4,6 +4,7 @@ import { inContainer } from '../block-decorator';
 import { TeamBlock } from './team-block';
 
 const members = ['Alex Muster', 'Kim Beispiel', 'Robin Test', 'Sascha Muster'].map((name, index) => ({
+  id: `member-${index}`,
   name,
   role: ['Lichtplanerin', 'Elektriker', 'Beratung', 'Montage'][index],
   bio: 'Plant Licht für Wohnungen, Büros und Läden und begleitet Projekte bis zur Montage.',
@@ -35,6 +36,7 @@ export const SixMembers: Story = {
   args: {
     members: [...members, ...members.slice(0, 2)].map((member, index) => ({
       ...member,
+      id: `member-${index}`,
       name: `${member.name} ${index + 1}`,
     })),
   },

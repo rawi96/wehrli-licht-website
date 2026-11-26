@@ -14,8 +14,8 @@ export const HIGHLIGHT_IMAGE_SIZES = {
   projectFeatured: '(min-width: 1400px) 750px, (min-width: 1024px) 58vw, 92vw',
   projectCompact: '(min-width: 1400px) 410px, (min-width: 1024px) 30vw, (min-width: 640px) 46vw, 92vw',
   offerFeatured: '(min-width: 1400px) 640px, (min-width: 640px) 46vw, 92vw',
-  // The small offer cards are tall: their landscape images are cropped, so they need more width than the card has.
-  offerCompact: '(min-width: 1400px) 640px, (min-width: 1024px) 46vw, 92vw',
+  // The small offer cards get an upright crop of the picture, so they need just their own width.
+  offerCompact: '(min-width: 1400px) 420px, (min-width: 640px) 31vw, 92vw',
   shopTileLarge: '(min-width: 1400px) 420px, (min-width: 1024px) 32vw, 92vw',
   shopTileSmall: '(min-width: 1400px) 300px, (min-width: 1024px) 22vw, 70vw',
 } as const;

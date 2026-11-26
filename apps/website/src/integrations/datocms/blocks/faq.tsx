@@ -25,7 +25,6 @@ export const FaqBlock: FC<Props> = async ({ block }) => {
             ? { label: block.allFaqsLinkText?.trim() ? block.allFaqsLinkText.trim() : texts.faqAllLink, href: allFaqsHref }
             : null
         }
-        labels={{ eyebrow: texts.faqBlockEyebrow }}
         marginTop={!block.disableMarginTop}
         marginBottom={!block.disableMarginBottom}
       />

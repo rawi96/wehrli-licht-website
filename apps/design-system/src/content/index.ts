@@ -15,3 +15,5 @@ export * from './teaser-tile/teaser-tile';
 export * from './testimonial/testimonial';
 export * from './project-facts/project-facts';
 export * from './configurator-teaser/configurator-teaser';
+export * from './project-tile/project-tile';
+export * from './loop-video/loop-video';

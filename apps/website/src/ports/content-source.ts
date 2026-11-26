@@ -12,7 +12,11 @@ export type ContentPage = {
   breadcrumbs: Breadcrumb[];
   /** Set for blog articles. */
   article: ArticleInfo | null;
-  content: ReactNode;
+  /**
+   * The whole page with the given breadcrumbs in its head, laid out by the page's level (ADR 0002): areas and
+   * overviews get a full-width head and their sub-pages as cards, detail pages a reading layout with a sidebar.
+   */
+  render: (breadcrumbs: ReactNode) => ReactNode;
 };
 
 export type HomePage = {
@@ -24,7 +28,8 @@ export type HomePage = {
 /** A page under /projekte/<slug>: a project with its rendered content, or an area: the overview page with its chip active. */
 export type ProjectPage =
   | { kind: 'project'; project: ProjectSummary; intro: ReactNode; content: ReactNode; projects: ProjectSummary[] }
-  | { kind: 'area'; area: ProjectArea; content: ReactNode }
+  /** The projects overview page with the area's chip active, laid out like the overview page itself. */
+  | { kind: 'area'; area: ProjectArea; render: (breadcrumbs: ReactNode) => ReactNode }
   /** A CMS page below «Projekte» that is not a project record. */
   | { kind: 'page'; page: ContentPage };
 

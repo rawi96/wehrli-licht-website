@@ -244,7 +244,9 @@ const oneOf = <T extends string>(value: string | null, items: readonly { id: T }
 /** Reads a shared design; unknown or broken values fall back to the defaults. */
 export const decodeDesign = (query: string): LampshadeDesign | null => {
   const params = new URLSearchParams(query.replace(/^#/, ''));
-  const shape = oneOf(params.get(PARAMS.shape), SHAPES);
+  // A link that only names a material (e.g. from the materials page) starts with the default form.
+  const shape =
+    oneOf(params.get(PARAMS.shape), SHAPES) ?? (oneOf(params.get(PARAMS.material), MATERIALS) ? DEFAULT_DESIGN.shape : null);
 
   if (!shape) {
     return null;

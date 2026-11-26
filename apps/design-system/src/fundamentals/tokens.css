@@ -66,6 +66,8 @@
   --text-lg--line-height: 125%;
   --text-xl: 2rem; /* 32px: headings h1/h2 */
   --text-xl--line-height: 125%;
+  --text-title: 2.75rem; /* 44px: page titles (H1 in the page head) */
+  --text-title--line-height: 1.2;
   --text-xxl: 4rem; /* 64px: hero */
   --text-xxl--line-height: 5rem;
   /* Without a line height of their own (they keep the inherited one): */

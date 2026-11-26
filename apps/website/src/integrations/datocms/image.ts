@@ -4,6 +4,8 @@ import type { ResponsiveImageType } from 'react-datocms';
 type DatoFile =
   | {
       responsiveImage?: ResponsiveImageType | null;
+      /** The asset's focal point (0…1), set in the DatoCMS media library. */
+      focalPoint?: { x: number; y: number } | null;
       title?: string | null;
       alt?: string | null;
     }
@@ -33,5 +35,5 @@ export const toImage = (file: DatoFile, { altFromTitle = true, fallbackAlt }: Op
       .map((text) => text?.trim())
       .find(Boolean) ?? '';
 
-  return { ...responsiveImage, src: responsiveImage.src, alt };
+  return { ...responsiveImage, src: responsiveImage.src, alt, focalPoint: file?.focalPoint ?? null };
 };

@@ -19,6 +19,7 @@ export const Section: FC<Props> = ({ children, id, marginTop = true, marginBotto
   <section
     id={id ?? undefined}
     className={cn(
+      'reveal-on-scroll',
       scrollMargin && 'scroll-mt-28',
       lead && 'first-of-type:text-base lg:first-of-type:text-lg',
       marginTop && 'mt-24',

@@ -26,6 +26,9 @@ query ShopPage {
       ... on CardsBlockRecord {
         ...cardsBlock
       }
+      ... on ConfiguratorTeaserRecord {
+        ...configuratorTeaserBlock
+      }
     }
   }
 }

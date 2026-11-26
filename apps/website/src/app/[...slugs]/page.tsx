@@ -52,10 +52,7 @@ export default async function ContentPage(props: Params) {
   return (
     <SitePage>
       {page.article && <ArticleJsonLd article={page.article} path={path} />}
-      <Container>
-        <Breadcrumbs customBreadcrumbs={page.breadcrumbs} />
-        {page.content}
-      </Container>
+      <Container>{page.render(<Breadcrumbs customBreadcrumbs={page.breadcrumbs} spacing="tight" />)}</Container>
     </SitePage>
   );
 }

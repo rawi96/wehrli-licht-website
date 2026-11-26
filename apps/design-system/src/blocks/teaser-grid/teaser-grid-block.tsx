@@ -15,7 +15,7 @@ export const TeaserGridBlock: FC<Props> = ({ teasers, marginTop, marginBottom })
   <Section marginBottom={marginBottom} marginTop={marginTop}>
     <Grid cols={teasers.length}>
       {teasers.map(({ id, ...teaser }) => (
-        <Card key={id} {...teaser} imageSizes={gridImageSizes(teasers.length)} />
+        <Card key={id} {...teaser} imageSizes={gridImageSizes()} />
       ))}
     </Grid>
   </Section>

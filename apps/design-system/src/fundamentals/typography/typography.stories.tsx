@@ -3,6 +3,7 @@ import { TokenTable } from '../token-table';
 
 // Class names are written out, so Tailwind finds them.
 const SIZES = [
+  { token: 'title', className: 'text-title', usage: 'Page title (H1 in the page head)' },
   { token: 'xxl', className: 'text-xxl', usage: 'Hero title' },
   { token: 'xl', className: 'text-xl', usage: 'Page and section title' },
   { token: 'lg', className: 'text-lg', usage: 'Card and sub title' },

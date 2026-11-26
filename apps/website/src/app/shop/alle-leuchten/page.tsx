@@ -1,6 +1,6 @@
 import { SitePage } from '@/components/layout/site-page';
 import { Breadcrumbs } from '@/components/breadcrumbs';
-import { CatalogHeader, Container } from '@wehrli/design-system';
+import { CatalogHeader, Container, PageHeadBreadcrumbs } from '@wehrli/design-system';
 import { ShopProductCatalog } from '@/components/shop/shop-product-catalog';
 import { ShopBrowseLayout } from '@/components/shop/shop-browse-layout';
 import { SHOP_ALL_PRODUCTS_PATH } from '@/domain/shop/paths';
@@ -24,13 +24,15 @@ export default async function ShopAllProductsPage() {
     <SitePage>
       <JsonLd data={buildAllProductsJsonLd(products)} />
       <Container>
-        <Breadcrumbs
-          spacing="tight"
-          customBreadcrumbs={[
-            { name: 'Shop', href: '/shop' },
-            { name: texts.allLightsTitle, href: SHOP_ALL_PRODUCTS_PATH },
-          ]}
-        />
+        <PageHeadBreadcrumbs>
+          <Breadcrumbs
+            spacing="tight"
+            customBreadcrumbs={[
+              { name: 'Shop', href: '/shop' },
+              { name: texts.allLightsTitle, href: SHOP_ALL_PRODUCTS_PATH },
+            ]}
+          />
+        </PageHeadBreadcrumbs>
         <ShopBrowseLayout showAllProductsActive>
           <CatalogHeader title={texts.allLightsTitle} description={texts.allLightsIntro} />
           {products.length > 0 && (

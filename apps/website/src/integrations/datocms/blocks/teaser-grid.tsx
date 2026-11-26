@@ -24,7 +24,7 @@ export const TeaserGridBlock: FC<Props> = ({ block: { teasers, disableMarginBott
         // Project pages are many and rarely opened from the grid: no prefetch.
         prefetch: href.startsWith('/projekte/') ? false : undefined,
         linkLabel: teaser.teaserLinkText ?? 'Anschauen',
-        image: toImage({ responsiveImage: teaser.teaserImage?.responsiveImage }),
+        image: toImage(teaser.teaserImage),
         eyebrow: teaser.teaserEyebrow,
       };
     })}

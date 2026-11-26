@@ -7,3 +7,7 @@ export * from './header/header';
 export * from './not-found/not-found';
 export * from './configurator-shell/configurator-shell';
 export * from './fullscreen-dialog/fullscreen-dialog';
+export * from './page-hero/page-hero';
+export * from './detail-page/detail-page';
+export * from './section-heading/section-heading';
+export * from './page-head/page-head-breadcrumbs';

@@ -37,7 +37,8 @@ export const ProjectsOverview: FC<Props> = ({ projects, areas, activeArea, allLa
           <p>{activeArea.intro}</p>
         </RichText>
       )}
-      <ProjectCards projects={visible} linkLabel={cardLinkLabel} />
+      {/* The overview has no section heading: the project titles come right after the page title. */}
+      <ProjectCards projects={visible} linkLabel={cardLinkLabel} headingLevel="h2" />
     </section>
   );
 };

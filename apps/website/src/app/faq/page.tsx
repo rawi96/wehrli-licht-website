@@ -6,7 +6,7 @@ import { JsonLd } from '@/components/seo/json-ld';
 import { groupFaqsByTopic } from '@/domain/content/faq';
 import { pickFaqTexts } from '@/domain/content/site-texts';
 import { content } from '@/integrations';
-import { Container } from '@wehrli/design-system';
+import { Container, PageHeadBreadcrumbs } from '@wehrli/design-system';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
@@ -29,7 +29,9 @@ export default async function FaqPage() {
     <SitePage>
       <JsonLd data={buildFaqPageJsonLd(faqs)} />
       <Container>
-        <Breadcrumbs customBreadcrumbs={[{ name: pageTitle, href: '/faq' }]} />
+        <PageHeadBreadcrumbs>
+          <Breadcrumbs customBreadcrumbs={[{ name: pageTitle, href: '/faq' }]} />
+        </PageHeadBreadcrumbs>
         <FaqPageContent
           title={pageTitle}
           intro={intro}

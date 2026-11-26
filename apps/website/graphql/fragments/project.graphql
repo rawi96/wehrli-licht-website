@@ -7,6 +7,10 @@ fragment projectArea on ProjectAreaRecord {
     noIndex
   }
   image {
+    focalPoint {
+      x
+      y
+    }
     responsiveImage(imgixParams: { fit: crop, w: 920, h: 480, auto: format }) {
       ...responsiveImageFragment
     }
@@ -27,8 +31,13 @@ fragment projectSummary on ProjectRecord {
   seoSettings: seo {
     noIndex
   }
+  # Portrait like the project tiles (4:5), large enough for sharp tiles on retina screens.
   teaserImage {
-    responsiveImage(imgixParams: { fit: crop, w: 920, h: 480, auto: format }) {
+    focalPoint {
+      x
+      y
+    }
+    responsiveImage(imgixParams: { fit: crop, crop: [focalpoint, faces, edges], w: 900, h: 1125, auto: format }) {
       ...responsiveImageFragment
     }
   }
