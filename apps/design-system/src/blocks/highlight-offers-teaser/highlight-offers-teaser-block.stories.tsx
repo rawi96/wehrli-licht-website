@@ -34,4 +34,7 @@ export const TwoOffers: Story = { args: { offers: offers.slice(0, 2) } };
 
 export const OneOffer: Story = { args: { offers: offers.slice(0, 1) } };
 
+/** Home page today: two large cards and three small ones; on phones the third small card fills its row, from sm all three sit in one row. */
+export const FiveOffers: Story = { args: { offers: offers.slice(0, 5) } };
+
 export const ThreeOffers: Story = { args: { offers: offers.slice(0, 3) } };

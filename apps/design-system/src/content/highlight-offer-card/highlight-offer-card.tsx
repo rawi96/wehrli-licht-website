@@ -5,8 +5,13 @@ import { HIGHLIGHT_IMAGE_SIZES } from '../highlight-section/highlight-section';
 import { Image, ImageData } from '../image/image';
 
 type Props = {
-  /** `featured`: large landscape card (2 per row). `compact`: small portrait card (2 per row, 4 from lg). */
-  variant: 'featured' | 'compact';
+  /**
+   * `featured`: large landscape card (2 per row). `compact`: small portrait card (2 per row, 4 from lg).
+   * `compactWide`: a compact card that fills a whole row (landscape) below `wideUntil`, a normal compact card from there.
+   */
+  variant: 'featured' | 'compact' | 'compactWide';
+  /** Breakpoint from which a `compactWide` card looks like a normal compact card. Default `lg`. */
+  wideUntil?: 'sm' | 'lg';
   eyebrow?: string | null;
   title: string;
   href: string;
@@ -30,6 +35,7 @@ export const HighlightOfferCard: FC<Props> = ({
   image,
   linkLabel = 'Mehr erfahren',
   priority,
+  wideUntil = 'lg',
 }) => {
   const featured = variant === 'featured';
 
@@ -38,9 +44,12 @@ export const HighlightOfferCard: FC<Props> = ({
       href={href}
       className={cn(
         'group relative block min-w-0 overflow-hidden rounded-md no-underline',
-        featured
-          ? 'aspect-[4/3] min-h-[12.5rem] sm:aspect-[16/10] sm:min-h-[16rem] lg:min-h-[18rem]'
-          : 'aspect-[3/4] min-h-[10.5rem] sm:aspect-[4/5] sm:min-h-0 lg:aspect-[4/5]',
+        featured && 'aspect-[4/3] min-h-[12.5rem] sm:aspect-[16/10] sm:min-h-[16rem] lg:min-h-[18rem]',
+        variant === 'compact' && 'aspect-[3/4] min-h-[10.5rem] sm:aspect-[4/5] sm:min-h-0 lg:aspect-[4/5]',
+        variant === 'compactWide' &&
+          (wideUntil === 'sm'
+            ? 'aspect-[16/9] min-h-[10.5rem] sm:aspect-[4/5] sm:min-h-0'
+            : 'aspect-[16/9] min-h-[10.5rem] sm:aspect-[16/7] lg:aspect-[4/5] lg:min-h-0'),
         cardLinkClass,
       )}
     >
@@ -58,7 +67,7 @@ export const HighlightOfferCard: FC<Props> = ({
         </p>
         <h3
           className={cn(
-            'mt-1.5 font-bold text-balance break-words sm:mt-2',
+            'mt-1.5 font-bold text-balance break-words hyphens-auto sm:mt-2',
             featured ? 'text-lg leading-snug' : 'text-sm leading-snug sm:text-base lg:text-sm',
           )}
         >

@@ -20,7 +20,11 @@ type Props = {
   title: string;
   subline: string;
   cta?: LinkData | null;
-  /** The first two offers are large cards, the others small cards (2 per row; from lg 3 when there are 3, else 4). */
+  /**
+   * The first two offers are large cards, the others small cards: 2 per row on phones, from sm 3 in a row when
+   * there are exactly 3, else 2 per row and 4 from lg. An odd last small card fills its row as a wide card while
+   * the grid has 2 columns.
+   */
   offers: Offer[];
   /** Loads the image of the first offer with priority (LCP). */
   priority?: boolean;
@@ -33,6 +37,7 @@ export const HighlightOffersTeaserBlock: FC<Props> = ({ id, title, subline, cta,
   }
 
   const [featuredOffers, moreOffers] = [offers.slice(0, 2), offers.slice(2)];
+  const threeInARow = moreOffers.length === 3;
 
   return (
     <HighlightSection id={id} title={title} subline={subline} cta={cta}>
@@ -50,13 +55,30 @@ export const HighlightOffersTeaserBlock: FC<Props> = ({ id, title, subline, cta,
           <ul
             className={cn(
               'grid list-none grid-cols-2 gap-2.5 p-0 min-[400px]:gap-3 sm:gap-3 lg:gap-4',
-              // Three small offers fill one row; otherwise 4 per row.
-              moreOffers.length === 3 ? 'lg:grid-cols-3' : 'lg:grid-cols-4',
+              // Three small offers fill one row from sm; otherwise 4 per row from lg.
+              threeInARow ? 'sm:grid-cols-3' : 'lg:grid-cols-4',
             )}
           >
-            {moreOffers.map((offer) => (
-              <li key={offer.id}>{offer.href && <HighlightOfferCard variant="compact" {...offer} href={offer.href} />}</li>
-            ))}
+            {moreOffers.map((offer, index) => {
+              // An odd last card would sit alone in the 2-column grid: let it fill the row instead.
+              const fillsRow = moreOffers.length % 2 === 1 && index === moreOffers.length - 1;
+
+              return (
+                <li
+                  key={offer.id}
+                  className={cn(fillsRow && (threeInARow ? 'col-span-2 sm:col-span-1' : 'col-span-2 lg:col-span-1'))}
+                >
+                  {offer.href && (
+                    <HighlightOfferCard
+                      variant={fillsRow ? 'compactWide' : 'compact'}
+                      wideUntil={threeInARow ? 'sm' : 'lg'}
+                      {...offer}
+                      href={offer.href}
+                    />
+                  )}
+                </li>
+              );
+            })}
           </ul>
         )}
       </div>
