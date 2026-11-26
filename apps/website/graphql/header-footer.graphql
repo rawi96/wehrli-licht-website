@@ -20,6 +20,7 @@ query HeaderFooter {
           ...pageRecordLink
           teaserDescription
           teaserImage {
+            copyright
             responsiveImage(imgixParams: { fit: crop, w: 576, h: 432, auto: format }) {
               ...responsiveImageFragment
             }

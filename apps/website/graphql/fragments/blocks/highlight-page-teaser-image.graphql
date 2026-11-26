@@ -4,6 +4,7 @@ fragment highlightPageTeaserImage on ImageFileField {
     y
   }
   # Cropped to the card's shape, so the browser gets exactly the pixels it shows (no upscaled, blurry crop).
+  copyright
   responsiveImage(imgixParams: { fit: crop, w: 1600, h: 1000, q: 75, auto: format }) {
     ...priorityResponsiveImageFragment
   }

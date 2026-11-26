@@ -8,6 +8,7 @@ fragment highlightOfferItem on HighlightOfferItemRecord {
       x
       y
     }
+    copyright
     responsiveImage(imgixParams: { fit: crop, w: 1600, h: 1000, q: 75, auto: format }) {
       ...priorityResponsiveImageFragment
     }

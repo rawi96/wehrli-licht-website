@@ -8,6 +8,7 @@ fragment lampshadeConfiguratorBlock on LampshadeConfiguratorRecord {
   startLabel
   teaserNote
   teaserImage {
+    copyright
     responsiveImage(imgixParams: { w: 1400, q: 75, auto: format }) {
       ...responsiveImageFragment
     }

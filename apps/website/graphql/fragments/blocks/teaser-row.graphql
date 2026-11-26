@@ -11,6 +11,7 @@ fragment teaserRowBlock on TeaserRowRecord {
       teaserEyebrow
       teaserLinkText
       teaserImage {
+        copyright
         responsiveImage {
           ...responsiveImageFragment
         }

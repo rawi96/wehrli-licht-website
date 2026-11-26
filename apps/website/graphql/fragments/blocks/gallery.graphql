@@ -6,6 +6,7 @@ fragment galleryBlock on GalleryRecord {
   gallery {
     id
     title
+    copyright
     smallSize: responsiveImage(imgixParams: { h: 339 }) {
       ...responsiveImageFragment
     }

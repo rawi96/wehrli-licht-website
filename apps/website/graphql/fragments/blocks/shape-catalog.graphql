@@ -16,6 +16,7 @@ fragment shapeCatalogBlock on ShapeCatalogRecord {
       configuratorMaterial
       configuratorColor
       image {
+        copyright
         responsiveImage(imgixParams: { w: 600, h: 600, fit: fill, bg: "eeeeee", auto: format }) {
           ...responsiveImageBaseFragment
         }

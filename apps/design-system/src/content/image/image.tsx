@@ -23,6 +23,8 @@ export type ImageData = {
    * picture (`fit="cover"`), the crop keeps this point in view instead of the centre.
    */
   focalPoint?: { x: number; y: number } | null;
+  /** Who the picture is from (the asset's copyright), shown small in its corner, e.g. «Neuco». */
+  credit?: string | null;
 };
 
 type Props = {
@@ -60,13 +62,26 @@ const ROUNDED = { lg: 'rounded-md', full: 'rounded-full' } as const;
 /** The one hover zoom of the site (inside a `group`), with the site-wide hover timing. Off for reduced motion. */
 const HOVER_ZOOM = 'transition-transform group-hover:scale-105 motion-reduce:transition-none';
 
-/** The image data for react-datocms, which does not know the focal point. */
-const withoutFocalPoint = (image: ImageData): Omit<ImageData, 'focalPoint'> => {
+/** The image data for react-datocms, which knows neither the focal point nor the credit. */
+const forDatoImage = (image: ImageData): Omit<ImageData, 'focalPoint' | 'credit'> => {
   const data = { ...image };
   delete data.focalPoint;
+  delete data.credit;
 
   return data;
 };
+
+/** Picture credit in the bottom right corner of its (positioned) parent; `stage` sits further in, above the overlays. */
+export const ImageCredit: FC<{ credit: string; placement?: 'image' | 'stage' }> = ({ credit, placement = 'image' }) => (
+  <span
+    className={cn(
+      'text-xxxs pointer-events-none absolute rounded-md bg-black/50 px-1.5 py-0.5 leading-tight text-white',
+      placement === 'stage' ? 'right-4 bottom-4 z-10' : 'right-2 bottom-2 z-[1]',
+    )}
+  >
+    Bild: {credit}
+  </span>
+);
 
 /** Fills its parent (width and height 100%); the parent decides size and aspect ratio. */
 export const Image: FC<Props> = ({
@@ -85,9 +100,9 @@ export const Image: FC<Props> = ({
     return null;
   }
 
-  return (
+  const picture = (
     <SRCImage
-      data={{ ...withoutFocalPoint(image), alt: image.alt ?? '' }}
+      data={{ ...forDatoImage(image), alt: image.alt ?? '' }}
       sizes={sizes}
       priority={priority}
       usePlaceholder={placeholder}
@@ -108,5 +123,23 @@ export const Image: FC<Props> = ({
           : {}),
       }}
     />
+  );
+  const credit = image.credit?.trim();
+
+  if (!credit) {
+    return picture;
+  }
+
+  // An absolute image lies over its positioned parent, which then holds the credit too; else a box of its own does.
+  return absolute ? (
+    <>
+      {picture}
+      <ImageCredit credit={credit} />
+    </>
+  ) : (
+    <span className="relative block size-full">
+      {picture}
+      <ImageCredit credit={credit} />
+    </span>
   );
 };

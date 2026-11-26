@@ -11,6 +11,7 @@ fragment teamBlock on TeamRecord {
     bio
     image {
       # Portrait like the team cards (4:5), sharp on retina screens, cropped around the face.
+      copyright
       responsiveImage(imgixParams: { fit: crop, crop: [faces, focalpoint, edges], w: 900, h: 1125, auto: format }) {
         ...priorityResponsiveImageFragment
       }

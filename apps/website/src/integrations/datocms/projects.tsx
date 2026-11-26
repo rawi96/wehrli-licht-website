@@ -11,6 +11,7 @@ import type { PageMetadata } from '@/domain/content/page';
 import type { ProjectArea, ProjectSummary } from '@/domain/content/project';
 import { getProjectAreaPath, getProjectPath, PROJECTS_PATH } from '@/domain/content/project';
 import { setActiveProjectArea } from './active-project-area';
+import { creditOf } from './image';
 import { ProjectsOverviewBlock } from './blocks/projects';
 import { getPage, getPageMetadata } from './pages';
 import type { ProjectPage } from '@/ports/content-source';
@@ -24,15 +25,28 @@ import { getCmsPagePath } from './paths';
 
 type ResponsiveImageData = NonNullable<NonNullable<ProjectSummaryFragment['teaserImage']>['responsiveImage']>;
 
-const toImage = (image?: ResponsiveImageData | null, focalPoint?: { x: number; y: number } | null) =>
-  image?.src ? { ...image, alt: image.alt ?? '', focalPoint: focalPoint ?? null } : null;
+type ProjectImageFile = {
+  responsiveImage?: ResponsiveImageData | null;
+  focalPoint?: { x: number; y: number } | null;
+  copyright?: string | null;
+} | null;
+
+const toImage = (file?: ProjectImageFile) =>
+  file?.responsiveImage?.src
+    ? {
+        ...file.responsiveImage,
+        alt: file.responsiveImage.alt ?? '',
+        focalPoint: file.focalPoint ?? null,
+        credit: creditOf(file.copyright),
+      }
+    : null;
 
 const toArea = (area: ProjectAreaFragment): ProjectArea => ({
   id: area.id,
   name: area.name,
   slug: area.slug,
   intro: area.intro?.trim() ? area.intro.trim() : null,
-  image: toImage(area.image?.responsiveImage, area.image?.focalPoint),
+  image: toImage(area.image),
   lastModified: area._updatedAt,
   noIndex: area.seoSettings?.noIndex ?? false,
 });
@@ -46,7 +60,7 @@ const toSummary = (project: ProjectSummaryFragment): ProjectSummary => ({
   year: project.year ?? null,
   featured: project.featured,
   description: project.teaserDescription ?? null,
-  image: toImage(project.teaserImage?.responsiveImage, project.teaserImage?.focalPoint),
+  image: toImage(project.teaserImage),
   area: project.area ? { id: project.area.id, name: project.area.name, slug: project.area.slug } : null,
   services: project.services.flatMap((service) => {
     const href = getCmsPagePath(service);

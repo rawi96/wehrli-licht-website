@@ -12,6 +12,7 @@ fragment childPage on PageRecord {
       x
       y
     }
+    copyright
     responsiveImage(imgixParams: { fit: crop, w: 1280, h: 720, auto: format }) {
       ...responsiveImageFragment
     }

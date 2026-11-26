@@ -12,6 +12,7 @@ fragment highlightProjectItem on HighlightProjectItemRecord {
         x
         y
       }
+      copyright
       responsiveImage(imgixParams: { w: 1600, q: 75, auto: format }) {
         ...priorityResponsiveImageFragment
       }

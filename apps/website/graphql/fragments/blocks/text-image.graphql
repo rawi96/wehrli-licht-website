@@ -18,6 +18,7 @@ fragment textImageBlock on TextImageRecord {
       x
       y
     }
+    copyright
     responsiveImage(imgixParams: { w: 1200, auto: format }) {
       ...priorityResponsiveImageFragment
     }

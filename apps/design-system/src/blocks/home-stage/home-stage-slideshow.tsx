@@ -2,6 +2,7 @@
 
 import NextImage from 'next/image';
 import { FC, useEffect, useState } from 'react';
+import { ImageCredit } from '../../content/image/image';
 import { cn } from '../../fundamentals/cn';
 
 export type HomeStageSlide = {
@@ -9,6 +10,8 @@ export type HomeStageSlide = {
   src: string;
   /** Blurred placeholder (data URL) while the image loads. */
   blurDataURL?: string | null;
+  /** Who the picture is from, shown small in the corner while the slide is on. */
+  credit?: string | null;
 };
 
 export type HomeStageSlideshowLabels = {
@@ -100,6 +103,8 @@ export const HomeStageSlideshow: FC<Props> = ({ slides, labels, intervalMs = 700
           );
         })}
       </div>
+
+      {slides[activeIndex]?.credit && <ImageCredit credit={slides[activeIndex].credit} placement="stage" />}
 
       {hasMultipleSlides && (
         <div className="absolute bottom-24 left-1/2 z-10 flex -translate-x-1/2 items-center gap-3">

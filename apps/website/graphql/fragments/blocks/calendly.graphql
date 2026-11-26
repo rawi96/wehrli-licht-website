@@ -12,6 +12,7 @@ fragment calendlyBlock on CalendlyRecord {
     lastname
     function
     image {
+      copyright
       responsiveImage(imgixParams: { fit: crop, w: 160, h: 160, auto: format }) {
         ...responsiveImageFragment
       }

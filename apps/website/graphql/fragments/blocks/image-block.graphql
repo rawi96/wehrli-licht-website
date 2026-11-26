@@ -10,6 +10,7 @@ fragment imageBlock on ImageRecord {
       x
       y
     }
+    copyright
     responsiveImage(imgixParams: { w: 1600, q: 70, auto: format }) {
       ...priorityResponsiveImageFragment
     }

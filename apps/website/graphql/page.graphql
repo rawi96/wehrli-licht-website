@@ -13,6 +13,7 @@ query Page($id: ItemId!) {
         y
       }
       # Not cropped here: the page head crops it to its own shape at the focal point (one crop, not two).
+      copyright
       responsiveImage(imgixParams: { w: 1600, auto: format }) {
         ...responsiveImageFragment
       }
@@ -23,6 +24,7 @@ query Page($id: ItemId!) {
         y
       }
       # Not cropped here: the page head crops it to its own shape at the focal point (one crop, not two).
+      copyright
       responsiveImage(imgixParams: { w: 1600, auto: format }) {
         ...responsiveImageFragment
       }
@@ -182,6 +184,7 @@ query Page($id: ItemId!) {
         ...pageRecordLink
       }
       image {
+        copyright
         responsiveImage(imgixParams: { fit: crop, w: 160, h: 160, auto: format }) {
           ...responsiveImageFragment
         }

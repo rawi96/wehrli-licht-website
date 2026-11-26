@@ -18,8 +18,8 @@ export const GalleryBlock: FC<Props> = ({
     marginBottom={!disableMarginBottom}
     showTitles={showImageTitles}
     priority={aboveFold}
-    items={gallery.flatMap(({ id, smallSize, largeSize }): GalleryItem[] => {
-      const image = toImage({ responsiveImage: smallSize });
+    items={gallery.flatMap(({ id, copyright, smallSize, largeSize }): GalleryItem[] => {
+      const image = toImage({ responsiveImage: smallSize, copyright });
 
       if (!image) {
         return [];
