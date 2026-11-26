@@ -10,7 +10,6 @@ export * from './highlight-project-card/highlight-project-card';
 export * from './highlight-section/highlight-section';
 export * from './image/image';
 export * from './lightbox/lightbox';
-export * from './team-member-card/team-member-card';
 export * from './teaser-tile/teaser-tile';
 export * from './testimonial/testimonial';
 export * from './project-facts/project-facts';

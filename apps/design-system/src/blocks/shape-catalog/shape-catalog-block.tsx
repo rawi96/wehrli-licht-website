@@ -59,6 +59,8 @@ const ShapeCard: FC<{ shape: Shape; configuratorLabel: string; imageFit: 'contai
           className="text-wehrli hover:text-wehrli-dark mt-auto inline-flex items-center gap-1.5 pt-4 text-sm font-bold whitespace-nowrap no-underline"
         >
           {configuratorLabel}
+          {/* Every card has the same link text: the name makes each link unique for screen readers and search. */}
+          <span className="sr-only">: {shape.name}</span>
           <ArrowRightIcon
             aria-hidden
             className="size-4 transition-transform group-hover:translate-x-0.5 motion-reduce:transition-none"

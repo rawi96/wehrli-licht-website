@@ -72,6 +72,8 @@ const TopicCard: FC<{ page: ChildPage; imageSizes: string; headingLevel: 'h2' | 
           className="text-wehrli border-wehrli hover:text-wehrli-dark hover:border-wehrli-dark border-b-2 text-sm font-bold no-underline transition-colors"
         >
           {page.linkLabel}
+          {/* «Mehr erfahren» on every card: the title makes each link unique for screen readers and search. */}
+          <span className="sr-only">: {page.title}</span>
         </NextLink>
       </div>
     </div>
