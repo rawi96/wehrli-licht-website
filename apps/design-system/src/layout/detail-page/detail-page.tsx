@@ -53,7 +53,8 @@ const ContactBar: FC<{ contact: Contact }> = ({ contact }) => (
           {contact.appointment.label}
         </NextLink>
       )}
-      {(contact.phone ?? contact.email) && (
+      {/* Empty CMS fields come as "", so check both (`??` would keep an empty phone and hide the e-mail). */}
+      {(contact.phone ? true : Boolean(contact.email)) && (
         <p className="flex flex-wrap gap-x-4 gap-y-1 text-xs">
           {contact.phone && (
             <a href={`tel:${contact.phone}`} className="font-bold text-white/85 hover:text-white">

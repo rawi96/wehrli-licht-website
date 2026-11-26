@@ -54,6 +54,7 @@ export const RelatedPagesBlock: FC<Props> = ({ title, pages, back, last = false 
                 linkLabel={page.linkLabel}
                 image={page.image}
                 imageSizes={gridImageSizes()}
+                headingLevel="h3"
               />
             ))}
           </div>

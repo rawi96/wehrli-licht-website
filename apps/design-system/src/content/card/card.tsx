@@ -1,5 +1,5 @@
 import NextLink from 'next/link';
-import { FC } from 'react';
+import { createElement, FC } from 'react';
 import { Image, ImageData } from '../image/image';
 
 type Props = {
@@ -15,6 +15,8 @@ type Props = {
   image?: ImageData | null;
   /** Rendered image width, e.g. `gridImageSizes()`. */
   imageSizes: string;
+  /** `h3` below a section heading; `h2` (default) where the cards follow the page title directly. */
+  headingLevel?: 'h2' | 'h3';
 };
 
 /** Teaser of a page: image, eyebrow, title, text and a link label. The whole card is the link. */
@@ -28,6 +30,7 @@ export const Card: FC<Props> = ({
   image,
   imageSizes,
   eyebrow,
+  headingLevel = 'h2',
 }) => (
   <NextLink
     href={href}
@@ -44,9 +47,14 @@ export const Card: FC<Props> = ({
       {/* Always three rows (eyebrow, text, link), so the link sits at the bottom of equal-height cards. */}
       {eyebrow ? <p>{eyebrow}</p> : <span aria-hidden="true" />}
       <div>
-        <h2 className="text-wehrli my-4 text-lg font-bold break-words hyphens-auto peer-[p&]:mt-6 md:text-base lg:text-lg lg:peer-[p&]:mt-8">
-          {title}
-        </h2>
+        {createElement(
+          headingLevel,
+          {
+            className:
+              'text-wehrli my-4 text-lg font-bold break-words hyphens-auto peer-[p&]:mt-6 md:text-base lg:text-lg lg:peer-[p&]:mt-8',
+          },
+          title,
+        )}
         {description && <p className="mb-2 lg:mb-4">{description}</p>}
       </div>
       <div>
