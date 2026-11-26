@@ -35,18 +35,32 @@ const configuratorHash = (entry: Entry) => {
  * The catalog of lampshade shapes or materials; entries the 3D configurator knows open it with that shape
  * (`#form=…`) or material (`#material=…`).
  */
+/** Anchors per group, unique even when two groups share a title (`stoffe`, `stoffe-2`). */
+const uniqueAnchors = (titles: string[]): string[] => {
+  const seen = new Map<string, number>();
+
+  return titles.map((title) => {
+    const anchor = toAnchor(title);
+    const count = (seen.get(anchor) ?? 0) + 1;
+    seen.set(anchor, count);
+
+    return count === 1 ? anchor : `${anchor}-${count}`;
+  });
+};
+
 export const ShapeCatalogBlock: FC<Props> = ({ block }) => {
   const configuratorPath = block.configuratorPage ? getPublicPagePath(block.configuratorPage) : null;
   const materials = block.kind === 'materialien';
+  const anchors = uniqueAnchors(block.groups.map((group) => group.title));
 
   return (
     <ShapeCatalogBlockView
       navLabel={materials ? 'Materialien nach Gruppe' : 'Formen nach Gruppe'}
       imageFit={materials ? 'cover' : 'contain'}
       configuratorLabel="In 3D ansehen"
-      groups={block.groups.map((group) => ({
+      groups={block.groups.map((group, index) => ({
         id: group.id,
-        anchor: toAnchor(group.title),
+        anchor: anchors[index],
         title: group.title,
         intro: group.intro,
         shapes: group.shapes.map((shape) => ({

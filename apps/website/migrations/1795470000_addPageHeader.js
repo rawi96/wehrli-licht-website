@@ -28,7 +28,7 @@ module.exports = async (client) => {
     api_key: 'intro',
     label: 'Einleitung',
     field_type: 'text',
-    hint: 'Zwei bis drei Sätze: worum es geht und für wen. Steht neben dem Bild.',
+    hint: 'Zwei bis drei Sätze: worum es geht und für wen. Steht unter der Überschrift.',
     appearance: { editor: 'textarea', parameters: {}, addons: [] },
     position: 1,
     ...inFieldset,
