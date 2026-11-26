@@ -282,8 +282,8 @@ export const getPage = async (path: string): Promise<ContentPage | null> => {
           breadcrumbs={breadcrumbs}
           title={title}
           intro={page.intro}
-          // «Schlichter Seitenkopf»: pages like team or contact start right with their content.
-          image={page.plainHeader ? null : image}
+          // «Schlichter Seitenkopf» (team, contact …): no contact bar, and a picture only when one is set as «Kopfbild».
+          image={page.plainHeader ? toImage(page.heroImage) : image}
           contact={page.plainHeader ? null : contact}
         >
           <ContentBlocks blocks={mainBlocks} eagerBlockCount={0} />
