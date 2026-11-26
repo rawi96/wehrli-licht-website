@@ -3,7 +3,7 @@ import NextLink from 'next/link';
 import { FC } from 'react';
 import { Image, ImageData } from '../../content/image/image';
 import { cn } from '../../fundamentals/cn';
-import { CARD_COLUMNS, GRID_COLUMN_CLASSES } from '../../layout/grid/grid';
+import { CARD_COLUMNS, GRID_COLUMN_CLASSES, type GridColumns } from '../../layout/grid/grid';
 import { Section } from '../../layout/section/section';
 import { Heading } from '../../typography/heading/heading';
 
@@ -37,18 +37,31 @@ type Props = {
 };
 
 /** Two columns already on phones (unlike the other card grids), 4 from lg. */
-const CARD_IMAGE_SIZES = '(min-width: 1400px) 300px, (min-width: 1024px) 23vw, 46vw';
+const CARD_IMAGE_SIZES: Record<GridColumns, string> = {
+  3: '(min-width: 1400px) 410px, (min-width: 1024px) 30vw, 46vw',
+  4: '(min-width: 1400px) 300px, (min-width: 1024px) 23vw, 46vw',
+};
+
+/** 3 columns for groups of 3 or 6 (no gap in the last row), else the usual 4. */
+const columnsFor = (count: number): GridColumns => (count % 4 !== 0 && count % 3 === 0 ? 3 : CARD_COLUMNS);
 
 /** One shape: its sketch, name and description, and the way into the 3D configurator where there is one. */
-const ShapeCard: FC<{ shape: Shape; configuratorLabel: string; imageFit: 'contain' | 'cover' }> = ({
+const ShapeCard: FC<{ shape: Shape; configuratorLabel: string; imageFit: 'contain' | 'cover'; columns: GridColumns }> = ({
   shape,
   configuratorLabel,
   imageFit,
+  columns,
 }) => (
   <article className="card-surface group flex h-full flex-col overflow-hidden">
     {/* Sketches are drawn on a light grey ground: shown whole, so the shape is never cut. Renderings fill the card. */}
     <div className="relative aspect-square overflow-hidden bg-gray-100">
-      <Image image={shape.image} sizes={CARD_IMAGE_SIZES} fit={imageFit} placeholder={imageFit === 'cover'} absolute />
+      <Image
+        image={shape.image}
+        sizes={CARD_IMAGE_SIZES[columns]}
+        fit={imageFit}
+        placeholder={imageFit === 'cover'}
+        absolute
+      />
     </div>
     <div className="flex flex-1 flex-col p-5">
       <h3 className="text-wehrli text-base leading-snug font-bold text-balance break-words hyphens-auto">{shape.name}</h3>
@@ -98,10 +111,20 @@ export const ShapeCatalogBlock: FC<Props> = ({ groups, configuratorLabel, navLab
       <Section key={group.id} id={group.anchor} scrollMargin>
         <Heading level="2">{group.title}</Heading>
         {group.intro && <p className="-mt-2 mb-8 max-w-2xl text-base text-black">{group.intro}</p>}
-        <ul className={cn('grid list-none grid-cols-2 gap-4 p-0 lg:gap-6', GRID_COLUMN_CLASSES[CARD_COLUMNS])}>
+        <ul
+          className={cn(
+            'grid list-none grid-cols-2 gap-4 p-0 lg:gap-6',
+            GRID_COLUMN_CLASSES[columnsFor(group.shapes.length)],
+          )}
+        >
           {group.shapes.map((shape) => (
             <li key={shape.id}>
-              <ShapeCard shape={shape} configuratorLabel={configuratorLabel} imageFit={imageFit} />
+              <ShapeCard
+                shape={shape}
+                configuratorLabel={configuratorLabel}
+                imageFit={imageFit}
+                columns={columnsFor(group.shapes.length)}
+              />
             </li>
           ))}
         </ul>
